@@ -1,4 +1,3 @@
-```php
 <?php
 
 session_start();
@@ -12,8 +11,6 @@ $nome = $_SESSION["nome"];
 $nivel = $_SESSION["nivel"];
 $xp = $_SESSION["xp"];
 
-echo "LOGIN FUNCIONOU!";
-exit;
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +19,7 @@ exit;
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Início | MathPlay</title>
@@ -48,7 +46,6 @@ exit;
 
     </header>
 
-
     <main class="pagina">
 
         <section class="boas-vindas">
@@ -67,7 +64,6 @@ exit;
 
         </section>
 
-
         <section class="informacoes">
 
             <div class="info-card">
@@ -75,32 +71,34 @@ exit;
                 <span>⭐</span>
 
                 <div>
+
                     <p>Nível</p>
 
                     <strong>
                         <?php echo $nivel; ?>
                     </strong>
+
                 </div>
 
             </div>
-
 
             <div class="info-card">
 
                 <span>⚡</span>
 
                 <div>
+
                     <p>XP</p>
 
                     <strong>
                         <?php echo $xp; ?>
                     </strong>
+
                 </div>
 
             </div>
 
         </section>
-
 
         <section class="jogos">
 
@@ -114,9 +112,7 @@ exit;
 
             </div>
 
-
             <div class="lista-jogos">
-
 
                 <article class="jogo-card">
 
@@ -141,7 +137,6 @@ exit;
 
                 </article>
 
-
                 <article class="jogo-card">
 
                     <div class="imagem-jogo memoria">
@@ -165,13 +160,11 @@ exit;
 
                 </article>
 
-
             </div>
 
         </section>
 
     </main>
-
 
     <script src="js/inicio.js"></script>
 

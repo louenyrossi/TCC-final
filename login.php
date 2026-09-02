@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -18,49 +17,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     } else {
 
-        $sql = "SELECT id, nome, senha, tipo, nivel, xp FROM usuarios WHERE email = ?";
+        $sql = "SELECT * FROM usuarios WHERE email = ?";
 
-        $stmt = $conexao->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
-        if ($stmt) {
+        $stmt->execute([$email]);
 
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
+        $usuario = $stmt->fetch();
 
-            $resultado = $stmt->get_result();
+        if ($usuario) {
 
-            if ($resultado->num_rows === 1) {
+            if (password_verify($senha, $usuario["senha"])) {
 
-                $usuario = $resultado->fetch_assoc();
+                $_SESSION["usuario_id"] = $usuario["id"];
+                $_SESSION["nome"] = $usuario["nome"];
+                $_SESSION["tipo"] = $usuario["tipo"];
+                $_SESSION["nivel"] = $usuario["nivel"];
+                $_SESSION["xp"] = $usuario["xp"];
 
-                if (password_verify($senha, $usuario["senha"])) {
-
-                    $_SESSION["usuario_id"] = $usuario["id"];
-                    $_SESSION["nome"] = $usuario["nome"];
-                    $_SESSION["tipo"] = $usuario["tipo"];
-                    $_SESSION["nivel"] = $usuario["nivel"];
-                    $_SESSION["xp"] = $usuario["xp"];
-
-                    header("Location: inicio.php");
-                    exit;
-
-                } else {
-
-                    $mensagem = "Senha incorreta.";
-
-                }
+                header("Location: inicio.php");
+                exit;
 
             } else {
 
-                $mensagem = "E-mail não encontrado.";
+                $mensagem = "E-mail ou senha incorretos.";
 
             }
 
-            $stmt->close();
-
         } else {
 
-            $mensagem = "Erro ao acessar o banco de dados.";
+            $mensagem = "E-mail ou senha incorretos.";
 
         }
     }
@@ -74,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login | MathPlay</title>
@@ -89,8 +76,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <section class="login">
 
             <div class="logo">
+
                 <span>✦</span>
+
                 <h1>MathPlay</h1>
+
             </div>
 
             <div class="titulo">
@@ -170,4 +160,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </body>
 
 </html>
-```
