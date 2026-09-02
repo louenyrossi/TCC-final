@@ -12,6 +12,8 @@ $nome = $_SESSION["nome"];
 $nivel = $_SESSION["nivel"];
 $xp = $_SESSION["xp"];
 
+echo "LOGIN FUNCIONOU!";
+exit;
 ?>
 
 <!DOCTYPE html>
@@ -176,4 +178,3 @@ $xp = $_SESSION["xp"];
 </body>
 
 </html>
-```
