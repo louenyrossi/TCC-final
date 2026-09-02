@@ -1,4 +1,4 @@
-```php
+
 <?php
 
 session_start();
@@ -7,34 +7,29 @@ include "config.php";
 
 $mensagem = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $email = trim($_POST["email"]);
     $senha = $_POST["senha"];
 
-    if ($email == "" || $senha == "") {
+    if ($email === "" || $senha === "") {
 
         $mensagem = "Preencha todos os campos.";
 
     } else {
 
-        $sql = "SELECT * FROM usuarios WHERE email = ?";
+        $sql = "SELECT id, nome, senha, tipo, nivel, xp FROM usuarios WHERE email = ?";
 
         $stmt = $conexao->prepare($sql);
 
-        if (!$stmt) {
-
-            $mensagem = "Erro ao preparar a consulta.";
-
-        } else {
+        if ($stmt) {
 
             $stmt->bind_param("s", $email);
-
             $stmt->execute();
 
             $resultado = $stmt->get_result();
 
-            if ($resultado->num_rows == 1) {
+            if ($resultado->num_rows === 1) {
 
                 $usuario = $resultado->fetch_assoc();
 
@@ -62,6 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             $stmt->close();
+
+        } else {
+
+            $mensagem = "Erro ao acessar o banco de dados.";
+
         }
     }
 }
@@ -74,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login | MathPlay</title>
@@ -90,13 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section class="login">
 
             <div class="logo">
-
                 <span>✦</span>
-
                 <h1>MathPlay</h1>
-
             </div>
-
 
             <div class="titulo">
 
@@ -107,7 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </p>
 
             </div>
-
 
             <form method="POST" id="formLogin">
 
@@ -127,7 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
 
-
                 <div class="campo">
 
                     <label for="senha">
@@ -144,22 +137,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
 
-
                 <button type="submit">
                     Entrar
                 </button>
 
             </form>
 
-
-            <?php if ($mensagem != ""): ?>
+            <?php if ($mensagem !== ""): ?>
 
                 <p class="mensagem">
                     <?php echo htmlspecialchars($mensagem); ?>
                 </p>
 
             <?php endif; ?>
-
 
             <p class="cadastro">
 
@@ -174,7 +164,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </section>
 
     </main>
-
 
     <script src="js/login.js"></script>
 
