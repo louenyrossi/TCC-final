@@ -1,4 +1,4 @@
-
+```php
 <?php
 
 session_start();
@@ -9,47 +9,61 @@ $mensagem = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = $_POST["email"];
+    $email = trim($_POST["email"]);
     $senha = $_POST["senha"];
 
-    $sql = "SELECT * FROM usuarios WHERE email = ?";
+    if ($email == "" || $senha == "") {
 
-    $stmt = $conexao->prepare($sql);
-
-    $stmt->bind_param("s", $email);
-
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows == 1) {
-
-        $usuario = $resultado->fetch_assoc();
-
-        if (password_verify($senha, $usuario["senha"])) {
-
-            $_SESSION["usuario_id"] = $usuario["id"];
-            $_SESSION["nome"] = $usuario["nome"];
-            $_SESSION["tipo"] = $usuario["tipo"];
-            $_SESSION["nivel"] = $usuario["nivel"];
-            $_SESSION["xp"] = $usuario["xp"];
-
-            header("Location: inicio.php");
-            exit;
-
-        } else {
-
-            $mensagem = "E-mail ou senha incorretos.";
-
-        }
+        $mensagem = "Preencha todos os campos.";
 
     } else {
 
-        $mensagem = "E-mail ou senha incorretos.";
+        $sql = "SELECT * FROM usuarios WHERE email = ?";
 
+        $stmt = $conexao->prepare($sql);
+
+        if (!$stmt) {
+
+            $mensagem = "Erro ao preparar a consulta.";
+
+        } else {
+
+            $stmt->bind_param("s", $email);
+
+            $stmt->execute();
+
+            $resultado = $stmt->get_result();
+
+            if ($resultado->num_rows == 1) {
+
+                $usuario = $resultado->fetch_assoc();
+
+                if (password_verify($senha, $usuario["senha"])) {
+
+                    $_SESSION["usuario_id"] = $usuario["id"];
+                    $_SESSION["nome"] = $usuario["nome"];
+                    $_SESSION["tipo"] = $usuario["tipo"];
+                    $_SESSION["nivel"] = $usuario["nivel"];
+                    $_SESSION["xp"] = $usuario["xp"];
+
+                    header("Location: inicio.php");
+                    exit;
+
+                } else {
+
+                    $mensagem = "Senha incorreta.";
+
+                }
+
+            } else {
+
+                $mensagem = "E-mail não encontrado.";
+
+            }
+
+            $stmt->close();
+        }
     }
-
-    $stmt->close();
 }
 
 ?>
@@ -141,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if ($mensagem != ""): ?>
 
                 <p class="mensagem">
-                    <?php echo $mensagem; ?>
+                    <?php echo htmlspecialchars($mensagem); ?>
                 </p>
 
             <?php endif; ?>
