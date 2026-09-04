@@ -309,7 +309,7 @@ $jogos = $stmt->fetchAll();
                                 $classe = 'game-caixa';
 
                                 $link =
-                                    '/jogos/caixa-matematico/index.php';;
+                                    '/jogos/caixa-matematico/index.php';
 
                             }
 
