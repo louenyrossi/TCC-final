@@ -462,6 +462,9 @@ $jogos = $stmt->fetchAll();
 ></div>
 
 <script src="../assets/js/jogos-aluno.js"></script>
+<a href="../jogos/caixa-matematico/index.php">
+    TESTAR CAIXA
+</a>
 
 </body>
 
