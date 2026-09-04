@@ -1,0 +1,843 @@
+/* ==========================================================
+   CAIXA MATEMÁTICO
+   MathPlay
+   Mobile First
+========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --roxo: #7C3AED;
+    --roxo-escuro: #5B21B6;
+    --roxo-claro: #EDE9FE;
+
+    --fundo: #F8F7FC;
+    --branco: #FFFFFF;
+
+    --texto: #17151C;
+    --texto-secundario: #6B6675;
+
+    --verde: #16A34A;
+    --verde-claro: #DCFCE7;
+
+    --vermelho: #DC2626;
+    --vermelho-claro: #FEE2E2;
+
+    --amarelo: #D97706;
+    --amarelo-claro: #FEF3C7;
+
+    --borda: #E7E3EE;
+
+    --sombra: 0 8px 30px rgba(41, 38, 49, 0.08);
+    --raio: 18px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* ==========================================================
+   PÁGINA
+========================================================== */
+
+.game-page {
+    min-height: 100vh;
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.game-header {
+    width: 100%;
+    min-height: 72px;
+
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 18px;
+
+    gap: 15px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+
+    color: var(--texto-secundario);
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.back-button:hover {
+    color: var(--roxo);
+}
+
+.game-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: var(--roxo-claro);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.game-brand span,
+.game-brand strong {
+    display: block;
+}
+
+.game-brand span {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.game-brand strong {
+    color: var(--texto);
+    font-size: 14px;
+}
+
+.player-info {
+    display: none;
+}
+
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.game-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 22px 16px 40px;
+}
+
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.game-status {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.status-card {
+    background: var(--branco);
+
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+
+    padding: 13px;
+
+    text-align: center;
+
+    box-shadow: 0 3px 15px rgba(41, 38, 49, 0.04);
+}
+
+.status-label {
+    display: block;
+
+    color: var(--texto-secundario);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-bottom: 4px;
+}
+
+.status-card strong {
+    font-size: 20px;
+    color: var(--texto);
+}
+
+.status-card > span:last-child {
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.score-card strong {
+    color: var(--roxo);
+}
+
+
+/* ==========================================================
+   PROGRESSO
+========================================================== */
+
+.progress-wrapper {
+    margin-bottom: 20px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+
+    background: var(--roxo-claro);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+
+    background: var(--roxo);
+
+    border-radius: inherit;
+
+    transition: width 0.4s ease;
+}
+
+
+/* ==========================================================
+   CARTÃO PRINCIPAL
+========================================================== */
+
+.game-card {
+    background: var(--branco);
+
+    border: 1px solid var(--borda);
+
+    border-radius: var(--raio);
+
+    padding: 20px;
+
+    box-shadow: var(--sombra);
+}
+
+.game-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.game-category {
+    display: block;
+
+    color: var(--roxo);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 6px;
+}
+
+.game-card-header h1 {
+    font-size: 23px;
+    line-height: 1.2;
+
+    color: var(--texto);
+}
+
+.difficulty-badge {
+    flex-shrink: 0;
+
+    padding: 7px 11px;
+
+    background: var(--verde-claro);
+    color: var(--verde);
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ==========================================================
+   CENÁRIO
+========================================================== */
+
+.scenario {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 14px;
+
+    background: var(--fundo);
+
+    border-radius: 14px;
+
+    margin-bottom: 24px;
+}
+
+.scenario-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background: var(--roxo-claro);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+}
+
+.scenario strong {
+    display: block;
+
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.scenario p {
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   PERGUNTA
+========================================================== */
+
+.question-area {
+    padding: 5px 0 20px;
+
+    text-align: center;
+}
+
+.question-label {
+    display: block;
+
+    color: var(--texto-secundario);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 9px;
+}
+
+.question-area h2 {
+    font-size: 20px;
+    line-height: 1.5;
+
+    font-weight: 700;
+
+    max-width: 750px;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================================
+   DICA
+========================================================== */
+
+.hint-area {
+    margin-bottom: 20px;
+}
+
+.hint-button {
+    border: 0;
+
+    background: var(--amarelo-claro);
+    color: var(--amarelo);
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.hint-button:hover {
+    transform: translateY(-1px);
+}
+
+.hint-text {
+    margin-top: 10px;
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    background: var(--amarelo-claro);
+
+    color: #92400E;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   RESPOSTA
+========================================================== */
+
+.answer-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.answer-form label {
+    color: var(--texto);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.answer-input-wrapper {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    background: var(--branco);
+
+    border: 2px solid var(--borda);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    transition: border-color 0.2s ease;
+}
+
+.answer-input-wrapper:focus-within {
+    border-color: var(--roxo);
+}
+
+.answer-input-wrapper span {
+    padding-left: 14px;
+
+    color: var(--texto-secundario);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.answer-input-wrapper input {
+    width: 100%;
+
+    border: 0;
+    outline: 0;
+
+    padding: 14px 12px;
+
+    color: var(--texto);
+
+    background: transparent;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.answer-input-wrapper input::placeholder {
+    color: #AAA5B3;
+
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+.answer-button,
+.next-button {
+    width: 100%;
+
+    border: 0;
+    border-radius: 12px;
+
+    padding: 14px 18px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.answer-button {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+.answer-button:hover {
+    background: var(--roxo-escuro);
+    transform: translateY(-1px);
+}
+
+.answer-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    transform: none;
+}
+
+.next-button {
+    margin-top: 14px;
+
+    background: var(--texto);
+    color: var(--branco);
+}
+
+.next-button:hover {
+    background: #292631;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================
+   FEEDBACK
+========================================================== */
+
+.feedback {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    border: 1px solid transparent;
+}
+
+.feedback-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+}
+
+.feedback strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+.feedback p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.feedback-success {
+    background: var(--verde-claro);
+    border-color: #BBF7D0;
+
+    color: #166534;
+}
+
+.feedback-success .feedback-icon {
+    background: var(--verde);
+    color: var(--branco);
+}
+
+.feedback-error {
+    background: var(--vermelho-claro);
+    border-color: #FECACA;
+
+    color: #991B1B;
+}
+
+.feedback-error .feedback-icon {
+    background: var(--vermelho);
+    color: var(--branco);
+}
+
+
+/* ==========================================================
+   CARDS DE DICAS
+========================================================== */
+
+.game-tips {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.tip-card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    background: var(--branco);
+
+    border: 1px solid var(--borda);
+
+    border-radius: 13px;
+
+    padding: 13px;
+}
+
+.tip-icon {
+    font-size: 20px;
+}
+
+.tip-card strong {
+    display: block;
+
+    font-size: 12px;
+
+    margin-bottom: 3px;
+}
+
+.tip-card p {
+    color: var(--texto-secundario);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   UTILITÁRIO
+========================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (min-width: 600px) {
+
+    .game-header {
+        padding: 16px 28px;
+    }
+
+    .player-info {
+        display: block;
+
+        text-align: right;
+
+        font-size: 12px;
+    }
+
+    .player-info span {
+        color: var(--texto-secundario);
+    }
+
+    .player-info strong {
+        display: block;
+
+        color: var(--texto);
+
+        font-size: 13px;
+    }
+
+    .game-container {
+        padding: 30px 24px 50px;
+    }
+
+    .game-status {
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 12px;
+    }
+
+    .game-card {
+        padding: 30px;
+    }
+
+    .game-card-header h1 {
+        font-size: 27px;
+    }
+
+    .question-area h2 {
+        font-size: 24px;
+    }
+
+    .game-tips {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+
+/* ==========================================================
+   DESKTOP
+========================================================== */
+
+@media (min-width: 900px) {
+
+    .game-header {
+        min-height: 78px;
+
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .game-container {
+        padding-top: 40px;
+    }
+
+    .status-card {
+        padding: 16px;
+    }
+
+    .status-card strong {
+        font-size: 23px;
+    }
+
+    .game-card {
+        padding: 38px 50px;
+    }
+
+    .game-card-header {
+        margin-bottom: 28px;
+    }
+
+    .game-card-header h1 {
+        font-size: 30px;
+    }
+
+    .question-area {
+        padding-top: 15px;
+        padding-bottom: 28px;
+    }
+
+    .question-area h2 {
+        font-size: 26px;
+    }
+
+    .answer-form {
+        max-width: 650px;
+
+        margin: 0 auto;
+    }
+
+    .answer-button {
+        margin-top: 5px;
+    }
+}
+
+
+/* ==========================================================
+   DESKTOP GRANDE
+========================================================== */
+
+@media (min-width: 1200px) {
+
+    .game-container {
+        max-width: 1150px;
+    }
+
+    .game-card {
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+}
