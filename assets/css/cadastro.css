@@ -1,0 +1,541 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --roxo: #7C3AED;
+    --roxo-escuro: #5B21B6;
+    --roxo-claro: #EDE9FE;
+
+    --fundo: #F8F7FC;
+    --branco: #FFFFFF;
+
+    --preto: #17151C;
+    --cinza-escuro: #292631;
+    --cinza: #6B6675;
+    --cinza-claro: #E5E1EA;
+
+    --verde: #16A34A;
+    --vermelho: #DC2626;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--fundo);
+    color: var(--preto);
+}
+
+.cadastro-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cadastro-card {
+    width: 100%;
+    padding: 28px 20px;
+    background: var(--branco);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--roxo);
+    color: var(--branco);
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.logo-area h1 {
+    font-size: 25px;
+    line-height: 1;
+}
+
+.logo-area h1 span {
+    color: var(--roxo);
+}
+
+.logo-area p {
+    margin-top: 5px;
+
+    color: var(--cinza);
+    font-size: 12px;
+}
+
+.form-header {
+    margin-bottom: 25px;
+}
+
+.form-header h2 {
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+.form-header p {
+    color: var(--cinza);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.mensagem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 13px;
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.mensagem span {
+    font-weight: bold;
+}
+
+.mensagem p {
+    flex: 1;
+}
+
+.mensagem-erro {
+    color: var(--vermelho);
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+
+.mensagem-sucesso {
+    color: var(--verde);
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+}
+
+.campo {
+    margin-bottom: 19px;
+}
+
+.campo > label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--cinza-escuro);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="password"] {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+
+    outline: none;
+
+    background: var(--branco);
+
+    color: var(--preto);
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.campo input:focus {
+    border-color: var(--roxo);
+
+    box-shadow: 0 0 0 3px var(--roxo-claro);
+}
+
+.campo input::placeholder {
+    color: #AAA6B2;
+}
+
+.tipo-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.tipo-option {
+    cursor: pointer;
+}
+
+.tipo-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tipo-card {
+    min-height: 78px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px;
+
+    border: 1px solid var(--cinza-claro);
+    border-radius: 11px;
+
+    background: var(--branco);
+
+    transition: 0.2s;
+}
+
+.tipo-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--roxo-claro);
+
+    font-size: 19px;
+}
+
+.tipo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.tipo-texto strong {
+    font-size: 13px;
+}
+
+.tipo-texto small {
+    color: var(--cinza);
+    font-size: 11px;
+}
+
+.tipo-option input:checked + .tipo-card {
+    border-color: var(--roxo);
+    background: #FAF8FF;
+    box-shadow: 0 0 0 2px var(--roxo-claro);
+}
+
+.senha-container {
+    position: relative;
+}
+
+.senha-container input {
+    padding-right: 48px !important;
+}
+
+.mostrar-senha {
+    position: absolute;
+
+    right: 8px;
+    top: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    transform: translateY(-50%);
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.mostrar-senha:hover {
+    background: var(--roxo-claro);
+}
+
+.senha-forca {
+    margin-top: 7px;
+}
+
+.forca-barra {
+    width: 100%;
+    height: 4px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: var(--cinza-claro);
+}
+
+.forca-barra span {
+    display: block;
+
+    width: 0;
+    height: 100%;
+
+    border-radius: 10px;
+
+    transition: width 0.3s;
+}
+
+#forcaTexto {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--cinza);
+    font-size: 11px;
+}
+
+.erro-campo {
+    display: block;
+
+    min-height: 14px;
+
+    margin-top: 5px;
+
+    color: var(--vermelho);
+
+    font-size: 11px;
+}
+
+.btn-cadastrar {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: var(--roxo);
+
+    color: var(--branco);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-cadastrar:hover {
+    background: var(--roxo-escuro);
+    transform: translateY(-1px);
+}
+
+.btn-cadastrar:active {
+    transform: translateY(0);
+}
+
+.btn-seta {
+    font-size: 20px;
+}
+
+.login-link {
+    margin-top: 23px;
+
+    text-align: center;
+
+    font-size: 13px;
+    color: var(--cinza);
+}
+
+.login-link a {
+    color: var(--roxo);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* LADO DIREITO */
+
+.cadastro-lateral {
+    display: none;
+}
+
+
+/* TABLET */
+
+@media (min-width: 700px) {
+
+    .cadastro-card {
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 45px 50px;
+    }
+
+    .logo-area {
+        margin-bottom: 45px;
+    }
+
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 1000px) {
+
+    .cadastro-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cadastro-card {
+        width: 100%;
+        max-width: 600px;
+
+        justify-self: center;
+
+        padding: 55px 70px;
+    }
+
+    .cadastro-lateral {
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+
+        padding: 70px;
+
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                #8B5CF6 0,
+                transparent 30%
+            ),
+            var(--roxo-escuro);
+
+        color: var(--branco);
+    }
+
+    .lateral-content {
+        max-width: 500px;
+    }
+
+    .lateral-badge {
+        display: inline-block;
+
+        padding: 8px 13px;
+        margin-bottom: 25px;
+
+        border-radius: 30px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .lateral-content h2 {
+        margin-bottom: 17px;
+
+        font-size: 42px;
+        line-height: 1.1;
+    }
+
+    .lateral-content > p {
+        max-width: 430px;
+
+        color: #E9E2FF;
+
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .beneficios {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        margin-top: 40px;
+    }
+
+    .beneficio {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .beneficio > span {
+        width: 45px;
+        height: 45px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        font-size: 21px;
+    }
+
+    .beneficio div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .beneficio strong {
+        font-size: 14px;
+    }
+
+    .beneficio small {
+        color: #DDD4FF;
+        font-size: 12px;
+    }
+
+}
+
+
+/* DESKTOP GRANDE */
+
+@media (min-width: 1300px) {
+
+    .cadastro-card {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .cadastro-lateral {
+        padding-left: 100px;
+    }
+
+}

@@ -10,8 +10,6 @@
  * os marcadores pelos dados do seu banco local antes de testar.
  */
 
-<?php
-
 $host = "__DB_HOST__";
 $dbname = "__DB_NAME__";
 $user = "__DB_USER__";

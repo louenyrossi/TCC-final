@@ -162,3 +162,224 @@ INSERT INTO partidas
 VALUES
 (1, 1, 3, 1, 30),
 (1, 2, 5, 2, 50);
+
+USE b14_42774124_tcc_final;
+
+-- =========================================================
+-- 1. CRIAR TABELA DE TURMAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS turmas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(10) NOT NULL,
+    ano_serie INT NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+-- =========================================================
+-- 2. CADASTRAR AS 8 TURMAS
+-- =========================================================
+
+INSERT INTO turmas (nome, ano_serie) VALUES
+('6º A', 6),
+('6º B', 6),
+('7º A', 7),
+('7º B', 7),
+('8º A', 8),
+('8º B', 8),
+('9º A', 9),
+('9º B', 9);
+
+
+-- =========================================================
+-- 3. ADICIONAR TURMA AO USUÁRIO
+-- =========================================================
+
+ALTER TABLE usuarios
+ADD COLUMN turma_id INT NULL,
+ADD CONSTRAINT fk_usuario_turma
+FOREIGN KEY (turma_id) REFERENCES turmas(id);
+
+
+-- =========================================================
+-- 4. CRIAR RELAÇÃO PROFESSOR ↔ TURMAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS professor_turmas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    professor_id INT NOT NULL,
+    turma_id INT NOT NULL,
+
+    FOREIGN KEY (professor_id) REFERENCES usuarios(id),
+    FOREIGN KEY (turma_id) REFERENCES turmas(id),
+
+    UNIQUE (professor_id, turma_id)
+);
+
+
+-- =========================================================
+-- 5. ADICIONAR ANO/SÉRIE ÀS PERGUNTAS
+-- =========================================================
+
+ALTER TABLE perguntas
+ADD COLUMN ano_serie INT NOT NULL DEFAULT 6
+AFTER jogo_id;
+
+
+-- =========================================================
+-- 6. ADICIONAR CONTEÚDO/TEMA ESPECÍFICO À PERGUNTA
+-- =========================================================
+
+ALTER TABLE perguntas
+ADD COLUMN conteudo VARCHAR(100) NULL
+AFTER enunciado;
+
+
+-- =========================================================
+-- 7. ADICIONAR DIFICULDADE AO PROGRESSO
+-- =========================================================
+
+ALTER TABLE progresso
+ADD COLUMN dificuldade ENUM('facil', 'medio', 'dificil')
+NOT NULL DEFAULT 'facil'
+AFTER jogo_id;
+
+
+-- =========================================================
+-- 8. ALTERAR A REGRA DE PROGRESSO
+-- =========================================================
+-- O progresso agora será separado por:
+-- usuário + jogo + dificuldade
+--
+-- Primeiro removemos a restrição antiga.
+-- Depois criamos a nova.
+
+
+ALTER TABLE progresso
+DROP INDEX usuario_id;
+
+ALTER TABLE progresso
+ADD UNIQUE (usuario_id, jogo_id, dificuldade);
+
+
+-- =========================================================
+-- 9. CRIAR HISTÓRICO DETALHADO DAS RESPOSTAS
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS respostas_partida (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    partida_id INT NOT NULL,
+    pergunta_id INT NOT NULL,
+
+    resposta_dada VARCHAR(255) NOT NULL,
+    correta BOOLEAN NOT NULL DEFAULT FALSE,
+    pontuacao_obtida INT NOT NULL DEFAULT 0,
+
+    data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (partida_id)
+        REFERENCES partidas(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (pergunta_id)
+        REFERENCES perguntas(id)
+        ON DELETE CASCADE
+);
+
+
+-- =========================================================
+-- 10. ATUALIZAR AS PERGUNTAS EXISTENTES
+-- =========================================================
+-- As perguntas que você já possui ficarão inicialmente
+-- associadas ao 6º ano.
+--
+-- Aqui também adicionamos os conteúdos correspondentes.
+
+
+UPDATE perguntas
+SET ano_serie = 6
+WHERE jogo_id = 1
+AND id IN (1, 2);
+
+
+UPDATE perguntas
+SET ano_serie = 7
+WHERE jogo_id = 1
+AND id IN (3);
+
+
+UPDATE perguntas
+SET ano_serie = 8
+WHERE jogo_id = 1
+AND id IN (4);
+
+
+UPDATE perguntas
+SET ano_serie = 9
+WHERE jogo_id = 1
+AND id IN (5);
+
+
+UPDATE perguntas
+SET conteudo = 'Matemática Financeira'
+WHERE jogo_id = 1;
+
+
+UPDATE perguntas
+SET conteudo = 'Operações Matemáticas'
+WHERE jogo_id = 2;
+
+
+-- =========================================================
+-- 11. CADASTRAR O ALUNO DE TESTE NA TURMA 6º A
+-- =========================================================
+
+UPDATE usuarios
+SET turma_id = (
+    SELECT id
+    FROM turmas
+    WHERE nome = '6º A'
+    LIMIT 1
+)
+WHERE email = 'aluno@mathplay.com';
+
+
+-- =========================================================
+-- 12. VINCULAR O PROFESSOR DE TESTE ÀS TURMAS
+-- =========================================================
+-- Professor Teste ficará responsável pelas 8 turmas
+-- para facilitar os testes do TCC.
+
+
+INSERT IGNORE INTO professor_turmas (professor_id, turma_id)
+SELECT
+    u.id,
+    t.id
+FROM usuarios u
+CROSS JOIN turmas t
+WHERE u.email = 'professor@mathplay.com'
+AND u.tipo = 'professor';
+
+
+-- =========================================================
+-- 13. GARANTIR PROGRESSO DO ALUNO NOS JOGOS
+-- =========================================================
+
+INSERT IGNORE INTO progresso
+(usuario_id, jogo_id, dificuldade, status, porcentagem)
+SELECT
+    u.id,
+    j.id,
+    'facil',
+    'disponivel',
+    0
+FROM usuarios u
+CROSS JOIN jogos j
+WHERE u.email = 'aluno@mathplay.com';
+
+
+-- =========================================================
+-- FIM DAS MODIFICAÇÕES
+-- =========================================================
