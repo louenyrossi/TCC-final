@@ -1,3 +1,4 @@
+
 <?php
 
 require_once '../includes/auth.php';
@@ -204,11 +205,15 @@ $porcentagemXp = min(
         <div class="sidebar-header">
 
             <a href="dashboard.php" class="logo">
-                <span class="logo-icon">M</span>
+
+                <span class="logo-icon">
+                    M
+                </span>
 
                 <span class="logo-text">
                     Math<span>Play</span>
                 </span>
+
             </a>
 
             <button
@@ -279,11 +284,13 @@ $porcentagemXp = min(
             <div class="sidebar-user">
 
                 <div class="user-avatar">
+
                     <?= htmlspecialchars(
                         strtoupper(
                             mb_substr($aluno['nome'], 0, 1)
                         )
                     ) ?>
+
                 </div>
 
                 <div class="user-info">
@@ -333,7 +340,9 @@ $porcentagemXp = min(
 
             <div class="topbar-title">
 
-                <span>Área do aluno</span>
+                <span>
+                    Área do aluno
+                </span>
 
             </div>
 
@@ -344,11 +353,13 @@ $porcentagemXp = min(
             >
 
                 <div class="topbar-avatar">
+
                     <?= htmlspecialchars(
                         strtoupper(
                             mb_substr($aluno['nome'], 0, 1)
                         )
                     ) ?>
+
                 </div>
 
             </a>
@@ -559,7 +570,10 @@ $porcentagemXp = min(
 
                     </div>
 
-                    <a href="jogos.php" class="see-all">
+                    <a
+                        href="jogos.php"
+                        class="see-all"
+                    >
                         Ver todos →
                     </a>
 
@@ -671,12 +685,38 @@ $porcentagemXp = min(
 
                                 </div>
 
-                                <a
-                                    href="../jogos/"
-                                    class="game-button"
-                                >
-                                    Jogar
-                                </a>
+                                <!-- =================================================
+                                     BOTÃO DO JOGO
+                                ================================================== -->
+
+                                <?php if ($nomeJogo === 'Caixa Matemático'): ?>
+
+                                    <a
+                                        href="../jogos/caixa-matematico/index.php"
+                                        class="game-button"
+                                    >
+                                        Jogar
+                                    </a>
+
+                                <?php elseif ($nomeJogo === 'Memória Matemática'): ?>
+
+                                    <a
+                                        href="../jogos/memoria-matematica/index.php"
+                                        class="game-button"
+                                    >
+                                        Jogar
+                                    </a>
+
+                                <?php else: ?>
+
+                                    <a
+                                        href="jogos.php"
+                                        class="game-button"
+                                    >
+                                        Ver jogo
+                                    </a>
+
+                                <?php endif; ?>
 
                             </article>
 
@@ -809,3 +849,4 @@ $porcentagemXp = min(
 </body>
 
 </html>
+
