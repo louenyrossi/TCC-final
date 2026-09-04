@@ -1,0 +1,538 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --roxo: #7C3AED;
+    --roxo-escuro: #5B21B6;
+    --roxo-claro: #EDE9FE;
+
+    --fundo: #F8F7FC;
+    --branco: #FFFFFF;
+
+    --preto: #17151C;
+    --cinza-escuro: #292631;
+    --cinza: #6B6675;
+    --cinza-claro: #E5E1EA;
+
+    --vermelho: #DC2626;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--fundo);
+
+    color: var(--preto);
+}
+
+.login-container {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+   CARD DE LOGIN
+========================================= */
+
+.login-card {
+    width: 100%;
+
+    padding: 28px 20px;
+
+    background: var(--branco);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 48px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--roxo);
+
+    color: var(--branco);
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.logo-area h1 {
+    font-size: 25px;
+    line-height: 1;
+}
+
+.logo-area h1 span {
+    color: var(--roxo);
+}
+
+.logo-area p {
+    margin-top: 5px;
+
+    color: var(--cinza);
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.form-header {
+    margin-bottom: 26px;
+}
+
+.form-header h2 {
+    margin-bottom: 8px;
+
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+.form-header p {
+    color: var(--cinza);
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   MENSAGEM
+========================================= */
+
+.mensagem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 13px;
+
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.mensagem span {
+    font-weight: bold;
+}
+
+.mensagem p {
+    flex: 1;
+}
+
+.mensagem-erro {
+    color: var(--vermelho);
+
+    background: #FEF2F2;
+
+    border: 1px solid #FECACA;
+}
+
+
+/* =========================================
+   CAMPOS
+========================================= */
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo > label,
+.senha-label label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--cinza-escuro);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.campo input[type="email"],
+.campo input[type="password"],
+.campo input[type="text"] {
+    width: 100%;
+    height: 49px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--cinza-claro);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: var(--branco);
+
+    color: var(--preto);
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.campo input:focus {
+    border-color: var(--roxo);
+
+    box-shadow: 0 0 0 3px var(--roxo-claro);
+}
+
+.campo input::placeholder {
+    color: #AAA6B2;
+}
+
+
+/* =========================================
+   SENHA
+========================================= */
+
+.senha-container {
+    position: relative;
+}
+
+.senha-container input {
+    padding-right: 50px !important;
+}
+
+.mostrar-senha {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    width: 36px;
+    height: 36px;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.mostrar-senha:hover {
+    background: var(--roxo-claro);
+}
+
+
+/* =========================================
+   ERROS DOS CAMPOS
+========================================= */
+
+.erro-campo {
+    display: block;
+
+    min-height: 14px;
+
+    margin-top: 5px;
+
+    color: var(--vermelho);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   BOTÃO
+========================================= */
+
+.btn-entrar {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: var(--roxo);
+
+    color: var(--branco);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-entrar:hover {
+    background: var(--roxo-escuro);
+
+    transform: translateY(-1px);
+}
+
+.btn-entrar:active {
+    transform: translateY(0);
+}
+
+.btn-entrar:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.btn-seta {
+    font-size: 20px;
+}
+
+
+/* =========================================
+   LINK CADASTRO
+========================================= */
+
+.cadastro-link {
+    margin-top: 25px;
+
+    text-align: center;
+
+    color: var(--cinza);
+
+    font-size: 13px;
+}
+
+.cadastro-link a {
+    color: var(--roxo);
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.cadastro-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.login-footer {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+
+    margin-top: 45px;
+
+    color: #AAA6B2;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   LADO DIREITO
+========================================= */
+
+.login-lateral {
+    display: none;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (min-width: 700px) {
+
+    .login-card {
+        max-width: 560px;
+
+        margin: 0 auto;
+
+        padding: 50px;
+    }
+
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media (min-width: 1000px) {
+
+    .login-container {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 600px;
+
+        justify-self: center;
+
+        padding: 65px 80px;
+    }
+
+
+    .login-lateral {
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+
+        padding: 70px;
+
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                #8B5CF6 0,
+                transparent 30%
+            ),
+            var(--roxo-escuro);
+
+        color: var(--branco);
+    }
+
+    .lateral-content {
+        max-width: 500px;
+    }
+
+    .lateral-badge {
+        display: inline-block;
+
+        padding: 8px 14px;
+
+        margin-bottom: 25px;
+
+        border-radius: 30px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .lateral-content h2 {
+        max-width: 480px;
+
+        margin-bottom: 18px;
+
+        font-size: 48px;
+
+        line-height: 1.05;
+    }
+
+    .lateral-content > p {
+        max-width: 430px;
+
+        color: #E9E2FF;
+
+        font-size: 16px;
+
+        line-height: 1.6;
+    }
+
+
+    /* ESTATÍSTICAS */
+
+    .estatisticas {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        margin-top: 42px;
+    }
+
+    .estatistica {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .estatistica-icon {
+        width: 46px;
+        height: 46px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        font-size: 20px;
+    }
+
+    .estatistica div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .estatistica strong {
+        font-size: 14px;
+    }
+
+    .estatistica small {
+        color: #DDD4FF;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================
+   DESKTOP GRANDE
+========================================= */
+
+@media (min-width: 1300px) {
+
+    .login-card {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .login-lateral {
+        padding-left: 100px;
+    }
+
+}
