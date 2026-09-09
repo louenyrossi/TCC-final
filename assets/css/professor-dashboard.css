@@ -1,0 +1,504 @@
+/* =========================================================
+   MATHPLAY - DASHBOARD PROFESSOR / ADMIN
+   ========================================================= */
+
+:root {
+    --roxo: #7C3AED;
+    --roxo-escuro: #5B21B6;
+    --roxo-claro: #EDE9FE;
+
+    --fundo: #F8F7FC;
+    --branco: #FFFFFF;
+
+    --texto: #292631;
+    --texto-secundario: #6B6675;
+    --borda: #E7E3EF;
+
+    --verde: #16A34A;
+    --vermelho: #DC2626;
+
+    --sombra: 0 4px 18px rgba(41, 38, 49, 0.06);
+    --raio: 16px;
+}
+
+
+/* =========================================================
+   RESET LOCAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+.conteudo-principal {
+    width: 100%;
+    min-width: 0;
+    padding: 24px 18px 40px;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.cabecalho-pagina {
+    margin-bottom: 28px;
+}
+
+.saudacao {
+    margin: 0 0 6px;
+    color: var(--roxo);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cabecalho-pagina h1 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--texto);
+}
+
+.cabecalho-pagina p:last-child {
+    margin: 8px 0 0;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CARDS DE ESTATÍSTICAS
+   ========================================================= */
+
+.cards-estatisticas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.card-estatistica {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--sombra);
+}
+
+.card-estatistica .icone {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--roxo-claro);
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+.card-estatistica .titulo {
+    display: block;
+    margin-bottom: 4px;
+
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.card-estatistica strong {
+    display: block;
+    color: var(--texto);
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
+
+.secao {
+    margin-bottom: 32px;
+}
+
+.titulo-secao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.titulo-secao h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--texto);
+}
+
+.titulo-secao p {
+    margin: 5px 0 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.titulo-secao > a {
+    color: var(--roxo);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.titulo-secao > a:hover {
+    color: var(--roxo-escuro);
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   ATALHOS
+   ========================================================= */
+
+.atalhos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.atalho {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    min-height: 140px;
+
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    color: var(--texto);
+    text-decoration: none;
+
+    box-shadow: var(--sombra);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.atalho:hover {
+    transform: translateY(-2px);
+    border-color: var(--roxo);
+    box-shadow: 0 7px 22px rgba(41, 38, 49, 0.09);
+}
+
+.atalho > span {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    background: var(--roxo-claro);
+    border-radius: 12px;
+
+    font-size: 21px;
+}
+
+.atalho strong {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.atalho small {
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LISTA DE TURMAS
+   ========================================================= */
+
+.lista-turmas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.card-turma {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 18px;
+
+    box-shadow: var(--sombra);
+}
+
+.card-turma .serie {
+    display: inline-block;
+
+    margin-bottom: 6px;
+    padding: 4px 9px;
+
+    background: var(--roxo-claro);
+    color: var(--roxo-escuro);
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.card-turma h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.quantidade-alunos {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+
+    margin: 16px 0;
+
+    color: var(--texto-secundario);
+}
+
+.quantidade-alunos strong {
+    color: var(--texto);
+    font-size: 22px;
+}
+
+.quantidade-alunos span {
+    font-size: 13px;
+}
+
+.botao-secundario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 8px 14px;
+
+    border: 1px solid var(--roxo);
+    border-radius: 9px;
+
+    background: var(--branco);
+    color: var(--roxo);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.botao-secundario:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.estado-vazio {
+    padding: 35px 20px;
+
+    background: var(--branco);
+    border: 1px dashed var(--borda);
+    border-radius: var(--raio);
+
+    text-align: center;
+}
+
+.estado-vazio > span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 32px;
+}
+
+.estado-vazio h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+}
+
+.estado-vazio p {
+    margin: 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABELA
+   ========================================================= */
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    box-shadow: var(--sombra);
+}
+
+.tabela-container table {
+    width: 100%;
+    min-width: 650px;
+
+    border-collapse: collapse;
+}
+
+.tabela-container th,
+.tabela-container td {
+    padding: 14px 16px;
+
+    border-bottom: 1px solid var(--borda);
+
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabela-container th {
+    background: #FAF9FC;
+
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tabela-container td {
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.tabela-container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-container tbody tr:hover {
+    background: #FCFBFE;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 600px) {
+
+    .conteudo-principal {
+        padding: 30px 26px 50px;
+    }
+
+    .cards-estatisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .atalhos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lista-turmas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .titulo-secao {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+    .conteudo-principal {
+        padding: 36px 40px 60px;
+    }
+
+    .cabecalho-pagina h1 {
+        font-size: 32px;
+    }
+
+    .cards-estatisticas {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .atalhos {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .lista-turmas {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card-turma {
+        padding: 20px;
+    }
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+.atalho:focus-visible,
+.botao-secundario:focus-visible,
+.titulo-secao a:focus-visible {
+    outline: 3px solid var(--roxo-claro);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .atalho,
+    .botao-secundario {
+        transition: none;
+    }
+}
