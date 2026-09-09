@@ -115,92 +115,138 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let expressao = String(enunciado)
                 .replace(/Calcule:\s*/gi, '')
-                .replace(/\?/g, '')
                 .replace(/=/g, '')
                 .trim();
 
 
             /*
-             * OPERADORES MATEMÁTICOS
+             * ÂNGULOS
              */
 
-            expressao = expressao
-                .replace(/×/g, '*')
-                .replace(/x/gi, '*')
-                .replace(/÷/g, '/');
+            const angulo = expressao.match(/(\d+(?:[.,]\d+)?)\s*°/);
 
+        if (angulo) {
 
-            /*
-             * RAIZ QUADRADA
-             *
-             * √49 → Math.sqrt(49)
-             */
-
-            expressao = expressao.replace(
-                /√\s*(\d+(?:\.\d+)?)/g,
-                'Math.sqrt($1)'
+            const valor = Number(
+                angulo[1].replace(',', '.')
             );
 
-
-            /*
-             * POTÊNCIAS
-             *
-             * 3² → 3**2
-             * 2³ → 2**3
-             * 4⁴ → 4**4
-             */
-
-            expressao = expressao
-                .replace(/²/g, '**2')
-                .replace(/³/g, '**3')
-                .replace(/⁴/g, '**4')
-                .replace(/⁵/g, '**5');
-
-
-            /*
-             * REMOVE ESPAÇOS
-             */
-
-            expressao = expressao.replace(/\s+/g, '');
-
-
-            /*
-             * VERIFICAÇÃO DE SEGURANÇA
-             */
-
-            if (!/^[0-9+\-*/().a-zA-Z]+$/.test(expressao)) {
-                return null;
+            if (valor === 90) {
+                return 'Reto';
             }
 
-
-            /*
-             * CALCULA A EXPRESSÃO
-             */
-
-            const resultado = Function(
-                `"use strict"; return (${expressao})`
-            )();
-
-
-            /*
-             * CONFIRMA SE O RESULTADO É VÁLIDO
-             */
-
-            if (!Number.isFinite(resultado)) {
-                return null;
+            if (valor > 90 && valor < 180) {
+                return 'Obtuso';
             }
 
-            return resultado;
+            if (valor > 0 && valor < 90) {
+                return 'Agudo';
+            }
 
-        } catch (erro) {
+            if (valor === 180) {
+                return 'Raso';
+            }
+        }
 
-            console.error(
-                'Erro ao calcular expressão:',
-                enunciado,
-                erro
+        /* =========================
+           PORCENTAGEM
+           Exemplo:
+           10% de 50 → 5
+        ========================= */
+
+        const porcentagem = expressao.match(
+            /(\d+(?:[.,]\d+)?)\s*%\s*de\s*(\d+(?:[.,]\d+)?)/i
+        );
+
+        if (porcentagem) {
+
+            const percentual = Number(
+                porcentagem[1].replace(',', '.')
             );
 
+            const valor = Number(
+                porcentagem[2].replace(',', '.')
+            );
+
+            return (percentual / 100) * valor;
+        }
+
+        /* =========================
+           OPERAÇÕES
+        ========================= */
+
+        expressao = expressao
+            .replace(/×/g, '*')
+            .replace(/x/gi, '*')
+            .replace(/÷/g, '/');
+
+        /* =========================
+           POTÊNCIAS
+        ========================= */
+
+        expressao = expressao
+            .replace(/²/g, '**2')
+            .replace(/³/g, '**3')
+            .replace(/⁴/g, '**4')
+            .replace(/⁵/g, '**5');
+
+        /* =========================
+           VÍRGULA DECIMAL
+           7,5 → 7.5
+        ========================= */
+
+        expressao = expressao.replace(
+            /(\d),(\d)/g,
+            '$1.$2'
+        );
+
+        /* =========================
+           FRAÇÕES E OPERAÇÕES
+        ========================= */
+
+        expressao = expressao.replace(/\s+/g, '');
+
+        /* =========================
+           SEGURANÇA
+        ========================= */
+
+        if (!/^[0-9+\-*/().]+$/.test(expressao)) {
             return null;
+        }
+
+        /* =========================
+           CALCULAR
+        ========================= */
+
+        const resultado = Function(
+            `"use strict"; return (${expressao})`
+        )();
+
+        if (!Number.isFinite(resultado)) {
+            return null;
+        }
+
+        /* =========================
+           FORMATAÇÃO
+        ========================= */
+
+        if (Number.isInteger(resultado)) {
+            return resultado;
+        }
+
+        return Number(
+            resultado.toFixed(2)
+        );
+
+    } catch (erro) {
+
+        console.error(
+            'Erro ao calcular expressão:',
+            enunciado,
+            erro
+        );
+
+        return null;
         }
     }
 
