@@ -61,22 +61,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dados.perguntas.forEach((pergunta) => {
 
-            const enunciado = String(pergunta.enunciado || '').trim();
-
-            const resultado = calcularResultado(enunciado);
+            /*
+             * CARTA DA EXPRESSÃO
+             */
 
             cartasGeradas.push({
-                perguntaId: Number(pergunta.id),
+                perguntaId: pergunta.id,
                 tipo: 'operacao',
-                valor: formatarExpressao(enunciado)
+                valor: pergunta.enunciado,
+                par: pergunta.resposta_correta || null
             });
 
+
+            /*
+             * CARTA DO RESULTADO
+             */
+
+            const resultado = calcularResultado(pergunta.enunciado);
+
             cartasGeradas.push({
-                perguntaId: Number(pergunta.id),
+                perguntaId: pergunta.id,
                 tipo: 'resultado',
+
+                /*
+                 * Primeiro tenta calcular o resultado.
+                 *
+                 * Se não conseguir, usa a resposta correta
+                 * que veio do banco de dados.
+                 *
+                 * Assim nunca aparece "?" como resposta.
+                 */
+
                 valor: resultado !== null
-                    ? formatarNumero(resultado)
-                    : 'Erro'
+                    ? String(resultado)
+                    : String(pergunta.resposta_correta || 'Erro'),
+
+                par: pergunta.enunciado
             });
 
         });
@@ -91,104 +111,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calcularResultado(enunciado) {
 
-        if (!enunciado) {
-            return null;
-        }
-
         try {
 
             let expressao = String(enunciado)
-                .trim()
-                .replace(/,/g, '.')
+                .replace(/Calcule:\s*/gi, '')
+                .replace(/\?/g, '')
+                .replace(/=/g, '')
+                .trim();
+
+
+            /*
+             * OPERADORES MATEMÁTICOS
+             */
+
+            expressao = expressao
                 .replace(/×/g, '*')
                 .replace(/x/gi, '*')
                 .replace(/÷/g, '/');
 
-            /*
-             * Remove espaços desnecessários.
-             */
-            expressao = expressao.replace(/\s+/g, '');
-
 
             /*
-             * =========================
              * RAIZ QUADRADA
-             * =========================
              *
-             * Exemplo:
-             * √49 + 3
-             *
-             * vira:
-             * sqrt(49) + 3
+             * √49 → Math.sqrt(49)
              */
 
             expressao = expressao.replace(
-                /√(\d+(?:\.\d+)?)/g,
+                /√\s*(\d+(?:\.\d+)?)/g,
                 'Math.sqrt($1)'
             );
 
 
             /*
-             * =========================
              * POTÊNCIAS
-             * =========================
              *
-             * 3² -> 3**2
-             * 2³ -> 2**3
-             * 4⁴ -> 4**4
+             * 3² → 3**2
+             * 2³ → 2**3
+             * 4⁴ → 4**4
              */
 
             expressao = expressao
-                .replace(/⁰/g, '0')
-                .replace(/¹/g, '1')
-                .replace(/²/g, '2')
-                .replace(/³/g, '3')
-                .replace(/⁴/g, '4')
-                .replace(/⁵/g, '5')
-                .replace(/⁶/g, '6')
-                .replace(/⁷/g, '7')
-                .replace(/⁸/g, '8')
-                .replace(/⁹/g, '9');
+                .replace(/²/g, '**2')
+                .replace(/³/g, '**3')
+                .replace(/⁴/g, '**4')
+                .replace(/⁵/g, '**5');
 
 
             /*
-             * Converte:
-             *
-             * 3²
-             * 5²
-             * 2³
-             *
-             * para:
-             *
-             * 3**2
-             * 5**2
-             * 2**3
+             * REMOVE ESPAÇOS
              */
 
-            expressao = expressao.replace(
-                /(\d+(?:\.\d+)?)\s*([0-9]+)/g,
-                (match, base, expoente) => {
-                    return `${base}**${expoente}`;
-                }
-            );
+            expressao = expressao.replace(/\s+/g, '');
 
 
             /*
-             * Verifica se ainda existe algum
-             * caractere que não pertence à expressão.
+             * VERIFICAÇÃO DE SEGURANÇA
              */
 
-            if (
-                !/^[0-9+\-*/().\s]+$/.test(
-                    expressao.replace(/Math\.sqrt/g, '')
-                )
-            ) {
+            if (!/^[0-9+\-*/().a-zA-Z]+$/.test(expressao)) {
                 return null;
             }
 
 
             /*
-             * Avalia a expressão matemática.
+             * CALCULA A EXPRESSÃO
              */
 
             const resultado = Function(
@@ -196,17 +182,20 @@ document.addEventListener('DOMContentLoaded', () => {
             )();
 
 
+            /*
+             * CONFIRMA SE O RESULTADO É VÁLIDO
+             */
+
             if (!Number.isFinite(resultado)) {
                 return null;
             }
-
 
             return resultado;
 
         } catch (erro) {
 
             console.error(
-                'Erro ao calcular:',
+                'Erro ao calcular expressão:',
                 enunciado,
                 erro
             );
@@ -222,116 +211,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function formatarExpressao(expressao) {
 
-        let texto = String(expressao || '').trim();
-
-        /*
-         * Remove "Calcule:" caso ainda exista
-         * em alguma pergunta antiga do banco.
-         */
-
-        texto = texto.replace(/^calcule\s*:\s*/i, '');
-
-        /*
-         * Converte ** para potência visual.
-         *
-         * Exemplo:
-         * 3**2 -> 3²
-         */
-
-        texto = texto.replace(
-            /(\d+)\*\*(\d+)/g,
-            (match, base, expoente) => {
-                return `${base}${converterExpoente(expoente)}`;
-            }
-        );
-
-        /*
-         * Converte ^ para potência visual.
-         *
-         * Exemplo:
-         * 2^3 -> 2³
-         */
-
-        texto = texto.replace(
-            /(\d+)\^(\d+)/g,
-            (match, base, expoente) => {
-                return `${base}${converterExpoente(expoente)}`;
-            }
-        );
-
-        /*
-         * Padroniza multiplicação e divisão.
-         */
-
-        texto = texto
-            .replace(/\*/g, ' × ')
-            .replace(/\//g, ' ÷ ');
-
-        /*
-         * Mantém a raiz quadrada.
-         */
-
-        texto = texto.replace(/\s+/g, ' ').trim();
-
-        return escapeHtml(texto);
-    }
-
-
-    /* =========================
-       CONVERTER EXPOENTE
-    ========================= */
-
-    function converterExpoente(numero) {
-
-        const mapa = {
-            '0': '⁰',
-            '1': '¹',
-            '2': '²',
-            '3': '³',
-            '4': '⁴',
-            '5': '⁵',
-            '6': '⁶',
-            '7': '⁷',
-            '8': '⁸',
-            '9': '⁹'
-        };
-
-        return String(numero)
-            .split('')
-            .map(numero => mapa[numero] || numero)
-            .join('');
-    }
-
-
-    /* =========================
-       FORMATAR NÚMERO
-    ========================= */
-
-    function formatarNumero(numero) {
-
-        if (!Number.isFinite(numero)) {
-            return 'Erro';
+        if (!expressao) {
+            return '';
         }
 
-        /*
-         * Se for inteiro:
-         *
-         * 24 -> 24
-         */
-
-        if (Number.isInteger(numero)) {
-            return String(numero);
-        }
-
-        /*
-         * Se houver decimal:
-         *
-         * 10.5 -> 10,5
-         */
-
-        return String(
-            Number(numero.toFixed(2))
-        ).replace('.', ',');
+        return String(expressao)
+            .replace(/Calcule:\s*/gi, '')
+            .replace(/\*\*2/g, '²')
+            .replace(/\*\*3/g, '³')
+            .replace(/\*\*4/g, '⁴')
+            .replace(/\*\*5/g, '⁵')
+            .replace(/\^2/g, '²')
+            .replace(/\^3/g, '³')
+            .replace(/\^4/g, '⁴')
+            .replace(/\^5/g, '⁵')
+            .replace(/\*/g, '×')
+            .replace(/\//g, '÷')
+            .trim();
     }
 
 
@@ -355,31 +251,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
             elemento.dataset.indice = indice;
 
+
+            /*
+             * A FRENTE mostra apenas o símbolo do jogo.
+             *
+             * Quando clicar, a carta vira e mostra
+             * o conteúdo que está em carta.valor.
+             */
+
+            let valorCarta = carta.valor;
+
+            if (carta.tipo === 'operacao') {
+                valorCarta = formatarExpressao(valorCarta);
+            }
+
+
             elemento.innerHTML = `
 
                 <div class="carta-conteudo">
 
                     <div class="carta-frente">
-                        ?
+                        🧠
                     </div>
 
                     <div class="carta-verso">
-                        ${carta.valor}
+                        ${escapeHtml(valorCarta)}
                     </div>
 
                 </div>
 
             `;
 
+
             elemento.addEventListener(
                 'click',
                 () => selecionarCarta(elemento, indice)
             );
 
+
             tabuleiro.appendChild(elemento);
 
         });
-
     }
 
 
@@ -401,7 +313,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+
+        /*
+         * VIRA A CARTA
+         */
+
         elemento.classList.add('virada');
+
+
+        /*
+         * PRIMEIRA CARTA
+         */
 
         if (!primeiraCarta) {
 
@@ -414,11 +336,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+
+        /*
+         * SEGUNDA CARTA
+         */
+
         segundaCarta = {
             elemento: elemento,
             indice: indice,
             dados: cartas[indice]
         };
+
 
         verificarPar();
     }
@@ -435,22 +363,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const primeira = primeiraCarta.dados;
         const segunda = segundaCarta.dados;
 
+
         /*
-         * O par é identificado pelo ID da pergunta.
-         *
-         * Isso permite ter, por exemplo:
-         *
-         * 7 + 5 = 12
-         * 4 × 3 = 12
-         *
-         * sem o jogo confundir os dois.
+         * O PAR PRECISA SER DA MESMA PERGUNTA
          */
 
         const mesmoId =
-            primeira.perguntaId === segunda.perguntaId;
+            Number(primeira.perguntaId) === Number(segunda.perguntaId);
+
+
+        /*
+         * Uma carta precisa ser operação
+         * e a outra precisa ser resultado.
+         */
 
         const tiposDiferentes =
             primeira.tipo !== segunda.tipo;
+
+
+        /*
+         * PAR CORRETO
+         */
 
         if (mesmoId && tiposDiferentes) {
 
@@ -458,33 +391,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
             paresEncontrados++;
 
+
             const pergunta = dados.perguntas.find(
                 item =>
-                    Number(item.id) ===
-                    Number(primeira.perguntaId)
+                    Number(item.id) === Number(primeira.perguntaId)
             );
+
 
             if (pergunta) {
+
                 pontuacao +=
                     Number(pergunta.pontuacao) || 10;
+
             }
 
-            primeiraCarta.elemento.classList.add(
-                'encontrada'
-            );
 
-            segundaCarta.elemento.classList.add(
-                'encontrada'
-            );
+            /*
+             * Marca as cartas como encontradas
+             */
+
+            primeiraCarta.elemento.classList.add('encontrada');
+
+            segundaCarta.elemento.classList.add('encontrada');
+
 
             atualizarStatus();
+
 
             mostrarFeedback(
                 'sucesso',
                 '🎉 Par correto! Muito bem!'
             );
 
+
             resetarSelecao();
+
+
+            /*
+             * VERIFICA SE TERMINOU
+             */
 
             if (
                 paresEncontrados ===
@@ -496,29 +441,43 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
 
                 bloqueado = false;
+
             }
 
             return;
         }
 
+
+        /*
+         * PAR ERRADO
+         */
+
         erros++;
 
         atualizarStatus();
+
 
         mostrarFeedback(
             'erro',
             '🤔 Esse não é o par. Tente memorizar as cartas!'
         );
 
+
+        /*
+         * Depois de 1 segundo,
+         * as cartas voltam a fechar.
+         */
+
         setTimeout(() => {
 
-            primeiraCarta.elemento.classList.remove(
-                'virada'
-            );
+            primeiraCarta.elemento
+                .classList
+                .remove('virada');
 
-            segundaCarta.elemento.classList.remove(
-                'virada'
-            );
+            segundaCarta.elemento
+                .classList
+                .remove('virada');
+
 
             resetarSelecao();
 
@@ -535,6 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetarSelecao() {
 
         primeiraCarta = null;
+
         segundaCarta = null;
     }
 
@@ -557,8 +517,10 @@ document.addEventListener('DOMContentLoaded', () => {
         errosEl.textContent =
             erros;
 
+
         const totalPares =
             dados.perguntas.length;
+
 
         const percentual =
             totalPares > 0
@@ -567,11 +529,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 )
                 : 0;
 
+
         progressoTexto.textContent =
             `${percentual}%`;
 
+
         barraProgresso.style.width =
             `${percentual}%`;
+
 
         atualizarDificuldade();
     }
@@ -585,6 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const total =
             dados.perguntas.length;
+
 
         if (
             paresEncontrados >=
@@ -614,10 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
        FEEDBACK
     ========================= */
 
-    function mostrarFeedback(
-        tipo,
-        mensagem
-    ) {
+    function mostrarFeedback(tipo, mensagem) {
 
         feedbackEl.className =
             `feedback ${tipo}`;
@@ -625,9 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackEl.textContent =
             mensagem;
 
-        feedbackEl.classList.remove(
-            'hidden'
-        );
+        feedbackEl.classList.remove('hidden');
     }
 
 
@@ -639,13 +600,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         partidaFinalizada = true;
 
+
         mostrarFeedback(
             'final',
             `🏆 Parabéns! Você encontrou todos os pares e fez ${pontuacao} pontos.`
         );
 
+
         dificuldadeEl.textContent =
             'Concluído';
+
+
+        /*
+         * Salva a partida no servidor.
+         */
 
         salvarPartida();
     }
@@ -659,36 +627,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
 
-            const resposta =
-                await fetch(
-                    '../../api/memoria-matematica.php',
-                    {
-                        method: 'POST',
+            const resposta = await fetch(
+                '../../api/memoria-matematica.php',
+                {
+                    method: 'POST',
 
-                        headers: {
-                            'Content-Type':
-                                'application/json'
-                        },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
 
-                        body: JSON.stringify({
+                    body: JSON.stringify({
 
-                            jogo_id:
-                                dados.jogoId,
+                        jogo_id: dados.jogoId,
 
-                            acertos:
-                                acertos,
+                        acertos: acertos,
 
-                            erros:
-                                erros,
+                        erros: erros,
 
-                            pontuacao:
-                                pontuacao
-                        })
-                    }
-                );
+                        pontuacao: pontuacao
+
+                    })
+                }
+            );
+
 
             const resultado =
                 await resposta.json();
+
 
             if (!resultado.sucesso) {
 
@@ -700,10 +665,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+
             mostrarFeedback(
                 'final',
                 `🏆 Jogo concluído! Você fez ${pontuacao} pontos e ganhou ${resultado.xp_ganho || 0} XP.`
             );
+
 
             setTimeout(() => {
 
@@ -712,12 +679,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }, 3000);
 
+
         } catch (erro) {
 
             console.error(
                 'Erro ao salvar a partida:',
                 erro
             );
+
 
             mostrarFeedback(
                 'erro',
@@ -736,27 +705,33 @@ document.addEventListener('DOMContentLoaded', () => {
         () => {
 
             primeiraCarta = null;
+
             segundaCarta = null;
 
             bloqueado = false;
 
             paresEncontrados = 0;
+
             acertos = 0;
+
             erros = 0;
+
             pontuacao = 0;
 
             partidaFinalizada = false;
 
-            feedbackEl.classList.add(
-                'hidden'
-            );
+
+            feedbackEl.classList.add('hidden');
+
 
             dificuldadeEl.textContent =
                 'Fácil';
 
+
             atualizarStatus();
 
             renderizarTabuleiro();
+
         }
     );
 
@@ -778,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================
-       INICIAR
+       INICIAR JOGO
     ========================= */
 
     atualizarStatus();
