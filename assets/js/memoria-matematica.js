@@ -61,26 +61,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dados.perguntas.forEach((pergunta) => {
 
+            const enunciado = String(pergunta.enunciado || '').trim();
+
+            const resultado = calcularResultado(enunciado);
+
             cartasGeradas.push({
-                perguntaId: pergunta.id,
+                perguntaId: Number(pergunta.id),
                 tipo: 'operacao',
-                valor: pergunta.enunciado,
-                par: pergunta.resposta_correta || null
+                valor: formatarExpressao(enunciado)
             });
 
-            /*
-             * O resultado correto não vem do PHP por segurança.
-             *
-             * Para o funcionamento visual do jogo, o resultado é
-             * calculado somente para as operações matemáticas simples.
-             */
-            const resultado = calcularResultado(pergunta.enunciado);
-
             cartasGeradas.push({
-                perguntaId: pergunta.id,
+                perguntaId: Number(pergunta.id),
                 tipo: 'resultado',
-                valor: resultado !== null ? String(resultado) : '?',
-                par: pergunta.enunciado
+                valor: resultado !== null
+                    ? formatarNumero(resultado)
+                    : 'Erro'
             });
 
         });
@@ -95,38 +91,247 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calcularResultado(enunciado) {
 
-        let expressao = enunciado
-            .replace(/\?/g, '')
-            .replace(/=/g, '')
-            .trim();
-
-        expressao = expressao.replace(/x/gi, '*');
-        expressao = expressao.replace(/÷/g, '/');
-
-        /*
-         * Aceitamos somente operações matemáticas simples.
-         */
-
-        if (!/^[0-9+\-*/().\s]+$/.test(expressao)) {
+        if (!enunciado) {
             return null;
         }
 
         try {
 
+            let expressao = String(enunciado)
+                .trim()
+                .replace(/,/g, '.')
+                .replace(/×/g, '*')
+                .replace(/x/gi, '*')
+                .replace(/÷/g, '/');
+
+            /*
+             * Remove espaços desnecessários.
+             */
+            expressao = expressao.replace(/\s+/g, '');
+
+
+            /*
+             * =========================
+             * RAIZ QUADRADA
+             * =========================
+             *
+             * Exemplo:
+             * √49 + 3
+             *
+             * vira:
+             * sqrt(49) + 3
+             */
+
+            expressao = expressao.replace(
+                /√(\d+(?:\.\d+)?)/g,
+                'Math.sqrt($1)'
+            );
+
+
+            /*
+             * =========================
+             * POTÊNCIAS
+             * =========================
+             *
+             * 3² -> 3**2
+             * 2³ -> 2**3
+             * 4⁴ -> 4**4
+             */
+
+            expressao = expressao
+                .replace(/⁰/g, '0')
+                .replace(/¹/g, '1')
+                .replace(/²/g, '2')
+                .replace(/³/g, '3')
+                .replace(/⁴/g, '4')
+                .replace(/⁵/g, '5')
+                .replace(/⁶/g, '6')
+                .replace(/⁷/g, '7')
+                .replace(/⁸/g, '8')
+                .replace(/⁹/g, '9');
+
+
+            /*
+             * Converte:
+             *
+             * 3²
+             * 5²
+             * 2³
+             *
+             * para:
+             *
+             * 3**2
+             * 5**2
+             * 2**3
+             */
+
+            expressao = expressao.replace(
+                /(\d+(?:\.\d+)?)\s*([0-9]+)/g,
+                (match, base, expoente) => {
+                    return `${base}**${expoente}`;
+                }
+            );
+
+
+            /*
+             * Verifica se ainda existe algum
+             * caractere que não pertence à expressão.
+             */
+
+            if (
+                !/^[0-9+\-*/().\s]+$/.test(
+                    expressao.replace(/Math\.sqrt/g, '')
+                )
+            ) {
+                return null;
+            }
+
+
+            /*
+             * Avalia a expressão matemática.
+             */
+
             const resultado = Function(
                 `"use strict"; return (${expressao})`
             )();
+
 
             if (!Number.isFinite(resultado)) {
                 return null;
             }
 
+
             return resultado;
 
         } catch (erro) {
 
+            console.error(
+                'Erro ao calcular:',
+                enunciado,
+                erro
+            );
+
             return null;
         }
+    }
+
+
+    /* =========================
+       FORMATAR EXPRESSÃO
+    ========================= */
+
+    function formatarExpressao(expressao) {
+
+        let texto = String(expressao || '').trim();
+
+        /*
+         * Remove "Calcule:" caso ainda exista
+         * em alguma pergunta antiga do banco.
+         */
+
+        texto = texto.replace(/^calcule\s*:\s*/i, '');
+
+        /*
+         * Converte ** para potência visual.
+         *
+         * Exemplo:
+         * 3**2 -> 3²
+         */
+
+        texto = texto.replace(
+            /(\d+)\*\*(\d+)/g,
+            (match, base, expoente) => {
+                return `${base}${converterExpoente(expoente)}`;
+            }
+        );
+
+        /*
+         * Converte ^ para potência visual.
+         *
+         * Exemplo:
+         * 2^3 -> 2³
+         */
+
+        texto = texto.replace(
+            /(\d+)\^(\d+)/g,
+            (match, base, expoente) => {
+                return `${base}${converterExpoente(expoente)}`;
+            }
+        );
+
+        /*
+         * Padroniza multiplicação e divisão.
+         */
+
+        texto = texto
+            .replace(/\*/g, ' × ')
+            .replace(/\//g, ' ÷ ');
+
+        /*
+         * Mantém a raiz quadrada.
+         */
+
+        texto = texto.replace(/\s+/g, ' ').trim();
+
+        return escapeHtml(texto);
+    }
+
+
+    /* =========================
+       CONVERTER EXPOENTE
+    ========================= */
+
+    function converterExpoente(numero) {
+
+        const mapa = {
+            '0': '⁰',
+            '1': '¹',
+            '2': '²',
+            '3': '³',
+            '4': '⁴',
+            '5': '⁵',
+            '6': '⁶',
+            '7': '⁷',
+            '8': '⁸',
+            '9': '⁹'
+        };
+
+        return String(numero)
+            .split('')
+            .map(numero => mapa[numero] || numero)
+            .join('');
+    }
+
+
+    /* =========================
+       FORMATAR NÚMERO
+    ========================= */
+
+    function formatarNumero(numero) {
+
+        if (!Number.isFinite(numero)) {
+            return 'Erro';
+        }
+
+        /*
+         * Se for inteiro:
+         *
+         * 24 -> 24
+         */
+
+        if (Number.isInteger(numero)) {
+            return String(numero);
+        }
+
+        /*
+         * Se houver decimal:
+         *
+         * 10.5 -> 10,5
+         */
+
+        return String(
+            Number(numero.toFixed(2))
+        ).replace('.', ',');
     }
 
 
@@ -159,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <div class="carta-verso">
-                        ${escapeHtml(carta.valor)}
+                        ${carta.valor}
                     </div>
 
                 </div>
@@ -230,6 +435,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const primeira = primeiraCarta.dados;
         const segunda = segundaCarta.dados;
 
+        /*
+         * O par é identificado pelo ID da pergunta.
+         *
+         * Isso permite ter, por exemplo:
+         *
+         * 7 + 5 = 12
+         * 4 × 3 = 12
+         *
+         * sem o jogo confundir os dois.
+         */
+
         const mesmoId =
             primeira.perguntaId === segunda.perguntaId;
 
@@ -243,15 +459,23 @@ document.addEventListener('DOMContentLoaded', () => {
             paresEncontrados++;
 
             const pergunta = dados.perguntas.find(
-                item => Number(item.id) === Number(primeira.perguntaId)
+                item =>
+                    Number(item.id) ===
+                    Number(primeira.perguntaId)
             );
 
             if (pergunta) {
-                pontuacao += Number(pergunta.pontuacao) || 10;
+                pontuacao +=
+                    Number(pergunta.pontuacao) || 10;
             }
 
-            primeiraCarta.elemento.classList.add('encontrada');
-            segundaCarta.elemento.classList.add('encontrada');
+            primeiraCarta.elemento.classList.add(
+                'encontrada'
+            );
+
+            segundaCarta.elemento.classList.add(
+                'encontrada'
+            );
 
             atualizarStatus();
 
@@ -262,7 +486,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resetarSelecao();
 
-            if (paresEncontrados === dados.perguntas.length) {
+            if (
+                paresEncontrados ===
+                dados.perguntas.length
+            ) {
 
                 finalizarVisualmente();
 
@@ -285,8 +512,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
 
-            primeiraCarta.elemento.classList.remove('virada');
-            segundaCarta.elemento.classList.remove('virada');
+            primeiraCarta.elemento.classList.remove(
+                'virada'
+            );
+
+            segundaCarta.elemento.classList.remove(
+                'virada'
+            );
 
             resetarSelecao();
 
@@ -313,20 +545,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function atualizarStatus() {
 
-        paresEncontradosEl.textContent = paresEncontrados;
-        pontuacaoEl.textContent = pontuacao;
-        acertosEl.textContent = acertos;
-        errosEl.textContent = erros;
+        paresEncontradosEl.textContent =
+            paresEncontrados;
 
-        const totalPares = dados.perguntas.length;
+        pontuacaoEl.textContent =
+            pontuacao;
 
-        const percentual = totalPares > 0
-            ? Math.round((paresEncontrados / totalPares) * 100)
-            : 0;
+        acertosEl.textContent =
+            acertos;
 
-        progressoTexto.textContent = `${percentual}%`;
+        errosEl.textContent =
+            erros;
 
-        barraProgresso.style.width = `${percentual}%`;
+        const totalPares =
+            dados.perguntas.length;
+
+        const percentual =
+            totalPares > 0
+                ? Math.round(
+                    (paresEncontrados / totalPares) * 100
+                )
+                : 0;
+
+        progressoTexto.textContent =
+            `${percentual}%`;
+
+        barraProgresso.style.width =
+            `${percentual}%`;
 
         atualizarDificuldade();
     }
@@ -338,19 +583,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function atualizarDificuldade() {
 
-        const total = dados.perguntas.length;
+        const total =
+            dados.perguntas.length;
 
-        if (paresEncontrados >= Math.ceil(total * 0.7)) {
+        if (
+            paresEncontrados >=
+            Math.ceil(total * 0.7)
+        ) {
 
-            dificuldadeEl.textContent = 'Difícil';
+            dificuldadeEl.textContent =
+                'Difícil';
 
-        } else if (paresEncontrados >= Math.ceil(total * 0.3)) {
+        } else if (
+            paresEncontrados >=
+            Math.ceil(total * 0.3)
+        ) {
 
-            dificuldadeEl.textContent = 'Médio';
+            dificuldadeEl.textContent =
+                'Médio';
 
         } else {
 
-            dificuldadeEl.textContent = 'Fácil';
+            dificuldadeEl.textContent =
+                'Fácil';
         }
     }
 
@@ -359,13 +614,20 @@ document.addEventListener('DOMContentLoaded', () => {
        FEEDBACK
     ========================= */
 
-    function mostrarFeedback(tipo, mensagem) {
+    function mostrarFeedback(
+        tipo,
+        mensagem
+    ) {
 
-        feedbackEl.className = `feedback ${tipo}`;
+        feedbackEl.className =
+            `feedback ${tipo}`;
 
-        feedbackEl.textContent = mensagem;
+        feedbackEl.textContent =
+            mensagem;
 
-        feedbackEl.classList.remove('hidden');
+        feedbackEl.classList.remove(
+            'hidden'
+        );
     }
 
 
@@ -382,14 +644,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `🏆 Parabéns! Você encontrou todos os pares e fez ${pontuacao} pontos.`
         );
 
-        dificuldadeEl.textContent = 'Concluído';
-
-        /*
-         * Salva a partida no servidor.
-         */
+        dificuldadeEl.textContent =
+            'Concluído';
 
         salvarPartida();
-
     }
 
 
@@ -401,32 +659,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
 
-            const resposta = await fetch(
-                '../../api/memoria-matematica.php',
-                {
-                    method: 'POST',
+            const resposta =
+                await fetch(
+                    '../../api/memoria-matematica.php',
+                    {
+                        method: 'POST',
 
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
 
-                    body: JSON.stringify({
+                        body: JSON.stringify({
 
-                        jogo_id: dados.jogoId,
-                        acertos: acertos,
-                        erros: erros,
-                        pontuacao: pontuacao
+                            jogo_id:
+                                dados.jogoId,
 
-                    })
-                }
-            );
+                            acertos:
+                                acertos,
 
-            const resultado = await resposta.json();
+                            erros:
+                                erros,
+
+                            pontuacao:
+                                pontuacao
+                        })
+                    }
+                );
+
+            const resultado =
+                await resposta.json();
 
             if (!resultado.sucesso) {
 
                 console.error(
-                    resultado.mensagem || 'Erro ao salvar partida.'
+                    resultado.mensagem ||
+                    'Erro ao salvar partida.'
                 );
 
                 return;
@@ -479,14 +747,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             partidaFinalizada = false;
 
-            feedbackEl.classList.add('hidden');
+            feedbackEl.classList.add(
+                'hidden'
+            );
 
-            dificuldadeEl.textContent = 'Fácil';
+            dificuldadeEl.textContent =
+                'Fácil';
 
             atualizarStatus();
 
             renderizarTabuleiro();
-
         }
     );
 
@@ -497,9 +767,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function escapeHtml(valor) {
 
-        const div = document.createElement('div');
+        const div =
+            document.createElement('div');
 
-        div.textContent = valor;
+        div.textContent =
+            valor;
 
         return div.innerHTML;
     }
