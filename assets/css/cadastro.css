@@ -539,3 +539,30 @@ body {
     }
 
 }
+
+.campo select {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+
+    outline: none;
+
+    background: var(--branco);
+
+    color: var(--preto);
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.campo select:focus {
+    border-color: var(--roxo);
+
+    box-shadow: 0 0 0 3px var(--roxo-claro);
+}
