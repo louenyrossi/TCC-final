@@ -618,6 +618,14 @@ body {
     color: var(--preto);
 }
 
-.serie{
-    color: #C9C3D6;
+.campo select:invalid {
+    color: #AAA6B2;
+}
+
+.campo select option {
+    color: var(--preto);
+}
+
+.campo select option:first-child {
+    color: #AAA6B2;
 }
