@@ -592,7 +592,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 >
 
                     <option value="" selected>
-                        Selecione série/turma
+                        Selecione Série/Turma
                     </option>
 
 

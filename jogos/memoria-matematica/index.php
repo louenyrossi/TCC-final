@@ -40,12 +40,6 @@ $stmt = $pdo->prepare("
     FROM perguntas
     WHERE jogo_id = ?
     ORDER BY
-        CASE dificuldade
-            WHEN 'facil' THEN 1
-            WHEN 'medio' THEN 2
-            WHEN 'dificil' THEN 3
-        END,
-        id
 ");
 
 $stmt->execute([$jogoId]);

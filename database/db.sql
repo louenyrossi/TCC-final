@@ -712,3 +712,284 @@ CREATE TABLE IF NOT EXISTS jogos_turmas (
 
     UNIQUE (jogo_id, turma_id)
 );
+USE b14_42774124_tcc_final;
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '6º A', 6
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '6º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '6º B', 6
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '6º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '7º A', 7
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '7º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '7º B', 7
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '7º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '8º A', 8
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '8º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '8º B', 8
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '8º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '9º A', 9
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '9º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '9º B', 9
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '9º B');
+
+USE b14_42774124_tcc_final;
+
+INSERT INTO perguntas
+(jogo_id, ano_serie, conteudo, enunciado, resposta_correta, dificuldade, pontuacao)
+VALUES
+
+(
+    1,
+    6,
+    'Operações e porcentagem',
+    'Ana foi ao mercado com R$ 50,00 para comprar alguns produtos. Ela gastou R$ 32,00 e depois encontrou uma promoção de 10% em um produto que custava R$ 20,00. Depois de comprar o produto com desconto, quanto dinheiro restou para Ana?',
+    '16',
+    'facil',
+    10
+),
+
+(
+    1,
+    6,
+    'Operações com dinheiro',
+    'Pedro está juntando dinheiro para comprar uma bicicleta que custa R$ 200,00. Ele já conseguiu guardar R$ 80,00 e ganhou mais R$ 40,00 de sua família. Quanto ainda falta para Pedro comprar a bicicleta?',
+    '80',
+    'facil',
+    10
+),
+
+(
+    1,
+    6,
+    'Porcentagem',
+    'Marina foi comprar um estojo que custava R$ 30,00. A papelaria ofereceu 20% de desconto e ela decidiu aproveitar a promoção. Qual será o valor que Marina pagará pelo estojo?',
+    '24',
+    'facil',
+    10
+),
+
+(
+    1,
+    6,
+    'Operações com dinheiro',
+    'Lucas recebeu R$ 60,00 para comprar materiais escolares. Ele gastou R$ 25,00 em um caderno e R$ 15,00 em lápis e canetas. Quanto dinheiro Lucas ainda tem?',
+    '20',
+    'facil',
+    10
+),
+
+(
+    1,
+    6,
+    'Operações com dinheiro',
+    'Sofia quer comprar um livro que custa R$ 50,00. Ela já possui R$ 30,00 e decidiu guardar R$ 5,00 por semana para completar o valor. Depois de quantas semanas Sofia terá dinheiro suficiente para comprar o livro?',
+    '4',
+    'facil',
+    10
+);
+
+USE b14_42774124_tcc_final;
+
+INSERT INTO perguntas
+(jogo_id, ano_serie, conteudo, enunciado, resposta_correta, dificuldade, pontuacao)
+VALUES
+
+(
+    1,
+    7,
+    'Porcentagem',
+    'Uma mochila custa R$ 120,00 e está com 15% de desconto. Pedro tem R$ 110,00 para realizar a compra e quer saber se o dinheiro será suficiente. Qual será o preço da mochila após o desconto?',
+    '102',
+    'medio',
+    15
+),
+
+(
+    1,
+    7,
+    'Porcentagem',
+    'Uma bicicleta custava R$ 500,00 no começo do ano. Depois de alguns meses, seu preço aumentou 10% por causa dos custos da loja. Qual passou a ser o preço da bicicleta?',
+    '550',
+    'medio',
+    15
+),
+
+(
+    1,
+    7,
+    'Operações com dinheiro',
+    'Mariana levou R$ 150,00 para comprar uma camiseta e uma calça. A camiseta custou R$ 45,00 e a calça custou R$ 80,00. Quanto dinheiro sobrou depois das compras?',
+    '25',
+    'medio',
+    15
+),
+
+(
+    1,
+    7,
+    'Porcentagem',
+    'João encontrou um tênis de R$ 200,00 com 20% de desconto. Ele tinha R$ 170,00 guardados e decidiu verificar se conseguiria comprar o tênis. Quanto ele pagará pelo tênis e quanto sobrará?',
+    '160 e 10',
+    'medio',
+    15
+),
+
+(
+    1,
+    7,
+    'Operações com dinheiro',
+    'Lucas quer comprar um jogo que custa R$ 600,00. Ele já possui R$ 240,00 e pretende guardar R$ 60,00 todos os meses. Por quantos meses Lucas precisará guardar dinheiro para conseguir comprar o jogo?',
+    '6',
+    'medio',
+    15
+);
+
+USE b14_42774124_tcc_final;
+
+INSERT INTO perguntas
+(jogo_id, ano_serie, conteudo, enunciado, resposta_correta, dificuldade, pontuacao)
+VALUES
+
+(
+    1,
+    8,
+    'Porcentagem',
+    'Uma bicicleta custa R$ 800,00 e está com 15% de desconto durante uma promoção. Carlos tem R$ 700,00 guardados e quer saber se conseguirá comprar a bicicleta com o desconto. Qual será o preço da bicicleta após o desconto?',
+    '680',
+    'dificil',
+    20
+),
+
+(
+    1,
+    8,
+    'Porcentagem',
+    'Um celular custava R$ 1.200,00, mas seu preço aumentou 10% devido a mudanças nos custos da loja. Depois do aumento, a loja decidiu oferecer um desconto de 5% sobre o novo preço. Qual será o preço final do celular?',
+    '1254',
+    'dificil',
+    20
+),
+
+(
+    1,
+    8,
+    'Porcentagem e operações',
+    'Uma família foi ao supermercado com R$ 250,00 para fazer suas compras. Ao final, gastou 60% desse valor e ainda comprou um produto de R$ 20,00 que não estava planejado. Quanto dinheiro restou para a família?',
+    '80',
+    'dificil',
+    20
+),
+
+(
+    1,
+    8,
+    'Porcentagem',
+    'Uma turma pretende juntar R$ 1.200,00 para realizar um passeio. Depois de algumas semanas, os alunos já conseguiram juntar 65% desse valor. Quanto dinheiro ainda falta para alcançar o objetivo?',
+    '420',
+    'dificil',
+    20
+),
+
+(
+    1,
+    8,
+    'Porcentagem',
+    'Uma loja aumentou o preço de uma televisão de R$ 2.000,00 em 10%. Na semana seguinte, anunciou um desconto de 10% sobre o novo preço. Qual será o preço final da televisão?',
+    '1980',
+    'dificil',
+    20
+);
+USE b14_42774124_tcc_final;
+
+INSERT INTO perguntas
+(jogo_id, ano_serie, conteudo, enunciado, resposta_correta, dificuldade, pontuacao)
+VALUES
+
+(
+    1,
+    9,
+    'Porcentagem',
+    'Uma televisão custa R$ 2.500,00 em uma loja. Primeiro, o preço recebeu um aumento de 12% e, depois, a loja ofereceu um desconto de 10% sobre o novo valor. Qual será o preço final da televisão?',
+    '2520',
+    'dificil',
+    25
+),
+
+(
+    1,
+    9,
+    'Porcentagem',
+    'Um celular custa R$ 1.800,00 à vista. Uma loja oferece 15% de desconto para quem pagar no dinheiro, mas João possui apenas R$ 1.500,00. Depois do desconto, quanto João ainda precisará conseguir para comprar o celular?',
+    '30',
+    'dificil',
+    25
+),
+
+(
+    1,
+    9,
+    'Porcentagem',
+    'Uma bicicleta custava R$ 1.200,00. Durante uma promoção, seu preço foi reduzido em 20%. Na semana seguinte, a loja aumentou o novo preço em 10%. Qual será o preço da bicicleta depois dessas duas alterações?',
+    '1056',
+    'dificil',
+    25
+),
+
+(
+    1,
+    9,
+    'Porcentagem e operações',
+    'Uma turma precisa juntar R$ 2.400,00 para realizar uma viagem. Na primeira etapa, conseguiu arrecadar 35% desse valor. Depois, arrecadou mais R$ 480,00 em uma campanha. Quanto ainda falta para a turma alcançar o valor necessário?',
+    '1080',
+    'dificil',
+    25
+),
+
+(
+    1,
+    9,
+    'Porcentagem',
+    'Uma família separou R$ 3.000,00 para comprar alguns móveis. Durante as compras, conseguiu um desconto de 15% sobre o valor total. Depois, gastou mais R$ 300,00 comprando um item que não estava planejado. Considerando o desconto, quanto a família terá gasto ao todo?',
+    '3150',
+    'dificil',
+    25
+);
+USE b14_42774124_tcc_final;
+
+INSERT INTO perguntas
+(jogo_id, ano_serie, conteudo, enunciado, resposta_correta, dificuldade, pontuacao)
+VALUES
+
+-- POTENCIAÇÃO
+(2, 6, 'Potenciação', '2³', '8', 'facil', 10),
+(2, 6, 'Potenciação', '5²', '25', 'facil', 10),
+
+-- DIVISÃO COM VÍRGULA
+(2, 6, 'Divisão com vírgula', '7,5 ÷ 3', '2,5', 'medio', 15),
+(2, 6, 'Divisão com vírgula', '12,6 ÷ 6', '2,1', 'medio', 15),
+
+-- ÂNGULOS
+(2, 6, 'Ângulos', '90°', 'Reto', 'facil', 10),
+(2, 6, 'Ângulos', '120°', 'Obtuso', 'medio', 15),
+
+-- FRAÇÕES
+(2, 6, 'Frações', '1/2 + 1/2', '1', 'facil', 10),
+(2, 6, 'Frações', '1/4 + 1/4', '1/2', 'medio', 15),
+
+-- PORCENTAGEM
+(2, 6, 'Porcentagem', '10% de 50', '5', 'facil', 10),
+(2, 6, 'Porcentagem', '25% de 100', '25', 'facil', 10);
