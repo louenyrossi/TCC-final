@@ -1,27 +1,24 @@
 <?php
 
-require_once '../../config/config.php';
 require_once '../../includes/auth.php';
+require_once '../../config/config.php';
 
-protegerPagina(['aluno']);
+protegerPagina('aluno');
 
-$usuarioId = usuarioId();
+/* =========================
+   BUSCAR JOGO
+========================= */
 
-/*
-|--------------------------------------------------------------------------
-| Busca o jogo
-|--------------------------------------------------------------------------
-*/
-$stmtJogo = $pdo->prepare("
+$stmt = $pdo->prepare("
     SELECT id, nome, descricao
     FROM jogos
     WHERE nome = 'Memória Matemática'
-      AND ativo = 1
+      AND ativo = TRUE
     LIMIT 1
 ");
-$stmtJogo->execute();
 
-$jogo = $stmtJogo->fetch();
+$stmt->execute();
+$jogo = $stmt->fetch();
 
 if (!$jogo) {
     die('Jogo não encontrado.');
@@ -29,12 +26,11 @@ if (!$jogo) {
 
 $jogoId = (int) $jogo['id'];
 
-/*
-|--------------------------------------------------------------------------
-| Busca as perguntas
-|--------------------------------------------------------------------------
-*/
-$stmtPerguntas = $pdo->prepare("
+/* =========================
+   BUSCAR PERGUNTAS
+========================= */
+
+$stmt = $pdo->prepare("
     SELECT
         id,
         enunciado,
@@ -48,102 +44,41 @@ $stmtPerguntas = $pdo->prepare("
             WHEN 'facil' THEN 1
             WHEN 'medio' THEN 2
             WHEN 'dificil' THEN 3
-            ELSE 4
         END,
         id
 ");
-$stmtPerguntas->execute([$jogoId]);
 
-$perguntas = $stmtPerguntas->fetchAll();
+$stmt->execute([$jogoId]);
 
-if (!$perguntas) {
+$perguntasBanco = $stmt->fetchAll();
+
+if (empty($perguntasBanco)) {
     die('Nenhuma pergunta cadastrada para este jogo.');
 }
 
 /*
-|--------------------------------------------------------------------------
-| Cria o baralho
-|--------------------------------------------------------------------------
-|
-| Cada pergunta gera duas cartas:
-|
-| - uma carta com a operação
-| - uma carta com o resultado
-|
-| O token identifica exclusivamente aquela carta.
-| O servidor também guarda o baralho na sessão para que a API
-| consiga validar as jogadas posteriormente.
-|
-|--------------------------------------------------------------------------
-*/
+ * Não enviamos a resposta correta para o navegador.
+ * O PHP/BD continua sendo responsável pela validação.
+ */
+$perguntasPublicas = [];
 
-$cartas = [];
+foreach ($perguntasBanco as $pergunta) {
 
-foreach ($perguntas as $pergunta) {
-
-    $perguntaId = (int) $pergunta['id'];
-
-    // Carta da operação
-    $cartas[] = [
-        'token' => bin2hex(random_bytes(8)),
-        'pergunta_id' => $perguntaId,
-        'tipo' => 'operacao',
-        'valor' => $pergunta['enunciado']
-    ];
-
-    // Carta do resultado
-    $cartas[] = [
-        'token' => bin2hex(random_bytes(8)),
-        'pergunta_id' => $perguntaId,
-        'tipo' => 'resultado',
-        'valor' => $pergunta['resposta_correta']
-    ];
-}
-
-/*
-|--------------------------------------------------------------------------
-| Embaralha as cartas
-|--------------------------------------------------------------------------
-*/
-shuffle($cartas);
-
-/*
-|--------------------------------------------------------------------------
-| Guarda o baralho completo no servidor
-|--------------------------------------------------------------------------
-|
-| O JavaScript recebe apenas os dados necessários para desenhar
-| as cartas.
-|
-| A API poderá consultar este baralho através da sessão.
-|
-|--------------------------------------------------------------------------
-*/
-
-$_SESSION['memoria_jogo_id'] = $jogoId;
-$_SESSION['memoria_deck'] = $cartas;
-
-/*
-|--------------------------------------------------------------------------
-| Dados públicos enviados para o JavaScript
-|--------------------------------------------------------------------------
-*/
-
-$cartasPublicas = [];
-
-foreach ($cartas as $carta) {
-    $cartasPublicas[] = [
-        'token' => $carta['token'],
-        'tipo' => $carta['tipo'],
-        'valor' => $carta['valor']
+    $perguntasPublicas[] = [
+        'id' => (int) $pergunta['id'],
+        'enunciado' => $pergunta['enunciado'],
+        'dificuldade' => $pergunta['dificuldade'],
+        'pontuacao' => (int) $pergunta['pontuacao']
     ];
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -151,187 +86,253 @@ foreach ($cartas as $carta) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Memória Matemática | MathPlay</title>
+    <title>Memória Matemática - MathPlay</title>
 
     <link
         rel="stylesheet"
         href="../../assets/css/memoria-matematica.css"
     >
+
 </head>
 
 <body>
 
     <main class="pagina-jogo">
 
-        <!-- Cabeçalho -->
+        <!-- CABEÇALHO -->
+
         <header class="cabecalho-jogo">
 
             <a
                 href="../../aluno/jogos.php"
                 class="botao-voltar"
             >
-                ← Voltar
+                ← Voltar aos jogos
             </a>
 
             <div class="titulo-jogo">
+
                 <span class="icone-jogo">🧠</span>
 
                 <div>
                     <h1>Memória Matemática</h1>
-                    <p>Encontre os pares e teste sua memória!</p>
+
+                    <p>
+                        Encontre os pares entre operações e resultados.
+                    </p>
                 </div>
+
             </div>
 
         </header>
 
 
-        <!-- Status -->
+        <!-- STATUS -->
+
         <section class="status-jogo">
 
             <div class="status-card">
-                <span class="status-label">Acertos</span>
-                <strong id="acertos">0</strong>
+
+                <span>🎯</span>
+
+                <div>
+                    <small>Pares</small>
+                    <strong id="paresEncontrados">0</strong>
+                </div>
+
             </div>
 
-            <div class="status-card">
-                <span class="status-label">Erros</span>
-                <strong id="erros">0</strong>
-            </div>
 
             <div class="status-card">
-                <span class="status-label">Pontuação</span>
-                <strong id="pontuacao">0</strong>
+
+                <span>⭐</span>
+
+                <div>
+                    <small>Pontuação</small>
+                    <strong id="pontuacao">0</strong>
+                </div>
+
             </div>
 
+
             <div class="status-card">
-                <span class="status-label">Nível</span>
-                <strong id="dificuldade">Fácil</strong>
+
+                <span>✅</span>
+
+                <div>
+                    <small>Acertos</small>
+                    <strong id="acertos">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <span>❌</span>
+
+                <div>
+                    <small>Erros</small>
+                    <strong id="erros">0</strong>
+                </div>
+
             </div>
 
         </section>
 
 
-        <!-- Progresso -->
-        <section class="progresso-jogo">
+        <!-- PROGRESSO -->
+
+        <section class="progresso-container">
 
             <div class="progresso-info">
+
                 <span>Progresso</span>
 
-                <strong id="progresso-texto">
+                <strong id="progressoTexto">
                     0%
                 </strong>
+
             </div>
 
             <div class="barra-progresso">
+
                 <div
-                    id="barra-progresso"
-                    class="barra-progresso-preenchida"
+                    id="barraProgresso"
+                    class="barra-preenchida"
                     style="width: 0%;"
                 ></div>
+
             </div>
 
         </section>
 
 
-        <!-- Instruções -->
-        <section class="instrucoes-jogo">
+        <!-- INSTRUÇÃO -->
 
-            <div class="icone-instrucao">
+        <section class="instrucoes">
+
+            <div class="instrucoes-icone">
                 💡
             </div>
 
             <div>
-                <h2>Como jogar?</h2>
+
+                <strong>Como jogar?</strong>
 
                 <p>
-                    Vire duas cartas e encontre a operação
-                    correspondente ao seu resultado.
+                    Clique em duas cartas para revelar seu conteúdo.
+                    Encontre o resultado correspondente à operação.
                 </p>
+
             </div>
 
         </section>
 
 
-        <!-- Área do jogo -->
+        <!-- JOGO -->
+
         <section class="area-jogo">
+
+            <div class="cabecalho-area">
+
+                <div>
+
+                    <span class="etiqueta">
+                        DESAFIO
+                    </span>
+
+                    <h2>
+                        Encontre os pares matemáticos
+                    </h2>
+
+                </div>
+
+                <div
+                    id="dificuldadeAtual"
+                    class="dificuldade"
+                >
+                    Fácil
+                </div>
+
+            </div>
+
+
+            <!-- TABULEIRO -->
 
             <div
                 id="tabuleiro"
                 class="tabuleiro"
-                aria-label="Tabuleiro do jogo da memória"
-            >
-                <!-- As cartas serão criadas pelo JavaScript -->
+            ></div>
+
+
+            <!-- FEEDBACK -->
+
+            <div
+                id="feedback"
+                class="feedback hidden"
+            ></div>
+
+
+            <!-- BOTÃO PRÓXIMA RODADA -->
+
+            <div class="acoes">
+
+                <button
+                    type="button"
+                    id="reiniciarJogo"
+                    class="botao-secundario"
+                >
+                    🔄 Reiniciar
+                </button>
+
             </div>
 
         </section>
 
 
-        <!-- Feedback -->
-        <section
-            id="feedback"
-            class="feedback-jogo"
-            aria-live="polite"
-        >
-            Encontre os pares matemáticos!
-        </section>
+        <!-- DICA -->
 
+        <section class="dica-card">
 
-        <!-- Botões -->
-        <section class="acoes-jogo">
+            <span>🧠</span>
 
-            <button
-                type="button"
-                id="botao-dica"
-                class="botao botao-secundario"
-            >
-                💡 Dica
-            </button>
+            <div>
 
-            <button
-                type="button"
-                id="botao-reiniciar"
-                class="botao botao-primario"
-            >
-                🔄 Reiniciar
-            </button>
+                <strong>Dica</strong>
 
-        </section>
+                <p>
+                    Tente memorizar a posição das cartas que você já revelou.
+                    Isso ajuda a encontrar os pares mais rapidamente.
+                </p>
 
+            </div>
 
-        <!-- Dica -->
-        <section
-            id="dica"
-            class="cartao-dica"
-            hidden
-        >
-            <strong>💡 Dica</strong>
-
-            <p>
-                Procure relacionar cada operação matemática
-                com o número que representa seu resultado.
-            </p>
         </section>
 
     </main>
 
 
-    <!--
-    |--------------------------------------------------------------------------
-    | Dados necessários para o JavaScript
-    |--------------------------------------------------------------------------
-    -->
+    <!-- DADOS PARA O JAVASCRIPT -->
 
     <script>
+
         window.MathPlayMemoria = {
-            jogoId: <?= (int) $jogoId ?>,
-            usuarioId: <?= (int) $usuarioId ?>,
-            cartas: <?= json_encode(
-                $cartasPublicas,
+
+            perguntas: <?= json_encode(
+                $perguntasPublicas,
                 JSON_UNESCAPED_UNICODE |
                 JSON_UNESCAPED_SLASHES
-            ) ?>
+            ) ?>,
+
+            usuarioId: <?= (int) usuarioId() ?>,
+
+            jogoId: <?= $jogoId ?>
+
         };
+
     </script>
+
 
     <script
         src="../../assets/js/memoria-matematica.js"
