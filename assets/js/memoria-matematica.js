@@ -80,13 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             cartasGeradas.push({
 
-                perguntaId: pergunta.id,
+               perguntaId: pergunta.id,
 
                 tipo: 'resultado',
 
-                valor: resultado !== null
-                    ? formatarResultado(resultado)
-                    : 'Erro'
+                valor: String(pergunta.resposta_correta || '')
 
             });
 
