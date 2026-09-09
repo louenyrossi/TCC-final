@@ -456,7 +456,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         id="mostrarSenha"
                         aria-label="Mostrar senha"
                     >
-                        👁️
+                        <span class="icone-olho"></span>
                     </button>
 
                 </div>
