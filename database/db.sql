@@ -379,7 +379,160 @@ FROM usuarios u
 CROSS JOIN jogos j
 WHERE u.email = 'aluno@mathplay.com';
 
+USE b14_42774124_tcc_final;
 
--- =========================================================
--- FIM DAS MODIFICAÇÕES
--- =========================================================
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 3/4 + 1/4',
+    resposta_correta = '1',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Frações'
+WHERE id = 6
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 5/6 - 1/6',
+    resposta_correta = '0.6666666667',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Frações'
+WHERE id = 7
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 2**2 + 3',
+    resposta_correta = '7',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Potenciação'
+WHERE id = 8
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 18/3 + 4',
+    resposta_correta = '10',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Operações e Expressões'
+WHERE id = 9
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 3**2 + 4**2',
+    resposta_correta = '25',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 7,
+    conteudo = 'Potenciação'
+WHERE id = 10
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 5/2 + 3/2',
+    resposta_correta = '4',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 8,
+    conteudo = 'Frações'
+WHERE id = 11
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: 2**3 * 3 - 5',
+    resposta_correta = '19',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 8,
+    conteudo = 'Expressões Numéricas'
+WHERE id = 12
+  AND jogo_id = 2;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Calcule: (5/2)**2 - 3',
+    resposta_correta = '3.25',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Frações e Potenciação'
+WHERE id = 13
+  AND jogo_id = 2;
+
+  USE b14_42774124_tcc_final;
+
+UPDATE perguntas
+SET
+    enunciado = 'Uma loja vende uma camiseta por R$ 80,00. Durante uma promoção, o produto recebeu um desconto de 10%. Qual será o valor do desconto?',
+    resposta_correta = '8',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Porcentagem e Desconto'
+WHERE id = 1
+  AND jogo_id = 1;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'João tinha R$ 150,00 guardados. Ele decidiu aumentar esse valor em 20% para alcançar sua meta de compra. Qual será o novo valor que João terá?',
+    resposta_correta = '180',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Porcentagem e Acréscimo'
+WHERE id = 2
+  AND jogo_id = 1;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Uma mochila custa R$ 240,00. Em uma promoção, a loja oferece 15% de desconto. Considerando o desconto, qual será o preço final pago pelo cliente?',
+    resposta_correta = '204',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 7,
+    conteudo = 'Desconto Percentual'
+WHERE id = 3
+  AND jogo_id = 1;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Uma pessoa comprou um produto por R$ 120,00 e deseja revendê-lo obtendo um lucro de 25% sobre o preço de compra. Por qual valor o produto deverá ser vendido?',
+    resposta_correta = '150',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 8,
+    conteudo = 'Lucro e Porcentagem'
+WHERE id = 4
+  AND jogo_id = 1;
+
+
+UPDATE perguntas
+SET
+    enunciado = 'Uma televisão custa R$ 2.000,00. Primeiro, a loja oferece 10% de desconto. Depois, sobre o novo preço, concede mais 5% de desconto. Qual será o preço final da televisão?',
+    resposta_correta = '1710',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Descontos Sucessivos'
+WHERE id = 5
+  AND jogo_id = 1;
