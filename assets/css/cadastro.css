@@ -543,21 +543,14 @@ body {
 .campo select {
     width: 100%;
     height: 48px;
-
     padding: 0 14px;
-
     border: 1px solid var(--cinza-claro);
     border-radius: 10px;
-
     outline: none;
-
     background: var(--branco);
-
     color: var(--preto);
     font-size: 14px;
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
@@ -623,4 +616,8 @@ body {
 .campo select option {
     background: var(--branco);
     color: var(--preto);
+}
+
+.serie{
+    color: #C9C3D6;
 }

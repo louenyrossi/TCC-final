@@ -591,8 +591,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     name="turma_id"
                 >
 
-                    <option value="">
-                        Selecione sua série/turma
+                    <option value="" class='serie'>
+                        Selecione série/turma
                     </option>
 
 
