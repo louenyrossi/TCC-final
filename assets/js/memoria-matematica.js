@@ -117,8 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/Calcule:\s*/gi, '')
                 .replace(/=/g, '')
                 .trim();
-
-
             /*
              * ÂNGULOS
              */
@@ -339,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
     }
-
 
     /* =========================
        SELECIONAR CARTA
