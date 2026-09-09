@@ -536,3 +536,126 @@ SET
     conteudo = 'Descontos Sucessivos'
 WHERE id = 5
   AND jogo_id = 1;
+
+
+  USE b14_42774124_tcc_final;
+
+UPDATE perguntas
+SET
+    enunciado = '7 + 5',
+    resposta_correta = '12',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Adição'
+WHERE id = 6 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '15 - 8',
+    resposta_correta = '7',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Subtração'
+WHERE id = 7 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '4 × 6',
+    resposta_correta = '24',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Multiplicação'
+WHERE id = 8 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '20 ÷ 5',
+    resposta_correta = '4',
+    dificuldade = 'facil',
+    pontuacao = 10,
+    ano_serie = 6,
+    conteudo = 'Divisão'
+WHERE id = 9 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '3² + 4',
+    resposta_correta = '13',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 7,
+    conteudo = 'Potenciação e Adição'
+WHERE id = 10 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '5² - 9',
+    resposta_correta = '16',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 7,
+    conteudo = 'Potenciação e Subtração'
+WHERE id = 11 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '6 × 7 - 10',
+    resposta_correta = '32',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 8,
+    conteudo = 'Expressões Numéricas'
+WHERE id = 12 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '√49 + 3',
+    resposta_correta = '10',
+    dificuldade = 'medio',
+    pontuacao = 15,
+    ano_serie = 8,
+    conteudo = 'Raiz Quadrada'
+WHERE id = 13 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '2³ × 3',
+    resposta_correta = '24',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Potenciação e Multiplicação'
+WHERE id = 14 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '4² + 3²',
+    resposta_correta = '25',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Potenciação'
+WHERE id = 15 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '2⁴ - 3',
+    resposta_correta = '13',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Potenciação e Subtração'
+WHERE id = 16 AND jogo_id = 2;
+
+UPDATE perguntas
+SET
+    enunciado = '√144 ÷ 2',
+    resposta_correta = '6',
+    dificuldade = 'dificil',
+    pontuacao = 20,
+    ano_serie = 9,
+    conteudo = 'Raiz Quadrada e Divisão'
+WHERE id = 17 AND jogo_id = 2;
