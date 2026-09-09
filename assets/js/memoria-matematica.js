@@ -2,187 +2,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const dados = window.MathPlayMemoria;
 
-    if (!dados || !dados.perguntas || dados.perguntas.length === 0) {
-        console.error('Dados do Memória Matemática não encontrados.');
+    if (!dados || !Array.isArray(dados.cartas)) {
+        console.error('Dados do jogo não encontrados.');
         return;
     }
 
     const tabuleiro = document.getElementById('tabuleiro');
-    const paresEncontradosEl = document.getElementById('paresEncontrados');
-    const pontuacaoEl = document.getElementById('pontuacao');
-    const acertosEl = document.getElementById('acertos');
-    const errosEl = document.getElementById('erros');
-    const progressoTexto = document.getElementById('progressoTexto');
-    const barraProgresso = document.getElementById('barraProgresso');
-    const dificuldadeEl = document.getElementById('dificuldadeAtual');
-    const feedbackEl = document.getElementById('feedback');
-    const reiniciarBtn = document.getElementById('reiniciarJogo');
+    const acertosElemento = document.getElementById('acertos');
+    const errosElemento = document.getElementById('erros');
+    const pontuacaoElemento = document.getElementById('pontuacao');
+    const dificuldadeElemento = document.getElementById('dificuldade');
+    const progressoTexto = document.getElementById('progresso-texto');
+    const barraProgresso = document.getElementById('barra-progresso');
+    const feedback = document.getElementById('feedback');
 
-    let cartas = [];
+    const botaoDica = document.getElementById('botao-dica');
+    const botaoReiniciar = document.getElementById('botao-reiniciar');
+    const dica = document.getElementById('dica');
+
     let primeiraCarta = null;
     let segundaCarta = null;
 
     let bloqueado = false;
+    let partidaFinalizada = false;
 
-    let paresEncontrados = 0;
     let acertos = 0;
     let erros = 0;
     let pontuacao = 0;
 
-    let partidaFinalizada = false;
+    const totalPares = dados.cartas.length / 2;
 
+    /*
+    |--------------------------------------------------------------------------
+    | Criação das cartas
+    |--------------------------------------------------------------------------
+    */
 
-    /* =========================
-       EMBARALHAR
-    ========================= */
-
-    function embaralhar(array) {
-
-        const copia = [...array];
-
-        for (let i = copia.length - 1; i > 0; i--) {
-
-            const j = Math.floor(Math.random() * (i + 1));
-
-            [copia[i], copia[j]] = [copia[j], copia[i]];
-        }
-
-        return copia;
-    }
-
-
-    /* =========================
-       CRIAR CARTAS
-    ========================= */
-
-    function criarCartas() {
-
-        const cartasGeradas = [];
-
-        dados.perguntas.forEach((pergunta) => {
-
-            cartasGeradas.push({
-                perguntaId: pergunta.id,
-                tipo: 'operacao',
-                valor: pergunta.enunciado,
-                par: pergunta.resposta_correta || null
-            });
-
-            /*
-             * O resultado correto não vem do PHP por segurança.
-             *
-             * Para o funcionamento visual do jogo, o resultado é
-             * calculado somente para as operações matemáticas simples.
-             */
-            const resultado = calcularResultado(pergunta.enunciado);
-
-            cartasGeradas.push({
-                perguntaId: pergunta.id,
-                tipo: 'resultado',
-                valor: resultado !== null ? String(resultado) : '?',
-                par: pergunta.enunciado
-            });
-
-        });
-
-        return embaralhar(cartasGeradas);
-    }
-
-
-    /* =========================
-       CALCULAR RESULTADO
-    ========================= */
-
-    function calcularResultado(enunciado) {
-
-        let expressao = enunciado
-            .replace(/\?/g, '')
-            .replace(/=/g, '')
-            .trim();
-
-        expressao = expressao.replace(/x/gi, '*');
-        expressao = expressao.replace(/÷/g, '/');
-
-        /*
-         * Aceitamos somente operações matemáticas simples.
-         */
-
-        if (!/^[0-9+\-*/().\s]+$/.test(expressao)) {
-            return null;
-        }
-
-        try {
-
-            const resultado = Function(
-                `"use strict"; return (${expressao})`
-            )();
-
-            if (!Number.isFinite(resultado)) {
-                return null;
-            }
-
-            return resultado;
-
-        } catch (erro) {
-
-            return null;
-        }
-    }
-
-
-    /* =========================
-       CRIAR TABULEIRO
-    ========================= */
-
-    function renderizarTabuleiro() {
+    function criarTabuleiro() {
 
         tabuleiro.innerHTML = '';
 
-        cartas = criarCartas();
-
-        cartas.forEach((carta, indice) => {
+        dados.cartas.forEach((carta) => {
 
             const elemento = document.createElement('button');
 
             elemento.type = 'button';
+            elemento.className = 'carta';
 
-            elemento.className = `carta ${carta.tipo}`;
+            elemento.dataset.token = carta.token;
 
-            elemento.dataset.indice = indice;
+            elemento.setAttribute(
+                'aria-label',
+                'Carta fechada'
+            );
 
             elemento.innerHTML = `
+                <span class="carta-conteudo">
 
-                <div class="carta-conteudo">
-
-                    <div class="carta-frente">
+                    <span class="carta-frente">
                         ?
-                    </div>
+                    </span>
 
-                    <div class="carta-verso">
+                    <span class="carta-verso">
                         ${escapeHtml(carta.valor)}
-                    </div>
+                    </span>
 
-                </div>
-
+                </span>
             `;
 
             elemento.addEventListener(
                 'click',
-                () => selecionarCarta(elemento, indice)
+                () => selecionarCarta(elemento, carta)
             );
 
             tabuleiro.appendChild(elemento);
-
         });
-
     }
 
 
-    /* =========================
-       SELECIONAR CARTA
-    ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Seleciona uma carta
+    |--------------------------------------------------------------------------
+    */
 
-    function selecionarCarta(elemento, indice) {
+    function selecionarCarta(elemento, carta) {
 
         if (bloqueado || partidaFinalizada) {
             return;
@@ -198,206 +102,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
         elemento.classList.add('virada');
 
+        elemento.setAttribute(
+            'aria-label',
+            carta.tipo === 'operacao'
+                ? `Operação: ${carta.valor}`
+                : `Resultado: ${carta.valor}`
+        );
+
         if (!primeiraCarta) {
 
             primeiraCarta = {
                 elemento: elemento,
-                indice: indice,
-                dados: cartas[indice]
+                dados: carta
             };
+
+            mostrarFeedback(
+                'Escolha mais uma carta.',
+                ''
+            );
 
             return;
         }
 
         segundaCarta = {
             elemento: elemento,
-            indice: indice,
-            dados: cartas[indice]
+            dados: carta
         };
+
+        bloqueado = true;
 
         verificarPar();
     }
 
 
-    /* =========================
-       VERIFICAR PAR
-    ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Verifica o par
+    |--------------------------------------------------------------------------
+    */
 
-    function verificarPar() {
+    async function verificarPar() {
 
-        bloqueado = true;
-
-        const primeira = primeiraCarta.dados;
-        const segunda = segundaCarta.dados;
-
-        const mesmoId =
-            primeira.perguntaId === segunda.perguntaId;
-
-        const tiposDiferentes =
-            primeira.tipo !== segunda.tipo;
-
-        if (mesmoId && tiposDiferentes) {
-
-            acertos++;
-
-            paresEncontrados++;
-
-            const pergunta = dados.perguntas.find(
-                item => Number(item.id) === Number(primeira.perguntaId)
-            );
-
-            if (pergunta) {
-                pontuacao += Number(pergunta.pontuacao) || 10;
-            }
-
-            primeiraCarta.elemento.classList.add('encontrada');
-            segundaCarta.elemento.classList.add('encontrada');
-
-            atualizarStatus();
-
-            mostrarFeedback(
-                'sucesso',
-                '🎉 Par correto! Muito bem!'
-            );
-
-            resetarSelecao();
-
-            if (paresEncontrados === dados.perguntas.length) {
-
-                finalizarVisualmente();
-
-            } else {
-
-                bloqueado = false;
-            }
-
+        if (!primeiraCarta || !segundaCarta) {
             return;
         }
 
-        erros++;
-
-        atualizarStatus();
-
-        mostrarFeedback(
-            'erro',
-            '🤔 Esse não é o par. Tente memorizar as cartas!'
-        );
-
-        setTimeout(() => {
-
-            primeiraCarta.elemento.classList.remove('virada');
-            segundaCarta.elemento.classList.remove('virada');
-
-            resetarSelecao();
-
-            bloqueado = false;
-
-        }, 1000);
-    }
-
-
-    /* =========================
-       RESETAR SELEÇÃO
-    ========================= */
-
-    function resetarSelecao() {
-
-        primeiraCarta = null;
-        segundaCarta = null;
-    }
-
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    function atualizarStatus() {
-
-        paresEncontradosEl.textContent = paresEncontrados;
-        pontuacaoEl.textContent = pontuacao;
-        acertosEl.textContent = acertos;
-        errosEl.textContent = erros;
-
-        const totalPares = dados.perguntas.length;
-
-        const percentual = totalPares > 0
-            ? Math.round((paresEncontrados / totalPares) * 100)
-            : 0;
-
-        progressoTexto.textContent = `${percentual}%`;
-
-        barraProgresso.style.width = `${percentual}%`;
-
-        atualizarDificuldade();
-    }
-
-
-    /* =========================
-       DIFICULDADE
-    ========================= */
-
-    function atualizarDificuldade() {
-
-        const total = dados.perguntas.length;
-
-        if (paresEncontrados >= Math.ceil(total * 0.7)) {
-
-            dificuldadeEl.textContent = 'Difícil';
-
-        } else if (paresEncontrados >= Math.ceil(total * 0.3)) {
-
-            dificuldadeEl.textContent = 'Médio';
-
-        } else {
-
-            dificuldadeEl.textContent = 'Fácil';
-        }
-    }
-
-
-    /* =========================
-       FEEDBACK
-    ========================= */
-
-    function mostrarFeedback(tipo, mensagem) {
-
-        feedbackEl.className = `feedback ${tipo}`;
-
-        feedbackEl.textContent = mensagem;
-
-        feedbackEl.classList.remove('hidden');
-    }
-
-
-    /* =========================
-       FINALIZAÇÃO
-    ========================= */
-
-    function finalizarVisualmente() {
-
-        partidaFinalizada = true;
-
-        mostrarFeedback(
-            'final',
-            `🏆 Parabéns! Você encontrou todos os pares e fez ${pontuacao} pontos.`
-        );
-
-        dificuldadeEl.textContent = 'Concluído';
-
-        /*
-         * Salva a partida no servidor.
-         */
-
-        salvarPartida();
-
-    }
-
-
-    /* =========================
-       SALVAR PARTIDA
-    ========================= */
-
-    async function salvarPartida() {
+        const token1 = primeiraCarta.dados.token;
+        const token2 = segundaCarta.dados.token;
 
         try {
 
@@ -411,106 +162,367 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
 
                     body: JSON.stringify({
-
+                        acao: 'tentativa',
                         jogo_id: dados.jogoId,
-                        acertos: acertos,
-                        erros: erros,
-                        pontuacao: pontuacao
-
+                        carta1: token1,
+                        carta2: token2
                     })
                 }
             );
 
             const resultado = await resposta.json();
 
-            if (!resultado.sucesso) {
+            if (!resposta.ok || !resultado.sucesso) {
 
-                console.error(
-                    resultado.mensagem || 'Erro ao salvar partida.'
+                throw new Error(
+                    resultado.mensagem ||
+                    'Não foi possível validar a jogada.'
                 );
+            }
+
+            atualizarStatus(resultado);
+
+            if (resultado.correta) {
+
+                primeiraCarta.elemento.classList.add(
+                    'encontrada'
+                );
+
+                segundaCarta.elemento.classList.add(
+                    'encontrada'
+                );
+
+                mostrarFeedback(
+                    resultado.mensagem ||
+                    '🎉 Par correto!',
+                    'sucesso'
+                );
+
+                primeiraCarta.elemento.disabled = true;
+                segundaCarta.elemento.disabled = true;
+
+                primeiraCarta = null;
+                segundaCarta = null;
+
+                bloqueado = false;
+
+                if (resultado.partida_finalizada) {
+                    finalizarJogo(resultado);
+                }
 
                 return;
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | Erro
+            |--------------------------------------------------------------------------
+            */
+
             mostrarFeedback(
-                'final',
-                `🏆 Jogo concluído! Você fez ${pontuacao} pontos e ganhou ${resultado.xp_ganho || 0} XP.`
+                resultado.mensagem ||
+                'Quase! Essas cartas não formam um par.',
+                'erro'
             );
 
             setTimeout(() => {
 
-                window.location.href =
-                    '../../aluno/progresso.php';
+                if (primeiraCarta) {
+                    primeiraCarta.elemento.classList.remove(
+                        'virada'
+                    );
 
-            }, 3000);
+                    primeiraCarta.elemento.setAttribute(
+                        'aria-label',
+                        'Carta fechada'
+                    );
+                }
+
+                if (segundaCarta) {
+                    segundaCarta.elemento.classList.remove(
+                        'virada'
+                    );
+
+                    segundaCarta.elemento.setAttribute(
+                        'aria-label',
+                        'Carta fechada'
+                    );
+                }
+
+                primeiraCarta = null;
+                segundaCarta = null;
+
+                bloqueado = false;
+
+            }, 1000);
 
         } catch (erro) {
 
-            console.error(
-                'Erro ao salvar a partida:',
-                erro
-            );
+            console.error(erro);
 
             mostrarFeedback(
-                'erro',
-                'A partida terminou, mas houve um problema ao salvar seus dados.'
+                erro.message ||
+                'Ocorreu um erro ao validar a jogada.',
+                'erro'
             );
-        }
-    }
 
+            if (primeiraCarta) {
+                primeiraCarta.elemento.classList.remove(
+                    'virada'
+                );
+            }
 
-    /* =========================
-       REINICIAR
-    ========================= */
-
-    reiniciarBtn.addEventListener(
-        'click',
-        () => {
+            if (segundaCarta) {
+                segundaCarta.elemento.classList.remove(
+                    'virada'
+                );
+            }
 
             primeiraCarta = null;
             segundaCarta = null;
 
             bloqueado = false;
+        }
+    }
 
-            paresEncontrados = 0;
-            acertos = 0;
-            erros = 0;
-            pontuacao = 0;
 
-            partidaFinalizada = false;
+    /*
+    |--------------------------------------------------------------------------
+    | Atualiza os números do jogo
+    |--------------------------------------------------------------------------
+    */
 
-            feedbackEl.classList.add('hidden');
+    function atualizarStatus(resultado) {
 
-            dificuldadeEl.textContent = 'Fácil';
+        if (typeof resultado.acertos !== 'undefined') {
+            acertos = Number(resultado.acertos);
+        }
 
-            atualizarStatus();
+        if (typeof resultado.erros !== 'undefined') {
+            erros = Number(resultado.erros);
+        }
 
-            renderizarTabuleiro();
+        if (typeof resultado.pontuacao !== 'undefined') {
+            pontuacao = Number(resultado.pontuacao);
+        }
 
+        acertosElemento.textContent = acertos;
+        errosElemento.textContent = erros;
+        pontuacaoElemento.textContent = pontuacao;
+
+        atualizarProgresso();
+        atualizarDificuldade();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Atualiza progresso visual
+    |--------------------------------------------------------------------------
+    */
+
+    function atualizarProgresso() {
+
+        if (totalPares <= 0) {
+            return;
+        }
+
+        const porcentagem = Math.round(
+            (acertos / totalPares) * 100
+        );
+
+        const progresso = Math.min(
+            100,
+            Math.max(0, porcentagem)
+        );
+
+        progressoTexto.textContent = `${progresso}%`;
+
+        barraProgresso.style.width = `${progresso}%`;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dificuldade visual
+    |--------------------------------------------------------------------------
+    */
+
+    function atualizarDificuldade() {
+
+        if (acertos <= 2) {
+
+            dificuldadeElemento.textContent = 'Fácil';
+
+        } else if (acertos <= 5) {
+
+            dificuldadeElemento.textContent = 'Médio';
+
+        } else {
+
+            dificuldadeElemento.textContent = 'Difícil';
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Feedback
+    |--------------------------------------------------------------------------
+    */
+
+    function mostrarFeedback(mensagem, tipo) {
+
+        feedback.textContent = mensagem;
+
+        feedback.classList.remove(
+            'sucesso',
+            'erro'
+        );
+
+        if (tipo) {
+            feedback.classList.add(tipo);
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Finalização
+    |--------------------------------------------------------------------------
+    */
+
+    function finalizarJogo(resultado) {
+
+        partidaFinalizada = true;
+        bloqueado = true;
+
+        atualizarStatus(resultado);
+
+        mostrarFeedback(
+            `🏆 Parabéns! Você terminou com ${resultado.acertos} acertos e ${resultado.pontuacao} pontos!`,
+            'sucesso'
+        );
+
+        setTimeout(() => {
+
+            window.location.href =
+                '../../aluno/progresso.php';
+
+        }, 3000);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dica
+    |--------------------------------------------------------------------------
+    */
+
+    botaoDica.addEventListener(
+        'click',
+        () => {
+
+            dica.hidden = !dica.hidden;
+
+            if (dica.hidden) {
+
+                botaoDica.textContent = '💡 Dica';
+
+            } else {
+
+                botaoDica.textContent = '💡 Ocultar dica';
+            }
         }
     );
 
 
-    /* =========================
-       SEGURANÇA HTML
-    ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Reiniciar
+    |--------------------------------------------------------------------------
+    */
+
+    botaoReiniciar.addEventListener(
+        'click',
+        async () => {
+
+            if (
+                !confirm(
+                    'Deseja reiniciar o jogo? O progresso desta partida será perdido.'
+                )
+            ) {
+                return;
+            }
+
+            try {
+
+                const resposta = await fetch(
+                    '../../api/memoria-matematica.php',
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            acao: 'reiniciar',
+                            jogo_id: dados.jogoId
+                        })
+                    }
+                );
+
+                const resultado = await resposta.json();
+
+                if (!resposta.ok || !resultado.sucesso) {
+
+                    throw new Error(
+                        resultado.mensagem ||
+                        'Não foi possível reiniciar.'
+                    );
+                }
+
+                window.location.reload();
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                mostrarFeedback(
+                    erro.message ||
+                    'Não foi possível reiniciar o jogo.',
+                    'erro'
+                );
+            }
+        }
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Segurança para exibição dos valores
+    |--------------------------------------------------------------------------
+    */
 
     function escapeHtml(valor) {
 
         const div = document.createElement('div');
 
-        div.textContent = valor;
+        div.textContent = String(valor);
 
         return div.innerHTML;
     }
 
 
-    /* =========================
-       INICIAR
-    ========================= */
+    /*
+    |--------------------------------------------------------------------------
+    | Inicialização
+    |--------------------------------------------------------------------------
+    */
 
-    atualizarStatus();
-
-    renderizarTabuleiro();
+    criarTabuleiro();
+    atualizarProgresso();
+    atualizarDificuldade();
 
 });
