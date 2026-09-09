@@ -69,11 +69,11 @@ foreach ($perguntasBanco as $pergunta) {
     $perguntasPublicas[] = [
         'id' => (int) $pergunta['id'],
         'enunciado' => $pergunta['enunciado'],
+        'resposta_correta' => $pergunta['resposta_correta'],
         'dificuldade' => $pergunta['dificuldade'],
         'pontuacao' => (int) $pergunta['pontuacao']
     ];
 }
-
 ?>
 
 <!DOCTYPE html>
