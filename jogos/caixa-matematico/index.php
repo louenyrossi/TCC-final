@@ -5,10 +5,6 @@ require_once '../../config/config.php';
 
 protegerPagina('aluno');
 
-/* =========================================================
-   USUÁRIO LOGADO
-========================================================= */
-
 $usuarioId = usuarioId();
 
 if (!$usuarioId) {
@@ -16,9 +12,9 @@ if (!$usuarioId) {
     exit;
 }
 
-/* =========================================================
-   BUSCAR DADOS DO ALUNO E DA TURMA
-========================================================= */
+/* ==========================================================
+   BUSCAR ALUNO E TURMA
+========================================================== */
 
 $stmt = $pdo->prepare("
     SELECT
@@ -42,10 +38,6 @@ if (!$aluno) {
     die('Aluno não encontrado.');
 }
 
-/* =========================================================
-   VERIFICAR TURMA
-========================================================= */
-
 if (empty($aluno['turma_id']) || empty($aluno['ano_serie'])) {
     die('Seu cadastro ainda não possui uma turma definida.');
 }
@@ -53,9 +45,10 @@ if (empty($aluno['turma_id']) || empty($aluno['ano_serie'])) {
 $turmaId = (int) $aluno['turma_id'];
 $anoSerie = (int) $aluno['ano_serie'];
 
-/* =========================================================
-   BUSCAR O JOGO
-========================================================= */
+
+/* ==========================================================
+   BUSCAR JOGO
+========================================================== */
 
 $stmt = $pdo->prepare("
     SELECT
@@ -78,18 +71,10 @@ if (!$jogo) {
 
 $jogoId = (int) $jogo['id'];
 
-/* =========================================================
-   VERIFICAR SE O JOGO ESTÁ DISPONÍVEL PARA A TURMA
-========================================================= */
 
-/*
- * Se a tabela jogos_turmas já estiver sendo utilizada,
- * verificamos se o professor liberou o jogo para esta turma.
- *
- * Caso ainda não exista um registro para a turma,
- * mantemos o jogo disponível para não quebrar o funcionamento
- * durante a fase de testes.
- */
+/* ==========================================================
+   VERIFICAR DISPONIBILIDADE PARA A TURMA
+========================================================== */
 
 $jogoLiberado = true;
 
@@ -108,18 +93,19 @@ try {
         $turmaId
     ]);
 
-    $configuracaoTurma = $stmt->fetch();
+    $configuracao = $stmt->fetch();
 
-    if ($configuracaoTurma) {
-        $jogoLiberado = (bool) $configuracaoTurma['ativo'];
+    if ($configuracao) {
+        $jogoLiberado = (bool) $configuracao['ativo'];
     }
 
 } catch (PDOException $e) {
 
     /*
-     * Caso a tabela jogos_turmas ainda não esteja criada,
-     * não interrompemos o jogo.
+     * Se a tabela jogos_turmas ainda não estiver disponível,
+     * o jogo continua funcionando.
      */
+
     $jogoLiberado = true;
 }
 
@@ -127,29 +113,22 @@ if (!$jogoLiberado) {
     die('Este jogo ainda não está disponível para sua turma.');
 }
 
-/* =========================================================
-   BUSCAR PERGUNTAS DA SÉRIE DO ALUNO
-========================================================= */
+
+/* ==========================================================
+   BUSCAR PERGUNTAS DA SÉRIE
+========================================================== */
 
 $stmt = $pdo->prepare("
     SELECT
         id,
         enunciado,
         conteudo,
-        resposta_correta,
         dificuldade,
         pontuacao
     FROM perguntas
     WHERE jogo_id = ?
       AND ano_serie = ?
-    ORDER BY
-        CASE dificuldade
-            WHEN 'facil' THEN 1
-            WHEN 'medio' THEN 2
-            WHEN 'dificil' THEN 3
-            ELSE 4
-        END,
-        id ASC
+    ORDER BY id ASC
 ");
 
 $stmt->execute([
@@ -159,10 +138,6 @@ $stmt->execute([
 
 $perguntasBanco = $stmt->fetchAll();
 
-/* =========================================================
-   VERIFICAR PERGUNTAS
-========================================================= */
-
 if (empty($perguntasBanco)) {
     die(
         'Nenhuma pergunta cadastrada para o ' .
@@ -171,9 +146,10 @@ if (empty($perguntasBanco)) {
     );
 }
 
-/* =========================================================
-   PREPARAR DADOS PARA O JAVASCRIPT
-========================================================= */
+
+/* ==========================================================
+   PREPARAR PERGUNTAS PARA O JAVASCRIPT
+========================================================== */
 
 $perguntasPublicas = [];
 
@@ -183,28 +159,30 @@ foreach ($perguntasBanco as $pergunta) {
         'id' => (int) $pergunta['id'],
         'enunciado' => $pergunta['enunciado'],
         'conteudo' => $pergunta['conteudo'],
-        'resposta_correta' => $pergunta['resposta_correta'],
         'dificuldade' => $pergunta['dificuldade'],
         'pontuacao' => (int) $pergunta['pontuacao']
     ];
 }
 
-/* =========================================================
-   NOME DA DIFICULDADE
-========================================================= */
 
-$dificuldadeAtual = 'fácil';
+/* ==========================================================
+   DIFICULDADE DA SÉRIE
+========================================================== */
+
+$dificuldadeAtual = 'Fácil';
 
 if ($anoSerie === 7) {
-    $dificuldadeAtual = 'médio';
+    $dificuldadeAtual = 'Médio';
 } elseif ($anoSerie === 8) {
-    $dificuldadeAtual = 'difícil';
+    $dificuldadeAtual = 'Difícil';
 } elseif ($anoSerie === 9) {
-    $dificuldadeAtual = 'muito difícil';
+    $dificuldadeAtual = 'Muito difícil';
 }
 
 ?>
+
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
@@ -216,7 +194,9 @@ if ($anoSerie === 7) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Caixa Matemático - MathPlay</title>
+    <title>
+        Caixa Matemático - MathPlay
+    </title>
 
     <link
         rel="stylesheet"
@@ -225,402 +205,436 @@ if ($anoSerie === 7) {
 
 </head>
 
+
 <body>
 
-<main class="pagina-jogo">
+<div class="game-page">
 
-    <!-- =====================================================
-         CABEÇALHO
-    ====================================================== -->
 
-    <header class="cabecalho-jogo">
+    <!-- ======================================================
+         HEADER
+    ======================================================= -->
+
+    <header class="game-header">
 
         <a
             href="../../aluno/jogos.php"
-            class="botao-voltar"
+            class="back-button"
         >
             ← Voltar aos jogos
         </a>
 
-        <div class="titulo-jogo">
 
-            <span class="icone-jogo">🧮</span>
+        <div class="game-brand">
+
+            <div class="game-brand-icon">
+                🧮
+            </div>
 
             <div>
 
-                <h1>Caixa Matemático</h1>
+                <span>
+                    MathPlay
+                </span>
 
-                <p>
-                    Resolva situações matemáticas do dia a dia.
-                </p>
+                <strong>
+                    Caixa Matemático
+                </strong>
 
             </div>
+
+        </div>
+
+
+        <div class="player-info">
+
+            <span>
+                Aluno
+            </span>
+
+            <strong>
+                <?= htmlspecialchars($aluno['nome']) ?>
+            </strong>
 
         </div>
 
     </header>
 
 
-    <!-- =====================================================
-         INFORMAÇÕES DA TURMA
-    ====================================================== -->
+    <!-- ======================================================
+         CONTEÚDO
+    ======================================================= -->
 
-    <section class="informacoes-aluno">
+    <main class="game-container">
 
-        <div class="info-item">
 
-            <span class="info-label">
-                Turma
-            </span>
+        <!-- ==================================================
+             STATUS
+        =================================================== -->
 
-            <strong>
-                <?= htmlspecialchars($aluno['turma_nome']) ?>
-            </strong>
+        <section class="game-status">
 
-        </div>
 
-        <div class="info-item">
+            <div class="status-card">
 
-            <span class="info-label">
-                Série
-            </span>
+                <span class="status-label">
+                    Questão
+                </span>
 
-            <strong>
-                <?= $anoSerie ?>º ano
-            </strong>
+                <strong id="question-number">
+                    1
+                </strong>
 
-        </div>
+                <span id="question-total">
+                    / <?= count($perguntasPublicas) ?>
+                </span>
 
-        <div class="info-item">
-
-            <span class="info-label">
-                Dificuldade
-            </span>
-
-            <strong>
-                <?= htmlspecialchars($dificuldadeAtual) ?>
-            </strong>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         STATUS DO JOGO
-    ====================================================== -->
-
-    <section class="status-jogo">
-
-        <div class="status-card">
-
-            <span class="status-label">
-                Questão
-            </span>
-
-            <strong id="questaoAtual">
-                1
-            </strong>
-
-            <span>
-                de <?= count($perguntasPublicas) ?>
-            </span>
-
-        </div>
-
-
-        <div class="status-card">
-
-            <span class="status-label">
-                Acertos
-            </span>
-
-            <strong id="acertos">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="status-card">
-
-            <span class="status-label">
-                Erros
-            </span>
-
-            <strong id="erros">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="status-card">
-
-            <span class="status-label">
-                Pontuação
-            </span>
-
-            <strong id="pontuacao">
-                0
-            </strong>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         BARRA DE PROGRESSO
-    ====================================================== -->
-
-    <section class="progresso-container">
-
-        <div class="progresso-topo">
-
-            <span>
-                Progresso
-            </span>
-
-            <span id="progressoTexto">
-                0%
-            </span>
-
-        </div>
-
-        <div class="barra-progresso">
-
-            <div
-                class="barra-progresso-preenchida"
-                id="barraProgresso"
-                style="width: 0%;"
-            ></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         ÁREA DA PERGUNTA
-    ====================================================== -->
-
-    <section class="area-pergunta">
-
-        <div class="cabecalho-pergunta">
-
-            <span
-                class="badge-dificuldade"
-                id="badgeDificuldade"
-            >
-                Fácil
-            </span>
-
-            <span
-                class="badge-conteudo"
-                id="badgeConteudo"
-            >
-                Matemática Financeira
-            </span>
-
-        </div>
-
-
-        <div class="pergunta">
-
-            <span class="numero-pergunta">
-                Questão <span id="numeroPergunta">1</span>
-            </span>
-
-            <h2 id="enunciado">
-                Carregando questão...
-            </h2>
-
-        </div>
-
-
-        <!-- =================================================
-             DICA
-        ================================================== -->
-
-        <div class="area-dica">
-
-            <button
-                type="button"
-                id="botaoDica"
-                class="botao-dica"
-            >
-                💡 Ver dica
-            </button>
-
-            <div
-                id="dica"
-                class="dica"
-                hidden
-            >
-                Pense com calma e identifique quais valores
-                aparecem na situação.
             </div>
 
-        </div>
+
+            <div class="status-card">
+
+                <span class="status-label">
+                    Acertos
+                </span>
+
+                <strong id="correct">
+                    0
+                </strong>
+
+            </div>
 
 
-        <!-- =================================================
-             FORMULÁRIO DE RESPOSTA
-        ================================================== -->
+            <div class="status-card">
 
-        <form
-            id="formResposta"
-            class="form-resposta"
-        >
+                <span class="status-label">
+                    Erros
+                </span>
 
-            <label for="resposta">
-                Sua resposta
-            </label>
+                <strong id="incorrect">
+                    0
+                </strong>
 
-            <div class="campo-resposta">
+            </div>
 
-                <input
-                    type="text"
-                    id="resposta"
-                    name="resposta"
-                    autocomplete="off"
-                    placeholder="Digite sua resposta"
-                    required
+
+            <div class="status-card score-card">
+
+                <span class="status-label">
+                    Pontuação
+                </span>
+
+                <strong id="score">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             PROGRESSO
+        =================================================== -->
+
+        <section class="progress-wrapper">
+
+            <div class="progress-info">
+
+                <span>
+                    Progresso
+                </span>
+
+                <span id="progress-text">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progress-fill"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             CARD PRINCIPAL
+        =================================================== -->
+
+        <section class="game-card">
+
+
+            <div class="game-card-header">
+
+                <div>
+
+                    <span
+                        class="game-category"
+                        id="category"
+                    >
+                        <?= htmlspecialchars(
+                            $perguntasPublicas[0]['conteudo']
+                                ?: 'Matemática'
+                        ) ?>
+                    </span>
+
+                    <h1>
+                        Caixa Matemático
+                    </h1>
+
+                </div>
+
+
+                <span
+                    class="difficulty-badge"
+                    id="difficulty"
                 >
+                    <?= htmlspecialchars($dificuldadeAtual) ?>
+                </span>
+
+            </div>
+
+
+            <!-- ==============================================
+                 CENÁRIO
+            =============================================== -->
+
+            <div class="scenario">
+
+                <div class="scenario-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <strong>
+                        Situação do dia a dia
+                    </strong>
+
+                    <p>
+                        Resolva o problema usando os valores
+                        apresentados na questão.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================================
+                 PERGUNTA
+            =============================================== -->
+
+            <div class="question-area">
+
+                <span class="question-label">
+                    QUESTÃO <span id="question-number-display">1</span>
+                </span>
+
+                <h2 id="question">
+                    Carregando questão...
+                </h2>
+
+            </div>
+
+
+            <!-- ==============================================
+                 DICA
+            =============================================== -->
+
+            <div class="hint-area">
+
+                <button
+                    type="button"
+                    class="hint-button"
+                    id="hint-button"
+                >
+                    💡 Ver dica
+                </button>
+
+                <div
+                    class="hint-text hidden"
+                    id="hint-text"
+                ></div>
+
+            </div>
+
+
+            <!-- ==============================================
+                 FORMULÁRIO
+            =============================================== -->
+
+            <form
+                id="answer-form"
+                class="answer-form"
+            >
+
+                <label for="answer">
+                    Sua resposta
+                </label>
+
+
+                <div class="answer-input-wrapper">
+
+                    <span>
+                        R$
+                    </span>
+
+                    <input
+                        type="text"
+                        id="answer"
+                        name="answer"
+                        placeholder="Digite sua resposta"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
 
                 <button
                     type="submit"
-                    id="botaoResponder"
+                    class="answer-button"
+                    id="answer-button"
                 >
-                    Responder
+                    Confirmar resposta
                 </button>
+
+            </form>
+
+
+            <!-- ==============================================
+                 FEEDBACK
+            =============================================== -->
+
+            <div
+                id="feedback"
+                class="feedback hidden"
+            >
+
+                <div
+                    class="feedback-icon"
+                    id="feedback-icon"
+                ></div>
+
+
+                <div>
+
+                    <strong id="feedback-title">
+                    </strong>
+
+                    <p id="feedback-message">
+                    </p>
+
+                </div>
 
             </div>
 
-        </form>
 
-
-        <!-- =================================================
-             FEEDBACK
-        ================================================== -->
-
-        <div
-            id="feedback"
-            class="feedback"
-            hidden
-        >
-
-            <div
-                id="feedbackTitulo"
-                class="feedback-titulo"
-            ></div>
-
-            <div
-                id="feedbackMensagem"
-                class="feedback-mensagem"
-            ></div>
-
-            <div
-                id="feedbackResposta"
-                class="feedback-resposta"
-            ></div>
+            <!-- ==============================================
+                 PRÓXIMA
+            =============================================== -->
 
             <button
                 type="button"
-                id="botaoProxima"
-                class="botao-proxima"
+                class="next-button hidden"
+                id="next-button"
             >
                 Próxima questão →
             </button>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =====================================================
-         FINAL DO JOGO
-    ====================================================== -->
+        <!-- ==================================================
+             DICAS EXTRAS
+        =================================================== -->
 
-    <section
-        id="resultadoFinal"
-        class="resultado-final"
-        hidden
-    >
+        <section class="game-tips">
 
-        <div class="resultado-icone">
-            🏆
-        </div>
 
-        <h2>
-            Partida concluída!
-        </h2>
+            <div class="tip-card">
 
-        <p>
-            Você terminou todas as questões.
-        </p>
+                <div class="tip-icon">
+                    🧠
+                </div>
 
-        <div class="resultado-cards">
+                <div>
 
-            <div class="resultado-card">
+                    <strong>
+                        Leia com atenção
+                    </strong>
 
-                <span>
-                    Acertos
-                </span>
+                    <p>
+                        Identifique os valores importantes
+                        antes de fazer a conta.
+                    </p>
 
-                <strong id="resultadoAcertos">
-                    0
-                </strong>
+                </div>
 
             </div>
 
-            <div class="resultado-card">
 
-                <span>
-                    Erros
-                </span>
+            <div class="tip-card">
 
-                <strong id="resultadoErros">
-                    0
-                </strong>
+                <div class="tip-icon">
+                    ✏️
+                </div>
 
-            </div>
+                <div>
 
-            <div class="resultado-card">
+                    <strong>
+                        Faça passo a passo
+                    </strong>
 
-                <span>
-                    Pontuação
-                </span>
+                    <p>
+                        Organize os cálculos para evitar erros.
+                    </p>
 
-                <strong id="resultadoPontuacao">
-                    0
-                </strong>
+                </div>
 
             </div>
 
-        </div>
 
-        <p
-            id="resultadoMensagem"
-            class="resultado-mensagem"
-        ></p>
+            <div class="tip-card">
 
-        <a
-            href="../../aluno/progresso.php"
-            class="botao-resultado"
-        >
-            Ver meu progresso
-        </a>
+                <div class="tip-icon">
+                    ⭐
+                </div>
 
-    </section>
+                <div>
 
-</main>
+                    <strong>
+                        Aprenda com os erros
+                    </strong>
+
+                    <p>
+                        O feedback ajuda você a entender
+                        a questão.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-<!-- =========================================================
-     DADOS PARA O JAVASCRIPT
-========================================================== -->
+    </main>
+
+</div>
+
+
+<!-- ==========================================================
+     DADOS DO JOGO
+=========================================================== -->
 
 <script>
 
@@ -636,12 +650,14 @@ window.MathPlayCaixa = {
 
     turmaNome: <?= json_encode(
         $aluno['turma_nome'],
-        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        JSON_UNESCAPED_UNICODE |
+        JSON_UNESCAPED_SLASHES
     ) ?>,
 
     perguntas: <?= json_encode(
         $perguntasPublicas,
-        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        JSON_UNESCAPED_UNICODE |
+        JSON_UNESCAPED_SLASHES
     ) ?>
 
 };
@@ -649,13 +665,53 @@ window.MathPlayCaixa = {
 </script>
 
 
-<!-- =========================================================
-     JAVASCRIPT DO JOGO
-========================================================== -->
-
 <script
     src="../../assets/js/caixa-matematico.js"
 ></script>
+
+
+<script>
+
+/*
+ * Atualiza o número visual da questão.
+ * O JS principal continua controlando o jogo.
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const original =
+        document.getElementById('question-number');
+
+    const visual =
+        document.getElementById('question-number-display');
+
+    if (!original || !visual) {
+        return;
+    }
+
+    const observer = new MutationObserver(function () {
+
+        visual.textContent =
+            original.textContent;
+
+    });
+
+    observer.observe(
+        original,
+        {
+            childList: true,
+            characterData: true,
+            subtree: true
+        }
+    );
+
+    visual.textContent =
+        original.textContent;
+
+});
+
+</script>
+
 
 </body>
 
