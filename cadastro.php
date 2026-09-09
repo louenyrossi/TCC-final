@@ -248,9 +248,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Cadastro | MathPlay</title>
 
     <link
-        rel="stylesheet"
-        href="assets/css/global.css"
-    >
+    rel="stylesheet"
+    href="assets/css/cadastro.css"
+>
 
 </head>
 
