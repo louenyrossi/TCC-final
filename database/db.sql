@@ -659,3 +659,56 @@ SET
     ano_serie = 9,
     conteudo = 'Raiz Quadrada e Divisão'
 WHERE id = 17 AND jogo_id = 2;
+USE b14_42774124_tcc_final;
+
+-- Garante as 8 turmas
+INSERT INTO turmas (nome, ano_serie)
+SELECT '6º A', 6
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '6º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '6º B', 6
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '6º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '7º A', 7
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '7º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '7º B', 7
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '7º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '8º A', 8
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '8º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '8º B', 8
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '8º B');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '9º A', 9
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '9º A');
+
+INSERT INTO turmas (nome, ano_serie)
+SELECT '9º B', 9
+WHERE NOT EXISTS (SELECT 1 FROM turmas WHERE nome = '9º B');
+
+
+-- Relação entre jogos e turmas
+CREATE TABLE IF NOT EXISTS jogos_turmas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jogo_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    FOREIGN KEY (jogo_id)
+        REFERENCES jogos(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (turma_id)
+        REFERENCES turmas(id)
+        ON DELETE CASCADE,
+
+    UNIQUE (jogo_id, turma_id)
+);

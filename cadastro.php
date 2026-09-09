@@ -1,98 +1,243 @@
 <?php
-session_start();
 
-require_once __DIR__ . '/config/config.php';
+require_once 'config/config.php';
 
 $erro = '';
 $sucesso = '';
+
+$turmas = [];
+
+try {
+
+    $stmt = $pdo->query("
+        SELECT id, nome, ano_serie
+        FROM turmas
+        WHERE ativo = 1
+        ORDER BY ano_serie, nome
+    ");
+
+    $turmas = $stmt->fetchAll();
+
+} catch (PDOException $e) {
+
+    $erro = 'Não foi possível carregar as turmas.';
+
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $senha = $_POST['senha'] ?? '';
-    $confirmar_senha = $_POST['confirmar_senha'] ?? '';
     $tipo = $_POST['tipo'] ?? 'aluno';
+    $turmaId = !empty($_POST['turma_id'])
+        ? (int) $_POST['turma_id']
+        : null;
 
-    // Validação dos campos
-    if ($nome === '' || $email === '' || $senha === '' || $confirmar_senha === '') {
-        $erro = 'Preencha todos os campos.';
-    }
 
-    // Validação do nome
-    elseif (strlen($nome) < 3) {
-        $erro = 'Digite um nome válido.';
-    }
+    /*
+     * ==========================================
+     * VALIDAÇÕES
+     * ==========================================
+     */
 
-    // Validação do e-mail
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if ($nome === '') {
+
+        $erro = 'Digite o nome do usuário.';
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
         $erro = 'Digite um e-mail válido.';
-    }
 
-    // Validação do tipo
-    elseif (!in_array($tipo, ['aluno', 'professor'], true)) {
+    } elseif (strlen($senha) < 6) {
+
+        $erro = 'A senha deve ter pelo menos 6 caracteres.';
+
+    } elseif (!in_array($tipo, ['aluno', 'professor'], true)) {
+
         $erro = 'Tipo de usuário inválido.';
+
+    } elseif ($tipo === 'aluno' && $turmaId === null) {
+
+        $erro = 'Selecione a turma do aluno.';
+
     }
 
-    // Validação da senha
-    elseif (strlen($senha) < 6) {
-        $erro = 'A senha deve possuir pelo menos 6 caracteres.';
-    }
 
-    // Confirmação da senha
-    elseif ($senha !== $confirmar_senha) {
-        $erro = 'As senhas não coincidem.';
-    }
+    /*
+     * ==========================================
+     * CADASTRO
+     * ==========================================
+     */
 
-    else {
+    if ($erro === '') {
 
-        // Verifica se o e-mail já existe
-        $stmt = $pdo->prepare("
-            SELECT id
-            FROM usuarios
-            WHERE email = ?
-            LIMIT 1
-        ");
+        try {
 
-        $stmt->execute([$email]);
+            /*
+             * Verifica e-mail
+             */
 
-        if ($stmt->fetch()) {
-
-            $erro = 'Este e-mail já está cadastrado.';
-
-        } else {
-
-            // Protege a senha
-            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-            // Cadastra o usuário
             $stmt = $pdo->prepare("
-                INSERT INTO usuarios
-                (nome, email, senha, tipo, nivel, xp)
-                VALUES (?, ?, ?, ?, 1, 0)
+                SELECT id
+                FROM usuarios
+                WHERE email = ?
+                LIMIT 1
             ");
 
-            $stmt->execute([
-                $nome,
-                $email,
-                $senha_hash,
-                $tipo
-            ]);
+            $stmt->execute([$email]);
 
-            $sucesso = 'Cadastro realizado com sucesso! Você já pode entrar na plataforma.';
+            if ($stmt->fetch()) {
 
-            // Limpa os campos depois do cadastro
-            $nome = '';
-            $email = '';
+                $erro = 'Este e-mail já está cadastrado.';
+
+            } else {
+
+                /*
+                 * Verifica turma
+                 */
+
+                if ($tipo === 'aluno') {
+
+                    $stmt = $pdo->prepare("
+                        SELECT id
+                        FROM turmas
+                        WHERE id = ?
+                          AND ativo = 1
+                        LIMIT 1
+                    ");
+
+                    $stmt->execute([$turmaId]);
+
+                    if (!$stmt->fetch()) {
+
+                        $erro = 'A turma selecionada não existe.';
+
+                    }
+
+                }
+
+
+                if ($erro === '') {
+
+                    $senhaHash = password_hash(
+                        $senha,
+                        PASSWORD_DEFAULT
+                    );
+
+
+                    /*
+                     * Cria usuário
+                     */
+
+                    $stmt = $pdo->prepare("
+                        INSERT INTO usuarios
+                        (
+                            nome,
+                            email,
+                            senha,
+                            tipo,
+                            nivel,
+                            xp,
+                            turma_id
+                        )
+                        VALUES
+                        (
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            1,
+                            0,
+                            ?
+                        )
+                    ");
+
+
+                    $stmt->execute([
+                        $nome,
+                        $email,
+                        $senhaHash,
+                        $tipo,
+                        $tipo === 'aluno' ? $turmaId : null
+                    ]);
+
+
+                    $usuarioId = (int) $pdo->lastInsertId();
+
+
+                    /*
+                     * Cria progresso inicial dos jogos
+                     * para alunos
+                     */
+
+                    if ($tipo === 'aluno') {
+
+                        $stmt = $pdo->prepare("
+                            SELECT id
+                            FROM jogos
+                            WHERE ativo = 1
+                        ");
+
+                        $stmt->execute();
+
+                        $jogos = $stmt->fetchAll();
+
+
+                        foreach ($jogos as $jogo) {
+
+                            $stmtProgresso = $pdo->prepare("
+                                INSERT IGNORE INTO progresso
+                                (
+                                    usuario_id,
+                                    jogo_id,
+                                    dificuldade,
+                                    status,
+                                    porcentagem
+                                )
+                                VALUES
+                                (
+                                    ?,
+                                    ?,
+                                    'facil',
+                                    'bloqueado',
+                                    0
+                                )
+                            ");
+
+                            $stmtProgresso->execute([
+                                $usuarioId,
+                                $jogo['id']
+                            ]);
+                        }
+
+                    }
+
+
+                    $sucesso = 'Cadastro realizado com sucesso!';
+
+                }
+
+            }
+
+        } catch (PDOException $e) {
+
+            $erro = 'Erro ao realizar o cadastro: ' . $e->getMessage();
+
         }
+
     }
+
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -100,335 +245,246 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="Crie sua conta no MathPlay"
-    >
-
     <title>Cadastro | MathPlay</title>
 
     <link
         rel="stylesheet"
-        href="assets/css/cadastro.css"
+        href="assets/css/global.css"
     >
+
 </head>
 
 <body>
 
-    <main class="cadastro-container">
+<main class="pagina-cadastro">
 
-        <section class="cadastro-card">
+    <section class="card-cadastro">
 
-            <div class="logo-area">
-                <div class="logo-icon">M</div>
+        <div class="cabecalho-cadastro">
 
-                <div>
-                    <h1>Math<span>Play</span></h1>
-                    <p>Aprender matemática pode ser divertido!</p>
-                </div>
+            <div class="logo-cadastro">
+                🧮
+            </div>
+
+            <h1>
+                Criar conta
+            </h1>
+
+            <p>
+                Faça seu cadastro no MathPlay
+            </p>
+
+        </div>
+
+
+        <?php if ($erro !== ''): ?>
+
+            <div class="mensagem-erro">
+
+                <?= htmlspecialchars($erro) ?>
+
+            </div>
+
+        <?php endif; ?>
+
+
+        <?php if ($sucesso !== ''): ?>
+
+            <div class="mensagem-sucesso">
+
+                <?= htmlspecialchars($sucesso) ?>
+
+                <br><br>
+
+                <a href="login.php">
+                    Ir para o login
+                </a>
+
+            </div>
+
+        <?php endif; ?>
+
+
+        <form
+            method="POST"
+            action=""
+        >
+
+
+            <div class="campo">
+
+                <label for="nome">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value="<?= htmlspecialchars($_POST['nome'] ?? '') ?>"
+                    placeholder="Digite o nome"
+                    required
+                >
+
             </div>
 
 
-            <div class="form-header">
-                <h2>Criar sua conta</h2>
+            <div class="campo">
 
-                <p>
-                    Preencha seus dados para começar sua jornada.
-                </p>
+                <label for="email">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                    placeholder="Digite o e-mail"
+                    required
+                >
+
             </div>
 
 
-            <?php if ($erro !== ''): ?>
+            <div class="campo">
 
-                <div class="mensagem mensagem-erro">
-                    <span>!</span>
-                    <p><?= htmlspecialchars($erro) ?></p>
-                </div>
+                <label for="senha">
+                    Senha
+                </label>
 
-            <?php endif; ?>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    placeholder="Mínimo de 6 caracteres"
+                    required
+                >
 
-
-            <?php if ($sucesso !== ''): ?>
-
-                <div class="mensagem mensagem-sucesso">
-                    <span>✓</span>
-
-                    <p>
-                        <?= htmlspecialchars($sucesso) ?>
-                    </p>
-                </div>
-
-            <?php endif; ?>
+            </div>
 
 
-            <form
-                id="cadastroForm"
-                method="POST"
-                action="cadastro.php"
-                novalidate
+            <div class="campo">
+
+                <label for="tipo">
+                    Tipo de usuário
+                </label>
+
+                <select
+                    id="tipo"
+                    name="tipo"
+                    onchange="mostrarTurma()"
+                >
+
+                    <option
+                        value="aluno"
+                        <?= ($_POST['tipo'] ?? 'aluno') === 'aluno' ? 'selected' : '' ?>
+                    >
+                        Aluno
+                    </option>
+
+                    <option
+                        value="professor"
+                        <?= ($_POST['tipo'] ?? '') === 'professor' ? 'selected' : '' ?>
+                    >
+                        Professor
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="campo"
+                id="campo-turma"
             >
 
-                <div class="campo">
+                <label for="turma_id">
+                    Série / Turma
+                </label>
 
-                    <label for="nome">
-                        Nome completo
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Digite seu nome"
-                        value="<?= htmlspecialchars($nome ?? '') ?>"
-                        autocomplete="name"
-                        required
-                    >
-
-                    <small class="erro-campo" id="erroNome"></small>
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="email">
-                        E-mail
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="seuemail@exemplo.com"
-                        value="<?= htmlspecialchars($email ?? '') ?>"
-                        autocomplete="email"
-                        required
-                    >
-
-                    <small class="erro-campo" id="erroEmail"></small>
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label>
-                        Você é:
-                    </label>
-
-                    <div class="tipo-container">
-
-                        <label class="tipo-option">
-
-                            <input
-                                type="radio"
-                                name="tipo"
-                                value="aluno"
-                                <?= (($tipo ?? 'aluno') === 'aluno') ? 'checked' : '' ?>
-                            >
-
-                            <span class="tipo-card">
-
-                                <span class="tipo-icon">🎓</span>
-
-                                <span class="tipo-texto">
-                                    <strong>Aluno</strong>
-                                    <small>Quero aprender</small>
-                                </span>
-
-                            </span>
-
-                        </label>
-
-
-                        <label class="tipo-option">
-
-                            <input
-                                type="radio"
-                                name="tipo"
-                                value="professor"
-                                <?= (($tipo ?? '') === 'professor') ? 'checked' : '' ?>
-                            >
-
-                            <span class="tipo-card">
-
-                                <span class="tipo-icon">👨‍🏫</span>
-
-                                <span class="tipo-texto">
-                                    <strong>Professor</strong>
-                                    <small>Quero ensinar</small>
-                                </span>
-
-                            </span>
-
-                        </label>
-
-                    </div>
-
-                    <small class="erro-campo" id="erroTipo"></small>
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="senha">
-                        Senha
-                    </label>
-
-                    <div class="senha-container">
-
-                        <input
-                            type="password"
-                            id="senha"
-                            name="senha"
-                            placeholder="Mínimo de 6 caracteres"
-                            autocomplete="new-password"
-                            required
-                        >
-
-                        <button
-                            type="button"
-                            class="mostrar-senha"
-                            id="mostrarSenha"
-                            aria-label="Mostrar senha"
-                        >
-                            👁
-                        </button>
-
-                    </div>
-
-                    <div class="senha-forca">
-
-                        <div class="forca-barra">
-                            <span id="forcaProgresso"></span>
-                        </div>
-
-                        <small id="forcaTexto">
-                            Digite uma senha
-                        </small>
-
-                    </div>
-
-                    <small class="erro-campo" id="erroSenha"></small>
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="confirmar_senha">
-                        Confirmar senha
-                    </label>
-
-                    <div class="senha-container">
-
-                        <input
-                            type="password"
-                            id="confirmar_senha"
-                            name="confirmar_senha"
-                            placeholder="Digite a senha novamente"
-                            autocomplete="new-password"
-                            required
-                        >
-
-                        <button
-                            type="button"
-                            class="mostrar-senha"
-                            id="mostrarConfirmarSenha"
-                            aria-label="Mostrar confirmação da senha"
-                        >
-                            👁
-                        </button>
-
-                    </div>
-
-                    <small
-                        class="erro-campo"
-                        id="erroConfirmarSenha"
-                    ></small>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="btn-cadastrar"
-                    id="btnCadastrar"
+                <select
+                    id="turma_id"
+                    name="turma_id"
                 >
-                    <span>Criar minha conta</span>
-                    <span class="btn-seta">→</span>
-                </button>
 
-            </form>
-
-
-            <div class="login-link">
-
-                <p>
-                    Já possui uma conta?
-                    <a href="login.php">Entrar</a>
-                </p>
-
-            </div>
-
-        </section>
+                    <option value="">
+                        Selecione sua turma
+                    </option>
 
 
-        <aside class="cadastro-lateral">
+                    <?php foreach ($turmas as $turma): ?>
 
-            <div class="lateral-content">
+                        <option
+                            value="<?= (int) $turma['id'] ?>"
+                            <?= ((int) ($_POST['turma_id'] ?? 0) === (int) $turma['id']) ? 'selected' : '' ?>
+                        >
 
-                <span class="lateral-badge">
-                    🚀 Aprenda jogando
-                </span>
+                            <?= htmlspecialchars($turma['nome']) ?>
 
-                <h2>
-                    Sua jornada matemática
-                    começa aqui!
-                </h2>
+                        </option>
 
-                <p>
-                    Resolva desafios, conquiste medalhas,
-                    acumule XP e evolua no MathPlay.
-                </p>
+                    <?php endforeach; ?>
 
-                <div class="beneficios">
-
-                    <div class="beneficio">
-                        <span>🎮</span>
-                        <div>
-                            <strong>Jogos educativos</strong>
-                            <small>Aprenda matemática de forma divertida.</small>
-                        </div>
-                    </div>
-
-                    <div class="beneficio">
-                        <span>🏆</span>
-                        <div>
-                            <strong>Conquistas</strong>
-                            <small>Desbloqueie medalhas durante sua evolução.</small>
-                        </div>
-                    </div>
-
-                    <div class="beneficio">
-                        <span>📈</span>
-                        <div>
-                            <strong>Acompanhe seu progresso</strong>
-                            <small>Veja seu nível, XP e desempenho.</small>
-                        </div>
-                    </div>
-
-                </div>
+                </select>
 
             </div>
 
-        </aside>
 
-    </main>
+            <button
+                type="submit"
+                class="botao-cadastro"
+            >
+                Criar conta
+            </button>
 
 
-    <script src="assets/js/cadastro.js"></script>
+        </form>
+
+
+        <p class="link-login">
+
+            Já possui uma conta?
+
+            <a href="login.php">
+                Entrar
+            </a>
+
+        </p>
+
+
+    </section>
+
+</main>
+
+
+<script>
+
+function mostrarTurma() {
+
+    const tipo = document.getElementById('tipo').value;
+    const campoTurma = document.getElementById('campo-turma');
+    const turma = document.getElementById('turma_id');
+
+    if (tipo === 'aluno') {
+
+        campoTurma.style.display = 'block';
+        turma.required = true;
+
+    } else {
+
+        campoTurma.style.display = 'none';
+        turma.required = false;
+        turma.value = '';
+
+    }
+
+}
+
+document.addEventListener('DOMContentLoaded', mostrarTurma);
+
+</script>
 
 </body>
 
