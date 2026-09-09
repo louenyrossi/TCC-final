@@ -996,14 +996,14 @@ body {
 ========================================================== */
 
 .answer-button {
-    background: #35ffa1;
-    border: 2px solid #13351a;
+    background: #f9032c;
+    border: 2px solid #9c071f;
     box-shadow:
-        0 3px 0 #14915d;
+        0 3px 0 #f9032c;
 }
 
 .answer-button:hover {
-    background: #096939;
+    background: #f9032c;
     transform: translateY(-1px);
 }
 
