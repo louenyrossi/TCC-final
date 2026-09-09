@@ -21,14 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let cartas = [];
     let primeiraCarta = null;
     let segundaCarta = null;
-
     let bloqueado = false;
 
     let paresEncontrados = 0;
     let acertos = 0;
     let erros = 0;
     let pontuacao = 0;
-
     let partidaFinalizada = false;
 
 
@@ -61,42 +59,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dados.perguntas.forEach((pergunta) => {
 
-            /*
-             * CARTA DA EXPRESSÃO
-             */
+            /* Carta da operação */
 
             cartasGeradas.push({
+
                 perguntaId: pergunta.id,
+
                 tipo: 'operacao',
-                valor: pergunta.enunciado,
-                par: pergunta.resposta_correta || null
+
+                valor: pergunta.enunciado
+
             });
 
 
-            /*
-             * CARTA DO RESULTADO
-             */
+            /* Carta do resultado */
 
-            const resultado = calcularResultado(pergunta.enunciado);
+            const resultado = calcularResultado(
+                pergunta.enunciado
+            );
 
             cartasGeradas.push({
+
                 perguntaId: pergunta.id,
+
                 tipo: 'resultado',
 
-                /*
-                 * Primeiro tenta calcular o resultado.
-                 *
-                 * Se não conseguir, usa a resposta correta
-                 * que veio do banco de dados.
-                 *
-                 * Assim nunca aparece "?" como resposta.
-                 */
-
                 valor: resultado !== null
-                    ? String(resultado)
-                    : String(pergunta.resposta_correta || 'Erro'),
+                    ? formatarResultado(resultado)
+                    : 'Erro'
 
-                par: pergunta.enunciado
             });
 
         });
@@ -111,80 +102,125 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calcularResultado(enunciado) {
 
-        try {
-
-            let expressao = String(enunciado)
-                .replace(/Calcule:\s*/gi, '')
-                .replace(/\?/g, '')
-                .replace(/=/g, '')
-                .trim();
+        let expressao = String(enunciado)
+            .trim();
 
 
-            /*
-             * OPERADORES MATEMÁTICOS
-             */
+        /* =========================
+           ÂNGULOS
+        ========================= */
 
-            expressao = expressao
-                .replace(/×/g, '*')
-                .replace(/x/gi, '*')
-                .replace(/÷/g, '/');
+        const angulo = expressao.match(
+            /(\d+(?:[.,]\d+)?)\s*°/
+        );
 
+        if (angulo) {
 
-            /*
-             * RAIZ QUADRADA
-             *
-             * √49 → Math.sqrt(49)
-             */
-
-            expressao = expressao.replace(
-                /√\s*(\d+(?:\.\d+)?)/g,
-                'Math.sqrt($1)'
+            const valor = Number(
+                angulo[1].replace(',', '.')
             );
 
-
-            /*
-             * POTÊNCIAS
-             *
-             * 3² → 3**2
-             * 2³ → 2**3
-             * 4⁴ → 4**4
-             */
-
-            expressao = expressao
-                .replace(/²/g, '**2')
-                .replace(/³/g, '**3')
-                .replace(/⁴/g, '**4')
-                .replace(/⁵/g, '**5');
-
-
-            /*
-             * REMOVE ESPAÇOS
-             */
-
-            expressao = expressao.replace(/\s+/g, '');
-
-
-            /*
-             * VERIFICAÇÃO DE SEGURANÇA
-             */
-
-            if (!/^[0-9+\-*/().a-zA-Z]+$/.test(expressao)) {
-                return null;
+            if (valor === 90) {
+                return 'Reto';
             }
 
+            if (valor > 90 && valor < 180) {
+                return 'Obtuso';
+            }
 
-            /*
-             * CALCULA A EXPRESSÃO
-             */
+            if (valor > 0 && valor < 90) {
+                return 'Agudo';
+            }
+
+            if (valor === 180) {
+                return 'Raso';
+            }
+
+            return null;
+        }
+
+
+        /* =========================
+           PORCENTAGEM
+        ========================= */
+
+        const porcentagem = expressao.match(
+            /(\d+(?:[.,]\d+)?)\s*%\s*de\s*(\d+(?:[.,]\d+)?)/i
+        );
+
+        if (porcentagem) {
+
+            const percentual = Number(
+                porcentagem[1].replace(',', '.')
+            );
+
+            const valor = Number(
+                porcentagem[2].replace(',', '.')
+            );
+
+            return (percentual / 100) * valor;
+        }
+
+
+        /* =========================
+           OPERADORES
+        ========================= */
+
+        expressao = expressao
+            .replace(/×/g, '*')
+            .replace(/x/gi, '*')
+            .replace(/÷/g, '/');
+
+
+        /* =========================
+           POTENCIAÇÃO
+        ========================= */
+
+        expressao = expressao
+            .replace(/²/g, '**2')
+            .replace(/³/g, '**3')
+            .replace(/⁴/g, '**4')
+            .replace(/⁵/g, '**5');
+
+
+        /* =========================
+           NÚMEROS COM VÍRGULA
+        ========================= */
+
+        expressao = expressao.replace(
+            /(\d),(\d)/g,
+            '$1.$2'
+        );
+
+
+        /* =========================
+           ESPAÇOS
+        ========================= */
+
+        expressao = expressao.replace(
+            /\s+/g,
+            ''
+        );
+
+
+        /* =========================
+           SEGURANÇA
+        ========================= */
+
+        if (!/^[0-9+\-*/().]+$/.test(expressao)) {
+            return null;
+        }
+
+
+        /* =========================
+           CALCULAR
+        ========================= */
+
+        try {
 
             const resultado = Function(
                 `"use strict"; return (${expressao})`
             )();
-
-
-            /*
-             * CONFIRMA SE O RESULTADO É VÁLIDO
-             */
 
             if (!Number.isFinite(resultado)) {
                 return null;
@@ -195,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (erro) {
 
             console.error(
-                'Erro ao calcular expressão:',
+                'Erro ao calcular:',
                 enunciado,
                 erro
             );
@@ -206,33 +242,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================
+       FORMATAR RESULTADO
+    ========================= */
+
+    function formatarResultado(resultado) {
+
+        if (typeof resultado === 'string') {
+            return resultado;
+        }
+
+        if (Number.isInteger(resultado)) {
+            return String(resultado);
+        }
+
+        return String(
+            Number(resultado.toFixed(2))
+        ).replace('.', ',');
+    }
+
+
+    /* =========================
        FORMATAR EXPRESSÃO
     ========================= */
 
     function formatarExpressao(expressao) {
 
-        if (!expressao) {
-            return '';
-        }
-
         return String(expressao)
             .replace(/Calcule:\s*/gi, '')
-            .replace(/\*\*2/g, '²')
-            .replace(/\*\*3/g, '³')
-            .replace(/\*\*4/g, '⁴')
-            .replace(/\*\*5/g, '⁵')
-            .replace(/\^2/g, '²')
-            .replace(/\^3/g, '³')
-            .replace(/\^4/g, '⁴')
-            .replace(/\^5/g, '⁵')
-            .replace(/\*/g, '×')
-            .replace(/\//g, '÷')
             .trim();
     }
 
 
     /* =========================
-       CRIAR TABULEIRO
+       RENDERIZAR TABULEIRO
     ========================= */
 
     function renderizarTabuleiro() {
@@ -247,27 +289,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             elemento.type = 'button';
 
-            elemento.className = `carta ${carta.tipo}`;
+            elemento.className =
+                `carta ${carta.tipo}`;
 
             elemento.dataset.indice = indice;
 
 
-            /*
-             * A FRENTE mostra apenas o símbolo do jogo.
-             *
-             * Quando clicar, a carta vira e mostra
-             * o conteúdo que está em carta.valor.
-             */
-
             let valorCarta = carta.valor;
 
             if (carta.tipo === 'operacao') {
-                valorCarta = formatarExpressao(valorCarta);
+
+                valorCarta =
+                    formatarExpressao(valorCarta);
             }
 
 
             elemento.innerHTML = `
-
                 <div class="carta-conteudo">
 
                     <div class="carta-frente">
@@ -279,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                 </div>
-
             `;
 
 
@@ -290,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             tabuleiro.appendChild(elemento);
-
         });
     }
 
@@ -314,37 +349,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        /*
-         * VIRA A CARTA
-         */
-
         elemento.classList.add('virada');
 
-
-        /*
-         * PRIMEIRA CARTA
-         */
 
         if (!primeiraCarta) {
 
             primeiraCarta = {
+
                 elemento: elemento,
+
                 indice: indice,
+
                 dados: cartas[indice]
+
             };
 
             return;
         }
 
 
-        /*
-         * SEGUNDA CARTA
-         */
-
         segundaCarta = {
+
             elemento: elemento,
+
             indice: indice,
+
             dados: cartas[indice]
+
         };
 
 
@@ -360,30 +391,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         bloqueado = true;
 
-        const primeira = primeiraCarta.dados;
-        const segunda = segundaCarta.dados;
+        const primeira =
+            primeiraCarta.dados;
 
+        const segunda =
+            segundaCarta.dados;
 
-        /*
-         * O PAR PRECISA SER DA MESMA PERGUNTA
-         */
 
         const mesmoId =
-            Number(primeira.perguntaId) === Number(segunda.perguntaId);
+            Number(primeira.perguntaId) ===
+            Number(segunda.perguntaId);
 
-
-        /*
-         * Uma carta precisa ser operação
-         * e a outra precisa ser resultado.
-         */
 
         const tiposDiferentes =
             primeira.tipo !== segunda.tipo;
 
-
-        /*
-         * PAR CORRETO
-         */
 
         if (mesmoId && tiposDiferentes) {
 
@@ -392,27 +414,28 @@ document.addEventListener('DOMContentLoaded', () => {
             paresEncontrados++;
 
 
-            const pergunta = dados.perguntas.find(
-                item =>
-                    Number(item.id) === Number(primeira.perguntaId)
-            );
+            const pergunta =
+                dados.perguntas.find(
+                    item =>
+                        Number(item.id) ===
+                        Number(primeira.perguntaId)
+                );
 
 
             if (pergunta) {
 
                 pontuacao +=
                     Number(pergunta.pontuacao) || 10;
-
             }
 
 
-            /*
-             * Marca as cartas como encontradas
-             */
+            primeiraCarta.elemento
+                .classList
+                .add('encontrada');
 
-            primeiraCarta.elemento.classList.add('encontrada');
-
-            segundaCarta.elemento.classList.add('encontrada');
+            segundaCarta.elemento
+                .classList
+                .add('encontrada');
 
 
             atualizarStatus();
@@ -427,10 +450,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resetarSelecao();
 
 
-            /*
-             * VERIFICA SE TERMINOU
-             */
-
             if (
                 paresEncontrados ===
                 dados.perguntas.length
@@ -441,16 +460,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
 
                 bloqueado = false;
-
             }
 
             return;
         }
 
 
-        /*
-         * PAR ERRADO
-         */
+        /* PAR ERRADO */
 
         erros++;
 
@@ -459,14 +475,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mostrarFeedback(
             'erro',
-            '🤔 Esse não é o par. Tente memorizar as cartas!'
+            '🤔 Esse não é o par. Tente novamente!'
         );
 
-
-        /*
-         * Depois de 1 segundo,
-         * as cartas voltam a fechar.
-         */
 
         setTimeout(() => {
 
@@ -500,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================
-       STATUS
+       ATUALIZAR STATUS
     ========================= */
 
     function atualizarStatus() {
@@ -525,14 +536,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const percentual =
             totalPares > 0
                 ? Math.round(
-                    (paresEncontrados / totalPares) * 100
+                    (paresEncontrados /
+                        totalPares) * 100
                 )
                 : 0;
 
 
         progressoTexto.textContent =
             `${percentual}%`;
-
 
         barraProgresso.style.width =
             `${percentual}%`;
@@ -580,7 +591,10 @@ document.addEventListener('DOMContentLoaded', () => {
        FEEDBACK
     ========================= */
 
-    function mostrarFeedback(tipo, mensagem) {
+    function mostrarFeedback(
+        tipo,
+        mensagem
+    ) {
 
         feedbackEl.className =
             `feedback ${tipo}`;
@@ -588,7 +602,9 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackEl.textContent =
             mensagem;
 
-        feedbackEl.classList.remove('hidden');
+        feedbackEl.classList.remove(
+            'hidden'
+        );
     }
 
 
@@ -611,10 +627,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'Concluído';
 
 
-        /*
-         * Salva a partida no servidor.
-         */
-
         salvarPartida();
     }
 
@@ -633,19 +645,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     method: 'POST',
 
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type':
+                            'application/json'
                     },
 
                     body: JSON.stringify({
 
-                        jogo_id: dados.jogoId,
+                        jogo_id:
+                            dados.jogoId,
 
-                        acertos: acertos,
+                        acertos:
+                            acertos,
 
-                        erros: erros,
+                        erros:
+                            erros,
 
-                        pontuacao: pontuacao
-
+                        pontuacao:
+                            pontuacao
                     })
                 }
             );
@@ -705,23 +721,21 @@ document.addEventListener('DOMContentLoaded', () => {
         () => {
 
             primeiraCarta = null;
-
             segundaCarta = null;
 
             bloqueado = false;
 
             paresEncontrados = 0;
-
             acertos = 0;
-
             erros = 0;
-
             pontuacao = 0;
 
             partidaFinalizada = false;
 
 
-            feedbackEl.classList.add('hidden');
+            feedbackEl.classList.add(
+                'hidden'
+            );
 
 
             dificuldadeEl.textContent =
@@ -731,7 +745,6 @@ document.addEventListener('DOMContentLoaded', () => {
             atualizarStatus();
 
             renderizarTabuleiro();
-
         }
     );
 
@@ -753,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================
-       INICIAR JOGO
+       INICIAR
     ========================= */
 
     atualizarStatus();

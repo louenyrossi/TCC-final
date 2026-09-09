@@ -18,6 +18,7 @@ $stmt = $pdo->prepare("
 ");
 
 $stmt->execute();
+
 $jogo = $stmt->fetch();
 
 if (!$jogo) {
@@ -25,6 +26,7 @@ if (!$jogo) {
 }
 
 $jogoId = (int) $jogo['id'];
+
 
 /* =========================
    BUSCAR PERGUNTAS
@@ -39,7 +41,7 @@ $stmt = $pdo->prepare("
         pontuacao
     FROM perguntas
     WHERE jogo_id = ?
-    ORDER BY
+    ORDER BY id ASC
 ");
 
 $stmt->execute([$jogoId]);
@@ -50,10 +52,16 @@ if (empty($perguntasBanco)) {
     die('Nenhuma pergunta cadastrada para este jogo.');
 }
 
+
+/* =========================
+   DADOS PÚBLICOS
+========================= */
+
 /*
- * Não enviamos a resposta correta para o navegador.
- * O PHP/BD continua sendo responsável pela validação.
+ * A resposta correta não é enviada
+ * diretamente para o JavaScript.
  */
+
 $perguntasPublicas = [];
 
 foreach ($perguntasBanco as $pergunta) {
@@ -91,246 +99,250 @@ foreach ($perguntasBanco as $pergunta) {
 
 <body>
 
-    <main class="pagina-jogo">
+<main class="pagina-jogo">
 
-        <!-- CABEÇALHO -->
+    <!-- CABEÇALHO -->
 
-        <header class="cabecalho-jogo">
+    <header class="cabecalho-jogo">
 
-            <a
-                href="../../aluno/jogos.php"
-                class="botao-voltar"
+        <a
+            href="../../aluno/jogos.php"
+            class="botao-voltar"
+        >
+            ← Voltar aos jogos
+        </a>
+
+        <div class="titulo-jogo">
+
+            <span class="icone-jogo">🧠</span>
+
+            <div>
+
+                <h1>Memória Matemática</h1>
+
+                <p>
+                    Encontre os pares entre operações e resultados.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- STATUS -->
+
+    <section class="status-jogo">
+
+        <div class="status-card">
+
+            <span>🎯</span>
+
+            <div>
+                <small>Pares</small>
+                <strong id="paresEncontrados">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <span>⭐</span>
+
+            <div>
+                <small>Pontuação</small>
+                <strong id="pontuacao">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <span>✅</span>
+
+            <div>
+                <small>Acertos</small>
+                <strong id="acertos">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <span>❌</span>
+
+            <div>
+                <small>Erros</small>
+                <strong id="erros">0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROGRESSO -->
+
+    <section class="progresso-container">
+
+        <div class="progresso-info">
+
+            <span>Progresso</span>
+
+            <strong id="progressoTexto">
+                0%
+            </strong>
+
+        </div>
+
+        <div class="barra-progresso">
+
+            <div
+                id="barraProgresso"
+                class="barra-preenchida"
+                style="width: 0%;"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INSTRUÇÕES -->
+
+    <section class="instrucoes">
+
+        <div class="instrucoes-icone">
+            💡
+        </div>
+
+        <div>
+
+            <strong>Como jogar?</strong>
+
+            <p>
+                Clique em duas cartas para revelar seu conteúdo.
+                Encontre o resultado correspondente à operação.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ÁREA DO JOGO -->
+
+    <section class="area-jogo">
+
+        <div class="cabecalho-area">
+
+            <div>
+
+                <span class="etiqueta">
+                    DESAFIO
+                </span>
+
+                <h2>
+                    Encontre os pares matemáticos
+                </h2>
+
+            </div>
+
+            <div
+                id="dificuldadeAtual"
+                class="dificuldade"
             >
-                ← Voltar aos jogos
-            </a>
-
-            <div class="titulo-jogo">
-
-                <span class="icone-jogo">🧠</span>
-
-                <div>
-                    <h1>Memória Matemática</h1>
-
-                    <p>
-                        Encontre os pares entre operações e resultados.
-                    </p>
-                </div>
-
+                Fácil
             </div>
 
-        </header>
+        </div>
 
 
-        <!-- STATUS -->
+        <!-- TABULEIRO -->
 
-        <section class="status-jogo">
+        <div
+            id="tabuleiro"
+            class="tabuleiro"
+        ></div>
 
-            <div class="status-card">
 
-                <span>🎯</span>
+        <!-- FEEDBACK -->
 
-                <div>
-                    <small>Pares</small>
-                    <strong id="paresEncontrados">0</strong>
-                </div>
+        <div
+            id="feedback"
+            class="feedback hidden"
+        ></div>
 
-            </div>
 
+        <!-- AÇÕES -->
 
-            <div class="status-card">
+        <div class="acoes">
 
-                <span>⭐</span>
+            <button
+                type="button"
+                id="reiniciarJogo"
+                class="botao-secundario"
+            >
+                🔄 Reiniciar
+            </button>
 
-                <div>
-                    <small>Pontuação</small>
-                    <strong id="pontuacao">0</strong>
-                </div>
+        </div>
 
-            </div>
+    </section>
 
 
-            <div class="status-card">
+    <!-- DICA -->
 
-                <span>✅</span>
+    <section class="dica-card">
 
-                <div>
-                    <small>Acertos</small>
-                    <strong id="acertos">0</strong>
-                </div>
+        <span>🧠</span>
 
-            </div>
+        <div>
 
+            <strong>Dica</strong>
 
-            <div class="status-card">
+            <p>
+                Tente memorizar a posição das cartas que você já revelou.
+                Isso ajuda a encontrar os pares mais rapidamente.
+            </p>
 
-                <span>❌</span>
+        </div>
 
-                <div>
-                    <small>Erros</small>
-                    <strong id="erros">0</strong>
-                </div>
+    </section>
 
-            </div>
+</main>
 
-        </section>
 
+<!-- DADOS PARA O JAVASCRIPT -->
 
-        <!-- PROGRESSO -->
+<script>
 
-        <section class="progresso-container">
+    window.MathPlayMemoria = {
 
-            <div class="progresso-info">
+        perguntas: <?= json_encode(
+            $perguntasPublicas,
+            JSON_UNESCAPED_UNICODE |
+            JSON_UNESCAPED_SLASHES
+        ) ?>,
 
-                <span>Progresso</span>
+        usuarioId: <?= (int) usuarioId() ?>,
 
-                <strong id="progressoTexto">
-                    0%
-                </strong>
+        jogoId: <?= $jogoId ?>
 
-            </div>
+    };
 
-            <div class="barra-progresso">
+</script>
 
-                <div
-                    id="barraProgresso"
-                    class="barra-preenchida"
-                    style="width: 0%;"
-                ></div>
 
-            </div>
+<!-- JAVASCRIPT DO JOGO -->
 
-        </section>
-
-
-        <!-- INSTRUÇÃO -->
-
-        <section class="instrucoes">
-
-            <div class="instrucoes-icone">
-                💡
-            </div>
-
-            <div>
-
-                <strong>Como jogar?</strong>
-
-                <p>
-                    Clique em duas cartas para revelar seu conteúdo.
-                    Encontre o resultado correspondente à operação.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- JOGO -->
-
-        <section class="area-jogo">
-
-            <div class="cabecalho-area">
-
-                <div>
-
-                    <span class="etiqueta">
-                        DESAFIO
-                    </span>
-
-                    <h2>
-                        Encontre os pares matemáticos
-                    </h2>
-
-                </div>
-
-                <div
-                    id="dificuldadeAtual"
-                    class="dificuldade"
-                >
-                    Fácil
-                </div>
-
-            </div>
-
-
-            <!-- TABULEIRO -->
-
-            <div
-                id="tabuleiro"
-                class="tabuleiro"
-            ></div>
-
-
-            <!-- FEEDBACK -->
-
-            <div
-                id="feedback"
-                class="feedback hidden"
-            ></div>
-
-
-            <!-- BOTÃO PRÓXIMA RODADA -->
-
-            <div class="acoes">
-
-                <button
-                    type="button"
-                    id="reiniciarJogo"
-                    class="botao-secundario"
-                >
-                    🔄 Reiniciar
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- DICA -->
-
-        <section class="dica-card">
-
-            <span>🧠</span>
-
-            <div>
-
-                <strong>Dica</strong>
-
-                <p>
-                    Tente memorizar a posição das cartas que você já revelou.
-                    Isso ajuda a encontrar os pares mais rapidamente.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- DADOS PARA O JAVASCRIPT -->
-
-    <script>
-
-        window.MathPlayMemoria = {
-
-            perguntas: <?= json_encode(
-                $perguntasPublicas,
-                JSON_UNESCAPED_UNICODE |
-                JSON_UNESCAPED_SLASHES
-            ) ?>,
-
-            usuarioId: <?= (int) usuarioId() ?>,
-
-            jogoId: <?= $jogoId ?>
-
-        };
-
-    </script>
-
-
-    <script
-        src="../../assets/js/memoria-matematica.js"
-    ></script>
+<script
+    src="../../assets/js/memoria-matematica.js"
+></script>
 
 </body>
 
