@@ -1,30 +1,11 @@
-:root {
-    --purple: #7C3AED;
-    --purple-dark: #5B21B6;
-    --purple-light: #EDE9FE;
-
-    --background: #F8F7FC;
-    --white: #FFFFFF;
-
-    --dark: #17151C;
-    --gray: #6B6675;
-    --gray-light: #E7E4EC;
-    --gray-lighter: #F3F1F7;
-
-    --success: #16A34A;
-    --danger: #DC2626;
-
-    --sidebar-width: 260px;
-
-    --radius: 18px;
-
-    --shadow: 0 8px 30px rgba(23, 21, 28, 0.07);
-}
+/* =========================================================
+   MATHPLAY - JOGOS DO ALUNO
+   ========================================================= */
 
 
 /* =========================================================
    RESET
-========================================================= */
+   ========================================================= */
 
 * {
     margin: 0;
@@ -32,99 +13,77 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F8F7FC;
+    color: #292631;
     min-height: 100vh;
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background: var(--background);
-
-    color: var(--dark);
 }
 
-
-body.menu-open {
-    overflow: hidden;
-}
-
-
+button,
 a {
-    text-decoration: none;
-    color: inherit;
+    font-family: inherit;
 }
-
 
 button {
-    font: inherit;
+    border: 0;
 }
 
 
 /* =========================================================
    APP
-========================================================= */
+   ========================================================= */
 
 .app {
     min-height: 100vh;
+    display: flex;
 }
 
 
 /* =========================================================
    SIDEBAR
-========================================================= */
+   ========================================================= */
 
 .sidebar {
+    width: 250px;
+    min-width: 250px;
+    height: 100vh;
+
     position: fixed;
-
-    z-index: 1000;
-
     top: 0;
     left: 0;
 
-    width: var(--sidebar-width);
-    height: 100vh;
-
-    background: var(--white);
-
-    border-right: 1px solid var(--gray-light);
+    background: #FFFFFF;
+    border-right: 1px solid #E5E1EC;
 
     display: flex;
     flex-direction: column;
 
-    transform: translateX(-100%);
+    z-index: 1000;
 
     transition: transform 0.25s ease;
-
-    overflow-y: auto;
-}
-
-
-.sidebar.open {
-    transform: translateX(0);
 }
 
 
 /* =========================================================
    SIDEBAR HEADER
-========================================================= */
+   ========================================================= */
 
 .sidebar-header {
     height: 76px;
-
-    padding: 0 20px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: 1px solid var(--gray-lighter);
-}
+    padding: 0 18px;
 
+    border-bottom: 1px solid #F0EDF5;
+}
 
 .logo {
     display: flex;
@@ -132,612 +91,651 @@ button {
 
     gap: 10px;
 
-    font-size: 22px;
-    font-weight: 800;
+    text-decoration: none;
 }
 
-
 .logo-icon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 12px;
-
-    background: var(--purple);
-
-    color: var(--white);
+    width: 40px;
+    height: 40px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-weight: 900;
+    border-radius: 11px;
+
+    background: #7C3AED;
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
 }
 
+.logo-text {
+    color: #292631;
+
+    font-size: 20px;
+    font-weight: 800;
+}
 
 .logo-text span {
-    color: var(--purple);
-}
-
-
-.sidebar-close {
-    width: 34px;
-    height: 34px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: var(--gray-lighter);
-
-    color: var(--gray);
-
-    cursor: pointer;
-
-    font-size: 22px;
+    color: #7C3AED;
 }
 
 
 /* =========================================================
-   NAV
-========================================================= */
+   BOTÃO FECHAR SIDEBAR
+   ========================================================= */
+
+.sidebar-close {
+    display: none;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 8px;
+
+    background: #F3F1F7;
+    color: #292631;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.sidebar-close:hover {
+    background: #EDE9FE;
+    color: #5B21B6;
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
 
 .sidebar-nav {
-    padding: 20px 14px;
+    padding: 18px 12px;
 
     display: flex;
     flex-direction: column;
 
-    gap: 6px;
+    gap: 5px;
 }
 
-
 .nav-item {
-    min-height: 48px;
-
-    padding: 0 14px;
-
-    border-radius: 12px;
+    min-height: 46px;
 
     display: flex;
     align-items: center;
 
     gap: 12px;
 
-    color: var(--gray);
+    padding: 0 14px;
+
+    border-radius: 10px;
+
+    color: #6B6675;
+
+    text-decoration: none;
 
     font-size: 14px;
     font-weight: 600;
-}
 
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
 
 .nav-item:hover {
-    background: var(--gray-lighter);
-
-    color: var(--dark);
+    background: #F5F3FA;
+    color: #5B21B6;
 }
-
 
 .nav-item.active {
-    background: var(--purple-light);
-
-    color: var(--purple-dark);
+    background: #EDE9FE;
+    color: #5B21B6;
+    font-weight: 800;
 }
 
-
 .nav-icon {
-    width: 24px;
+    width: 22px;
 
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 18px;
 }
 
 
 /* =========================================================
-   SIDEBAR USER
-========================================================= */
+   PARTE INFERIOR DA SIDEBAR
+   ========================================================= */
 
 .sidebar-bottom {
     margin-top: auto;
 
     padding: 16px;
+
+    border-top: 1px solid #F0EDF5;
 }
 
+
+/* =========================================================
+   USUÁRIO
+   ========================================================= */
 
 .sidebar-user {
     display: flex;
     align-items: center;
 
     gap: 10px;
+
+    padding: 4px 2px 14px;
 }
 
-
-.user-avatar,
-.topbar-avatar {
+.user-avatar {
     width: 42px;
     height: 42px;
 
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    background: var(--purple);
-
-    color: var(--white);
+    min-width: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    border-radius: 50%;
+
+    background: #EDE9FE;
+    color: #5B21B6;
+
+    font-size: 16px;
     font-weight: 800;
 }
 
-
 .user-info {
     min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 3px;
 }
-
 
 .user-info strong {
-    font-size: 13px;
+    display: block;
 
+    color: #292631;
+
+    font-size: 14px;
+
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-
 .user-info span {
-    color: var(--gray);
+    display: block;
+
+    margin-top: 3px;
+
+    color: #8A8494;
 
     font-size: 12px;
 }
 
 
+/* =========================================================
+   DIVISOR DO LOGOUT
+   ========================================================= */
+
 .logout-divider {
     height: 1px;
 
-    margin: 16px 0;
+    background: #E5E1EC;
 
-    background: var(--gray-light);
+    margin-bottom: 10px;
 }
 
 
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
 .logout-link {
-    min-height: 44px;
-
-    padding: 0 12px;
-
-    border-radius: 10px;
+    min-height: 42px;
 
     display: flex;
     align-items: center;
 
     gap: 10px;
 
-    color: var(--danger);
+    padding: 0 10px;
+
+    border-radius: 9px;
+
+    color: #6B6675;
+
+    text-decoration: none;
 
     font-size: 14px;
     font-weight: 600;
-}
 
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
 
 .logout-link:hover {
     background: #FEF2F2;
+    color: #DC2626;
+}
+
+.logout-link span {
+    font-size: 18px;
 }
 
 
 /* =========================================================
-   OVERLAY
-========================================================= */
-
-.sidebar-overlay {
-    position: fixed;
-
-    z-index: 900;
-
-    inset: 0;
-
-    background: rgba(23, 21, 28, 0.45);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 0.25s ease,
-        visibility 0.25s ease;
-}
-
-
-.sidebar-overlay.active {
-    opacity: 1;
-
-    visibility: visible;
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
 
 .main-content {
+    width: calc(100% - 250px);
+
     min-height: 100vh;
+
+    margin-left: 250px;
 }
 
 
 /* =========================================================
    TOPBAR
-========================================================= */
+   ========================================================= */
 
 .topbar {
-    height: 70px;
-
-    padding: 0 18px;
-
-    background: var(--white);
-
-    border-bottom: 1px solid var(--gray-light);
+    height: 76px;
 
     display: flex;
     align-items: center;
 
-    position: sticky;
+    padding: 0 30px;
 
-    top: 0;
+    background: #FFFFFF;
 
-    z-index: 500;
+    border-bottom: 1px solid #E5E1EC;
 }
 
-
 .menu-button {
+    display: none;
+
     width: 42px;
     height: 42px;
 
-    border: 0;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 10px;
 
-    background: var(--gray-lighter);
+    background: #F3F1F7;
+    color: #292631;
+
+    font-size: 21px;
 
     cursor: pointer;
-
-    font-size: 20px;
 }
-
 
 .menu-button:hover {
-    background: var(--purple-light);
+    background: #EDE9FE;
+    color: #5B21B6;
 }
-
 
 .topbar-title {
-    flex: 1;
+    color: #292631;
 
-    padding: 0 14px;
-
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
 }
 
+.topbar-profile {
+    margin-left: auto;
 
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content {
-    width: 100%;
-
-    max-width: 1250px;
-
-    margin: 0 auto;
-
-    padding: 24px 16px 50px;
+    text-decoration: none;
 }
 
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
-
-.page-header {
-    min-height: 190px;
-
-    padding: 28px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--purple),
-            var(--purple-dark)
-        );
-
-    color: var(--white);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    box-shadow: var(--shadow);
-}
-
-
-.page-kicker {
-    display: block;
-
-    margin-bottom: 8px;
-
-    font-size: 13px;
-
-    opacity: 0.9;
-}
-
-
-.page-header h1 {
-    font-size: 29px;
-
-    line-height: 1.15;
-
-    margin-bottom: 10px;
-}
-
-
-.page-header p {
-    max-width: 550px;
-
-    font-size: 13px;
-
-    line-height: 1.6;
-
-    opacity: 0.9;
-}
-
-
-.header-symbol {
-    display: none;
-
-    position: absolute;
-
-    right: 35px;
-
-    font-size: 140px;
-
-    font-weight: 900;
-
-    opacity: 0.08;
-
-    transform: rotate(10deg);
-}
-
-
-/* =========================================================
-   GAMES
-========================================================= */
-
-.games-section {
-    margin-top: 28px;
-}
-
-
-.games-grid {
-    display: grid;
-
-    grid-template-columns: 1fr;
-
-    gap: 18px;
-}
-
-
-.game-card {
-    padding: 22px;
-
-    background: var(--white);
-
-    border: 1px solid var(--gray-light);
-
-    border-radius: var(--radius);
-
-    box-shadow: var(--shadow);
-
-    display: flex;
-    flex-direction: column;
-
-    min-height: 390px;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.game-card:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 15px 40px rgba(23, 21, 28, 0.1);
-}
-
-
-/* =========================================================
-   GAME TOP
-========================================================= */
-
-.game-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.game-icon {
-    width: 64px;
-    height: 64px;
-
-    border-radius: 18px;
-
-    background: var(--purple-light);
+.topbar-avatar {
+    width: 40px;
+    height: 40px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 31px;
+    border-radius: 50%;
+
+    background: #EDE9FE;
+    color: #5B21B6;
+
+    font-size: 14px;
+    font-weight: 800;
 }
 
+
+/* =========================================================
+   CONTEÚDO
+   ========================================================= */
+
+.content {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 34px 30px 50px;
+}
+
+
+/* =========================================================
+   CABEÇALHO DA PÁGINA
+   ========================================================= */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+}
+
+.page-kicker {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #7C3AED;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.page-header h1 {
+    color: #292631;
+
+    font-size: 34px;
+    line-height: 1.15;
+
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    max-width: 650px;
+
+    color: #6B6675;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SÍMBOLO DO CABEÇALHO
+   ========================================================= */
+
+.header-symbol {
+    width: 78px;
+    height: 78px;
+
+    min-width: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #EDE9FE;
+
+    border-radius: 22px;
+
+    color: #7C3AED;
+
+    font-size: 35px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SEÇÃO DE JOGOS
+   ========================================================= */
+
+.games-section {
+    width: 100%;
+}
+
+.games-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CARD DO JOGO
+   ========================================================= */
+
+.game-card {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow: 0 4px 12px rgba(41, 38, 49, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(41, 38, 49, 0.09);
+
+    border-color: #DDD6FE;
+}
+
+
+/* =========================================================
+   TOPO DO CARD
+   ========================================================= */
+
+.game-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.game-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: #EDE9FE;
+
+    font-size: 30px;
+}
+
+.game-caixa .game-icon {
+    background: #F3E8FF;
+}
+
+.game-memoria .game-icon {
+    background: #EDE9FE;
+}
 
 .game-badge {
     padding: 6px 10px;
 
     border-radius: 20px;
 
-    background: var(--gray-lighter);
+    background: #F5F3FA;
 
-    color: var(--gray);
+    color: #6B6675;
 
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
 }
 
 
 /* =========================================================
-   GAME INFO
-========================================================= */
+   INFORMAÇÕES DO JOGO
+   ========================================================= */
 
 .game-info {
-    margin-top: 22px;
-
     flex: 1;
 }
 
-
 .game-theme {
-    color: var(--purple);
+    display: inline-block;
 
-    font-size: 10px;
+    margin-bottom: 7px;
+
+    color: #7C3AED;
+
+    font-size: 12px;
     font-weight: 800;
 
     text-transform: uppercase;
-
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
-
 
 .game-info h2 {
-    margin-top: 6px;
+    color: #292631;
 
-    font-size: 22px;
+    font-size: 23px;
+    line-height: 1.25;
+
+    margin-bottom: 9px;
 }
 
-
 .game-info p {
-    margin-top: 10px;
+    color: #6B6675;
 
-    color: var(--gray);
-
-    font-size: 13px;
+    font-size: 14px;
 
     line-height: 1.6;
 }
 
 
 /* =========================================================
-   GAME PROGRESS
-========================================================= */
+   PROGRESSO DO JOGO
+   ========================================================= */
 
 .game-progress {
-    margin-top: 20px;
+    margin-top: 25px;
 }
-
 
 .progress-info {
-    margin-bottom: 7px;
-
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
-    color: var(--gray);
+    gap: 10px;
 
-    font-size: 11px;
+    margin-bottom: 8px;
 }
 
+.progress-info span {
+    color: #6B6675;
+
+    font-size: 12px;
+    font-weight: 600;
+}
 
 .progress-info strong {
-    color: var(--purple);
-}
+    color: #5B21B6;
 
+    font-size: 13px;
+}
 
 .progress-bar {
     width: 100%;
-
-    height: 8px;
+    height: 9px;
 
     overflow: hidden;
 
+    background: #EDE9FE;
+
     border-radius: 20px;
-
-    background: var(--gray-lighter);
 }
-
 
 .progress-fill {
     height: 100%;
 
-    border-radius: inherit;
+    min-width: 0;
 
-    background: var(--purple);
+    background: #7C3AED;
 
-    transition: width 0.4s ease;
+    border-radius: 20px;
+
+    transition: width 0.3s ease;
 }
 
 
 /* =========================================================
-   PLAY BUTTON
-========================================================= */
+   BOTÃO JOGAR
+   ========================================================= */
 
 .play-button {
-    margin-top: 20px;
-
     min-height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 20px;
 
     padding: 0 16px;
 
     border-radius: 11px;
 
-    background: var(--purple);
+    background: #7C3AED;
+    color: #FFFFFF;
 
-    color: var(--white);
+    text-decoration: none;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
 
     transition:
         background 0.2s ease,
         transform 0.2s ease;
 }
 
-
 .play-button:hover {
-    background: var(--purple-dark);
+    background: #5B21B6;
 
     transform: translateY(-1px);
 }
-
 
 .play-button span {
     font-size: 18px;
@@ -745,232 +743,305 @@ button {
 
 
 /* =========================================================
-   CORES ESPECÍFICAS DOS JOGOS
-========================================================= */
+   ESTADO VAZIO
+   ========================================================= */
 
-.game-caixa .game-icon {
-    background: var(--purple-light);
+.empty-state {
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+
+    border-radius: 18px;
+
+    padding: 45px 25px;
+
+    text-align: center;
 }
 
+.empty-icon {
+    font-size: 42px;
 
-.game-memoria .game-icon {
-    background: var(--purple-light);
+    margin-bottom: 12px;
+}
+
+.empty-state h2 {
+    color: #292631;
+
+    font-size: 20px;
+
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+    color: #6B6675;
+
+    font-size: 14px;
 }
 
 
 /* =========================================================
    DICA
-========================================================= */
+   ========================================================= */
 
 .tip-card {
-    margin-top: 22px;
-
-    padding: 18px;
-
-    background: var(--white);
-
-    border: 1px solid var(--gray-light);
-
-    border-radius: var(--radius);
+    margin-top: 25px;
 
     display: flex;
     align-items: flex-start;
 
-    gap: 14px;
-}
+    gap: 15px;
 
+    padding: 18px 20px;
+
+    background: #EDE9FE;
+
+    border: 1px solid #DDD6FE;
+
+    border-radius: 15px;
+}
 
 .tip-icon {
     width: 42px;
     height: 42px;
 
-    flex-shrink: 0;
-
-    border-radius: 12px;
-
-    background: var(--purple-light);
+    min-width: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 20px;
-}
+    background: #FFFFFF;
 
+    border-radius: 11px;
+
+    font-size: 21px;
+}
 
 .tip-card strong {
-    font-size: 13px;
+    display: block;
+
+    color: #5B21B6;
+
+    font-size: 14px;
+
+    margin-bottom: 5px;
 }
 
-
 .tip-card p {
-    margin-top: 5px;
+    color: #6B6675;
 
-    color: var(--gray);
-
-    font-size: 11px;
+    font-size: 13px;
 
     line-height: 1.5;
 }
 
 
 /* =========================================================
-   EMPTY
-========================================================= */
+   OVERLAY MOBILE
+   ========================================================= */
 
-.empty-state {
-    padding: 50px 20px;
+.sidebar-overlay {
+    display: none;
 
-    background: var(--white);
+    position: fixed;
 
-    border: 1px dashed var(--gray-light);
+    inset: 0;
 
-    border-radius: var(--radius);
+    background: rgba(23, 21, 28, 0.45);
 
-    text-align: center;
-}
-
-
-.empty-icon {
-    margin-bottom: 12px;
-
-    font-size: 42px;
-}
-
-
-.empty-state h2 {
-    font-size: 18px;
-}
-
-
-.empty-state p {
-    margin-top: 7px;
-
-    color: var(--gray);
-
-    font-size: 12px;
+    z-index: 900;
 }
 
 
 /* =========================================================
    TABLET
-========================================================= */
+   ========================================================= */
 
-@media (min-width: 600px) {
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 235px;
+        min-width: 235px;
+    }
+
+    .main-content {
+        width: calc(100% - 235px);
+
+        margin-left: 235px;
+    }
+
+    .topbar {
+        padding: 0 22px;
+    }
 
     .content {
-        padding: 30px 24px 60px;
+        padding: 28px 22px 45px;
     }
-
-
-    .page-header {
-        padding: 34px;
-    }
-
 
     .page-header h1 {
-        font-size: 34px;
+        font-size: 30px;
     }
-
-
-    .header-symbol {
-        display: block;
-    }
-
 
     .games-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 
 }
 
 
 /* =========================================================
-   DESKTOP
-========================================================= */
+   MOBILE
+   ========================================================= */
 
-@media (min-width: 901px) {
+@media (max-width: 700px) {
 
     .sidebar {
+        width: 270px;
+        min-width: 270px;
+
+        transform: translateX(-100%);
+
+        box-shadow: 8px 0 25px rgba(23, 21, 28, 0.12);
+    }
+
+    .sidebar.open {
         transform: translateX(0);
     }
 
-
     .sidebar-close {
-        display: none;
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
     }
 
-
-    .sidebar-overlay {
-        display: none;
+    .sidebar-overlay.active {
+        display: block;
     }
-
 
     .main-content {
-        margin-left: var(--sidebar-width);
+        width: 100%;
+
+        margin-left: 0;
     }
-
-
-    .menu-button {
-        display: none;
-    }
-
 
     .topbar {
-        padding: 0 30px;
+        height: 64px;
+
+        padding: 0 15px;
     }
 
+    .menu-button {
+        display: flex;
+
+        margin-right: 12px;
+    }
 
     .topbar-title {
-        padding-left: 0;
+        font-size: 16px;
     }
 
+    .topbar-avatar {
+        width: 36px;
+        height: 36px;
+    }
 
     .content {
-        padding: 36px 34px 70px;
+        padding: 24px 15px 40px;
     }
-
 
     .page-header {
-        min-height: 220px;
+        align-items: flex-start;
 
-        padding: 40px;
+        margin-bottom: 24px;
     }
-
 
     .page-header h1 {
-        font-size: 38px;
+        font-size: 27px;
     }
-
 
     .page-header p {
         font-size: 14px;
     }
 
+    .header-symbol {
+        width: 58px;
+        height: 58px;
+
+        min-width: 58px;
+
+        border-radius: 16px;
+
+        font-size: 27px;
+    }
+
+    .game-card {
+        padding: 18px;
+
+        border-radius: 17px;
+    }
+
+    .game-info h2 {
+        font-size: 21px;
+    }
+
 }
 
 
 /* =========================================================
-   DESKTOP GRANDE
-========================================================= */
+   CELULARES PEQUENOS
+   ========================================================= */
 
-@media (min-width: 1200px) {
+@media (max-width: 450px) {
 
-    .content {
-        padding-left: 45px;
-        padding-right: 45px;
+    .page-header {
+        display: block;
     }
 
-
-    .games-grid {
-        gap: 22px;
+    .header-symbol {
+        display: none;
     }
 
+    .page-header h1 {
+        font-size: 25px;
+    }
 
-    .game-card {
-        min-height: 410px;
+    .page-kicker {
+        font-size: 13px;
+    }
 
-        padding: 26px;
+    .game-card-top {
+        margin-bottom: 17px;
+    }
+
+    .game-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 27px;
+    }
+
+    .game-info h2 {
+        font-size: 20px;
+    }
+
+    .game-info p {
+        font-size: 13px;
+    }
+
+    .tip-card {
+        padding: 16px;
+
+        gap: 11px;
+    }
+
+    .tip-icon {
+        width: 38px;
+        height: 38px;
+
+        min-width: 38px;
+
+        font-size: 19px;
     }
 
 }

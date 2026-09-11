@@ -1,0 +1,545 @@
+/* =========================================================
+   MATHPLAY - CONQUISTAS
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F8F7FC;
+    color: #292631;
+}
+
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
+.pagina {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.cabecalho {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E1EC;
+    padding: 16px 20px;
+}
+
+.cabecalho-conteudo {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+/* =========================================================
+   MARCA
+   ========================================================= */
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.marca-icone {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #EDE9FE;
+    border-radius: 12px;
+
+    font-size: 24px;
+}
+
+.marca-texto strong {
+    display: block;
+    color: #5B21B6;
+    font-size: 18px;
+}
+
+.marca-texto span {
+    display: block;
+    color: #6B6675;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   BOTÃO VOLTAR
+   ========================================================= */
+
+.voltar {
+    text-decoration: none;
+    color: #5B21B6;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.voltar:hover {
+    color: #7C3AED;
+}
+
+
+/* =========================================================
+   CONTEÚDO
+   ========================================================= */
+
+.conteudo {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 28px 20px 50px;
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.titulo-area {
+    margin-bottom: 24px;
+}
+
+.titulo-area h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.titulo-area p {
+    color: #6B6675;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESUMO
+   ========================================================= */
+
+.resumo {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+.resumo-card {
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+    border-radius: 16px;
+
+    padding: 20px;
+}
+
+.resumo-card span {
+    display: block;
+
+    color: #6B6675;
+    font-size: 13px;
+
+    margin-bottom: 7px;
+}
+
+.resumo-card strong {
+    display: block;
+
+    color: #5B21B6;
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   PROGRESSO
+   ========================================================= */
+
+.progresso-card {
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+    border-radius: 16px;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+}
+
+.progresso-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+.progresso-topo strong {
+    font-size: 15px;
+}
+
+.progresso-topo span {
+    color: #5B21B6;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   BARRA
+   ========================================================= */
+
+.barra {
+    width: 100%;
+    height: 12px;
+
+    background: #EDE9FE;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.barra-preenchida {
+    height: 100%;
+
+    background: #7C3AED;
+
+    border-radius: 20px;
+
+    transition: width 0.3s ease;
+}
+
+
+/* =========================================================
+   TÍTULO DA SEÇÃO
+   ========================================================= */
+
+.secao-titulo {
+    margin-bottom: 16px;
+}
+
+.secao-titulo h2 {
+    font-size: 21px;
+
+    margin-bottom: 5px;
+}
+
+.secao-titulo p {
+    color: #6B6675;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   GRID DE CONQUISTAS
+   ========================================================= */
+
+.conquistas-grid {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   CARD DA CONQUISTA
+   ========================================================= */
+
+.conquista {
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+    border-radius: 18px;
+
+    padding: 22px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 16px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.conquista:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(41, 38, 49, 0.08);
+}
+
+
+/* =========================================================
+   CONQUISTA BLOQUEADA
+   ========================================================= */
+
+.conquista.bloqueada {
+    opacity: 0.65;
+}
+
+.conquista.bloqueada:hover {
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   ÍCONE
+   ========================================================= */
+
+.conquista-icone {
+    width: 62px;
+    height: 62px;
+
+    min-width: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #EDE9FE;
+
+    border-radius: 16px;
+
+    font-size: 32px;
+}
+
+.bloqueada .conquista-icone {
+    filter: grayscale(1);
+
+    background: #F0EEF3;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES
+   ========================================================= */
+
+.conquista-info {
+    flex: 1;
+}
+
+.conquista-info h3 {
+    font-size: 17px;
+
+    margin-bottom: 6px;
+}
+
+.conquista-info p {
+    color: #6B6675;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.status-desbloqueada {
+    background: #DCFCE7;
+    color: #166534;
+}
+
+.status-bloqueada {
+    background: #F1F0F4;
+    color: #6B6675;
+}
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+.data {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 12px;
+
+    color: #6B6675;
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.vazio {
+    background: #FFFFFF;
+
+    border: 1px solid #E5E1EC;
+    border-radius: 16px;
+
+    padding: 35px 20px;
+
+    text-align: center;
+}
+
+.vazio-icone {
+    font-size: 42px;
+
+    margin-bottom: 12px;
+}
+
+.vazio h3 {
+    font-size: 18px;
+
+    margin-bottom: 7px;
+}
+
+.vazio p {
+    color: #6B6675;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 650px) {
+
+    .resumo {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .conquistas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+    .conteudo {
+        padding-top: 36px;
+    }
+
+    .titulo-area h1 {
+        font-size: 32px;
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .cabecalho {
+        padding: 14px 15px;
+    }
+
+    .marca-icone {
+        width: 40px;
+        height: 40px;
+
+        font-size: 21px;
+    }
+
+    .marca-texto strong {
+        font-size: 16px;
+    }
+
+    .marca-texto span {
+        font-size: 12px;
+    }
+
+    .voltar {
+        font-size: 13px;
+    }
+
+    .conteudo {
+        padding: 22px 15px 40px;
+    }
+
+    .titulo-area h1 {
+        font-size: 25px;
+    }
+
+    .titulo-area p {
+        font-size: 14px;
+    }
+
+    .conquista {
+        padding: 17px;
+    }
+
+    .conquista-icone {
+        width: 52px;
+        height: 52px;
+
+        min-width: 52px;
+
+        font-size: 27px;
+    }
+
+    .conquista-info h3 {
+        font-size: 16px;
+    }
+
+    .conquista-info p {
+        font-size: 13px;
+    }
+
+}
