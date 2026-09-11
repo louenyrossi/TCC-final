@@ -25,6 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const answerInput = document.getElementById('answer');
     const answerButton = document.getElementById('answer-button');
 
+    // TECLADO NUMÉRICO
+
+    const botoesTeclado = document.querySelectorAll('.key-button');
+
+    botoesTeclado.forEach(botao => {
+        botao.addEventListener('click', () => {
+        const valor = botao.dataset.valor;
+
+        if (valor === 'clear') {
+            answerInput.value = '';
+            return;
+        }
+
+        if (valor === 'delete') {
+            answerInput.value = answerInput.value.slice(0, -1);
+            return;
+        }
+
+        answerInput.value += valor;
+    });
+});
+
     const hintButton = document.getElementById('hint-button');
     const hintText = document.getElementById('hint-text');
 
