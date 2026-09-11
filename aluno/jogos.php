@@ -67,7 +67,7 @@ $jogos = $stmt->fetchAll();
 
     <link
         rel="stylesheet"
-        href="../assets/css/jogos-alunos.css"
+        href="../assets/css/jogos-aluno.css"
     >
 
 </head>

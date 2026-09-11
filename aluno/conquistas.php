@@ -124,7 +124,7 @@ function iconeConquista(string $nome): string
 
     <link
         rel="stylesheet"
-        href="../assets/css/conquistas.css"
+        href="../assets/css/conquista-aluno.css"
     >
 
 </head>
