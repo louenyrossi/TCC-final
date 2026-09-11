@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     botoesTeclado.forEach(botao => {
         botao.addEventListener('click', () => {
-        const valor = botao.dataset.valor;
+        const valor = botao.dataset.key;
 
         if (valor === 'clear') {
             answerInput.value = '';
