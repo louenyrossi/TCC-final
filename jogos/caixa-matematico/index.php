@@ -495,7 +495,24 @@ if ($anoSerie === 7) {
                         autocomplete="off"
                         required
                     >
+                </div>
+                <!-- TECLADO NUMÉRICO PARA O JOGO CAIXA MATEMATICO-->
+                <div class="numeric-keypad">
+                    <button type="button" class="key-button" data-key="1">1</button>
+                    <button type="button" class="key-button" data-key="2">2</button>
+                    <button type="button" class="key-button" data-key="3">3</button>
 
+                    <button type="button" class="key-button" data-key="4">4</button>
+                    <button type="button" class="key-button" data-key="5">5</button>
+                    <button type="button" class="key-button" data-key="6">6</button>
+
+                    <button type="button" class="key-button" data-key="7">7</button>
+                    <button type="button" class="key-button" data-key="8">8</button>
+                    <button type="button" class="key-button" data-key="9">9</button>
+
+                    <button type="button" class="key-button key-clear" data-key="clear">C</button>
+                    <button type="button" class="key-button" data-key="0">0</button>
+                    <button type="button" class="key-button key-delete" data-key="delete">←</button>
                 </div>
 
 
