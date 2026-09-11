@@ -65,63 +65,6 @@ $resposta = isset($dados['resposta'])
 
 $dicaUsada = !empty($dados['dica_usada']);
 
-/* ==========================================================
-   USAR DICA — DESCONTA 5 XP
-========================================================== */
-
-if (isset($dados['acao']) && $dados['acao'] === 'usar_dica') {
-
-    $perguntaIdDica = isset($dados['pergunta_id'])
-        ? (int) $dados['pergunta_id']
-        : 0;
-
-    if ($perguntaIdDica <= 0) {
-        echo json_encode([
-            'sucesso' => false,
-            'mensagem' => 'Pergunta inválida.'
-        ]);
-        exit;
-    }
-
-    // Evita cobrar duas vezes a mesma dica
-    if (!isset($_SESSION['caixa_dicas_usadas'])) {
-        $_SESSION['caixa_dicas_usadas'] = [];
-    }
-
-    if (in_array($perguntaIdDica, $_SESSION['caixa_dicas_usadas'])) {
-        echo json_encode([
-            'sucesso' => true,
-            'mensagem' => 'Dica já utilizada nesta questão.',
-            'xp_descontado' => 0
-        ]);
-        exit;
-    }
-
-    // Desconta exatamente 5 XP, sem deixar XP negativo
-    $stmtDica = $pdo->prepare("
-        UPDATE usuarios
-        SET xp = GREATEST(xp - 5, 0),
-            nivel = FLOOR(GREATEST(xp - 5, 0) / 100) + 1
-        WHERE id = :usuario_id
-    ");
-
-    $stmtDica->execute([
-        ':usuario_id' => $usuarioId
-    ]);
-
-    // Marca a dica como usada
-    $_SESSION['caixa_dicas_usadas'][] = $perguntaIdDica;
-
-    echo json_encode([
-        'sucesso' => true,
-        'mensagem' => 'Dica utilizada. -5 XP',
-        'xp_descontado' => 5
-    ]);
-
-    exit;
-}
-
-
 /*
 |--------------------------------------------------------------------------
 | Validação básica

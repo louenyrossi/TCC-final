@@ -169,11 +169,48 @@ document.addEventListener('DOMContentLoaded', () => {
     |--------------------------------------------------------------------------
     */
 
-    hintButton.addEventListener('click', () => {
+    hintButton.addEventListener('click', async () => {
 
-        const pergunta = perguntas[perguntaAtual];
+    const pergunta = perguntas[perguntaAtual];
 
-        if (!pergunta || dicaUsada) {
+    if (!pergunta || dicaUsada) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            '../../api/caixa-matematico.php',
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    acao: 'usar_dica',
+
+                    jogo_id:
+                        window.MathPlayCaixa.jogoId,
+
+                    pergunta_id:
+                        pergunta.id
+
+                })
+            }
+        );
+
+        const resultado = await response.json();
+
+        if (!resultado.sucesso) {
+
+            alert(
+                resultado.mensagem ||
+                'Não foi possível usar a dica.'
+            );
+
             return;
         }
 
@@ -185,7 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
             gerarDica(pergunta.enunciado);
 
         hintText.classList.remove('hidden');
-    });
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            'Erro ao usar a dica.'
+        );
+    }
+});
 
 
     function gerarDica(enunciado) {
