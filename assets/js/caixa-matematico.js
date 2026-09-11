@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dicaUsada = false;
 
     const questionElement = document.getElementById('question');
-    const questionNumberElement = document.getElementById('question-number');
+    const questionNumberElement = document.getElementById('question-number-display');
     const questionTotalElement = document.getElementById('question-total');
 
     const scoreElement = document.getElementById('score');
