@@ -18,20 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| Lê os dados enviados pelo JavaScript
-|--------------------------------------------------------------------------
-*/
-
 $dados = json_decode(
     file_get_contents('php://input'),
     true
 );
 
 if (!is_array($dados)) {
-
     http_response_code(400);
 
     echo json_encode([
@@ -42,14 +34,29 @@ if (!is_array($dados)) {
     exit;
 }
 
+$usuarioId = usuarioId();
+
+if (!$usuarioId) {
+    http_response_code(401);
+
+    echo json_encode([
+        'sucesso' => false,
+        'mensagem' => 'Usuário não autenticado.'
+    ]);
+
+    exit;
+}
+
 
 /*
 |--------------------------------------------------------------------------
-| Dados principais
+| DADOS RECEBIDOS
 |--------------------------------------------------------------------------
 */
 
-$usuarioId = usuarioId();
+$acao = isset($dados['acao'])
+    ? (string) $dados['acao']
+    : 'responder';
 
 $jogoId = isset($dados['jogo_id'])
     ? (int) $dados['jogo_id']
@@ -65,9 +72,181 @@ $resposta = isset($dados['resposta'])
 
 $dicaUsada = !empty($dados['dica_usada']);
 
+
 /*
 |--------------------------------------------------------------------------
-| Validação básica
+| AÇÃO: USAR DICA
+|--------------------------------------------------------------------------
+*/
+
+if ($acao === 'usar_dica') {
+
+    if ($jogoId !== 1) {
+        http_response_code(400);
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'Jogo inválido.'
+        ]);
+
+        exit;
+    }
+
+    if ($perguntaId <= 0) {
+        http_response_code(400);
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'Pergunta inválida.'
+        ]);
+
+        exit;
+    }
+
+    /*
+     * Confirma se a pergunta pertence ao Caixa Matemático.
+     */
+    $stmtPergunta = $pdo->prepare("
+        SELECT id
+        FROM perguntas
+        WHERE id = :pergunta_id
+          AND jogo_id = :jogo_id
+        LIMIT 1
+    ");
+
+    $stmtPergunta->execute([
+        ':pergunta_id' => $perguntaId,
+        ':jogo_id' => $jogoId
+    ]);
+
+    if (!$stmtPergunta->fetch()) {
+        http_response_code(404);
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'Pergunta não encontrada.'
+        ]);
+
+        exit;
+    }
+
+
+    /*
+     * Guarda as dicas utilizadas durante a partida
+     * para impedir que a mesma pergunta seja cobrada
+     * duas vezes.
+     */
+    if (!isset($_SESSION['caixa_dicas_usadas'])) {
+        $_SESSION['caixa_dicas_usadas'] = [];
+    }
+
+    if (in_array(
+        $perguntaId,
+        $_SESSION['caixa_dicas_usadas'],
+        true
+    )) {
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'A dica desta pergunta já foi utilizada.'
+        ]);
+
+        exit;
+    }
+
+
+    try {
+
+        $pdo->beginTransaction();
+
+
+        /*
+         * Desconta 5 XP.
+         *
+         * GREATEST impede que o XP fique negativo.
+         */
+        $stmtXP = $pdo->prepare("
+            UPDATE usuarios
+            SET xp = GREATEST(xp - 5, 0)
+            WHERE id = :usuario_id
+        ");
+
+        $stmtXP->execute([
+            ':usuario_id' => $usuarioId
+        ]);
+
+
+        /*
+         * Recalcula o nível.
+         */
+        $stmtNivel = $pdo->prepare("
+            UPDATE usuarios
+            SET nivel = FLOOR(xp / 100) + 1
+            WHERE id = :usuario_id
+        ");
+
+        $stmtNivel->execute([
+            ':usuario_id' => $usuarioId
+        ]);
+
+
+        /*
+         * Marca a pergunta como já tendo utilizado dica.
+         */
+        $_SESSION['caixa_dicas_usadas'][] = $perguntaId;
+
+
+        /*
+         * Busca XP e nível atualizados.
+         */
+        $stmtAtual = $pdo->prepare("
+            SELECT xp, nivel
+            FROM usuarios
+            WHERE id = :usuario_id
+            LIMIT 1
+        ");
+
+        $stmtAtual->execute([
+            ':usuario_id' => $usuarioId
+        ]);
+
+        $usuarioAtual = $stmtAtual->fetch();
+
+
+        $pdo->commit();
+
+
+        echo json_encode([
+            'sucesso' => true,
+            'mensagem' => 'Dica utilizada. 5 XP foram descontados.',
+            'xp_descontado' => 5,
+            'xp_atual' => (int) $usuarioAtual['xp'],
+            'nivel_atual' => (int) $usuarioAtual['nivel']
+        ]);
+
+        exit;
+
+    } catch (Throwable $e) {
+
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+
+        http_response_code(500);
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'Não foi possível utilizar a dica.'
+        ]);
+
+        exit;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| VALIDAÇÕES DA RESPOSTA
 |--------------------------------------------------------------------------
 */
 
@@ -110,11 +289,8 @@ if ($resposta === '') {
 
 /*
 |--------------------------------------------------------------------------
-| Busca a pergunta diretamente no banco
+| BUSCAR PERGUNTA
 |--------------------------------------------------------------------------
-|
-| A resposta correta NÃO vem do JavaScript.
-|
 */
 
 $stmt = $pdo->prepare("
@@ -152,33 +328,64 @@ if (!$pergunta) {
 
 /*
 |--------------------------------------------------------------------------
-| Normaliza valores numéricos
+| NORMALIZAR RESPOSTA NUMÉRICA
 |--------------------------------------------------------------------------
 |
-| Permite respostas como:
-|
-| 5
-| 5,00
-| 5.00
+| Aceita exemplos como:
+| 10
+| 10,00
+| R$ 10,00
+| R$10.00
 |
 */
 
-function normalizarNumero(string $valor): ?float
+function normalizarValorNumerico(string $valor): ?float
 {
     $valor = trim($valor);
 
-    $valor = str_replace('R$', '', $valor);
-    $valor = str_replace(' ', '', $valor);
+    $valor = str_replace(
+        ['R$', 'r$', ' '],
+        '',
+        $valor
+    );
 
-    /*
-     * Se tiver vírgula, considera a vírgula como decimal.
-     */
-    if (str_contains($valor, ',')) {
-        $valor = str_replace('.', '', $valor);
-        $valor = str_replace(',', '.', $valor);
+    if ($valor === '') {
+        return null;
     }
 
-    if (!is_numeric($valor)) {
+    /*
+     * Se tiver ponto e vírgula:
+     * 1.234,56 -> 1234.56
+     */
+    if (
+        strpos($valor, '.') !== false &&
+        strpos($valor, ',') !== false
+    ) {
+
+        $valor = str_replace('.', '', $valor);
+        $valor = str_replace(',', '.', $valor);
+
+    } else {
+
+        /*
+         * Apenas vírgula:
+         * 10,50 -> 10.50
+         */
+        if (strpos($valor, ',') !== false) {
+            $valor = str_replace(',', '.', $valor);
+        }
+    }
+
+    /*
+     * Mantém somente números, ponto e sinal.
+     */
+    $valor = preg_replace(
+        '/[^0-9.\-]/',
+        '',
+        $valor
+    );
+
+    if ($valor === '' || !is_numeric($valor)) {
         return null;
     }
 
@@ -186,40 +393,34 @@ function normalizarNumero(string $valor): ?float
 }
 
 
-$respostaAluno = normalizarNumero($resposta);
+$respostaAluno = normalizarValorNumerico($resposta);
 
-$respostaCorreta = normalizarNumero(
-    $pergunta['resposta_correta']
+$respostaCorreta = normalizarValorNumerico(
+    (string) $pergunta['resposta_correta']
 );
 
+
+/*
+|--------------------------------------------------------------------------
+| VERIFICAR RESPOSTA
+|--------------------------------------------------------------------------
+*/
+
+$correta = false;
+
 if (
-    $respostaAluno === null ||
-    $respostaCorreta === null
+    $respostaAluno !== null &&
+    $respostaCorreta !== null
 ) {
 
-    echo json_encode([
-        'sucesso' => false,
-        'mensagem' => 'Informe um valor numérico válido.'
-    ]);
-
-    exit;
+    $correta =
+        abs($respostaAluno - $respostaCorreta) < 0.01;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Verifica se a resposta está correta
-|--------------------------------------------------------------------------
-*/
-
-$correta = abs(
-    $respostaAluno - $respostaCorreta
-) < 0.01;
-
-
-/*
-|--------------------------------------------------------------------------
-| Pontuação
+| PONTUAÇÃO
 |--------------------------------------------------------------------------
 */
 
@@ -229,39 +430,83 @@ $pontuacaoObtida = 0;
 
 if ($correta) {
 
-    $pontuacaoObtida = $pontuacaoBase;
-
     /*
-     * Se usou dica, reduzimos 20% da pontuação.
+     * A dica já desconta 5 XP.
+     * Não há mais redução de 20% na pontuação.
      */
-    if ($dicaUsada) {
-        $pontuacaoObtida = (int) round(
-            $pontuacaoObtida * 0.8
-        );
+    $pontuacaoObtida = $pontuacaoBase;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PARTIDA ATUAL
+|--------------------------------------------------------------------------
+*/
+
+$partidaId = null;
+
+
+/*
+ * Se já existe uma partida na sessão,
+ * verifica se ela realmente pertence ao usuário
+ * e ao jogo atual.
+ */
+if (
+    isset($_SESSION['caixa_partida_id']) &&
+    is_numeric($_SESSION['caixa_partida_id'])
+) {
+
+    $partidaId = (int) $_SESSION['caixa_partida_id'];
+
+    $stmtPartida = $pdo->prepare("
+        SELECT
+            id,
+            usuario_id,
+            jogo_id,
+            acertos,
+            erros,
+            pontuacao,
+            data_fim
+        FROM partidas
+        WHERE id = :partida_id
+        LIMIT 1
+    ");
+
+    $stmtPartida->execute([
+        ':partida_id' => $partidaId
+    ]);
+
+    $partida = $stmtPartida->fetch();
+
+    if (
+        !$partida ||
+        (int) $partida['usuario_id'] !== $usuarioId ||
+        (int) $partida['jogo_id'] !== $jogoId ||
+        $partida['data_fim'] !== null
+    ) {
+
+        $partidaId = null;
+
+        unset($_SESSION['caixa_partida_id']);
     }
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Inicia uma nova partida na sessão
+| CRIAR PARTIDA
 |--------------------------------------------------------------------------
-|
-| Não usamos o usuario_id enviado pelo JavaScript.
-| Pegamos o ID diretamente da sessão.
-|
 */
 
-if (
-    !isset($_SESSION['caixa_partida_id']) ||
-    !is_numeric($_SESSION['caixa_partida_id'])
-) {
+if ($partidaId === null) {
 
-    $stmtPartida = $pdo->prepare("
+    $stmtCriarPartida = $pdo->prepare("
         INSERT INTO partidas
         (
             usuario_id,
             jogo_id,
+            data_inicio,
             acertos,
             erros,
             pontuacao
@@ -270,75 +515,31 @@ if (
         (
             :usuario_id,
             :jogo_id,
+            NOW(),
             0,
             0,
             0
         )
     ");
 
-    $stmtPartida->execute([
+    $stmtCriarPartida->execute([
         ':usuario_id' => $usuarioId,
         ':jogo_id' => $jogoId
     ]);
 
-    $_SESSION['caixa_partida_id'] =
-        (int) $pdo->lastInsertId();
-}
+    $partidaId = (int) $pdo->lastInsertId();
 
-$partidaId =
-    (int) $_SESSION['caixa_partida_id'];
-
-
-/*
-|--------------------------------------------------------------------------
-| Confere se a partida pertence ao usuário
-|--------------------------------------------------------------------------
-*/
-
-$stmtPartida = $pdo->prepare("
-    SELECT
-        id,
-        usuario_id,
-        jogo_id,
-        acertos,
-        erros,
-        pontuacao,
-        data_fim
-    FROM partidas
-    WHERE id = :partida_id
-    LIMIT 1
-");
-
-$stmtPartida->execute([
-    ':partida_id' => $partidaId
-]);
-
-$partida = $stmtPartida->fetch();
-
-if (
-    !$partida ||
-    (int) $partida['usuario_id'] !== $usuarioId ||
-    (int) $partida['jogo_id'] !== $jogoId
-) {
-
-    unset($_SESSION['caixa_partida_id']);
-
-    echo json_encode([
-        'sucesso' => false,
-        'mensagem' => 'Partida inválida. Atualize a página e tente novamente.'
-    ]);
-
-    exit;
+    $_SESSION['caixa_partida_id'] = $partidaId;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Evita responder a mesma pergunta duas vezes
+| VERIFICAR SE A QUESTÃO JÁ FOI RESPONDIDA
 |--------------------------------------------------------------------------
 */
 
-$stmtRespostaExistente = $pdo->prepare("
+$stmtDuplicada = $pdo->prepare("
     SELECT id
     FROM respostas_partida
     WHERE partida_id = :partida_id
@@ -346,16 +547,16 @@ $stmtRespostaExistente = $pdo->prepare("
     LIMIT 1
 ");
 
-$stmtRespostaExistente->execute([
+$stmtDuplicada->execute([
     ':partida_id' => $partidaId,
     ':pergunta_id' => $perguntaId
 ]);
 
-if ($stmtRespostaExistente->fetch()) {
+if ($stmtDuplicada->fetch()) {
 
     echo json_encode([
         'sucesso' => false,
-        'mensagem' => 'Essa pergunta já foi respondida nesta partida.'
+        'mensagem' => 'Esta pergunta já foi respondida.'
     ]);
 
     exit;
@@ -364,7 +565,7 @@ if ($stmtRespostaExistente->fetch()) {
 
 /*
 |--------------------------------------------------------------------------
-| Salva a resposta
+| TRANSAÇÃO
 |--------------------------------------------------------------------------
 */
 
@@ -374,9 +575,73 @@ try {
 
 
     /*
-     * Registra a resposta individual.
+     * Busca novamente os dados da partida.
      */
+    $stmtPartida = $pdo->prepare("
+        SELECT
+            id,
+            usuario_id,
+            jogo_id,
+            acertos,
+            erros,
+            pontuacao
+        FROM partidas
+        WHERE id = :partida_id
+          AND usuario_id = :usuario_id
+          AND jogo_id = :jogo_id
+        LIMIT 1
+        FOR UPDATE
+    ");
 
+    $stmtPartida->execute([
+        ':partida_id' => $partidaId,
+        ':usuario_id' => $usuarioId,
+        ':jogo_id' => $jogoId
+    ]);
+
+    $partida = $stmtPartida->fetch();
+
+    if (!$partida) {
+
+        throw new RuntimeException(
+            'Partida não encontrada.'
+        );
+    }
+
+
+    /*
+     * Confirma novamente que não existe
+     * resposta duplicada.
+     */
+    $stmtDuplicada = $pdo->prepare("
+        SELECT id
+        FROM respostas_partida
+        WHERE partida_id = :partida_id
+          AND pergunta_id = :pergunta_id
+        LIMIT 1
+    ");
+
+    $stmtDuplicada->execute([
+        ':partida_id' => $partidaId,
+        ':pergunta_id' => $perguntaId
+    ]);
+
+    if ($stmtDuplicada->fetch()) {
+
+        $pdo->rollBack();
+
+        echo json_encode([
+            'sucesso' => false,
+            'mensagem' => 'Esta pergunta já foi respondida.'
+        ]);
+
+        exit;
+    }
+
+
+    /*
+     * Salvar resposta.
+     */
     $stmtResposta = $pdo->prepare("
         INSERT INTO respostas_partida
         (
@@ -406,49 +671,41 @@ try {
 
 
     /*
-     * Atualiza os totais da partida.
+     * Atualizar estatísticas da partida.
      */
+    $acertosAtual = (int) $partida['acertos'];
+    $errosAtual = (int) $partida['erros'];
+    $pontuacaoAtual = (int) $partida['pontuacao'];
 
     if ($correta) {
-
-        $stmtAtualizarPartida = $pdo->prepare("
-            UPDATE partidas
-            SET
-                acertos = acertos + 1,
-                pontuacao = pontuacao + :pontuacao
-            WHERE id = :partida_id
-        ");
-
+        $acertosAtual++;
     } else {
-
-        $stmtAtualizarPartida = $pdo->prepare("
-            UPDATE partidas
-            SET
-                erros = erros + 1
-            WHERE id = :partida_id
-        ");
+        $errosAtual++;
     }
 
+    $pontuacaoAtual += $pontuacaoObtida;
 
-    if ($correta) {
 
-        $stmtAtualizarPartida->execute([
-            ':pontuacao' => $pontuacaoObtida,
-            ':partida_id' => $partidaId
-        ]);
+    $stmtAtualizarPartida = $pdo->prepare("
+        UPDATE partidas
+        SET
+            acertos = :acertos,
+            erros = :erros,
+            pontuacao = :pontuacao
+        WHERE id = :partida_id
+    ");
 
-    } else {
-
-        $stmtAtualizarPartida->execute([
-            ':partida_id' => $partidaId
-        ]);
-    }
+    $stmtAtualizarPartida->execute([
+        ':acertos' => $acertosAtual,
+        ':erros' => $errosAtual,
+        ':pontuacao' => $pontuacaoAtual,
+        ':partida_id' => $partidaId
+    ]);
 
 
     /*
-     * XP do aluno.
+     * XP somente quando acertar.
      */
-
     if ($correta && $pontuacaoObtida > 0) {
 
         $stmtXP = $pdo->prepare("
@@ -461,72 +718,81 @@ try {
             ':xp' => $pontuacaoObtida,
             ':usuario_id' => $usuarioId
         ]);
+
+
+        /*
+         * Atualizar nível.
+         */
+        $stmtNivel = $pdo->prepare("
+            UPDATE usuarios
+            SET nivel = FLOOR(xp / 100) + 1
+            WHERE id = :usuario_id
+        ");
+
+        $stmtNivel->execute([
+            ':usuario_id' => $usuarioId
+        ]);
     }
 
 
     /*
-     * Atualiza o nível.
-     *
-     * Cada 100 XP = 1 nível.
+     * Atualizar progresso da dificuldade.
      */
+    $dificuldade = $pergunta['dificuldade'];
 
-    $stmtNivel = $pdo->prepare("
-        UPDATE usuarios
-        SET nivel = FLOOR(xp / 100) + 1
-        WHERE id = :usuario_id
+    $stmtTotalDificuldade = $pdo->prepare("
+        SELECT COUNT(*)
+        FROM perguntas
+        WHERE jogo_id = :jogo_id
+          AND dificuldade = :dificuldade
     ");
 
-    $stmtNivel->execute([
-        ':usuario_id' => $usuarioId
+    $stmtTotalDificuldade->execute([
+        ':jogo_id' => $jogoId,
+        ':dificuldade' => $dificuldade
     ]);
 
+    $totalDificuldade =
+        (int) $stmtTotalDificuldade->fetchColumn();
 
-    /*
-     * Atualiza progresso da dificuldade.
-     */
 
-    $stmtProgresso = $pdo->prepare("
-        SELECT
-            COUNT(*) AS total,
-            SUM(
-                CASE
-                    WHEN rp.correta = 1 THEN 1
-                    ELSE 0
-                END
-            ) AS acertos
+    $stmtRespondidasDificuldade = $pdo->prepare("
+        SELECT COUNT(*)
         FROM respostas_partida rp
         INNER JOIN perguntas p
             ON p.id = rp.pergunta_id
         WHERE rp.partida_id = :partida_id
+          AND p.jogo_id = :jogo_id
           AND p.dificuldade = :dificuldade
     ");
 
-    $stmtProgresso->execute([
+    $stmtRespondidasDificuldade->execute([
         ':partida_id' => $partidaId,
-        ':dificuldade' => $pergunta['dificuldade']
+        ':jogo_id' => $jogoId,
+        ':dificuldade' => $dificuldade
     ]);
 
-    $dadosProgresso = $stmtProgresso->fetch();
+    $respondidasDificuldade =
+        (int) $stmtRespondidasDificuldade->fetchColumn();
 
-    $totalRespostas =
-        (int) ($dadosProgresso['total'] ?? 0);
-
-    $totalAcertos =
-        (int) ($dadosProgresso['acertos'] ?? 0);
 
     $porcentagem = 0;
 
-    if ($totalRespostas > 0) {
-        $porcentagem =
-            ($totalAcertos / $totalRespostas) * 100;
+    if ($totalDificuldade > 0) {
+
+        $porcentagem = min(
+            100,
+            round(
+                ($respondidasDificuldade / $totalDificuldade) * 100
+            )
+        );
     }
 
 
     /*
-     * Verifica se já existe progresso nessa dificuldade.
+     * Verifica se já existe progresso para esta dificuldade.
      */
-
-    $stmtExisteProgresso = $pdo->prepare("
+    $stmtProgresso = $pdo->prepare("
         SELECT id
         FROM progresso
         WHERE usuario_id = :usuario_id
@@ -535,17 +801,16 @@ try {
         LIMIT 1
     ");
 
-    $stmtExisteProgresso->execute([
+    $stmtProgresso->execute([
         ':usuario_id' => $usuarioId,
         ':jogo_id' => $jogoId,
-        ':dificuldade' => $pergunta['dificuldade']
+        ':dificuldade' => $dificuldade
     ]);
 
-    $progressoExistente =
-        $stmtExisteProgresso->fetch();
+    $progressoExiste = $stmtProgresso->fetch();
 
 
-    if ($progressoExistente) {
+    if ($progressoExiste) {
 
         $status = 'em_andamento';
 
@@ -564,12 +829,18 @@ try {
         $stmtAtualizarProgresso->execute([
             ':porcentagem' => $porcentagem,
             ':status' => $status,
-            ':id' => $progressoExistente['id']
+            ':id' => $progressoExiste['id']
         ]);
 
     } else {
 
-        $stmtCriarProgresso = $pdo->prepare("
+        $status = 'em_andamento';
+
+        if ($porcentagem >= 100) {
+            $status = 'concluido';
+        }
+
+        $stmtInserirProgresso = $pdo->prepare("
             INSERT INTO progresso
             (
                 usuario_id,
@@ -583,26 +854,26 @@ try {
                 :usuario_id,
                 :jogo_id,
                 :dificuldade,
-                'em_andamento',
+                :status,
                 :porcentagem
             )
         ");
 
-        $stmtCriarProgresso->execute([
+        $stmtInserirProgresso->execute([
             ':usuario_id' => $usuarioId,
             ':jogo_id' => $jogoId,
-            ':dificuldade' => $pergunta['dificuldade'],
+            ':dificuldade' => $dificuldade,
+            ':status' => $status,
             ':porcentagem' => $porcentagem
         ]);
     }
 
 
     /*
-     * Descobre quantas perguntas existem no jogo.
+     * Verificar total de perguntas do jogo.
      */
-
     $stmtTotalPerguntas = $pdo->prepare("
-        SELECT COUNT(*) AS total
+        SELECT COUNT(*)
         FROM perguntas
         WHERE jogo_id = :jogo_id
     ");
@@ -612,15 +883,15 @@ try {
     ]);
 
     $totalPerguntas =
-        (int) $stmtTotalPerguntas->fetch()['total'];
+        (int) $stmtTotalPerguntas->fetchColumn();
 
 
     /*
-     * Descobre quantas perguntas já foram respondidas.
+     * Verificar quantas perguntas foram respondidas
+     * nesta partida.
      */
-
     $stmtRespondidas = $pdo->prepare("
-        SELECT COUNT(*) AS total
+        SELECT COUNT(*)
         FROM respostas_partida
         WHERE partida_id = :partida_id
     ");
@@ -630,13 +901,13 @@ try {
     ]);
 
     $totalRespondidas =
-        (int) $stmtRespondidas->fetch()['total'];
+        (int) $stmtRespondidas->fetchColumn();
 
 
     /*
-     * Se todas foram respondidas, encerra a partida.
+     * Se todas as perguntas foram respondidas,
+     * finalizar a partida.
      */
-
     $partidaFinalizada = false;
 
     if (
@@ -646,7 +917,7 @@ try {
 
         $stmtFinalizar = $pdo->prepare("
             UPDATE partidas
-            SET data_fim = CURRENT_TIMESTAMP
+            SET data_fim = NOW()
             WHERE id = :partida_id
         ");
 
@@ -659,9 +930,8 @@ try {
 
 
     /*
-     * Atualiza conquistas.
+     * Verificar conquistas.
      */
-
     verificarConquistas(
         $pdo,
         $usuarioId,
@@ -674,65 +944,42 @@ try {
 
 
     /*
-     * Se a partida acabou, removemos o ID da sessão.
+     * Limpar sessão da partida somente depois
+     * que ela realmente terminou.
      */
-
     if ($partidaFinalizada) {
+
         unset($_SESSION['caixa_partida_id']);
+
+        /*
+         * A lista de dicas da partida também pode
+         * ser limpa ao finalizar.
+         */
+        unset($_SESSION['caixa_dicas_usadas']);
     }
 
 
     /*
-     * Feedback educativo.
+     * Feedback didático.
      */
-
     if ($correta) {
 
-        if ($dicaUsada) {
-
-            $mensagem =
-                "Muito bem! Você acertou usando a dica. " .
-                "Continue praticando para ganhar ainda mais confiança.";
-
-        } else {
-
-            $mensagem =
-                "Excelente! Sua resposta está correta. " .
-                "Você está dominando essa conta!";
-        }
+        $mensagem =
+            'Muito bem! Sua resposta está correta. ' .
+            'Continue assim!';
 
     } else {
 
-        $respostaFormatada =
-            number_format(
-                $respostaCorreta,
-                2,
-                ',',
-                '.'
-            );
-
-        if (
-            str_contains(
-                strtolower($pergunta['enunciado']),
-                'troco'
-            )
-        ) {
-
-            $mensagem =
-                "Vamos revisar: para calcular o troco, " .
-                "faça o valor pago menos o valor da compra. " .
-                "A resposta correta é R$ {$respostaFormatada}.";
-
-        } else {
-
-            $mensagem =
-                "Não tem problema! Revise os valores da situação " .
-                "e tente identificar qual operação deve ser feita. " .
-                "A resposta correta é {$respostaFormatada}.";
-        }
+        $mensagem =
+            'Não foi dessa vez. ' .
+            'Revise os valores apresentados na questão ' .
+            'e tente aprender com o erro.';
     }
 
 
+    /*
+     * Retorno para o JavaScript.
+     */
     echo json_encode([
         'sucesso' => true,
         'correta' => $correta,
@@ -740,6 +987,8 @@ try {
         'mensagem' => $mensagem,
         'partida_finalizada' => $partidaFinalizada
     ]);
+
+    exit;
 
 } catch (Throwable $e) {
 
@@ -751,15 +1000,16 @@ try {
 
     echo json_encode([
         'sucesso' => false,
-        'mensagem' =>
-            'Não foi possível salvar sua resposta. Tente novamente.'
+        'mensagem' => 'Ocorreu um erro ao registrar sua resposta.'
     ]);
+
+    exit;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| FUNÇÃO DE CONQUISTAS
+| CONQUISTAS
 |--------------------------------------------------------------------------
 */
 
@@ -773,22 +1023,21 @@ function verificarConquistas(
     /*
      * Primeira Vitória
      */
-
-    $stmtPartidas = $pdo->prepare("
-        SELECT COUNT(*) AS total
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*)
         FROM partidas
         WHERE usuario_id = :usuario_id
           AND data_fim IS NOT NULL
     ");
 
-    $stmtPartidas->execute([
+    $stmt->execute([
         ':usuario_id' => $usuarioId
     ]);
 
-    $totalPartidas =
-        (int) $stmtPartidas->fetch()['total'];
+    $partidasConcluidas =
+        (int) $stmt->fetchColumn();
 
-    if ($totalPartidas >= 1) {
+    if ($partidasConcluidas >= 1) {
 
         desbloquearConquista(
             $pdo,
@@ -801,20 +1050,18 @@ function verificarConquistas(
     /*
      * Mestre da Matemática
      */
-
-    $stmtXP = $pdo->prepare("
+    $stmt = $pdo->prepare("
         SELECT xp
         FROM usuarios
         WHERE id = :usuario_id
         LIMIT 1
     ");
 
-    $stmtXP->execute([
+    $stmt->execute([
         ':usuario_id' => $usuarioId
     ]);
 
-    $xp =
-        (int) $stmtXP->fetch()['xp'];
+    $xp = (int) $stmt->fetchColumn();
 
     if ($xp >= 100) {
 
@@ -828,24 +1075,21 @@ function verificarConquistas(
 
     /*
      * Caixa Rápido
-     *
-     * Consideramos bom desempenho:
-     * pelo menos 4 acertos em uma partida.
      */
-
-    $stmtCaixa = $pdo->prepare("
+    $stmt = $pdo->prepare("
         SELECT acertos
         FROM partidas
         WHERE id = :partida_id
+          AND usuario_id = :usuario_id
         LIMIT 1
     ");
 
-    $stmtCaixa->execute([
-        ':partida_id' => $partidaId
+    $stmt->execute([
+        ':partida_id' => $partidaId,
+        ':usuario_id' => $usuarioId
     ]);
 
-    $partida =
-        $stmtCaixa->fetch();
+    $partida = $stmt->fetch();
 
     if (
         $partida &&
@@ -862,23 +1106,20 @@ function verificarConquistas(
 
     /*
      * Aluno Dedicado
-     *
-     * Verifica se o aluno já jogou os dois jogos.
      */
-
-    $stmtDoisJogos = $pdo->prepare("
-        SELECT COUNT(DISTINCT jogo_id) AS total
+    $stmt = $pdo->prepare("
+        SELECT COUNT(DISTINCT jogo_id)
         FROM partidas
         WHERE usuario_id = :usuario_id
           AND data_fim IS NOT NULL
     ");
 
-    $stmtDoisJogos->execute([
+    $stmt->execute([
         ':usuario_id' => $usuarioId
     ]);
 
     $jogosConcluidos =
-        (int) $stmtDoisJogos->fetch()['total'];
+        (int) $stmt->fetchColumn();
 
     if ($jogosConcluidos >= 2) {
 
@@ -904,21 +1145,43 @@ function desbloquearConquista(
 ): void {
 
     $stmt = $pdo->prepare("
-        INSERT IGNORE INTO usuario_conquistas
-        (
-            usuario_id,
-            conquista_id
-        )
-        SELECT
-            :usuario_id,
-            id
+        SELECT id
         FROM conquistas
         WHERE nome = :nome
         LIMIT 1
     ");
 
     $stmt->execute([
-        ':usuario_id' => $usuarioId,
         ':nome' => $nomeConquista
+    ]);
+
+    $conquista = $stmt->fetch();
+
+    if (!$conquista) {
+        return;
+    }
+
+
+    /*
+     * INSERT IGNORE impede duplicidade.
+     */
+    $stmt = $pdo->prepare("
+        INSERT IGNORE INTO usuario_conquistas
+        (
+            usuario_id,
+            conquista_id,
+            data_desbloqueio
+        )
+        VALUES
+        (
+            :usuario_id,
+            :conquista_id,
+            NOW()
+        )
+    ");
+
+    $stmt->execute([
+        ':usuario_id' => $usuarioId,
+        ':conquista_id' => $conquista['id']
     ]);
 }
