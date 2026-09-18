@@ -1,132 +1,48 @@
 <?php
-
-require_once '../config/config.php';
 require_once '../includes/auth.php';
+require_once '../config/config.php';
 
 protegerPagina(['professor', 'admin']);
 
-/* =========================
-   DADOS DO USUÁRIO
-========================= */
-
 $usuarioId = usuarioId();
-$nome = nomeUsuario();
-$tipo = tipoUsuario();
 
-/* =========================
-   ESTATÍSTICAS GERAIS
-========================= */
-
-$stmt = $pdo->query("
-    SELECT COUNT(*) AS total
+/*
+|--------------------------------------------------------------------------
+| Dados do professor
+|--------------------------------------------------------------------------
+*/
+$stmt = $pdo->prepare("
+    SELECT
+        id,
+        nome,
+        email,
+        tipo
     FROM usuarios
-    WHERE tipo = 'aluno'
+    WHERE id = ?
+    LIMIT 1
 ");
-$totalAlunos = (int) $stmt->fetch()['total'];
 
-if ($tipo === 'admin') {
+$stmt->execute([$usuarioId]);
+$professor = $stmt->fetch();
 
-    $stmt = $pdo->query("
-        SELECT COUNT(*) AS total
-        FROM turmas
-        WHERE ativo = 1
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT COUNT(*) AS total
-        FROM professor_turmas pt
-        INNER JOIN turmas t ON t.id = pt.turma_id
-        WHERE pt.professor_id = ?
-        AND t.ativo = 1
-    ");
-
-    $stmt->execute([$usuarioId]);
+if (!$professor) {
+    header('Location: ../login.php');
+    exit;
 }
 
-$totalTurmas = (int) $stmt->fetch()['total'];
-
-/* =========================
-   PARTIDAS
-========================= */
-
-if ($tipo === 'admin') {
-
-    $stmt = $pdo->query("
-        SELECT COUNT(*) AS total
-        FROM partidas
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT COUNT(*) AS total
-        FROM partidas p
-        INNER JOIN usuarios u ON u.id = p.usuario_id
-        INNER JOIN professor_turmas pt ON pt.turma_id = u.turma_id
-        WHERE pt.professor_id = ?
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
-
-$totalPartidas = (int) $stmt->fetch()['total'];
-
-/* =========================
-   MÉDIA DE ACERTOS
-========================= */
-
-if ($tipo === 'admin') {
-
-    $stmt = $pdo->query("
-        SELECT
-            COALESCE(
-                ROUND(
-                    (SUM(acertos) /
-                    NULLIF(SUM(acertos + erros), 0)) * 100,
-                    1
-                ),
-                0
-            ) AS media
-        FROM partidas
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            COALESCE(
-                ROUND(
-                    (SUM(p.acertos) /
-                    NULLIF(SUM(p.acertos + p.erros), 0)) * 100,
-                    1
-                ),
-                0
-            ) AS media
-        FROM partidas p
-        INNER JOIN usuarios u ON u.id = p.usuario_id
-        INNER JOIN professor_turmas pt ON pt.turma_id = u.turma_id
-        WHERE pt.professor_id = ?
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
-
-$mediaAcertos = (float) $stmt->fetch()['media'];
-
-/* =========================
-   TURMAS
-========================= */
-
-if ($tipo === 'admin') {
+/*
+|--------------------------------------------------------------------------
+| Turmas do professor
+|--------------------------------------------------------------------------
+*/
+if (ehAdmin()) {
 
     $stmt = $pdo->query("
         SELECT
             t.id,
             t.nome,
             t.ano_serie,
-            COUNT(u.id) AS total_alunos
+            COUNT(DISTINCT u.id) AS total_alunos
         FROM turmas t
         LEFT JOIN usuarios u
             ON u.turma_id = t.id
@@ -143,16 +59,21 @@ if ($tipo === 'admin') {
             t.id,
             t.nome,
             t.ano_serie,
-            COUNT(u.id) AS total_alunos
-        FROM professor_turmas pt
-        INNER JOIN turmas t
-            ON t.id = pt.turma_id
+            COUNT(DISTINCT u.id) AS total_alunos
+        FROM turmas t
+
+        INNER JOIN professor_turmas pt
+            ON pt.turma_id = t.id
+            AND pt.professor_id = ?
+
         LEFT JOIN usuarios u
             ON u.turma_id = t.id
             AND u.tipo = 'aluno'
-        WHERE pt.professor_id = ?
-        AND t.ativo = 1
+
+        WHERE t.ativo = 1
+
         GROUP BY t.id, t.nome, t.ano_serie
+
         ORDER BY t.ano_serie, t.nome
     ");
 
@@ -161,54 +82,167 @@ if ($tipo === 'admin') {
 
 $turmas = $stmt->fetchAll();
 
-/* =========================
-   ÚLTIMAS PARTIDAS
-========================= */
+/*
+|--------------------------------------------------------------------------
+| Quantidade de alunos
+|--------------------------------------------------------------------------
+*/
+if (ehAdmin()) {
 
-if ($tipo === 'admin') {
+    $stmt = $pdo->query("
+        SELECT COUNT(*) AS total
+        FROM usuarios
+        WHERE tipo = 'aluno'
+    ");
+
+} else {
+
+    $stmt = $pdo->prepare("
+        SELECT COUNT(DISTINCT u.id) AS total
+        FROM usuarios u
+        INNER JOIN professor_turmas pt
+            ON pt.turma_id = u.turma_id
+        WHERE pt.professor_id = ?
+          AND u.tipo = 'aluno'
+    ");
+
+    $stmt->execute([$usuarioId]);
+}
+
+$totalAlunos = (int) ($stmt->fetch()['total'] ?? 0);
+
+/*
+|--------------------------------------------------------------------------
+| Total de jogos
+|--------------------------------------------------------------------------
+*/
+$stmt = $pdo->query("
+    SELECT COUNT(*) AS total
+    FROM jogos
+    WHERE ativo = 1
+");
+
+$totalJogos = (int) ($stmt->fetch()['total'] ?? 0);
+
+/*
+|--------------------------------------------------------------------------
+| Partidas realizadas pelos alunos das turmas
+|--------------------------------------------------------------------------
+*/
+if (ehAdmin()) {
 
     $stmt = $pdo->query("
         SELECT
-            p.id,
-            u.nome AS aluno,
-            j.nome AS jogo,
-            p.acertos,
-            p.erros,
-            p.pontuacao,
-            p.data_inicio
+            COUNT(DISTINCT p.id) AS partidas,
+            COALESCE(SUM(p.acertos), 0) AS acertos,
+            COALESCE(SUM(p.erros), 0) AS erros,
+            COALESCE(SUM(p.pontuacao), 0) AS pontuacao
         FROM partidas p
-        INNER JOIN usuarios u ON u.id = p.usuario_id
-        INNER JOIN jogos j ON j.id = p.jogo_id
-        ORDER BY p.data_inicio DESC
-        LIMIT 8
+        INNER JOIN usuarios u
+            ON u.id = p.usuario_id
+        WHERE u.tipo = 'aluno'
     ");
 
 } else {
 
     $stmt = $pdo->prepare("
         SELECT
-            p.id,
-            u.nome AS aluno,
-            j.nome AS jogo,
-            p.acertos,
-            p.erros,
-            p.pontuacao,
-            p.data_inicio
+            COUNT(DISTINCT p.id) AS partidas,
+            COALESCE(SUM(p.acertos), 0) AS acertos,
+            COALESCE(SUM(p.erros), 0) AS erros,
+            COALESCE(SUM(p.pontuacao), 0) AS pontuacao
         FROM partidas p
-        INNER JOIN usuarios u ON u.id = p.usuario_id
-        INNER JOIN jogos j ON j.id = p.jogo_id
+        INNER JOIN usuarios u
+            ON u.id = p.usuario_id
         INNER JOIN professor_turmas pt
             ON pt.turma_id = u.turma_id
         WHERE pt.professor_id = ?
-        ORDER BY p.data_inicio DESC
-        LIMIT 8
+          AND u.tipo = 'aluno'
     ");
 
     $stmt->execute([$usuarioId]);
 }
 
-$ultimasPartidas = $stmt->fetchAll();
+$dadosPartidas = $stmt->fetch();
 
+$totalPartidas = (int) ($dadosPartidas['partidas'] ?? 0);
+$totalAcertos = (int) ($dadosPartidas['acertos'] ?? 0);
+$totalErros = (int) ($dadosPartidas['erros'] ?? 0);
+$totalPontuacao = (int) ($dadosPartidas['pontuacao'] ?? 0);
+
+$totalRespostas = $totalAcertos + $totalErros;
+
+$taxaAcerto = $totalRespostas > 0
+    ? round(($totalAcertos / $totalRespostas) * 100)
+    : 0;
+
+/*
+|--------------------------------------------------------------------------
+| Partidas recentes
+|--------------------------------------------------------------------------
+*/
+if (ehAdmin()) {
+
+    $stmt = $pdo->query("
+        SELECT
+            u.nome AS aluno,
+            t.nome AS turma,
+            j.nome AS jogo,
+            p.acertos,
+            p.erros,
+            p.pontuacao,
+            p.data_fim
+        FROM partidas p
+        INNER JOIN usuarios u
+            ON u.id = p.usuario_id
+        LEFT JOIN turmas t
+            ON t.id = u.turma_id
+        INNER JOIN jogos j
+            ON j.id = p.jogo_id
+        WHERE u.tipo = 'aluno'
+        ORDER BY COALESCE(p.data_fim, p.data_inicio) DESC
+        LIMIT 5
+    ");
+
+} else {
+
+    $stmt = $pdo->prepare("
+        SELECT
+            u.nome AS aluno,
+            t.nome AS turma,
+            j.nome AS jogo,
+            p.acertos,
+            p.erros,
+            p.pontuacao,
+            p.data_fim
+        FROM partidas p
+        INNER JOIN usuarios u
+            ON u.id = p.usuario_id
+        INNER JOIN professor_turmas pt
+            ON pt.turma_id = u.turma_id
+            AND pt.professor_id = ?
+        LEFT JOIN turmas t
+            ON t.id = u.turma_id
+        INNER JOIN jogos j
+            ON j.id = p.jogo_id
+        WHERE u.tipo = 'aluno'
+        ORDER BY COALESCE(p.data_fim, p.data_inicio) DESC
+        LIMIT 5
+    ");
+
+    $stmt->execute([$usuarioId]);
+}
+
+$partidasRecentes = $stmt->fetchAll();
+
+/*
+|--------------------------------------------------------------------------
+| Inicial
+|--------------------------------------------------------------------------
+*/
+$inicial = mb_strtoupper(
+    mb_substr($professor['nome'], 0, 1)
+);
 ?>
 
 <!DOCTYPE html>
@@ -227,378 +261,782 @@ $ultimasPartidas = $stmt->fetchAll();
 
     <link
         rel="stylesheet"
-        href="../assets/css/global.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="../assets/css/professor-dashboard.css"
+        href="../assets/css/prof-dashboard.css"
     >
 
 </head>
 
 <body>
 
-<div class="layout">
+<div class="app">
 
-    <?php require_once '../includes/sidebar-professor.php'; ?>
+    <!-- SIDEBAR -->
 
-    <main class="conteudo-principal">
+    <aside class="sidebar">
 
-        <header class="cabecalho-pagina">
+        <div class="sidebar-header">
 
-            <div>
+            <div class="logo">
 
-                <p class="saudacao">
-                    Olá, <?= htmlspecialchars($nome) ?>! 👋
-                </p>
+                <span class="logo-icon">
+                    M
+                </span>
 
-                <h1>
+                <div>
+
+                    <strong>
+                        MathPlay
+                    </strong>
+
+                    <small>
+                        Área do Professor
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="dashboard.php"
+                class="nav-item active"
+            >
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="turmas.php"
+                class="nav-item"
+            >
+                <span>🏫</span>
+                <span>Turmas</span>
+            </a>
+
+
+            <a
+                href="alunos.php"
+                class="nav-item"
+            >
+                <span>👨‍🎓</span>
+                <span>Alunos</span>
+            </a>
+
+
+            <a
+                href="desempenho.php"
+                class="nav-item"
+            >
+                <span>📊</span>
+                <span>Desempenho</span>
+            </a>
+
+
+            <a
+                href="relatorios.php"
+                class="nav-item"
+            >
+                <span>📄</span>
+                <span>Relatórios</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="../logout.php"
+                class="logout-link"
+            >
+                <span>🚪</span>
+                <span>Sair</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button
+                type="button"
+                class="menu-button"
+                id="menu-button"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <strong>
                     Dashboard
-                </h1>
+                </strong>
 
-                <p>
-                    Acompanhe o desempenho dos alunos e das turmas.
-                </p>
+            </div>
+
+
+            <div class="teacher-mini">
+
+                <div class="teacher-avatar">
+
+                    <?= htmlspecialchars($inicial) ?>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        <?= htmlspecialchars($professor['nome']) ?>
+                    </strong>
+
+                    <small>
+                        Professor
+                    </small>
+
+                </div>
 
             </div>
 
         </header>
 
 
-        <!-- =========================
-             CARDS DE ESTATÍSTICAS
-        ========================== -->
+        <section class="content">
 
-        <section class="cards-estatisticas">
+            <!-- CABEÇALHO -->
 
-            <article class="card-estatistica">
-
-                <span class="icone">
-                    👥
-                </span>
+            <div class="page-header">
 
                 <div>
 
-                    <span class="titulo">
-                        Alunos
+                    <span class="eyebrow">
+                        ÁREA DO PROFESSOR
                     </span>
 
-                    <strong>
-                        <?= $totalAlunos ?>
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-            <article class="card-estatistica">
-
-                <span class="icone">
-                    🏫
-                </span>
-
-                <div>
-
-                    <span class="titulo">
-                        Turmas
-                    </span>
-
-                    <strong>
-                        <?= $totalTurmas ?>
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-            <article class="card-estatistica">
-
-                <span class="icone">
-                    🎮
-                </span>
-
-                <div>
-
-                    <span class="titulo">
-                        Partidas
-                    </span>
-
-                    <strong>
-                        <?= $totalPartidas ?>
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-            <article class="card-estatistica">
-
-                <span class="icone">
-                    📈
-                </span>
-
-                <div>
-
-                    <span class="titulo">
-                        Média de acertos
-                    </span>
-
-                    <strong>
-                        <?= number_format($mediaAcertos, 1, ',', '.') ?>%
-                    </strong>
-
-                </div>
-
-            </article>
-
-        </section>
-
-
-        <!-- =========================
-             ATALHOS
-        ========================== -->
-
-        <section class="secao">
-
-            <div class="titulo-secao">
-
-                <div>
-                    <h2>Acesso rápido</h2>
-                    <p>Gerencie os principais recursos.</p>
-                </div>
-
-            </div>
-
-
-            <div class="atalhos">
-
-                <a
-                    href="turmas.php"
-                    class="atalho"
-                >
-                    <span>🏫</span>
-                    <strong>Turmas</strong>
-                    <small>Visualizar turmas</small>
-                </a>
-
-
-                <a
-                    href="alunos.php"
-                    class="atalho"
-                >
-                    <span>👥</span>
-                    <strong>Alunos</strong>
-                    <small>Consultar alunos</small>
-                </a>
-
-
-                <a
-                    href="desempenho.php"
-                    class="atalho"
-                >
-                    <span>📊</span>
-                    <strong>Desempenho</strong>
-                    <small>Acompanhar resultados</small>
-                </a>
-
-
-                <a
-                    href="relatorios.php"
-                    class="atalho"
-                >
-                    <span>📄</span>
-                    <strong>Relatórios</strong>
-                    <small>Consultar relatórios</small>
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             TURMAS
-        ========================== -->
-
-        <section class="secao">
-
-            <div class="titulo-secao">
-
-                <div>
-                    <h2>Minhas turmas</h2>
-                    <p>Resumo das turmas cadastradas.</p>
-                </div>
-
-                <a href="turmas.php">
-                    Ver todas
-                </a>
-
-            </div>
-
-
-            <?php if (empty($turmas)): ?>
-
-                <div class="estado-vazio">
-
-                    <span>🏫</span>
-
-                    <h3>
-                        Nenhuma turma encontrada
-                    </h3>
+                    <h1>
+                        Olá, <?= htmlspecialchars($professor['nome']) ?>! 👋
+                    </h1>
 
                     <p>
-                        Ainda não existem turmas disponíveis.
+                        Acompanhe suas turmas e o desempenho
+                        dos seus alunos.
                     </p>
 
                 </div>
 
-            <?php else: ?>
+            </div>
 
-                <div class="lista-turmas">
 
-                    <?php foreach ($turmas as $turma): ?>
+            <!-- CARDS PRINCIPAIS -->
 
-                        <article class="card-turma">
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🏫
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Minhas turmas
+                        </span>
+
+                        <strong>
+                            <?= count($turmas) ?>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👨‍🎓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Alunos
+                        </span>
+
+                        <strong>
+                            <?= $totalAlunos ?>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        🎮
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Jogos ativos
+                        </span>
+
+                        <strong>
+                            <?= $totalJogos ?>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon yellow">
+                        📈
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Taxa de acerto
+                        </span>
+
+                        <strong>
+                            <?= $taxaAcerto ?>%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- VISÃO GERAL -->
+
+            <section class="overview-grid">
+
+                <div class="overview-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>
+                                Visão geral
+                            </h2>
+
+                            <p>
+                                Atividade dos seus alunos.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-stats">
+
+                        <div>
+
+                            <span>
+                                Partidas
+                            </span>
+
+                            <strong>
+                                <?= $totalPartidas ?>
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Acertos
+                            </span>
+
+                            <strong>
+                                <?= $totalAcertos ?>
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Erros
+                            </span>
+
+                            <strong>
+                                <?= $totalErros ?>
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Pontuação
+                            </span>
+
+                            <strong>
+                                <?= $totalPontuacao ?>
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="accuracy-area">
+
+                        <div class="accuracy-header">
+
+                            <span>
+                                Aproveitamento
+                            </span>
+
+                            <strong>
+                                <?= $taxaAcerto ?>%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width: <?= $taxaAcerto ?>%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACESSOS RÁPIDOS -->
+
+                <div class="quick-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>
+                                Acessos rápidos
+                            </h2>
+
+                            <p>
+                                Gerencie sua área.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-links">
+
+                        <a
+                            href="turmas.php"
+                            class="quick-link"
+                        >
+
+                            <span>
+                                🏫
+                            </span>
 
                             <div>
 
-                                <span class="serie">
-                                    <?= htmlspecialchars($turma['ano_serie']) ?>º ano
-                                </span>
+                                <strong>
+                                    Gerenciar turmas
+                                </strong>
+
+                                <small>
+                                    Ver suas turmas
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+                        <a
+                            href="alunos.php"
+                            class="quick-link"
+                        >
+
+                            <span>
+                                👨‍🎓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Ver alunos
+                                </strong>
+
+                                <small>
+                                    Acompanhar estudantes
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+                        <a
+                            href="desempenho.php"
+                            class="quick-link"
+                        >
+
+                            <span>
+                                📊
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Desempenho
+                                </strong>
+
+                                <small>
+                                    Analisar resultados
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+                        <a
+                            href="relatorios.php"
+                            class="quick-link"
+                        >
+
+                            <span>
+                                📄
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Relatórios
+                                </strong>
+
+                                <small>
+                                    Consultar relatórios
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TURMAS -->
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Minhas turmas
+                        </h2>
+
+                        <p>
+                            Acesso rápido às turmas cadastradas.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="turmas.php"
+                        class="view-all"
+                    >
+                        Ver todas →
+                    </a>
+
+                </div>
+
+
+                <?php if (!$turmas): ?>
+
+                    <div class="empty-card">
+
+                        <div>
+                            🏫
+                        </div>
+
+                        <h3>
+                            Nenhuma turma encontrada
+                        </h3>
+
+                        <p>
+                            As turmas vinculadas ao professor
+                            aparecerão aqui.
+                        </p>
+
+                    </div>
+
+                <?php else: ?>
+
+                    <div class="classes-grid">
+
+                        <?php foreach (array_slice($turmas, 0, 4) as $turma): ?>
+
+                            <a
+                                href="turmas.php?id=<?= (int) $turma['id'] ?>"
+                                class="class-card"
+                            >
+
+                                <div class="class-card-top">
+
+                                    <div class="class-icon">
+                                        🏫
+                                    </div>
+
+                                    <span>
+                                        <?= (int) $turma['ano_serie'] ?>º ano
+                                    </span>
+
+                                </div>
+
 
                                 <h3>
                                     <?= htmlspecialchars($turma['nome']) ?>
                                 </h3>
 
-                            </div>
 
-                            <div class="quantidade-alunos">
-
-                                <strong>
+                                <p>
                                     <?= (int) $turma['total_alunos'] ?>
-                                </strong>
-
-                                <span>
                                     aluno(s)
-                                </span>
+                                </p>
 
-                            </div>
 
-                            <a
-                                href="alunos.php?turma=<?= (int) $turma['id'] ?>"
-                                class="botao-secundario"
-                            >
-                                Ver alunos
+                                <div class="class-link">
+                                    Ver turma →
+                                </div>
+
                             </a>
 
-                        </article>
+                        <?php endforeach; ?>
 
-                    <?php endforeach; ?>
+                    </div>
 
-                </div>
+                <?php endif; ?>
 
-            <?php endif; ?>
-
-        </section>
+            </section>
 
 
-        <!-- =========================
-             ÚLTIMAS PARTIDAS
-        ========================== -->
+            <!-- ATIVIDADE RECENTE -->
 
-        <section class="secao">
+            <section class="section">
 
-            <div class="titulo-secao">
+                <div class="section-header">
 
-                <div>
-                    <h2>Atividade recente</h2>
-                    <p>Últimas partidas realizadas pelos alunos.</p>
-                </div>
+                    <div>
 
-            </div>
+                        <h2>
+                            Atividade recente
+                        </h2>
 
+                        <p>
+                            Últimas partidas realizadas pelos alunos.
+                        </p>
 
-            <?php if (empty($ultimasPartidas)): ?>
-
-                <div class="estado-vazio">
-
-                    <span>🎮</span>
-
-                    <h3>
-                        Nenhuma partida registrada
-                    </h3>
-
-                    <p>
-                        As atividades dos alunos aparecerão aqui.
-                    </p>
+                    </div>
 
                 </div>
 
-            <?php else: ?>
 
-                <div class="tabela-container">
+                <?php if (!$partidasRecentes): ?>
 
-                    <table>
+                    <div class="empty-card">
 
-                        <thead>
+                        <div>
+                            📊
+                        </div>
 
-                            <tr>
-                                <th>Aluno</th>
-                                <th>Jogo</th>
-                                <th>Acertos</th>
-                                <th>Erros</th>
-                                <th>Pontuação</th>
-                            </tr>
+                        <h3>
+                            Ainda não há atividades
+                        </h3>
 
-                        </thead>
+                        <p>
+                            As partidas dos alunos aparecerão aqui
+                            quando forem realizadas.
+                        </p>
 
-                        <tbody>
+                    </div>
 
-                            <?php foreach ($ultimasPartidas as $partida): ?>
+                <?php else: ?>
+
+                    <div class="activity-table-wrapper">
+
+                        <table class="activity-table">
+
+                            <thead>
 
                                 <tr>
 
-                                    <td>
-                                        <?= htmlspecialchars($partida['aluno']) ?>
-                                    </td>
+                                    <th>
+                                        Aluno
+                                    </th>
 
-                                    <td>
-                                        <?= htmlspecialchars($partida['jogo']) ?>
-                                    </td>
+                                    <th>
+                                        Turma
+                                    </th>
 
-                                    <td>
-                                        <?= (int) $partida['acertos'] ?>
-                                    </td>
+                                    <th>
+                                        Jogo
+                                    </th>
 
-                                    <td>
-                                        <?= (int) $partida['erros'] ?>
-                                    </td>
+                                    <th>
+                                        Acertos
+                                    </th>
 
-                                    <td>
-                                        <?= (int) $partida['pontuacao'] ?>
-                                    </td>
+                                    <th>
+                                        Pontuação
+                                    </th>
 
                                 </tr>
 
-                            <?php endforeach; ?>
+                            </thead>
 
-                        </tbody>
 
-                    </table>
+                            <tbody>
 
-                </div>
+                                <?php foreach ($partidasRecentes as $partida): ?>
 
-            <?php endif; ?>
+                                    <tr>
+
+                                        <td>
+
+                                            <strong>
+                                                <?= htmlspecialchars(
+                                                    $partida['aluno']
+                                                ) ?>
+                                            </strong>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <?= htmlspecialchars(
+                                                $partida['turma']
+                                                ?: '—'
+                                            ) ?>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <?= htmlspecialchars(
+                                                $partida['jogo']
+                                            ) ?>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <span class="accuracy-badge">
+
+                                                <?= (int) $partida['acertos'] ?>
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <strong>
+
+                                                <?= (int) $partida['pontuacao'] ?>
+
+                                            </strong>
+
+                                        </td>
+
+                                    </tr>
+
+                                <?php endforeach; ?>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                <?php endif; ?>
+
+            </section>
 
         </section>
 
     </main>
 
 </div>
+
+
+<div
+    class="sidebar-overlay"
+    id="sidebar-overlay"
+></div>
+
+
+<script src="../assets/js/prof-dashboard.js"></script>
 
 </body>
 
