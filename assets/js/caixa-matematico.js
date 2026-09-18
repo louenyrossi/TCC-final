@@ -486,7 +486,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nextButton.addEventListener('click', () => {
 
+
+        console.log('CLIQUEI EM PRÓXIMA');
+        console.log('Antes:', perguntaAtual);
+
         perguntaAtual++;
+
+        console.log('Depois:', perguntaAtual);
 
         if (perguntaAtual >= perguntas.length) {
 
