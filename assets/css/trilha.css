@@ -1,0 +1,671 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F8F7FC;
+    color: #292631;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    border-right: 1px solid #E7E3EF;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid #F0EDF5;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #7C3AED;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.logo strong {
+    display: block;
+    font-size: 19px;
+}
+
+.logo small {
+    display: block;
+    margin-top: 3px;
+    color: #6B6675;
+    font-size: 12px;
+}
+
+.sidebar-nav {
+    padding: 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: #6B6675;
+    font-size: 14px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.nav-item:hover {
+    background: #F3EEFF;
+    color: #5B21B6;
+}
+
+.nav-item.active {
+    background: #EDE9FE;
+    color: #5B21B6;
+}
+
+.nav-item span:first-child {
+    width: 22px;
+    text-align: center;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 15px 12px;
+    border-top: 1px solid #E7E3EF;
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: #6B6675;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.logout-link:hover {
+    background: #FDECEC;
+    color: #DC2626;
+}
+
+
+/* CONTEÚDO */
+
+.main-content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 70px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E7E3EF;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+}
+
+.topbar-title {
+    font-size: 16px;
+}
+
+.student-mini {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.student-mini strong,
+.student-mini small {
+    display: block;
+}
+
+.student-mini strong {
+    font-size: 13px;
+}
+
+.student-mini small {
+    color: #6B6675;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.student-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #EDE9FE;
+    color: #5B21B6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.menu-button {
+    display: none;
+}
+
+.content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 35px 25px 60px;
+}
+
+
+/* CABEÇALHO */
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.eyebrow {
+    color: #7C3AED;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.page-header h1 {
+    margin-top: 6px;
+    font-size: 30px;
+    line-height: 1.15;
+}
+
+.page-header p {
+    margin-top: 8px;
+    color: #6B6675;
+    line-height: 1.5;
+}
+
+.level-card {
+    min-width: 125px;
+    padding: 15px;
+    background: #FFFFFF;
+    border: 1px solid #E7E3EF;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.level-card span,
+.level-card small {
+    display: block;
+    color: #6B6675;
+    font-size: 11px;
+}
+
+.level-card strong {
+    display: block;
+    margin: 3px 0;
+    color: #5B21B6;
+    font-size: 25px;
+}
+
+
+/* TURMA */
+
+.class-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 18px;
+    margin-bottom: 35px;
+    background: #FFFFFF;
+    border: 1px solid #E7E3EF;
+    border-radius: 14px;
+}
+
+.class-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: #EDE9FE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.class-info span,
+.class-info strong {
+    display: block;
+}
+
+.class-info span {
+    color: #6B6675;
+    font-size: 11px;
+}
+
+.class-info strong {
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+
+/* TRILHA */
+
+.learning-path {
+    position: relative;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.path-line {
+    position: absolute;
+    left: 31px;
+    top: 30px;
+    bottom: 30px;
+    width: 4px;
+    background: #DDD6FE;
+    border-radius: 10px;
+}
+
+.path-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.path-node {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 4px solid #DDD6FE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B6675;
+    font-size: 18px;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+}
+
+.path-item.completed .path-node {
+    background: #7C3AED;
+    border-color: #7C3AED;
+    color: #FFFFFF;
+}
+
+.path-item.current .path-node {
+    background: #EDE9FE;
+    border-color: #7C3AED;
+    color: #5B21B6;
+}
+
+.path-item.available .path-node {
+    background: #FFFFFF;
+    border-color: #7C3AED;
+    color: #5B21B6;
+}
+
+.path-item.locked .path-node {
+    background: #F3F2F5;
+    border-color: #D7D3DD;
+    color: #99939F;
+}
+
+
+/* CARD */
+
+.path-card {
+    background: #FFFFFF;
+    border: 1px solid #E7E3EF;
+    border-radius: 17px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(41, 38, 49, .04);
+}
+
+.path-item.current .path-card,
+.path-item.available .path-card {
+    border-color: #D8CCFA;
+}
+
+.path-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.game-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #EDE9FE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.game-title {
+    flex: 1;
+}
+
+.step-label {
+    color: #7C3AED;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.game-title h2 {
+    margin-top: 3px;
+    font-size: 17px;
+}
+
+.status-badge {
+    padding: 6px 9px;
+    border-radius: 20px;
+    background: #F3F2F5;
+    color: #6B6675;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.completed .status-badge {
+    background: #ECFDF3;
+    color: #15803D;
+}
+
+.current .status-badge {
+    background: #FFF8E6;
+    color: #A16207;
+}
+
+.available .status-badge {
+    background: #EDE9FE;
+    color: #5B21B6;
+}
+
+.game-description {
+    margin: 15px 0;
+    color: #6B6675;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.progress-area {
+    margin-top: 12px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    font-size: 11px;
+    color: #6B6675;
+}
+
+.progress-label strong {
+    color: #292631;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #EEEAF5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #7C3AED;
+    border-radius: 10px;
+    transition: width .3s ease;
+}
+
+.locked .progress-fill {
+    background: #BDB8C5;
+}
+
+.path-button {
+    margin-top: 17px;
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: #7C3AED;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    transition: .2s ease;
+}
+
+.path-button:hover {
+    background: #5B21B6;
+}
+
+.locked-message {
+    margin-top: 17px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    background: #F5F4F7;
+    color: #8A8491;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* VAZIO */
+
+.empty-state {
+    background: #FFFFFF;
+    border: 1px solid #E7E3EF;
+    border-radius: 18px;
+    padding: 45px 25px;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.empty-state h2 {
+    font-size: 19px;
+}
+
+.empty-state p {
+    margin-top: 8px;
+    color: #6B6675;
+    font-size: 13px;
+}
+
+
+/* MOBILE */
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+        box-shadow: 8px 0 25px rgba(0, 0, 0, .08);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(23, 21, 28, .35);
+        z-index: 999;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .topbar {
+        padding: 0 16px;
+    }
+
+    .menu-button {
+        display: flex;
+        width: 38px;
+        height: 38px;
+        margin-right: 12px;
+        border: 0;
+        border-radius: 9px;
+        background: #EDE9FE;
+        color: #5B21B6;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        cursor: pointer;
+    }
+
+    .content {
+        padding: 25px 16px 45px;
+    }
+
+    .page-header {
+        flex-direction: column;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .level-card {
+        width: 100%;
+    }
+
+    .learning-path {
+        width: 100%;
+    }
+
+    .path-item {
+        grid-template-columns: 45px 1fr;
+        gap: 12px;
+    }
+
+    .path-line {
+        left: 20px;
+    }
+
+    .path-node {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+        font-size: 14px;
+    }
+
+    .path-card {
+        padding: 15px;
+    }
+
+    .path-card-header {
+        align-items: flex-start;
+    }
+
+    .game-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 21px;
+    }
+
+    .status-badge {
+        display: none;
+    }
+
+    .game-title h2 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .student-mini div:last-child {
+        display: none;
+    }
+
+    .path-item {
+        grid-template-columns: 40px 1fr;
+        gap: 9px;
+    }
+
+    .path-line {
+        left: 18px;
+    }
+
+    .path-node {
+        width: 38px;
+        height: 38px;
+    }
+
+    .path-card {
+        padding: 13px;
+    }
+
+    .game-description {
+        font-size: 12px;
+    }
+}
