@@ -127,8 +127,9 @@ $stmt = $pdo->prepare("
         pontuacao
     FROM perguntas
     WHERE jogo_id = ?
-      AND ano_serie = ?
+    AND ano_serie = ?
     ORDER BY id ASC
+    LIMIT 5
 ");
 
 $stmt->execute([
