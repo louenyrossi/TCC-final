@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const questionElement = document.getElementById('question');
     const questionNumberElement = document.getElementById('question-number-display');
+    const questionNumberTopElement = document.getElementById('question-number');
     const questionTotalElement = document.getElementById('question-total');
 
     const scoreElement = document.getElementById('score');
@@ -90,8 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        questionNumberElement.textContent =
-            perguntaAtual + 1;
+        questionNumberElement.textContent = perguntaAtual + 1;
+
+        if (questionNumberTopElement) {
+        questionNumberTopElement.textContent = perguntaAtual + 1;
+        }
 
         questionTotalElement.textContent =
             `/ ${perguntas.length}`;
