@@ -32,53 +32,23 @@ if (!$professor) {
 
 /*
 |--------------------------------------------------------------------------
-| Turmas do professor
+| Todas as turmas cadastradas
 |--------------------------------------------------------------------------
 */
-if (ehAdmin()) {
-
-    $stmt = $pdo->query("
-        SELECT
-            t.id,
-            t.nome,
-            t.ano_serie,
-            COUNT(DISTINCT u.id) AS total_alunos
-        FROM turmas t
-        LEFT JOIN usuarios u
-            ON u.turma_id = t.id
-            AND u.tipo = 'aluno'
-        WHERE t.ativo = 1
-        GROUP BY t.id, t.nome, t.ano_serie
-        ORDER BY t.ano_serie, t.nome
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            t.id,
-            t.nome,
-            t.ano_serie,
-            COUNT(DISTINCT u.id) AS total_alunos
-        FROM turmas t
-
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = t.id
-            AND pt.professor_id = ?
-
-        LEFT JOIN usuarios u
-            ON u.turma_id = t.id
-            AND u.tipo = 'aluno'
-
-        WHERE t.ativo = 1
-
-        GROUP BY t.id, t.nome, t.ano_serie
-
-        ORDER BY t.ano_serie, t.nome
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
+$stmt = $pdo->query("
+    SELECT
+        t.id,
+        t.nome,
+        t.ano_serie,
+        COUNT(DISTINCT u.id) AS total_alunos
+    FROM turmas t
+    LEFT JOIN usuarios u
+        ON u.turma_id = t.id
+        AND u.tipo = 'aluno'
+    WHERE t.ativo = 1
+    GROUP BY t.id, t.nome, t.ano_serie
+    ORDER BY t.ano_serie ASC, t.nome ASC
+");
 
 $turmas = $stmt->fetchAll();
 
@@ -87,27 +57,11 @@ $turmas = $stmt->fetchAll();
 | Quantidade de alunos
 |--------------------------------------------------------------------------
 */
-if (ehAdmin()) {
-
-    $stmt = $pdo->query("
-        SELECT COUNT(*) AS total
-        FROM usuarios
-        WHERE tipo = 'aluno'
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT COUNT(DISTINCT u.id) AS total
-        FROM usuarios u
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = u.turma_id
-        WHERE pt.professor_id = ?
-          AND u.tipo = 'aluno'
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
+$stmt = $pdo->query("
+    SELECT COUNT(*) AS total
+    FROM usuarios
+    WHERE tipo = 'aluno'
+");
 
 $totalAlunos = (int) ($stmt->fetch()['total'] ?? 0);
 
@@ -126,42 +80,20 @@ $totalJogos = (int) ($stmt->fetch()['total'] ?? 0);
 
 /*
 |--------------------------------------------------------------------------
-| Partidas realizadas pelos alunos das turmas
+| Partidas realizadas pelos alunos
 |--------------------------------------------------------------------------
 */
-if (ehAdmin()) {
-
-    $stmt = $pdo->query("
-        SELECT
-            COUNT(DISTINCT p.id) AS partidas,
-            COALESCE(SUM(p.acertos), 0) AS acertos,
-            COALESCE(SUM(p.erros), 0) AS erros,
-            COALESCE(SUM(p.pontuacao), 0) AS pontuacao
-        FROM partidas p
-        INNER JOIN usuarios u
-            ON u.id = p.usuario_id
-        WHERE u.tipo = 'aluno'
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            COUNT(DISTINCT p.id) AS partidas,
-            COALESCE(SUM(p.acertos), 0) AS acertos,
-            COALESCE(SUM(p.erros), 0) AS erros,
-            COALESCE(SUM(p.pontuacao), 0) AS pontuacao
-        FROM partidas p
-        INNER JOIN usuarios u
-            ON u.id = p.usuario_id
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = u.turma_id
-        WHERE pt.professor_id = ?
-          AND u.tipo = 'aluno'
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
+$stmt = $pdo->query("
+    SELECT
+        COUNT(DISTINCT p.id) AS partidas,
+        COALESCE(SUM(p.acertos), 0) AS acertos,
+        COALESCE(SUM(p.erros), 0) AS erros,
+        COALESCE(SUM(p.pontuacao), 0) AS pontuacao
+    FROM partidas p
+    INNER JOIN usuarios u
+        ON u.id = p.usuario_id
+    WHERE u.tipo = 'aluno'
+");
 
 $dadosPartidas = $stmt->fetch();
 
@@ -175,66 +107,33 @@ $totalRespostas = $totalAcertos + $totalErros;
 $taxaAcerto = $totalRespostas > 0
     ? round(($totalAcertos / $totalRespostas) * 100)
     : 0;
-
 /*
 |--------------------------------------------------------------------------
 | Partidas recentes
 |--------------------------------------------------------------------------
 */
-if (ehAdmin()) {
-
-    $stmt = $pdo->query("
-        SELECT
-            u.nome AS aluno,
-            t.nome AS turma,
-            j.nome AS jogo,
-            p.acertos,
-            p.erros,
-            p.pontuacao,
-            p.data_fim
-        FROM partidas p
-        INNER JOIN usuarios u
-            ON u.id = p.usuario_id
-        LEFT JOIN turmas t
-            ON t.id = u.turma_id
-        INNER JOIN jogos j
-            ON j.id = p.jogo_id
-        WHERE u.tipo = 'aluno'
-        ORDER BY COALESCE(p.data_fim, p.data_inicio) DESC
-        LIMIT 5
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            u.nome AS aluno,
-            t.nome AS turma,
-            j.nome AS jogo,
-            p.acertos,
-            p.erros,
-            p.pontuacao,
-            p.data_fim
-        FROM partidas p
-        INNER JOIN usuarios u
-            ON u.id = p.usuario_id
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = u.turma_id
-            AND pt.professor_id = ?
-        LEFT JOIN turmas t
-            ON t.id = u.turma_id
-        INNER JOIN jogos j
-            ON j.id = p.jogo_id
-        WHERE u.tipo = 'aluno'
-        ORDER BY COALESCE(p.data_fim, p.data_inicio) DESC
-        LIMIT 5
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
+$stmt = $pdo->query("
+    SELECT
+        u.nome AS aluno,
+        t.nome AS turma,
+        j.nome AS jogo,
+        p.acertos,
+        p.erros,
+        p.pontuacao,
+        p.data_fim
+    FROM partidas p
+    INNER JOIN usuarios u
+        ON u.id = p.usuario_id
+    LEFT JOIN turmas t
+        ON t.id = u.turma_id
+    INNER JOIN jogos j
+        ON j.id = p.jogo_id
+    WHERE u.tipo = 'aluno'
+    ORDER BY COALESCE(p.data_fim, p.data_inicio) DESC
+    LIMIT 5
+");
 
 $partidasRecentes = $stmt->fetchAll();
-
 /*
 |--------------------------------------------------------------------------
 | Inicial
