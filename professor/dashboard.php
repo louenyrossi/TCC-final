@@ -305,7 +305,7 @@ $inicial = mb_strtoupper(
                 href="dashboard.php"
                 class="nav-item active"
             >
-                <span>🏠</span>
+                <span>▦</span>
                 <span>Dashboard</span>
             </a>
 
@@ -314,7 +314,7 @@ $inicial = mb_strtoupper(
                 href="turmas.php"
                 class="nav-item"
             >
-                <span>🏫</span>
+                <span>👥</span>
                 <span>Turmas</span>
             </a>
 
@@ -323,7 +323,7 @@ $inicial = mb_strtoupper(
                 href="alunos.php"
                 class="nav-item"
             >
-                <span>👨‍🎓</span>
+                <span>🎓</span>
                 <span>Alunos</span>
             </a>
 
