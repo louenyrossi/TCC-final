@@ -9,7 +9,7 @@ $usuarioId = usuarioId();
 
 /*
 |--------------------------------------------------------------------------
-| Buscar todas as turmas
+| BUSCAR TURMAS
 |--------------------------------------------------------------------------
 */
 
@@ -27,7 +27,7 @@ $turmasDisponiveis = $stmtTurmas->fetchAll();
 
 /*
 |--------------------------------------------------------------------------
-| Buscar alunos
+| BUSCAR ALUNOS
 |--------------------------------------------------------------------------
 */
 
@@ -40,6 +40,7 @@ if (ehAdmin()) {
             u.email,
             u.nivel,
             u.xp,
+            u.turma_id,
             t.nome AS turma,
             t.ano_serie
         FROM usuarios u
@@ -54,13 +55,14 @@ if (ehAdmin()) {
 
 } else {
 
-    $stmt = $pdo->query("
+    $stmt = $pdo->prepare("
         SELECT
             u.id,
             u.nome,
             u.email,
             u.nivel,
             u.xp,
+            u.turma_id,
             t.nome AS turma,
             t.ano_serie
         FROM usuarios u
@@ -72,19 +74,37 @@ if (ehAdmin()) {
             t.nome ASC,
             u.nome ASC
     ");
+
+    $stmt->execute();
 }
 
 $alunos = $stmt->fetchAll();
 
 /*
 |--------------------------------------------------------------------------
-| Estatísticas
+| ESTATÍSTICAS
 |--------------------------------------------------------------------------
 */
 
 $totalAlunos = count($alunos);
-
 $totalTurmas = count($turmasDisponiveis);
+
+/*
+|--------------------------------------------------------------------------
+| AGRUPAR ALUNOS POR TURMA
+|--------------------------------------------------------------------------
+*/
+
+$alunosPorTurma = [];
+
+foreach ($alunos as $aluno) {
+
+    $nomeTurma = !empty($aluno['turma'])
+        ? $aluno['turma']
+        : 'Sem turma';
+
+    $alunosPorTurma[$nomeTurma][] = $aluno;
+}
 
 ?>
 
@@ -114,9 +134,11 @@ $totalTurmas = count($turmasDisponiveis);
 
 <div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
 
@@ -207,7 +229,9 @@ $totalTurmas = count($turmasDisponiveis);
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+         ===================================================== -->
 
     <main class="main-content">
 
@@ -231,7 +255,9 @@ $totalTurmas = count($turmasDisponiveis);
 
         <section class="content">
 
-            <!-- HEADER -->
+            <!-- =================================================
+                 CABEÇALHO
+                 ================================================= -->
 
             <div class="page-header">
 
@@ -254,7 +280,9 @@ $totalTurmas = count($turmasDisponiveis);
             </div>
 
 
-            <!-- RESUMO -->
+            <!-- =================================================
+                 RESUMO
+                 ================================================= -->
 
             <section class="summary-grid">
 
@@ -302,7 +330,9 @@ $totalTurmas = count($turmasDisponiveis);
             </section>
 
 
-            <!-- FILTRO -->
+            <!-- =================================================
+                 FILTROS
+                 ================================================= -->
 
             <section class="filters-card">
 
@@ -343,7 +373,9 @@ $totalTurmas = count($turmasDisponiveis);
             </section>
 
 
-            <!-- LISTA -->
+            <!-- =================================================
+                 LISTA DE ALUNOS
+                 ================================================= -->
 
             <section class="students-section">
 
@@ -356,7 +388,8 @@ $totalTurmas = count($turmasDisponiveis);
                         </h2>
 
                         <p id="results-count">
-                            <?= $totalAlunos ?> aluno(s) encontrado(s)
+                            <?= $totalAlunos ?>
+                            aluno(s) encontrado(s)
                         </p>
 
                     </div>
@@ -384,30 +417,16 @@ $totalTurmas = count($turmasDisponiveis);
 
                 <?php else: ?>
 
-                    <?php
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Agrupar alunos por turma
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $alunosPorTurma = [];
-
-                    foreach ($alunos as $aluno) {
-
-                        $turmaNome = !empty($aluno['turma'])
-                            ? $aluno['turma']
-                            : 'Sem turma';
-
-                        $alunosPorTurma[$turmaNome][] = $aluno;
-                    }
-                    ?>
-
 
                     <div
                         class="students-list"
                         id="students-list"
                     >
+
+
+                        <!-- =================================================
+                             TURMAS
+                             ================================================= -->
 
                         <?php foreach ($turmasDisponiveis as $turma): ?>
 
@@ -415,34 +434,48 @@ $totalTurmas = count($turmasDisponiveis);
 
                             $nomeTurma = $turma['nome'];
 
-                            if (empty($alunosPorTurma[$nomeTurma])) {
+                            if (
+                                empty(
+                                    $alunosPorTurma[$nomeTurma]
+                                )
+                            ) {
                                 continue;
                             }
 
-                            $alunosDaTurma = $alunosPorTurma[$nomeTurma];
+                            $alunosDaTurma =
+                                $alunosPorTurma[$nomeTurma];
+
 
                             /*
-                            | Ordenação alfabética dos alunos
+                            |-------------------------------------------------
+                            | ORDEM ALFABÉTICA
+                            |-------------------------------------------------
                             */
 
                             usort(
                                 $alunosDaTurma,
                                 function ($a, $b) {
+
                                     return strcasecmp(
                                         $a['nome'],
                                         $b['nome']
                                     );
+
                                 }
                             );
 
                             ?>
 
-                            <!-- GRUPO DA TURMA -->
+
+                            <!-- =============================================
+                                 GRUPO DA TURMA
+                                 ============================================= -->
 
                             <div
                                 class="turma-group"
                                 data-turma="<?= htmlspecialchars($nomeTurma) ?>"
                             >
+
 
                                 <div class="turma-group-header">
 
@@ -458,82 +491,124 @@ $totalTurmas = count($turmasDisponiveis);
 
                                     </div>
 
+
                                     <span class="turma-total">
+
                                         <?= count($alunosDaTurma) ?>
+
                                         aluno(s)
+
                                     </span>
 
                                 </div>
 
 
+                                <!-- =========================================
+                                     ALUNOS DA TURMA
+                                     ========================================= -->
+
                                 <div class="turma-students">
+
 
                                     <?php foreach ($alunosDaTurma as $aluno): ?>
 
                                         <?php
 
-                                        $inicial = mb_strtoupper(
-                                            mb_substr(
-                                                $aluno['nome'],
-                                                0,
-                                                1
-                                            )
-                                        );
+                                        $inicial =
+                                            mb_strtoupper(
+                                                mb_substr(
+                                                    $aluno['nome'],
+                                                    0,
+                                                    1
+                                                )
+                                            );
 
                                         ?>
+
+
+                                        <!-- =================================
+                                             CARD DO ALUNO
+                                             ================================= -->
 
                                         <a
                                             href="aluno.php?id=<?= (int) $aluno['id'] ?>"
                                             class="student-card"
                                             data-name="<?= htmlspecialchars(
-                                                mb_strtolower($aluno['nome'])
+                                                mb_strtolower(
+                                                    $aluno['nome']
+                                                )
                                             ) ?>"
                                             data-turma="<?= htmlspecialchars(
                                                 $aluno['turma'] ?? ''
                                             ) ?>"
                                         >
 
+
+                                            <!-- AVATAR -->
+
                                             <div class="student-avatar">
 
-                                                <?= htmlspecialchars($inicial) ?>
+                                                <?= htmlspecialchars(
+                                                    $inicial
+                                                ) ?>
 
                                             </div>
 
 
+                                            <!-- INFORMAÇÕES -->
+
                                             <div class="student-info">
 
                                                 <strong>
+
                                                     <?= htmlspecialchars(
                                                         $aluno['nome']
                                                     ) ?>
+
                                                 </strong>
 
+
                                                 <span>
+
                                                     <?= htmlspecialchars(
-                                                        $aluno['turma'] ?? 'Sem turma'
+                                                        $aluno['turma']
+                                                            ?? 'Sem turma'
                                                     ) ?>
+
                                                 </span>
 
+
                                                 <small>
+
                                                     Nível
                                                     <?= (int) $aluno['nivel'] ?>
 
                                                     ·
 
                                                     <?= (int) $aluno['xp'] ?>
+
                                                     XP
+
                                                 </small>
 
                                             </div>
 
 
+                                            <!-- =================================
+                                                 SETA / PERFIL
+                                                 ================================= -->
+
                                             <div class="student-arrow">
+
                                                 →
+
                                             </div>
+
 
                                         </a>
 
                                     <?php endforeach; ?>
+
 
                                 </div>
 
@@ -542,26 +617,38 @@ $totalTurmas = count($turmasDisponiveis);
                         <?php endforeach; ?>
 
 
-                        <!-- ALUNOS SEM TURMA -->
+                        <!-- =================================================
+                             ALUNOS SEM TURMA
+                             ================================================= -->
 
-                        <?php if (!empty($alunosPorTurma['Sem turma'])): ?>
+                        <?php
+                        if (
+                            !empty(
+                                $alunosPorTurma['Sem turma']
+                            )
+                        ):
+                        ?>
 
                             <?php
 
                             $alunosSemTurma =
                                 $alunosPorTurma['Sem turma'];
 
+
                             usort(
                                 $alunosSemTurma,
                                 function ($a, $b) {
+
                                     return strcasecmp(
                                         $a['nome'],
                                         $b['nome']
                                     );
+
                                 }
                             );
 
                             ?>
+
 
                             <div
                                 class="turma-group"
@@ -582,9 +669,13 @@ $totalTurmas = count($turmasDisponiveis);
 
                                     </div>
 
+
                                     <span class="turma-total">
+
                                         <?= count($alunosSemTurma) ?>
+
                                         aluno(s)
+
                                     </span>
 
                                 </div>
@@ -592,32 +683,43 @@ $totalTurmas = count($turmasDisponiveis);
 
                                 <div class="turma-students">
 
-                                    <?php foreach ($alunosSemTurma as $aluno): ?>
+
+                                    <?php foreach (
+                                        $alunosSemTurma
+                                        as $aluno
+                                    ): ?>
 
                                         <?php
 
-                                        $inicial = mb_strtoupper(
-                                            mb_substr(
-                                                $aluno['nome'],
-                                                0,
-                                                1
-                                            )
-                                        );
+                                        $inicial =
+                                            mb_strtoupper(
+                                                mb_substr(
+                                                    $aluno['nome'],
+                                                    0,
+                                                    1
+                                                )
+                                            );
 
                                         ?>
+
 
                                         <a
                                             href="aluno.php?id=<?= (int) $aluno['id'] ?>"
                                             class="student-card"
                                             data-name="<?= htmlspecialchars(
-                                                mb_strtolower($aluno['nome'])
+                                                mb_strtolower(
+                                                    $aluno['nome']
+                                                )
                                             ) ?>"
                                             data-turma=""
                                         >
 
+
                                             <div class="student-avatar">
 
-                                                <?= htmlspecialchars($inicial) ?>
+                                                <?= htmlspecialchars(
+                                                    $inicial
+                                                ) ?>
 
                                             </div>
 
@@ -625,35 +727,48 @@ $totalTurmas = count($turmasDisponiveis);
                                             <div class="student-info">
 
                                                 <strong>
+
                                                     <?= htmlspecialchars(
                                                         $aluno['nome']
                                                     ) ?>
+
                                                 </strong>
+
 
                                                 <span>
                                                     Sem turma
                                                 </span>
 
+
                                                 <small>
+
                                                     Nível
                                                     <?= (int) $aluno['nivel'] ?>
 
                                                     ·
 
                                                     <?= (int) $aluno['xp'] ?>
+
                                                     XP
+
                                                 </small>
 
                                             </div>
 
 
+                                            <!-- SETA -->
+
                                             <div class="student-arrow">
+
                                                 →
+
                                             </div>
+
 
                                         </a>
 
                                     <?php endforeach; ?>
+
 
                                 </div>
 
@@ -661,10 +776,13 @@ $totalTurmas = count($turmasDisponiveis);
 
                         <?php endif; ?>
 
+
                     </div>
 
 
-                    <!-- SEM RESULTADOS DO FILTRO -->
+                    <!-- =================================================
+                         NENHUM RESULTADO DO FILTRO
+                         ================================================= -->
 
                     <div
                         class="no-results"
@@ -686,7 +804,9 @@ $totalTurmas = count($turmasDisponiveis);
 
                     </div>
 
+
                 <?php endif; ?>
+
 
             </section>
 
@@ -697,13 +817,22 @@ $totalTurmas = count($turmasDisponiveis);
 </div>
 
 
+<!-- =========================================================
+     OVERLAY DO MENU MOBILE
+     ========================================================= -->
+
 <div
     class="sidebar-overlay"
     id="sidebar-overlay"
 ></div>
 
 
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
 <script src="../assets/js/prof-alunos.js"></script>
+
 
 </body>
 
