@@ -171,7 +171,7 @@ foreach ($alunos as $aluno) {
                 href="dashboard.php"
                 class="nav-item"
             >
-                <span>🏠</span>
+                <span>▦</span>
                 <span>Dashboard</span>
             </a>
 
@@ -180,7 +180,7 @@ foreach ($alunos as $aluno) {
                 href="turmas.php"
                 class="nav-item"
             >
-                <span>🏫</span>
+                <span>👥</span>
                 <span>Turmas</span>
             </a>
 
