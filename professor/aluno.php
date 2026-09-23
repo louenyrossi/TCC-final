@@ -51,9 +51,6 @@ if (ehAdmin()) {
             t.nome AS turma,
             t.ano_serie
         FROM usuarios u
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = u.turma_id
-            AND pt.professor_id = ?
         LEFT JOIN turmas t
             ON t.id = u.turma_id
         WHERE u.id = ?
@@ -61,7 +58,7 @@ if (ehAdmin()) {
         LIMIT 1
     ");
 
-    $stmt->execute([usuarioId(), $alunoId]);
+    $stmt->execute([$alunoId]);
 }
 
 $aluno = $stmt->fetch();
