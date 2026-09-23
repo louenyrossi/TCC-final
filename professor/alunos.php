@@ -189,7 +189,7 @@ foreach ($alunos as $aluno) {
                 href="alunos.php"
                 class="nav-item active"
             >
-                <span>👨‍🎓</span>
+                <span>🎓</span>
                 <span>Alunos</span>
             </a>
 
