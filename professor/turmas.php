@@ -6,45 +6,26 @@ protegerPagina(['professor', 'admin']);
 
 $usuarioId = usuarioId();
 
-if (ehAdmin()) {
+/*
+|--------------------------------------------------------------------------
+| Todas as turmas cadastradas
+|--------------------------------------------------------------------------
+*/
 
-    $stmt = $pdo->query("
-        SELECT
-            t.id,
-            t.nome,
-            t.ano_serie,
-            COUNT(DISTINCT u.id) AS total_alunos
-        FROM turmas t
-        LEFT JOIN usuarios u
-            ON u.turma_id = t.id
-            AND u.tipo = 'aluno'
-        WHERE t.ativo = 1
-        GROUP BY t.id, t.nome, t.ano_serie
-        ORDER BY t.ano_serie, t.nome
-    ");
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            t.id,
-            t.nome,
-            t.ano_serie,
-            COUNT(DISTINCT u.id) AS total_alunos
-        FROM turmas t
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = t.id
-            AND pt.professor_id = ?
-        LEFT JOIN usuarios u
-            ON u.turma_id = t.id
-            AND u.tipo = 'aluno'
-        WHERE t.ativo = 1
-        GROUP BY t.id, t.nome, t.ano_serie
-        ORDER BY t.ano_serie, t.nome
-    ");
-
-    $stmt->execute([$usuarioId]);
-}
+$stmt = $pdo->query("
+    SELECT
+        t.id,
+        t.nome,
+        t.ano_serie,
+        COUNT(DISTINCT u.id) AS total_alunos
+    FROM turmas t
+    LEFT JOIN usuarios u
+        ON u.turma_id = t.id
+        AND u.tipo = 'aluno'
+    WHERE t.ativo = 1
+    GROUP BY t.id, t.nome, t.ano_serie
+    ORDER BY t.ano_serie ASC, t.nome ASC
+");
 
 $turmas = $stmt->fetchAll();
 
@@ -74,24 +55,21 @@ if (isset($_GET['id'])) {
 
     } else {
 
-        $stmt = $pdo->prepare("
-            SELECT
-                u.id,
-                u.nome,
-                u.email,
-                u.nivel,
-                u.xp
-            FROM usuarios u
-            INNER JOIN professor_turmas pt
-                ON pt.turma_id = u.turma_id
-                AND pt.professor_id = ?
-            WHERE u.turma_id = ?
-              AND u.tipo = 'aluno'
-            ORDER BY u.nome
-        ");
+    $stmt = $pdo->prepare("
+        SELECT
+            u.id,
+            u.nome,
+            u.email,
+            u.nivel,
+            u.xp
+        FROM usuarios u
+        WHERE u.turma_id = ?
+          AND u.tipo = 'aluno'
+        ORDER BY u.nome ASC
+    ");
 
-        $stmt->execute([$usuarioId, $turmaId]);
-    }
+    $stmt->execute([$turmaId]);
+}
 
     $alunos = $stmt->fetchAll();
 
@@ -164,7 +142,7 @@ if (isset($_GET['id'])) {
                 href="dashboard.php"
                 class="nav-item"
             >
-                <span>🏠</span>
+                <span>▦</span>
                 <span>Dashboard</span>
             </a>
 
@@ -173,7 +151,7 @@ if (isset($_GET['id'])) {
                 href="turmas.php"
                 class="nav-item active"
             >
-                <span>🏫</span>
+                <span>👥</span>
                 <span>Turmas</span>
             </a>
 
@@ -182,7 +160,7 @@ if (isset($_GET['id'])) {
                 href="alunos.php"
                 class="nav-item"
             >
-                <span>👨‍🎓</span>
+                <span>🎓</span>
                 <span>Alunos</span>
             </a>
 
