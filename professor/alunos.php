@@ -6,6 +6,18 @@ protegerPagina(['professor', 'admin']);
 
 $usuarioId = usuarioId();
 
+$stmtTurmas = $pdo->query("
+    SELECT
+        id,
+        nome,
+        ano_serie
+    FROM turmas
+    WHERE ativo = 1
+    ORDER BY ano_serie, nome
+");
+
+$turmasDisponiveis = $stmtTurmas->fetchAll();
+
 /*
 |--------------------------------------------------------------------------
 | Buscar alunos
@@ -32,7 +44,7 @@ if (ehAdmin()) {
 
 } else {
 
-    $stmt = $pdo->prepare("
+    $stmt = $pdo->query("
         SELECT
             u.id,
             u.nome,
@@ -42,16 +54,11 @@ if (ehAdmin()) {
             t.nome AS turma,
             t.ano_serie
         FROM usuarios u
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = u.turma_id
-            AND pt.professor_id = ?
         LEFT JOIN turmas t
             ON t.id = u.turma_id
         WHERE u.tipo = 'aluno'
         ORDER BY t.ano_serie, t.nome, u.nome
     ");
-
-    $stmt->execute([$usuarioId]);
 }
 
 $alunos = $stmt->fetchAll();
@@ -63,18 +70,7 @@ $alunos = $stmt->fetchAll();
 */
 
 $totalAlunos = count($alunos);
-
-$turmas = [];
-
-foreach ($alunos as $aluno) {
-
-    if (!empty($aluno['turma'])) {
-        $turmas[$aluno['turma']] = true;
-    }
-
-}
-
-$totalTurmas = count($turmas);
+$totalTurmas = count($turmasDisponiveis);
 ?>
 
 <!DOCTYPE html>
@@ -315,14 +311,13 @@ $totalTurmas = count($turmas);
                     <option value="">
                         Todas as turmas
                     </option>
+                <?php foreach ($turmasDisponiveis as $turma): ?>
 
-                    <?php foreach (array_keys($turmas) as $nomeTurma): ?>
+                    <option value="<?= htmlspecialchars($turma['nome']) ?>">
+                        <?= htmlspecialchars($turma['nome']) ?>
+                    </option>
 
-                        <option value="<?= htmlspecialchars($nomeTurma) ?>">
-                            <?= htmlspecialchars($nomeTurma) ?>
-                        </option>
-
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
 
                 </select>
 
