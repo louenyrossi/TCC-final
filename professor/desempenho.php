@@ -1,4 +1,5 @@
 <?php
+
 require_once '../includes/auth.php';
 require_once '../config/config.php';
 
@@ -12,32 +13,17 @@ $usuarioProfessorId = usuarioId();
 |--------------------------------------------------------------------------
 */
 
-if (ehAdmin()) {
+$stmt = $pdo->query("
+    SELECT
+        id,
+        nome,
+        ano_serie
+    FROM turmas
+    WHERE ativo = 1
+    ORDER BY ano_serie ASC, nome ASC
+");
 
-    $stmt = $pdo->query("
-        SELECT id, nome, ano_serie
-        FROM turmas
-        WHERE ativo = 1
-        ORDER BY ano_serie, nome
-    ");
-
-    $turmas = $stmt->fetchAll();
-
-} else {
-
-    $stmt = $pdo->prepare("
-        SELECT t.id, t.nome, t.ano_serie
-        FROM turmas t
-        INNER JOIN professor_turmas pt
-            ON pt.turma_id = t.id
-        WHERE pt.professor_id = ?
-          AND t.ativo = 1
-        ORDER BY t.ano_serie, t.nome
-    ");
-
-    $stmt->execute([$usuarioProfessorId]);
-    $turmas = $stmt->fetchAll();
-}
+$turmas = $stmt->fetchAll();
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +32,9 @@ if (ehAdmin()) {
 */
 
 $stmt = $pdo->query("
-    SELECT id, nome
+    SELECT
+        id,
+        nome
     FROM jogos
     WHERE ativo = 1
     ORDER BY id
@@ -82,36 +70,15 @@ $turmaPermitida = true;
 
 if ($turmaSelecionada) {
 
-    if (ehAdmin()) {
+    $stmt = $pdo->prepare("
+        SELECT id
+        FROM turmas
+        WHERE id = ?
+          AND ativo = 1
+        LIMIT 1
+    ");
 
-        $stmt = $pdo->prepare("
-            SELECT id
-            FROM turmas
-            WHERE id = ?
-              AND ativo = 1
-            LIMIT 1
-        ");
-
-        $stmt->execute([$turmaSelecionada]);
-
-    } else {
-
-        $stmt = $pdo->prepare("
-            SELECT t.id
-            FROM turmas t
-            INNER JOIN professor_turmas pt
-                ON pt.turma_id = t.id
-            WHERE t.id = ?
-              AND pt.professor_id = ?
-              AND t.ativo = 1
-            LIMIT 1
-        ");
-
-        $stmt->execute([
-            $turmaSelecionada,
-            $usuarioProfessorId
-        ]);
-    }
+    $stmt->execute([$turmaSelecionada]);
 
     $turmaPermitida = (bool) $stmt->fetchColumn();
 }
@@ -132,26 +99,16 @@ $where = [
 
 $params = [];
 
-if (ehProfessor()) {
-
-    $where[] = "
-        EXISTS (
-            SELECT 1
-            FROM professor_turmas pt
-            WHERE pt.professor_id = ?
-              AND pt.turma_id = u.turma_id
-        )
-    ";
-
-    $params[] = $usuarioProfessorId;
-}
+// O professor pode visualizar os alunos de todas as turmas cadastradas.
 
 if ($turmaSelecionada) {
+
     $where[] = "u.turma_id = ?";
     $params[] = $turmaSelecionada;
 }
 
 if ($jogoSelecionado) {
+
     $where[] = "p.jogo_id = ?";
     $params[] = $jogoSelecionado;
 }
@@ -237,6 +194,7 @@ $precisaoGeral = $totalRespostas > 0
     : 0;
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -707,7 +665,9 @@ $precisaoGeral = $totalRespostas > 0
                                     </td>
 
                                     <td>
+
                                         <?= (int) $aluno['partidas'] ?>
+
                                     </td>
 
                                     <td>
