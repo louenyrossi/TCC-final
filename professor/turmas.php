@@ -1,4 +1,5 @@
 <?php
+
 require_once '../includes/auth.php';
 require_once '../config/config.php';
 
@@ -8,7 +9,7 @@ $usuarioId = usuarioId();
 
 /*
 |--------------------------------------------------------------------------
-| Todas as turmas cadastradas
+| BUSCAR TODAS AS TURMAS
 |--------------------------------------------------------------------------
 */
 
@@ -23,11 +24,22 @@ $stmt = $pdo->query("
         ON u.turma_id = t.id
         AND u.tipo = 'aluno'
     WHERE t.ativo = 1
-    GROUP BY t.id, t.nome, t.ano_serie
-    ORDER BY t.ano_serie ASC, t.nome ASC
+    GROUP BY
+        t.id,
+        t.nome,
+        t.ano_serie
+    ORDER BY
+        t.ano_serie ASC,
+        t.nome ASC
 ");
 
 $turmas = $stmt->fetchAll();
+
+/*
+|--------------------------------------------------------------------------
+| TURMA SELECIONADA
+|--------------------------------------------------------------------------
+*/
 
 $turmaSelecionada = null;
 $alunos = [];
@@ -38,22 +50,23 @@ if (isset($_GET['id'])) {
 
     /*
     |--------------------------------------------------------------------------
-    | Encontrar a turma clicada
+    | ENCONTRAR A TURMA CLICADA
     |--------------------------------------------------------------------------
     */
 
     foreach ($turmas as $turma) {
 
         if ((int) $turma['id'] === $turmaId) {
+
             $turmaSelecionada = $turma;
+
             break;
         }
-
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Buscar os alunos da turma clicada
+    | BUSCAR OS ALUNOS DA TURMA
     |--------------------------------------------------------------------------
     */
 
@@ -77,6 +90,7 @@ if (isset($_GET['id'])) {
         $alunos = $stmt->fetchAll();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +117,10 @@ if (isset($_GET['id'])) {
 <body>
 
 <div class="app">
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
 
     <aside class="sidebar">
 
@@ -195,7 +213,13 @@ if (isset($_GET['id'])) {
     </aside>
 
 
+    <!-- =========================================================
+         CONTEÚDO PRINCIPAL
+    ========================================================== -->
+
     <main class="main-content">
+
+        <!-- TOPBAR -->
 
         <header class="topbar">
 
@@ -215,7 +239,11 @@ if (isset($_GET['id'])) {
         </header>
 
 
+        <!-- CONTEÚDO -->
+
         <section class="content">
+
+            <!-- CABEÇALHO -->
 
             <div class="page-header">
 
@@ -238,6 +266,10 @@ if (isset($_GET['id'])) {
             </div>
 
 
+            <!-- =================================================
+                 TURMAS
+            ================================================== -->
+
             <?php if (!$turmas): ?>
 
                 <div class="empty-card">
@@ -251,7 +283,7 @@ if (isset($_GET['id'])) {
                     </h2>
 
                     <p>
-                        As turmas vinculadas ao professor aparecerão aqui.
+                        As turmas cadastradas aparecerão aqui.
                     </p>
 
                 </div>
@@ -262,13 +294,22 @@ if (isset($_GET['id'])) {
 
                     <?php foreach ($turmas as $turma): ?>
 
+                        <?php
+
+                        $turmaSelecionadaClass = '';
+
+                        if (
+                            $turmaSelecionada &&
+                            (int) $turmaSelecionada['id'] === (int) $turma['id']
+                        ) {
+                            $turmaSelecionadaClass = 'selected';
+                        }
+
+                        ?>
+
                         <a
                             href="turmas.php?id=<?= (int) $turma['id'] ?>"
-                            class="class-card
-                            <?= $turmaSelecionada &&
-                                (int) $turmaSelecionada['id'] === (int) $turma['id']
-                                ? 'selected'
-                                : '' ?>"
+                            class="class-card <?= $turmaSelecionadaClass ?>"
                         >
 
                             <div class="class-top">
@@ -278,14 +319,22 @@ if (isset($_GET['id'])) {
                                 </div>
 
                                 <span class="grade">
+
                                     <?= (int) $turma['ano_serie'] ?>º ano
+
                                 </span>
 
                             </div>
 
 
                             <h2>
-                                <?= htmlspecialchars($turma['nome']) ?>
+
+                                <?= htmlspecialchars(
+                                    $turma['nome'],
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ) ?>
+
                             </h2>
 
 
@@ -301,7 +350,9 @@ if (isset($_GET['id'])) {
 
 
                             <div class="class-footer">
+
                                 Ver alunos →
+
                             </div>
 
                         </a>
@@ -310,6 +361,10 @@ if (isset($_GET['id'])) {
 
                 </div>
 
+
+                <!-- =================================================
+                     ALUNOS DA TURMA SELECIONADA
+                ================================================== -->
 
                 <?php if ($turmaSelecionada): ?>
 
@@ -323,15 +378,24 @@ if (isset($_GET['id'])) {
                                     TURMA SELECIONADA
                                 </span>
 
+
                                 <h2>
+
                                     <?= htmlspecialchars(
-                                        $turmaSelecionada['nome']
+                                        $turmaSelecionada['nome'],
+                                        ENT_QUOTES,
+                                        'UTF-8'
                                     ) ?>
+
                                 </h2>
 
+
                                 <p>
-                                    <?= (int) $turmaSelecionada['total_alunos'] ?>
-                                    aluno(s) nesta turma.
+
+                                    <?= count($alunos) ?>
+
+                                    aluno(s) encontrado(s) nesta turma.
+
                                 </p>
 
                             </div>
@@ -339,7 +403,11 @@ if (isset($_GET['id'])) {
                         </div>
 
 
-                        <?php if (!$alunos): ?>
+                        <!-- =========================================
+                             NENHUM ALUNO
+                        ========================================== -->
+
+                        <?php if (empty($alunos)): ?>
 
                             <div class="empty-card small">
 
@@ -347,15 +415,23 @@ if (isset($_GET['id'])) {
                                     👨‍🎓
                                 </div>
 
+
                                 <h2>
                                     Nenhum aluno
                                 </h2>
 
+
                                 <p>
-                                    Esta turma ainda não possui alunos cadastrados.
+                                    Esta turma ainda não possui alunos
+                                    cadastrados.
                                 </p>
 
                             </div>
+
+
+                        <!-- =========================================
+                             LISTA DE ALUNOS
+                        ========================================== -->
 
                         <?php else: ?>
 
@@ -364,9 +440,25 @@ if (isset($_GET['id'])) {
                                 <?php foreach ($alunos as $aluno): ?>
 
                                     <?php
-                                    $inicial = mb_strtoupper(
-                                        mb_substr($aluno['nome'], 0, 1)
-                                    );
+
+                                    $nomeAluno = $aluno['nome'] ?? '';
+
+                                    $inicial = '';
+
+                                    if ($nomeAluno !== '') {
+
+                                        $inicial = mb_strtoupper(
+                                            mb_substr(
+                                                $nomeAluno,
+                                                0,
+                                                1,
+                                                'UTF-8'
+                                            ),
+                                            'UTF-8'
+                                        );
+
+                                    }
+
                                     ?>
 
                                     <a
@@ -374,32 +466,59 @@ if (isset($_GET['id'])) {
                                         class="student-card"
                                     >
 
+                                        <!-- AVATAR -->
+
                                         <div class="student-avatar">
-                                            <?= htmlspecialchars($inicial) ?>
+
+                                            <?= htmlspecialchars(
+                                                $inicial,
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+
                                         </div>
 
+
+                                        <!-- INFORMAÇÕES -->
 
                                         <div class="student-info">
 
                                             <strong>
+
                                                 <?= htmlspecialchars(
-                                                    $aluno['nome']
+                                                    $aluno['nome'],
+                                                    ENT_QUOTES,
+                                                    'UTF-8'
                                                 ) ?>
+
                                             </strong>
 
+
                                             <span>
-                                                Nível <?= (int) $aluno['nivel'] ?>
+
+                                                Nível
+                                                <?= (int) $aluno['nivel'] ?>
+
                                             </span>
 
+
                                             <small>
-                                                <?= (int) $aluno['xp'] ?> XP
+
+                                                <?= (int) $aluno['xp'] ?>
+
+                                                XP
+
                                             </small>
 
                                         </div>
 
 
+                                        <!-- SETA -->
+
                                         <div class="student-arrow">
+
                                             →
+
                                         </div>
 
                                     </a>
@@ -421,11 +540,21 @@ if (isset($_GET['id'])) {
     </main>
 
 </div>
+
+
+<!-- =========================================================
+     OVERLAY DO MENU MOBILE
+========================================================== -->
+
 <div
     class="sidebar-overlay"
     id="sidebar-overlay"
 ></div>
 
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
 
 <script src="../assets/js/prof-turmas.js"></script>
 
