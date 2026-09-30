@@ -14,14 +14,17 @@ $usuarioProfessorId = usuarioId();
 
 if (ehAdmin()) {
 
-    $stmt = $pdo->query("
-        SELECT id, nome, ano_serie
-        FROM turmas
-        WHERE ativo = 1
-        ORDER BY ano_serie, nome
-    ");
+    $stmtTurmas = $pdo->query("
+    SELECT
+        id,
+        nome,
+        ano_serie
+    FROM turmas
+    WHERE ativo = 1
+    ORDER BY ano_serie ASC, nome ASC
+");
 
-    $turmas = $stmt->fetchAll();
+$turmas = $stmtTurmas->fetchAll();
 
 } else {
 
@@ -457,13 +460,14 @@ $dataRelatorio = date('d/m/Y H:i');
 
                             <option
                                 value="<?= (int) $turma['id'] ?>"
-                                <?= $turmaSelecionada == $turma['id'] ? 'selected' : '' ?>
+                                 <?= (
+                                isset($_GET['turma']) &&
+                                (int) $_GET['turma'] === (int) $turma['id']
+                                ) ? 'selected' : '' ?>
                             >
 
-                                <?= (int) $turma['ano_serie'] ?>º ano —
-                                Turma <?= htmlspecialchars(
-                                    substr($turma['nome'], -1)
-                                ) ?>
+                        <?= htmlspecialchars($turma['nome']) ?>
+
 
                             </option>
 
