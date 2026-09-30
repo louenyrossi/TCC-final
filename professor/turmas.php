@@ -36,42 +36,11 @@ if (isset($_GET['id'])) {
 
     $turmaId = (int) $_GET['id'];
 
-    if (ehAdmin()) {
-
-        $stmt = $pdo->prepare("
-            SELECT
-                id,
-                nome,
-                email,
-                nivel,
-                xp
-            FROM usuarios
-            WHERE turma_id = ?
-              AND tipo = 'aluno'
-            ORDER BY nome
-        ");
-
-        $stmt->execute([$turmaId]);
-
-    } else {
-
-    $stmt = $pdo->prepare("
-        SELECT
-            u.id,
-            u.nome,
-            u.email,
-            u.nivel,
-            u.xp
-        FROM usuarios u
-        WHERE u.turma_id = ?
-          AND u.tipo = 'aluno'
-        ORDER BY u.nome ASC
-    ");
-
-    $stmt->execute([$turmaId]);
-}
-
-    $alunos = $stmt->fetchAll();
+    /*
+    |--------------------------------------------------------------------------
+    | Encontrar a turma clicada
+    |--------------------------------------------------------------------------
+    */
 
     foreach ($turmas as $turma) {
 
@@ -80,6 +49,32 @@ if (isset($_GET['id'])) {
             break;
         }
 
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Buscar os alunos da turma clicada
+    |--------------------------------------------------------------------------
+    */
+
+    if ($turmaSelecionada) {
+
+        $stmt = $pdo->prepare("
+            SELECT
+                u.id,
+                u.nome,
+                u.email,
+                u.nivel,
+                u.xp
+            FROM usuarios u
+            WHERE u.turma_id = ?
+              AND u.tipo = 'aluno'
+            ORDER BY u.nome ASC
+        ");
+
+        $stmt->execute([$turmaId]);
+
+        $alunos = $stmt->fetchAll();
     }
 }
 ?>
@@ -191,7 +186,7 @@ if (isset($_GET['id'])) {
                 href="../logout.php"
                 class="logout-link"
             >
-                <span>🚪</span>
+                <span>↪</span>
                 <span>Sair</span>
             </a>
 
@@ -426,8 +421,6 @@ if (isset($_GET['id'])) {
     </main>
 
 </div>
-
-
 <div
     class="sidebar-overlay"
     id="sidebar-overlay"

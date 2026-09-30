@@ -220,7 +220,7 @@ foreach ($alunos as $aluno) {
                 href="../logout.php"
                 class="logout-link"
             >
-                <span>🚪</span>
+                <span>↪</span>
                 <span>Sair</span>
             </a>
 

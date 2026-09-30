@@ -253,7 +253,7 @@ $inicial = mb_strtoupper(
                 href="../logout.php"
                 class="logout-link"
             >
-                <span>🚪</span>
+                <span>↪</span>
                 <span>Sair</span>
             </a>
 
