@@ -308,7 +308,7 @@ if (isset($_GET['id'])) {
                         ?>
 
                         <a
-                            href="turmas.php?id=<?= (int) $turma['id'] ?>"
+                           href="alunos-turma.php?id=<?= (int) $turma['id'] ?>"
                             class="class-card <?= $turmaSelecionadaClass ?>"
                         >
 
