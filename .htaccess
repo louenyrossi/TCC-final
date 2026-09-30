@@ -1,0 +1,15 @@
+# MathPlay - configuração do Apache
+
+# Define o arquivo inicial do site
+DirectoryIndex index.php index.html
+
+# Impede a listagem de arquivos e pastas
+Options -Indexes
+
+# Permite que o Apache processe arquivos PHP normalmente
+<IfModule mod_mime.c>
+    AddType application/x-httpd-php .php
+</IfModule>
+
+# Mantém UTF-8 como padrão
+AddDefaultCharset UTF-8
