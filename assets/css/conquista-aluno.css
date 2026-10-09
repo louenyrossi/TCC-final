@@ -618,3 +618,59 @@ body {
 .vazio {
     background-color: #ffffff;
 }
+
+
+
+/* CORREÇÃO DO ESPAÇO EM BRANCO NO TOPO */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.pagina {
+    margin: 0;
+    padding: 0;
+}
+
+.cabecalho {
+    margin: 0;
+    padding: 0;
+}
+
+.cabecalho-conteudo {
+    min-height: 65px;
+    height: auto;
+    padding: 10px 0;
+}
+
+.conteudo {
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Aproxima o título do cabeçalho */
+
+.titulo-area {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+/* Reduz os espaços entre os elementos */
+
+.resumo {
+    margin-top: 0;
+    margin-bottom: 22px;
+}
+
+.progresso-card {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.secao-titulo {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
