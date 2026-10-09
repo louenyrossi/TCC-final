@@ -1772,3 +1772,32 @@ button:focus-visible {
 }
 
 
+/* Garante que o menu lateral mostre todos os links */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+.sidebar-bottom .logout-link {
+    display: flex;
+}
+
+
+
