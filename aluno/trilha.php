@@ -221,7 +221,7 @@ function linkJogo(int $jogoId): string
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Trilha de Aprendizagem | MathPlay</title>
+    <title>Trilha de Aprendizagem | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -248,7 +248,7 @@ function linkJogo(int $jogoId): string
                 <div>
 
                     <strong>
-                        MathPlay
+                        MathPower
                     </strong>
 
                     <small>
@@ -284,7 +284,7 @@ function linkJogo(int $jogoId): string
                 href="trilha.php"
                 class="nav-item active"
             >
-                <span>🛤️</span>
+                
                 <span>Trilha</span>
             </a>
 
