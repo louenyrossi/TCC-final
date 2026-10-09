@@ -120,7 +120,7 @@ function iconeConquista(string $nome): string
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Conquistas - MathPlay</title>
+    <title>Conquistas - MathPower</title>
 
     <link
         rel="stylesheet"
@@ -142,12 +142,12 @@ function iconeConquista(string $nome): string
             <div class="marca">
 
                 <div class="marca-icone">
-                    🏆
+                    M
                 </div>
 
                 <div class="marca-texto">
 
-                    <strong>MathPlay</strong>
+                    <strong>MathPower</strong>
 
                     <span>
                         Conquistas

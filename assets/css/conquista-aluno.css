@@ -1,10 +1,6 @@
-/* =========================================================
-   MATHPLAY - CONQUISTAS
-   ========================================================= */
-
 
 /* =========================================================
-   RESET
+   MATHPOWER - CONQUISTAS NEON
    ========================================================= */
 
 * {
@@ -15,45 +11,35 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #F8F7FC;
-    color: #292631;
+    background:
+        radial-gradient(ellipse at 80% 0%, rgba(125, 35, 180, .16), transparent 38%),
+        #090711;
+    color: #F8F2FF;
 }
-
-
-/* =========================================================
-   PÁGINA
-   ========================================================= */
 
 .pagina {
     min-height: 100vh;
 }
 
-
-/* =========================================================
-   CABEÇALHO
-   ========================================================= */
+/* CABEÇALHO */
 
 .cabecalho {
-    background: #FFFFFF;
-    border-bottom: 1px solid #E5E1EC;
+    background: rgba(13, 10, 22, .96);
+    border-bottom: 1px solid rgba(199, 125, 255, .3);
     padding: 16px 20px;
+    box-shadow: 0 0 18px rgba(157, 78, 221, .08);
 }
 
 .cabecalho-conteudo {
-    max-width: 1100px;
+    max-width: 1500px;
     margin: 0 auto;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
 }
 
-
-/* =========================================================
-   MARCA
-   ========================================================= */
+/* MARCA */
 
 .marca {
     display: flex;
@@ -64,428 +50,410 @@ body {
 .marca-icone {
     width: 44px;
     height: 44px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #EDE9FE;
+    background: linear-gradient(135deg, #7928CA, #C044F4);
+    border: 1px solid #E6A5FF;
     border-radius: 12px;
-
     font-size: 24px;
+    box-shadow: 0 0 16px rgba(190, 70, 255, .4);
 }
 
 .marca-texto strong {
     display: block;
-    color: #5B21B6;
-    font-size: 18px;
+    color: #DF62FF;
+    font-size: 20px;
+    text-shadow: 0 0 12px rgba(190, 70, 255, .35);
 }
 
 .marca-texto span {
     display: block;
-    color: #6B6675;
+    color: #B9ACC9;
     font-size: 13px;
     margin-top: 2px;
 }
 
-
-/* =========================================================
-   BOTÃO VOLTAR
-   ========================================================= */
+/* VOLTAR */
 
 .voltar {
     text-decoration: none;
-    color: #5B21B6;
+    color: #DF62FF;
     font-weight: 700;
     font-size: 14px;
+    transition: .2s ease;
 }
 
 .voltar:hover {
-    color: #7C3AED;
+    color: #FFFFFF;
+    text-shadow: 0 0 12px #C653FF;
 }
 
-
-/* =========================================================
-   CONTEÚDO
-   ========================================================= */
+/* CONTEÚDO */
 
 .conteudo {
     width: 100%;
-    max-width: 1100px;
-
+    max-width: 1540px;
     margin: 0 auto;
-
-    padding: 28px 20px 50px;
+    padding: 36px 25px 60px;
 }
 
-
-/* =========================================================
-   TÍTULO
-   ========================================================= */
+/* TÍTULO */
 
 .titulo-area {
     margin-bottom: 24px;
 }
 
 .titulo-area h1 {
-    font-size: 30px;
+    font-size: 32px;
     line-height: 1.2;
     margin-bottom: 8px;
+    color: #FFFFFF;
+    text-shadow: 0 0 16px rgba(190, 70, 255, .15);
 }
 
 .titulo-area p {
-    color: #6B6675;
+    color: #B9ACC9;
     line-height: 1.5;
 }
 
-
-/* =========================================================
-   RESUMO
-   ========================================================= */
+/* RESUMO */
 
 .resumo {
     display: grid;
     grid-template-columns: 1fr;
-
-    gap: 14px;
-
+    gap: 16px;
     margin-bottom: 28px;
 }
 
 .resumo-card {
-    background: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at top left, rgba(174, 60, 255, .13), transparent 70%),
+        linear-gradient(145deg, #191328, #100D1B);
+    border: 1px solid rgba(190, 80, 255, .4);
+    border-radius: 17px;
+    padding: 24px;
+    box-shadow:
+        0 0 10px rgba(157, 78, 221, .12),
+        inset 0 0 18px rgba(157, 78, 221, .04);
+    transition: .25s ease;
+}
 
-    border: 1px solid #E5E1EC;
-    border-radius: 16px;
+.resumo-card::before,
+.progresso-card::before,
+.conquista::before,
+.vazio::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #B84DFF,
+        #F0B3FF,
+        #B84DFF,
+        transparent
+    );
+    box-shadow: 0 0 10px #C653FF;
+    pointer-events: none;
+}
 
-    padding: 20px;
+.resumo-card:hover {
+    transform: translateY(-3px);
+    border-color: #D966FF;
+    box-shadow:
+        0 0 12px rgba(190, 70, 255, .3),
+        0 0 28px rgba(157, 78, 221, .15),
+        inset 0 0 20px rgba(157, 78, 221, .07);
 }
 
 .resumo-card span {
     display: block;
-
-    color: #6B6675;
-    font-size: 13px;
-
-    margin-bottom: 7px;
+    color: #C8B8D5;
+    font-size: 15px;
+    margin-bottom: 8px;
 }
 
 .resumo-card strong {
     display: block;
-
-    color: #5B21B6;
-    font-size: 28px;
+    color: #DF62FF;
+    font-size: 34px;
+    text-shadow:
+        0 0 8px rgba(223, 98, 255, .5),
+        0 0 20px rgba(223, 98, 255, .2);
 }
 
-
-/* =========================================================
-   PROGRESSO
-   ========================================================= */
+/* PROGRESSO */
 
 .progresso-card {
-    background: #FFFFFF;
-
-    border: 1px solid #E5E1EC;
-    border-radius: 16px;
-
-    padding: 20px;
-
-    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #191328, #100D1B);
+    border: 1px solid rgba(190, 80, 255, .45);
+    border-radius: 17px;
+    padding: 24px;
+    margin-bottom: 35px;
+    box-shadow:
+        0 0 12px rgba(157, 78, 221, .14),
+        inset 0 0 20px rgba(157, 78, 221, .04);
 }
 
 .progresso-topo {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 10px;
-
-    margin-bottom: 10px;
+    margin-bottom: 13px;
 }
 
 .progresso-topo strong {
-    font-size: 15px;
+    font-size: 17px;
+    color: #FFFFFF;
 }
 
 .progresso-topo span {
-    color: #5B21B6;
+    color: #DF62FF;
     font-weight: 800;
+    font-size: 20px;
+    text-shadow: 0 0 10px rgba(223, 98, 255, .4);
 }
 
-
-/* =========================================================
-   BARRA
-   ========================================================= */
+/* BARRA */
 
 .barra {
     width: 100%;
     height: 12px;
-
-    background: #EDE9FE;
-
+    background: #2A2039;
+    border: 1px solid rgba(190, 80, 255, .18);
     border-radius: 20px;
-
     overflow: hidden;
 }
 
 .barra-preenchida {
     height: 100%;
-
-    background: #7C3AED;
-
+    background: linear-gradient(90deg, #7928CA, #C044F4, #F0A0FF);
     border-radius: 20px;
-
-    transition: width 0.3s ease;
+    box-shadow:
+        0 0 8px #B84DFF,
+        0 0 18px rgba(223, 98, 255, .6);
+    transition: width .3s ease;
 }
 
-
-/* =========================================================
-   TÍTULO DA SEÇÃO
-   ========================================================= */
+/* TÍTULO DA SEÇÃO */
 
 .secao-titulo {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .secao-titulo h2 {
-    font-size: 21px;
-
-    margin-bottom: 5px;
+    font-size: 23px;
+    margin-bottom: 7px;
+    color: #FFFFFF;
 }
 
 .secao-titulo p {
-    color: #6B6675;
-    font-size: 14px;
+    color: #B9ACC9;
+    font-size: 15px;
 }
 
-
-/* =========================================================
-   GRID DE CONQUISTAS
-   ========================================================= */
+/* GRID */
 
 .conquistas-grid {
     display: grid;
-
     grid-template-columns: 1fr;
-
-    gap: 16px;
+    gap: 18px;
 }
 
-
-/* =========================================================
-   CARD DA CONQUISTA
-   ========================================================= */
+/* CARDS DE CONQUISTA */
 
 .conquista {
-    background: #FFFFFF;
-
-    border: 1px solid #E5E1EC;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at top left, rgba(174, 60, 255, .1), transparent 70%),
+        linear-gradient(145deg, #191328, #100D1B);
+    border: 1px solid rgba(190, 80, 255, .4);
     border-radius: 18px;
-
-    padding: 22px;
-
+    padding: 24px;
     display: flex;
     align-items: flex-start;
-
-    gap: 16px;
-
+    gap: 18px;
+    box-shadow:
+        0 0 10px rgba(157, 78, 221, .1),
+        inset 0 0 18px rgba(157, 78, 221, .04);
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .conquista:hover {
-    transform: translateY(-2px);
-
+    transform: translateY(-4px);
+    border-color: #D966FF;
     box-shadow:
-        0 8px 20px rgba(41, 38, 49, 0.08);
+        0 0 12px rgba(190, 70, 255, .35),
+        0 0 28px rgba(157, 78, 221, .18),
+        inset 0 0 22px rgba(157, 78, 221, .07);
 }
 
-
-/* =========================================================
-   CONQUISTA BLOQUEADA
-   ========================================================= */
+/* CONQUISTAS BLOQUEADAS */
 
 .conquista.bloqueada {
-    opacity: 0.65;
+    opacity: .65;
+    border-color: rgba(130, 110, 150, .25);
+    box-shadow: none;
 }
 
 .conquista.bloqueada:hover {
     transform: none;
-
+    border-color: rgba(130, 110, 150, .35);
     box-shadow: none;
 }
 
-
-/* =========================================================
-   ÍCONE
-   ========================================================= */
+/* ÍCONES */
 
 .conquista-icone {
     width: 62px;
     height: 62px;
-
     min-width: 62px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #EDE9FE;
-
+    background: linear-gradient(135deg, #5724A8, #9D4EDD);
+    border: 1px solid rgba(226, 156, 255, .45);
     border-radius: 16px;
-
     font-size: 32px;
+    box-shadow:
+        0 0 10px rgba(190, 70, 255, .3),
+        inset 0 0 12px rgba(255, 255, 255, .06);
 }
 
 .bloqueada .conquista-icone {
     filter: grayscale(1);
-
-    background: #F0EEF3;
+    background: #211B2A;
+    border-color: rgba(150, 140, 160, .2);
+    box-shadow: none;
 }
 
-
-/* =========================================================
-   INFORMAÇÕES
-   ========================================================= */
+/* INFORMAÇÕES */
 
 .conquista-info {
     flex: 1;
+    min-width: 0;
 }
 
 .conquista-info h3 {
-    font-size: 17px;
-
-    margin-bottom: 6px;
+    font-size: 18px;
+    margin-bottom: 7px;
+    color: #FFFFFF;
 }
 
 .conquista-info p {
-    color: #6B6675;
-
+    color: #B9ACC9;
     font-size: 14px;
-
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
-
-/* =========================================================
-   STATUS
-   ========================================================= */
+/* STATUS */
 
 .status {
     display: inline-block;
-
-    margin-top: 10px;
-
-    padding: 5px 9px;
-
+    margin-top: 12px;
+    padding: 6px 10px;
     border-radius: 20px;
-
     font-size: 12px;
-
     font-weight: 800;
 }
 
 .status-desbloqueada {
-    background: #DCFCE7;
-    color: #166534;
+    background: rgba(85, 230, 165, .12);
+    border: 1px solid rgba(85, 230, 165, .35);
+    color: #83F5BD;
+    box-shadow: 0 0 10px rgba(85, 230, 165, .08);
 }
 
 .status-bloqueada {
-    background: #F1F0F4;
-    color: #6B6675;
+    background: rgba(150, 140, 160, .08);
+    border: 1px solid rgba(150, 140, 160, .2);
+    color: #A99BB7;
 }
 
-
-/* =========================================================
-   DATA
-   ========================================================= */
+/* DATA */
 
 .data {
     display: block;
-
-    margin-top: 6px;
-
+    margin-top: 7px;
     font-size: 12px;
-
-    color: #6B6675;
+    color: #A99BB7;
 }
 
-
-/* =========================================================
-   ESTADO VAZIO
-   ========================================================= */
+/* ESTADO VAZIO */
 
 .vazio {
-    background: #FFFFFF;
-
-    border: 1px solid #E5E1EC;
-    border-radius: 16px;
-
-    padding: 35px 20px;
-
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at center, rgba(111, 35, 157, .16), transparent 72%),
+        linear-gradient(145deg, #191128, #0D0917);
+    border: 1px solid rgba(190, 80, 255, .45);
+    border-radius: 17px;
+    padding: 40px 24px;
     text-align: center;
+    box-shadow:
+        0 0 12px rgba(157, 78, 221, .14),
+        inset 0 0 25px rgba(157, 78, 221, .05);
 }
 
 .vazio-icone {
-    font-size: 42px;
-
-    margin-bottom: 12px;
+    font-size: 44px;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 0 10px rgba(213, 95, 255, .5));
 }
 
 .vazio h3 {
-    font-size: 18px;
-
-    margin-bottom: 7px;
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #FFFFFF;
 }
 
 .vazio p {
-    color: #6B6675;
-
+    color: #B9ACC9;
     font-size: 14px;
+    line-height: 1.5;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* TABLET */
 
 @media (min-width: 650px) {
-
     .resumo {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .conquistas-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 }
 
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
+/* DESKTOP */
 
 @media (min-width: 900px) {
-
     .conteudo {
-        padding-top: 36px;
+        padding-top: 45px;
     }
 
     .titulo-area h1 {
-        font-size: 32px;
+        font-size: 36px;
     }
-
 }
 
-
-/* =========================================================
-   CELULAR
-   ========================================================= */
+/* CELULAR */
 
 @media (max-width: 500px) {
-
     .cabecalho {
         padding: 14px 15px;
     }
@@ -493,7 +461,6 @@ body {
     .marca-icone {
         width: 40px;
         height: 40px;
-
         font-size: 21px;
     }
 
@@ -510,28 +477,37 @@ body {
     }
 
     .conteudo {
-        padding: 22px 15px 40px;
+        padding: 25px 15px 40px;
     }
 
     .titulo-area h1 {
-        font-size: 25px;
+        font-size: 26px;
     }
 
     .titulo-area p {
         font-size: 14px;
     }
 
+    .resumo-card,
+    .progresso-card {
+        padding: 18px;
+    }
+
+    .resumo-card strong {
+        font-size: 30px;
+    }
+
     .conquista {
         padding: 17px;
+        gap: 13px;
     }
 
     .conquista-icone {
         width: 52px;
         height: 52px;
-
         min-width: 52px;
-
         font-size: 27px;
+        border-radius: 13px;
     }
 
     .conquista-info h3 {
@@ -542,4 +518,26 @@ body {
         font-size: 13px;
     }
 
+    .secao-titulo h2 {
+        font-size: 21px;
+    }
+
+    .vazio {
+        padding: 30px 18px;
+    }
+}
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+
+    .resumo-card:hover,
+    .conquista:hover {
+        transform: none;
+    }
 }
