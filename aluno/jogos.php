@@ -84,17 +84,9 @@ $jogos = $stmt->fetchAll();
 
         <div class="sidebar-header">
 
-            <a href="dashboard.php" class="logo">
-
-                <span class="logo-icon">
-                    M
-                </span>
-
-                <span class="logo-text">
-                    Math<span>Power
-                    </span>
-                </span>
-
+           <a href="dashboard.php" class="logo">
+                <span class="logo-icon">M</span>
+                <span class="logo-text">Math<span>Power</span></span>
             </a>
 
             <button
