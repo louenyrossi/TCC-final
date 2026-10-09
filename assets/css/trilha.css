@@ -268,6 +268,8 @@ button {
 }
 
 .student-avatar {
+    
+.student-avatar {
     width: 43px;
     height: 43px;
     min-width: 43px;
@@ -277,15 +279,13 @@ button {
     justify-content: center;
     border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
-    background: linear-gradient(
-        135deg,
-        #D946FF,
-        #7026C9
-    );
+    background: linear-gradient(135deg, #D946FF, #7026C9);
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 900;
     box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
+}
+
 }
 
 .menu-button {
@@ -914,6 +914,12 @@ button {
 /* TABLET E CELULAR */
 
 @media (max-width: 700px) {
+
+    .student-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    }
     .sidebar {
         transform: translateX(-100%);
         box-shadow: 8px 0 35px rgba(0, 0, 0, .5);
@@ -1821,13 +1827,17 @@ button:focus-visible {
     width: 40px;
     height: 40px;
     min-width: 40px;
+    flex-shrink: 0; 
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
-    background: linear-gradient(135deg, #a855f7, #7c3aed);
-    color: #fff;
-    font-weight: 800;
+    background: linear-gradient(135deg, #D946FF, #7026C9);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 900;
+    box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 
 .sidebar-student-info {
