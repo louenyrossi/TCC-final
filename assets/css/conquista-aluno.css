@@ -593,3 +593,28 @@ body {
         animation-duration: 0.01ms !important;
     }
 }
+html,
+body {
+    background: #f4f7fc !important;
+    color: #1e293b !important;
+}
+
+.pagina {
+    min-height: 100vh;
+    background: #f4f7fc;
+}
+
+.conteudo {
+    display: block;
+}
+
+.cabecalho {
+    background: #ffffff;
+}
+
+.resumo-card,
+.progresso-card,
+.conquista,
+.vazio {
+    background-color: #ffffff;
+}
