@@ -1852,3 +1852,47 @@ button:focus-visible {
         animation-duration: 0.01ms !important;
     }
 }
+
+/* ROLAGEM DA SIDEBAR INTEIRA */
+.sidebar {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
+    scrollbar-width: thin;
+    scrollbar-color: #7c3aed #171126;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #171126;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 10px;
+}
+
+/* Impede que as seções sejam comprimidas */
+.sidebar-header,
+.sidebar-nav,
+.sidebar-bottom {
+    flex-shrink: 0;
+}
+
+/* Evita uma segunda barra de rolagem nos links */
+.sidebar-nav {
+    overflow-y: visible;
+    flex: 0 0 auto;
+}
+
+/* Mantém o perfil e o botão Sair no final */
+.sidebar-bottom {
+    margin-top: auto;
+}
