@@ -290,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo-area">
 
             <div class="logo-icon">
-                🧮
+                M
             </div>
 
             <div>
