@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Cadastro | MathPlay</title>
+    <title>Cadastro | MathPower</title>
 
 
     <link
@@ -296,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div>
 
                 <h1>
-                    Math<span>Play</span>
+                    Math<span>Power</span>
                 </h1>
 
                 <p>
@@ -318,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <p>
                 Preencha os dados abaixo para começar
-                sua jornada no MathPlay.
+                sua jornada no MathPower.
             </p>
 
         </div>
@@ -680,7 +680,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             <p>
-                No MathPlay, você aprende matemática
+                No MathPower, você aprende matemática
                 enquanto joga, conquista medalhas
                 e acompanha sua evolução.
             </p>
