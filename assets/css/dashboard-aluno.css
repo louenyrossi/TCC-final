@@ -375,24 +375,19 @@ button {
     height: 43px;
     min-width: 43px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
-
     background: linear-gradient(
         135deg,
         #D946FF,
         #7026C9
     );
-
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 900;
-
     box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 

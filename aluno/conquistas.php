@@ -138,7 +138,8 @@ function iconeConquista(string $nome): string
     
 <header class="cabecalho">
     <div class="cabecalho-conteudo">
-        <h2 class="logo">MathPower 🧮</h2>
+        <h2 class="logo">MathPower</h2>
+        <span>M</span>
 
         <a href="dashboard.php" class="voltar">
             ← Voltar
