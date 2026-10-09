@@ -1274,3 +1274,119 @@ button:focus-visible {
 .sidebar-bottom {
     margin-top: auto;
 }
+
+/* =========================================================
+   PERFIL DO ALUNO — IGUAL AO DASHBOARD
+========================================================= */
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 4px 2px 14px;
+}
+
+.user-avatar {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(232, 121, 255, 0.75);
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #D946FF,
+        #7026C9
+    );
+
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 900;
+
+    box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
+}
+
+.user-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-info strong {
+    display: block;
+    overflow: hidden;
+
+    color: #FFFFFF;
+    font-size: 13px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-info span {
+    display: block;
+
+    color: var(--gray);
+    font-size: 12px;
+}
+
+/* =========================================================
+   RODAPÉ DA SIDEBAR
+========================================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+    flex-shrink: 0;
+
+    padding: 18px 16px;
+
+    border-top: 1px solid rgba(192, 38, 255, 0.14);
+    background: rgba(7, 4, 12, 0.25);
+}
+
+/* Rolagem da sidebar inteira */
+.sidebar {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    scrollbar-width: thin;
+    scrollbar-color: #7c3aed #171126;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #171126;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 10px;
+}
+
+.sidebar-header,
+.sidebar-nav,
+.sidebar-bottom {
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    overflow-y: visible;
+    flex: 0 0 auto;
+}
