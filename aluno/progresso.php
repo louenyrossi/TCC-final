@@ -201,7 +201,7 @@ $progressoXP = $xpNoNivel;
             </a>
 
             <a href="trilha.php">
-                🧭
+                📚
                 <span>Trilha</span>
             </a>
 
@@ -225,7 +225,7 @@ $progressoXP = $xpNoNivel;
         <div class="sidebar-bottom">
 
             <a href="../logout.php" class="logout">
-                🚪
+                ↪
                 <span>Sair</span>
             </a>
 
