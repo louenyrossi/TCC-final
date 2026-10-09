@@ -1800,4 +1800,52 @@ button:focus-visible {
 }
 
 
+/* PERFIL DO ALUNO NO RODAPÉ DA SIDEBAR */
+.sidebar-student {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 0;
+}
+
+.sidebar-student .student-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    color: #fff;
+    font-weight: 800;
+}
+
+.sidebar-student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.sidebar-student-info strong {
+    color: #fff;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-student-info small {
+    color: #a1a1aa;
+    font-size: 12px;
+}
+
+.sidebar-bottom {
+    flex-shrink: 0;
+}
+
+
 

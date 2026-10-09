@@ -313,19 +313,33 @@ function linkJogo(int $jogoId): string
             </a>
 
         </nav>
+        
+    <div class="sidebar-bottom">
 
-
-        <div class="sidebar-bottom">
-
-            <a
-                href="../logout.php"
-                class="logout-link"
-            >
-                <span>↪</span>
-                <span>Sair</span>
-            </a>
-
+        <div class="sidebar-student">
+        <div class="student-avatar">
+            <?= htmlspecialchars(
+                strtoupper(mb_substr($aluno['nome'], 0, 1))
+            ) ?>
         </div>
+
+        <div class="sidebar-student-info">
+            <strong>
+                <?= htmlspecialchars($aluno['nome']) ?>
+            </strong>
+
+            <small>
+                Nível <?= (int) $aluno['nivel'] ?>
+            </small>
+        </div>
+    </div>
+
+    <a href="../logout.php" class="logout-link">
+        <span>↪</span>
+        <span>Sair</span>
+    </a>
+
+</div>
 
     </aside>
 
