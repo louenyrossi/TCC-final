@@ -547,7 +547,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="tipo-card">
 
                             <div class="tipo-icon">
-                                👨‍🏫
+                                ✍️
                             </div>
 
                             <div class="tipo-texto">
