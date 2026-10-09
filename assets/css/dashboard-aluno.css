@@ -365,7 +365,6 @@ button {
     display: flex;
     align-items: center;
     gap: 11px;
-
     padding: 4px 2px 14px;
 }
 
@@ -393,7 +392,6 @@ button {
 
 .user-info {
     min-width: 0;
-
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -412,8 +410,7 @@ button {
 
 .user-info span {
     display: block;
-
-    color: var(--gray);
+    color:#a697b8;
     font-size: 12px;
 }
 
