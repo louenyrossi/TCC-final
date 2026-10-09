@@ -536,3 +536,552 @@ body {
     }
 
 }
+/* =====================================================
+   MATHPOWER — LOGIN GAMER NEON
+   Paleta: preto, branco e roxo neon
+   ===================================================== */
+
+:root {
+    --roxo: #A855F7;
+    --roxo-escuro: #7C3AED;
+    --roxo-claro: #261537;
+
+    --fundo: #0B0711;
+    --branco: #FFFFFF;
+
+    --preto: #F8F5FF;
+    --cinza-escuro: #E9DDF5;
+    --cinza: #B8A9C9;
+    --cinza-claro: #392847;
+
+    --vermelho: #FB7185;
+}
+
+/* FUNDO GERAL */
+
+html {
+    min-height: 100%;
+    color-scheme: dark;
+    background: var(--fundo);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--fundo);
+    color: var(--preto);
+}
+
+.login-container {
+    min-height: 100vh;
+    background: var(--fundo);
+}
+
+/* =====================================================
+   PAINEL ESQUERDO
+   ===================================================== */
+
+.login-card {
+    position: relative;
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            circle at 12% 0%,
+            rgba(168, 85, 247, 0.10),
+            transparent 32%
+        ),
+        linear-gradient(
+            155deg,
+            #120C1B,
+            #0B0711 65%,
+            #100817
+        );
+
+    color: var(--branco);
+}
+
+/* LOGO */
+
+.logo-area {
+    gap: 16px;
+    margin-bottom: 54px;
+}
+
+.logo-icon {
+    flex-shrink: 0;
+
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(216, 180, 254, 0.7);
+    border-radius: 17px;
+
+    background: linear-gradient(
+        135deg,
+        #D8B4FE,
+        #A855F7 48%,
+        #6D28D9
+    );
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 0 12px rgba(168, 85, 247, 0.55),
+        0 0 30px rgba(124, 58, 237, 0.25),
+        inset 0 0 12px rgba(255, 255, 255, 0.14);
+}
+
+.logo-area h1 {
+    color: #FFFFFF;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+
+    text-shadow:
+        0 0 12px rgba(168, 85, 247, 0.2);
+}
+
+.logo-area h1 span {
+    color: #C084FC;
+
+    text-shadow:
+        0 0 6px rgba(192, 132, 252, 0.75),
+        0 0 16px rgba(168, 85, 247, 0.55),
+        0 0 30px rgba(124, 58, 237, 0.28);
+}
+
+.logo-area p {
+    color: #C8B8D9;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* CABEÇALHO DO FORMULÁRIO */
+
+.form-header h2 {
+    margin-bottom: 12px;
+
+    color: #FFFFFF;
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.form-header p {
+    color: #BFB0D2;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* =====================================================
+   MENSAGENS DE ERRO
+   ===================================================== */
+
+.mensagem-erro {
+    background: rgba(127, 29, 29, 0.18);
+    border: 1px solid rgba(251, 113, 133, 0.35);
+    border-radius: 12px;
+    color: #FDA4AF;
+}
+
+/* =====================================================
+   CAMPOS DO FORMULÁRIO
+   ===================================================== */
+
+.campo > label,
+.senha-label label {
+    color: #F1E8FC;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.campo input[type="email"],
+.campo input[type="password"],
+.campo input[type="text"] {
+    width: 100%;
+    min-height: 54px;
+
+    border: 1px solid #3A294B;
+    border-radius: 13px;
+
+    background: rgba(8, 6, 13, 0.9);
+    color: #FFFFFF;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.campo input:hover {
+    border-color: #8050A5;
+}
+
+.campo input:focus {
+    border-color: #C084FC;
+    background: #100B18;
+
+    box-shadow:
+        0 0 0 3px rgba(168, 85, 247, 0.13),
+        0 0 20px rgba(168, 85, 247, 0.12);
+}
+
+.campo input::placeholder {
+    color: #8F7BA6;
+    opacity: 1;
+}
+
+/* BOTÃO DE MOSTRAR SENHA */
+
+.mostrar-senha {
+    color: #C8B8D9;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.mostrar-senha:hover {
+    background: #261537;
+    color: #FFFFFF;
+}
+
+/* ERROS DE VALIDAÇÃO */
+
+.erro-campo {
+    color: #FDA4AF;
+}
+
+/* =====================================================
+   BOTÃO ENTRAR
+   ===================================================== */
+
+.btn-entrar {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 54px;
+    margin-top: 10px;
+
+    border: 1px solid rgba(216, 180, 254, 0.42);
+    border-radius: 13px;
+
+    background: linear-gradient(
+        110deg,
+        #B45CFF,
+        #8B35E8 52%,
+        #6D28D9
+    );
+
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 7px 22px rgba(124, 58, 237, 0.28),
+        0 0 18px rgba(168, 85, 247, 0.10);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+.btn-entrar:hover {
+    background: linear-gradient(
+        110deg,
+        #C084FC,
+        #A855F7 52%,
+        #7C3AED
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(124, 58, 237, 0.4),
+        0 0 25px rgba(168, 85, 247, 0.2);
+}
+
+.btn-entrar:active {
+    transform: translateY(0);
+}
+
+.btn-entrar:disabled {
+    filter: grayscale(0.25);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-seta {
+    font-size: 22px;
+    transition: transform 0.2s ease;
+}
+
+.btn-entrar:hover .btn-seta {
+    transform: translateX(4px);
+}
+
+/* =====================================================
+   LINK PARA CADASTRO
+   ===================================================== */
+
+.cadastro-link {
+    color: #BFB0D2;
+    line-height: 1.7;
+}
+
+.cadastro-link a {
+    color: #C084FC;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.cadastro-link a:hover {
+    color: #FFFFFF;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+/* RODAPÉ */
+
+.login-footer {
+    color: #81728F;
+}
+
+/* =====================================================
+   PAINEL DIREITO — IDENTIDADE GAMER
+   ===================================================== */
+
+.login-lateral {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 82% 15%,
+            rgba(168, 85, 247, 0.28),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(124, 58, 237, 0.17),
+            transparent 34%
+        ),
+        linear-gradient(
+            145deg,
+            #1A0D29,
+            #100819 58%,
+            #09060F
+        );
+
+    border-left: 1px solid rgba(168, 85, 247, 0.28);
+}
+
+/* Símbolos matemáticos decorativos */
+
+.login-lateral::before {
+    content: "+      ×      ÷      =      π      √      ∑      %";
+
+    position: absolute;
+    inset: -10%;
+
+    z-index: 0;
+    pointer-events: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(216, 180, 254, 0.09);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 900;
+    line-height: 2.4;
+    letter-spacing: 1.2rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+
+    text-shadow:
+        0 0 16px rgba(168, 85, 247, 0.15);
+
+    transform: rotate(-12deg);
+
+    animation: login-simbolos 22s ease-in-out infinite alternate;
+}
+
+/* Halo roxo no fundo */
+
+.login-lateral::after {
+    content: "";
+
+    position: absolute;
+    top: -12%;
+    right: -12%;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(168, 85, 247, 0.10);
+    filter: blur(75px);
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Mantém o conteúdo à frente dos efeitos */
+
+.lateral-content {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 540px;
+}
+
+/* ETIQUETA SUPERIOR */
+
+.lateral-badge {
+    border: 1px solid rgba(192, 132, 252, 0.32);
+    background: rgba(168, 85, 247, 0.12);
+
+    color: #E9D5FF;
+    letter-spacing: 0.3px;
+
+    box-shadow:
+        0 0 20px rgba(168, 85, 247, 0.08);
+}
+
+/* TÍTULO DO PAINEL DIREITO */
+
+.lateral-content h2 {
+    color: #FFFFFF;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+
+    text-shadow:
+        0 0 25px rgba(168, 85, 247, 0.12);
+}
+
+.lateral-content > p {
+    color: #D0C1E2;
+}
+
+/* ESTATÍSTICAS / BENEFÍCIOS */
+
+.estatisticas {
+    gap: 20px;
+}
+
+.estatistica {
+    padding: 12px;
+
+    border: 1px solid transparent;
+    border-radius: 15px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.estatistica:hover {
+    background: rgba(168, 85, 247, 0.08);
+    border-color: rgba(192, 132, 252, 0.17);
+    transform: translateX(4px);
+}
+
+.estatistica-icon {
+    flex-shrink: 0;
+
+    border: 1px solid rgba(192, 132, 252, 0.18);
+    background: rgba(168, 85, 247, 0.14);
+
+    box-shadow:
+        0 0 18px rgba(124, 58, 237, 0.1);
+}
+
+.estatistica strong {
+    color: #FFFFFF;
+    font-size: 15px;
+}
+
+.estatistica small {
+    color: #C4B2D8;
+    line-height: 1.5;
+}
+
+/* =====================================================
+   ANIMAÇÕES SUAVES
+   ===================================================== */
+
+@keyframes login-simbolos {
+    0% {
+        transform: translate3d(-10px, 12px, 0) rotate(-12deg);
+    }
+
+    50% {
+        transform: translate3d(12px, -12px, 0) rotate(-7deg);
+    }
+
+    100% {
+        transform: translate3d(-6px, -24px, 0) rotate(-15deg);
+    }
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+   ===================================================== */
+
+@media (min-width: 700px) {
+    .login-card {
+        border: 1px solid rgba(168, 85, 247, 0.12);
+    }
+}
+
+@media (min-width: 1000px) {
+    .login-container {
+        background: #0B0711;
+    }
+
+    .login-card {
+        max-width: 720px;
+        padding: 65px clamp(50px, 5vw, 100px);
+
+        border: none;
+        border-right: 1px solid rgba(168, 85, 247, 0.22);
+        box-shadow: 8px 0 35px rgba(124, 58, 237, 0.05);
+    }
+
+    .login-lateral {
+        padding: 70px clamp(50px, 5vw, 100px);
+    }
+}
+
+/* Acessibilidade: foco visível */
+
+.campo input:focus-visible,
+.btn-entrar:focus-visible,
+.mostrar-senha:focus-visible,
+.cadastro-link a:focus-visible {
+    outline: 2px solid #D8B4FE;
+    outline-offset: 3px;
+}
+
+/* Respeita preferência por movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
