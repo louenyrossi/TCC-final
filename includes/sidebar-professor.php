@@ -53,16 +53,15 @@ $tipoProfessor = $_SESSION['tipo'] ?? '';
 
     <div class="sidebar-rodape">
 
-        <button
-            type="button"
-            class="botao-tema"
-            data-alternar-tema
-            aria-label="Ativar tema escuro"
-            title="Alternar tema claro e escuro"
-        >
-            🌙
-            <span>Alternar tema</span>
-        </button>
+       <button
+    type="button"
+    data-alternar-tema
+    style="display:flex; padding:12px; margin:10px;
+           background:#7C3AED; color:white;
+           border:0; border-radius:8px; cursor:pointer;"
+>
+    🌙 Alternar tema
+</button>
 
         <div class="sidebar-divisor"></div>
 
