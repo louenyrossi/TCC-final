@@ -9,27 +9,6 @@ $usuarioId = usuarioId();
 
 /*
 |--------------------------------------------------------------------------
-| Buscar os dados do aluno
-|--------------------------------------------------------------------------
-*/
-
-$sqlAluno = "
-    SELECT nome, nivel
-    FROM alunos
-    WHERE id = ?
-    LIMIT 1
-";
-
-$stmtAluno = $pdo->prepare($sqlAluno);
-$stmtAluno->execute([$usuarioId]);
-
-$aluno = $stmtAluno->fetch(PDO::FETCH_ASSOC);
-
-if (!$aluno) {
-    die('Não foi possível carregar os dados do aluno.');
-}
-/*
-|--------------------------------------------------------------------------
 | Buscar os jogos disponíveis
 |--------------------------------------------------------------------------
 */
