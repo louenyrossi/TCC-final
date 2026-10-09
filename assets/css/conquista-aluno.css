@@ -593,10 +593,68 @@ body {
         animation-duration: 0.01ms !important;
     }
 }
+
+/* AJUSTE FINAL DO LAYOUT */
+
 html,
 body {
-    background: #f4f7fc !important;
-    color: #1e293b !important;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #f4f7fc;
+    color: #1e293b;
+}
+
+.pagina {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.cabecalho {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.cabecalho-conteudo {
+    width: min(1200px, 92%);
+    min-height: 65px;
+    margin: 0 auto;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    color: #2563eb;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.conteudo {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 24px 0 40px;
+}
+
+.titulo-area {
+    margin: 0 0 24px;
+}
+
+.resumo {
+    margin: 0 0 22px;
+}
+
+.progresso-card {
+    margin: 0 0 30px;
+}
+
+.secao-titulo {
+    margin: 0 0 20px;
 }
 
 .pagina {
