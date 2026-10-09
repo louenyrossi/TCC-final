@@ -247,8 +247,8 @@ function linkJogo(int $jogoId): string
 
                 <div>
 
-                    <strong>
-                        MathPower
+                    <strong class="logo-text">
+                         Math<span>Power</span>
                     </strong>
 
                     <small>

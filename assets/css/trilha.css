@@ -103,19 +103,15 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 44px;
     height: 44px;
     flex-shrink: 0;
-
     border: 1px solid #e6a5ff;
     border-radius: 12px;
-
     background: linear-gradient(135deg, #d76aff, #8b2cf5);
     color: #fff;
     font-size: 22px;
     font-weight: 800;
-
     box-shadow: 0 0 18px rgba(217, 70, 255, .45);
 }
 
@@ -236,10 +232,8 @@ button {
 .topbar {
     display: flex;
     align-items: center;
-
     height: 72px;
     padding: 0 30px;
-
     background: rgba(13, 10, 22, .92);
     border-bottom: 1px solid var(--border);
 }
@@ -277,16 +271,13 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 36px;
     height: 36px;
     flex-shrink: 0;
-
     border-radius: 50%;
     background: linear-gradient(135deg, #5724a8, #c044f4);
     color: #fff;
     font-weight: 800;
-
     box-shadow: 0 0 15px rgba(157, 78, 221, .3);
 }
 
@@ -338,10 +329,8 @@ button {
 .level-card {
     min-width: 125px;
     padding: 15px;
-
     border: 1px solid rgba(190, 70, 255, .5);
     border-radius: 14px;
-
     background:
         radial-gradient(
             ellipse at top,
@@ -349,9 +338,7 @@ button {
             transparent 75%
         ),
         linear-gradient(145deg, #191328, #100d1b);
-
     text-align: center;
-
     box-shadow:
         0 0 10px rgba(157, 78, 221, .2),
         inset 0 0 18px rgba(157, 78, 221, .07);
@@ -383,25 +370,20 @@ button {
     display: flex;
     align-items: center;
     gap: 13px;
-
     overflow: hidden;
     padding: 15px 18px;
     margin-bottom: 35px;
-
     border: 1px solid rgba(190, 70, 255, .65);
     border-radius: 14px;
-
     background: linear-gradient(
         135deg,
         rgba(35, 18, 51, .98),
         rgba(15, 10, 27, .98)
     );
-
     box-shadow:
         0 0 8px rgba(190, 70, 255, .25),
         0 0 22px rgba(157, 78, 221, .18),
         inset 0 0 18px rgba(190, 70, 255, .07);
-
     transition: .3s ease;
 }
 
@@ -413,7 +395,6 @@ button {
     width: 80%;
     height: 1px;
     pointer-events: none;
-
     background: linear-gradient(
         90deg,
         transparent,
@@ -422,7 +403,6 @@ button {
         #b84dff,
         transparent
     );
-
     box-shadow: 0 0 10px #c653ff;
 }
 
@@ -438,17 +418,13 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 42px;
     height: 42px;
     flex-shrink: 0;
-
     border: 1px solid rgba(226, 156, 255, .45);
     border-radius: 11px;
-
     background: linear-gradient(135deg, #5724a8, #9d4edd);
     color: #fff;
-
     box-shadow:
         0 0 10px rgba(190, 70, 255, .35),
         inset 0 0 12px rgba(255, 255, 255, .08);
@@ -1780,4 +1756,19 @@ button:focus-visible {
         animation-duration: 0.01ms !important;
     }
 }
+
+.logo-text {
+    color: #ffffff;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -0.8px;
+}
+
+.logo-text span {
+    color: #e879ff;
+    text-shadow:
+        0 0 7px #c026ff,
+        0 0 20px rgba(192, 38, 255, 0.75);
+}
+
 
