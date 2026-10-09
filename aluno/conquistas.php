@@ -139,21 +139,15 @@ function iconeConquista(string $nome): string
 
         <div class="cabecalho-conteudo">
 
-            <div class="marca">
 
-                <div class="marca-icone">
-                    M
-                </div>
+<div class="marca">
+    <div class="marca-icone">M</div>
 
-                <div class="marca-texto">
-
-                    <strong>MathPower</strong>
-
-                    <span>
-                        Conquistas
-                    </span>
-
-                </div>
+    <div class="marca-texto">
+        <strong><span>Math</span>Power</strong>
+        <span>Conquistas</span>
+    </div>
+</div>
 
             </div>
 
