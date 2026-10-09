@@ -49,8 +49,8 @@ button {
    ========================================================= */
 
 .sidebar {
-    width: 368px;
-    min-width: 380px;
+    width: 260px;
+    min-width: 260px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -315,9 +315,9 @@ button {
    ========================================================= */
 
 .main-content {
-    width: calc(100% - 368px);
+    width: calc(100% - 260px);
     min-height: 100vh;
-    margin-left: 368px;
+    margin-left: 260px;
 }
 
 
@@ -837,14 +837,14 @@ button {
 @media (max-width: 900px) {
 
     .sidebar {
-        width: 235px;
-        min-width: 235px;
+        width: 260px;
+        min-width: 260px;
     }
 
     .main-content {
-        width: calc(100% - 235px);
+        width: calc(100% - 260px);
 
-        margin-left: 235px;
+        margin-left: 260px;
     }
 
     .topbar {
@@ -875,9 +875,7 @@ button {
     .sidebar {
         width: 270px;
         min-width: 270px;
-
         transform: translateX(-100%);
-
         box-shadow: 8px 0 25px rgba(23, 21, 28, 0.12);
     }
 
@@ -887,7 +885,6 @@ button {
 
     .sidebar-close {
         display: flex;
-
         align-items: center;
         justify-content: center;
     }
@@ -898,19 +895,16 @@ button {
 
     .main-content {
         width: 100%;
-
         margin-left: 0;
     }
 
     .topbar {
         height: 64px;
-
         padding: 0 15px;
     }
 
     .menu-button {
         display: flex;
-
         margin-right: 12px;
     }
 
@@ -929,7 +923,6 @@ button {
 
     .page-header {
         align-items: flex-start;
-
         margin-bottom: 24px;
     }
 
