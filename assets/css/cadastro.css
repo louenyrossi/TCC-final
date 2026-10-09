@@ -1651,3 +1651,205 @@ body {
         animation: none;
     }
 }
+/* ============================================
+   MATHPOWER — PAINEL ESQUERDO GAMER
+   ============================================ */
+
+/* Fundo do formulário */
+
+.cadastro-card {
+    position: relative;
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(124, 58, 237, 0.09),
+            transparent 32%
+        ),
+        linear-gradient(
+            160deg,
+            #120C1B,
+            #0B0811 65%,
+            #100918
+        );
+}
+
+/* Linha neon na divisão do painel */
+
+@media (min-width: 1000px) {
+    .cadastro-card {
+        border-right: 1px solid rgba(168, 85, 247, 0.28);
+        box-shadow: 8px 0 35px rgba(124, 58, 237, 0.06);
+    }
+}
+
+/* Marca MathPower */
+
+.logo-area h1 {
+    font-size: clamp(2.2rem, 3vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+
+    color: #FFFFFF;
+
+    text-shadow:
+        0 0 10px rgba(168, 85, 247, 0.18);
+}
+
+.logo-area h1 span {
+    color: #C084FC;
+
+    text-shadow:
+        0 0 6px rgba(192, 132, 252, 0.65),
+        0 0 18px rgba(168, 85, 247, 0.35),
+        0 0 32px rgba(124, 58, 237, 0.2);
+}
+
+/* Ícone da marca */
+
+.logo-icon {
+    border: 1px solid rgba(216, 180, 254, 0.7);
+
+    box-shadow:
+        0 0 12px rgba(168, 85, 247, 0.42),
+        0 0 28px rgba(124, 58, 237, 0.2);
+}
+
+/* Título do formulário */
+
+.form-header h2 {
+    color: #FFFFFF;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+}
+
+.form-header p {
+    color: #BFB0D2;
+    line-height: 1.7;
+}
+
+/* Rótulos */
+
+.campo > label {
+    color: #F1E8FC;
+    font-weight: 700;
+}
+
+/* Campos com contorno roxo discreto */
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="password"],
+.campo select {
+    background: rgba(8, 6, 13, 0.88);
+    color: #FFFFFF;
+    border: 1px solid #3A294B;
+    border-radius: 13px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.campo input:hover,
+.campo select:hover {
+    border-color: #8050A5;
+}
+
+.campo input:focus,
+.campo select:focus {
+    background: #100B18;
+    border-color: #B45CFF;
+
+    box-shadow:
+        0 0 0 3px rgba(168, 85, 247, 0.12),
+        0 0 20px rgba(168, 85, 247, 0.12);
+}
+
+/* Opções de aluno e professor */
+
+.tipo-card {
+    border: 1px solid #382744;
+    border-radius: 13px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.tipo-option:hover .tipo-card {
+    transform: translateY(-2px);
+    border-color: #8B35E8;
+    box-shadow: 0 5px 18px rgba(124, 58, 237, 0.12);
+}
+
+/* Botão de cadastro */
+
+.btn-cadastrar {
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid rgba(216, 180, 254, 0.4);
+    border-radius: 13px;
+
+    background: linear-gradient(
+        115deg,
+        #A855F7,
+        #7C3AED 55%,
+        #6D28D9
+    );
+
+    color: #FFFFFF;
+    font-weight: 800;
+
+    box-shadow:
+        0 5px 20px rgba(124, 58, 237, 0.25);
+}
+
+.btn-cadastrar:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 28px rgba(124, 58, 237, 0.4),
+        0 0 20px rgba(168, 85, 247, 0.18);
+}
+
+/* Link para entrar */
+
+.login-link {
+    color: #BFB0D2;
+}
+
+.login-link a {
+    color: #C084FC;
+    font-weight: 800;
+}
+
+.login-link a:hover {
+    color: #FFFFFF;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.45);
+}
+
+/* Acessibilidade: foco visível */
+
+.campo input:focus-visible,
+.campo select:focus-visible,
+.btn-cadastrar:focus-visible {
+    outline: 2px solid #D8B4FE;
+    outline-offset: 3px;
+}
+
+/* Menos movimento se solicitado pelo sistema */
+
+@media (prefers-reduced-motion: reduce) {
+    .tipo-card,
+    .campo input,
+    .campo select,
+    .btn-cadastrar {
+        transition: none;
+    }
+}
