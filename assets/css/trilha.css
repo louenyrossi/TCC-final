@@ -1151,3 +1151,633 @@ button {
         transform: none;
     }
 }
+
+/* =========================================================
+   MATHPOWER — PADRONIZAÇÃO COM JOGOS.CSS
+   Dimensões, tipografia, logo e layout
+   ========================================================= */
+
+/* FONTE E CORES */
+
+:root {
+    --sidebar-width: 260px;
+    --bg: #090711;
+    --panel: #12101f;
+    --purple: #9d4edd;
+    --neon: #e879ff;
+    --neon-light: #c77dff;
+    --text: #f5f0ff;
+    --muted: #aaa1bd;
+    --border: rgba(174, 107, 255, 0.24);
+}
+
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            ellipse at 80% 0%,
+            rgba(116, 36, 190, 0.17),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 10% 50%,
+            rgba(75, 25, 130, 0.12),
+            transparent 40%
+        ),
+        var(--bg);
+
+    color: var(--text);
+}
+
+button,
+a {
+    font-family: inherit;
+}
+
+/* =========================================================
+   SIDEBAR — MESMAS MEDIDAS DE JOGOS.CSS
+   ========================================================= */
+
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    height: 100vh;
+
+    background:
+        radial-gradient(
+            ellipse at 0% 0%,
+            rgba(168, 85, 247, 0.16),
+            transparent 48%
+        ),
+        linear-gradient(180deg, #120b1c, #0d0914);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: 8px 0 35px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    height: 88px;
+    min-height: 88px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #e879ff,
+        #a855f7 45%,
+        #6d28d9
+    );
+
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, 0.65),
+        0 0 28px rgba(168, 85, 247, 0.22);
+}
+
+/* O texto da logo mantém o HTML atual da Trilha */
+
+.logo strong {
+    display: block;
+
+    color: #fff;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -0.8px;
+
+    text-shadow: none;
+}
+
+.logo strong span {
+    color: #e879ff;
+
+    text-shadow:
+        0 0 7px #c026ff,
+        0 0 20px rgba(192, 38, 255, 0.75);
+}
+
+/* Oculta o subtítulo se existir, igual à logo de Jogos */
+
+.logo small {
+    display: none;
+}
+
+/* NAVEGAÇÃO */
+
+.sidebar-nav {
+    gap: 8px;
+    padding: 24px 14px;
+}
+
+.nav-item {
+    min-height: 50px;
+    padding: 0 14px;
+    gap: 12px;
+
+    border-radius: 13px;
+
+    color: #d0c1e2;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease;
+}
+
+.nav-item:hover {
+    background: linear-gradient(
+        100deg,
+        rgba(168, 85, 247, 0.19),
+        rgba(168, 85, 247, 0.04)
+    );
+
+    border-color: rgba(217, 70, 255, 0.42);
+    color: #fff;
+
+    transform: translateX(3px);
+}
+
+.nav-item.active {
+    background: linear-gradient(
+        105deg,
+        rgba(168, 85, 247, 0.3),
+        rgba(126, 34, 206, 0.09)
+    );
+
+    border-color: rgba(217, 70, 255, 0.48);
+    color: #fff;
+
+    box-shadow:
+        inset 3px 0 #e879ff,
+        0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* ÁREA INFERIOR DA SIDEBAR */
+
+.sidebar-bottom {
+    padding: 18px 16px;
+
+    border-top: 1px solid rgba(192, 38, 255, 0.14);
+    background: rgba(7, 4, 12, 0.25);
+}
+
+.logout-link {
+    min-height: 44px;
+    padding: 0 12px;
+    gap: 10px;
+
+    border-radius: 10px;
+
+    color: #a697b8;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.logout-link:hover {
+    background: rgba(251, 113, 133, 0.1);
+    color: #fda4af;
+}
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: var(--sidebar-width);
+
+    background:
+        radial-gradient(
+            ellipse at 90% 0%,
+            rgba(145, 0, 255, 0.14),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 15% 45%,
+            rgba(113, 34, 206, 0.07),
+            transparent 35%
+        ),
+        #09060f;
+}
+
+/* BARRA SUPERIOR */
+
+.topbar {
+    position: sticky;
+    z-index: 500;
+    top: 0;
+
+    height: 72px;
+    padding: 0 30px;
+
+    background: rgba(10, 6, 16, 0.91);
+    border-bottom: 1px solid rgba(192, 38, 255, 0.24);
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+
+    backdrop-filter: blur(18px);
+}
+
+.topbar-title {
+    flex: 1;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.student-mini {
+    margin-left: auto;
+}
+
+.student-mini strong {
+    font-size: 13px;
+}
+
+.student-mini small {
+    font-size: 12px;
+}
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+
+    border: 1px solid rgba(232, 121, 255, 0.75);
+
+    background: linear-gradient(
+        135deg,
+        #d946ff,
+        #7026c9
+    );
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+/* BOTÃO DO MENU */
+
+.menu-button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(192, 132, 252, 0.3);
+    border-radius: 12px;
+
+    background: linear-gradient(
+        145deg,
+        #21122e,
+        #120b1b
+    );
+
+    color: #e879ff;
+    font-size: 20px;
+}
+
+/* ÁREA DE CONTEÚDO */
+
+.content {
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+    padding: 34px 34px 60px;
+}
+
+/* CABEÇALHO DA PÁGINA */
+
+.page-header {
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #e879ff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    text-shadow: 0 0 15px rgba(199, 125, 255, 0.35);
+}
+
+.page-header h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    color: #fff;
+    font-size: 34px;
+    line-height: 1.15;
+
+    text-shadow: 0 0 24px rgba(157, 78, 221, 0.2);
+}
+
+.page-header p {
+    max-width: 650px;
+
+    margin-top: 0;
+
+    color: #aaa1bd;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   TRILHA — MANTÉM OS ELEMENTOS PRÓPRIOS DA PÁGINA
+   ========================================================= */
+
+.class-info {
+    border-color: var(--border);
+}
+
+.class-info span {
+    font-size: 12px;
+}
+
+.class-info strong {
+    font-size: 15px;
+}
+
+.path-card {
+    border-radius: 20px;
+}
+
+.game-title h2 {
+    font-size: 23px;
+    line-height: 1.25;
+}
+
+.game-description {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.progress-label {
+    font-size: 12px;
+}
+
+.path-button {
+    min-height: 46px;
+    font-size: 14px;
+    border-radius: 11px;
+}
+
+/* =========================================================
+   TABLETS — MESMO PADRÃO DE JOGOS.CSS
+   ========================================================= */
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .sidebar {
+        width: 260px;
+        min-width: 260px;
+    }
+
+    .main-content {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
+
+    .topbar {
+        padding: 0 22px;
+    }
+
+    .content {
+        padding: 28px 22px 45px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+}
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 901px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .main-content {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
+
+    .menu-button {
+        display: none;
+    }
+}
+
+/* =========================================================
+   CELULARES — MESMO PADRÃO DE JOGOS.CSS
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .sidebar {
+        width: 260px;
+        min-width: 260px;
+
+        transform: translateX(-100%);
+
+        box-shadow: 8px 0 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+
+        background: rgba(0, 0, 0, 0.72);
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: 64px;
+        padding: 0 15px;
+    }
+
+    .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+        margin-right: 12px;
+    }
+
+    .topbar-title {
+        font-size: 16px;
+    }
+
+    .student-avatar {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    .content {
+        padding: 24px 15px 40px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    .level-card {
+        width: 100%;
+    }
+
+    .class-info {
+        margin-bottom: 28px;
+        padding: 14px;
+    }
+
+    .path-card {
+        padding: 18px;
+        border-radius: 17px;
+    }
+
+    .game-title h2 {
+        font-size: 21px;
+    }
+
+    .game-description {
+        font-size: 14px;
+    }
+
+    .path-button {
+        min-height: 46px;
+    }
+}
+
+/* CELULARES PEQUENOS */
+
+@media (max-width: 450px) {
+    .student-mini div:last-child {
+        display: none;
+    }
+
+    .topbar-title {
+        font-size: 14px;
+    }
+
+    .page-header {
+        display: block;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .eyebrow {
+        font-size: 13px;
+    }
+
+    .path-card {
+        padding: 13px;
+        border-radius: 14px;
+    }
+
+    .game-title h2 {
+        font-size: 20px;
+    }
+
+    .game-description {
+        font-size: 13px;
+    }
+
+    .progress-label {
+        font-size: 11px;
+    }
+}
+
+/* ACESSIBILIDADE */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #e879ff;
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
