@@ -1847,5 +1847,52 @@ button:focus-visible {
     flex-shrink: 0;
 }
 
+/* SIDEBAR COM ROLAGEM EM TODA A LATERAL */
+.sidebar {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mantém o conteúdo da lateral na ordem natural */
+.sidebar-header,
+.sidebar-nav,
+.sidebar-bottom {
+    flex-shrink: 0;
+}
+
+/* A navegação não cria uma rolagem independente */
+.sidebar-nav {
+    overflow: visible;
+    flex: 0 0 auto;
+}
+
+/* Perfil e Sair ficam no final da lateral */
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+/* Barra de rolagem da lateral */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #7c3aed #171126;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #171126;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 10px;
+}
+
 
 
