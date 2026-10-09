@@ -83,6 +83,13 @@ a {
     color: #D66AFF;
     text-shadow: 0 0 12px rgba(214, 106, 255, .45);
 }
+.logo-math {
+    color: #ffffff !important;
+}
+
+.logo-power {
+    color: #ffffff !important;
+}
 
 /* MENU */
 
