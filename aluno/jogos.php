@@ -178,6 +178,7 @@ $jogos = $stmt->fetchAll();
 
                     <span>
                         Nível <?= (int) $aluno['nivel'] ?>
+
                     </span>
 
                 </div>
