@@ -611,19 +611,70 @@ tbody tr:hover {
         background: linear-gradient(180deg, #13091C, #090611);
     }
 
+    
+/* LOGO MATHPLAY NEON */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 24px;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d946ff, #8b2cf5);
+    border: 1px solid #e879ff;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(217, 70, 255, .7),
+                0 0 28px rgba(139, 44, 245, .4);
+}
+
+.logo-text {
+    display: inline-flex;
+    align-items: center;
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .25);
+}
+
+.logo-math {
+    color: #e879ff;
+}
+
+.logo-power {
+    color: #ffffff;
+}
+
+@media (max-width: 450px) {
     .logo {
-        padding: 18px;
+        gap: 9px;
+        padding: 20px 15px;
     }
 
-    .logo .logo-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 26px;
+    .logo-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        font-size: 24px;
     }
 
-    .logo .logo-text {
-        font-size: 23px;
+    .logo-text {
+        font-size: 24px;
     }
+}
+
 
     .menu {
         flex-direction: row;
