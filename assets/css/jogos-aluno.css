@@ -1,97 +1,1232 @@
 /* =========================================================
    MATHPOWER — JOGOS DO ALUNO
-   Tema Gamer Neon | Sidebar com as mesmas medidas do Dashboard
-========================================================= */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-:root{--sidebar-width:260px;--mp-bg:#090711;--mp-panel:#12101f;--mp-purple:#9d4edd;--mp-neon:#c77dff;--mp-text:#f5f0ff;--mp-muted:#aaa1bd;--mp-border:rgba(174,107,255,.24)}
-body{font-family:Inter,Arial,Helvetica,sans-serif;background:radial-gradient(ellipse at 80% 0%,rgba(116,36,190,.17),transparent 38%),radial-gradient(ellipse at 10% 50%,rgba(75,25,130,.12),transparent 40%),var(--mp-bg);color:var(--mp-text);min-height:100vh}
-button,a{font:inherit}button{border:0}a{color:inherit;text-decoration:none}
-.app{min-height:100vh}
+   Tema Gamer Neon
+   ========================================================= */
 
-/* SIDEBAR: mesmas medidas do Dashboard */
-.sidebar{position:fixed;z-index:1000;top:0;left:0;display:flex;flex-direction:column;width:var(--sidebar-width);min-width:var(--sidebar-width);height:100vh;overflow-y:auto;background:radial-gradient(ellipse at 0% 0%,rgba(168,85,247,.16),transparent 48%),linear-gradient(180deg,#120b1c,#0d0914);border-right:1px solid var(--mp-border);box-shadow:8px 0 35px rgba(0,0,0,.2);transition:transform .3s ease}
-.sidebar-header{height:88px;min-height:88px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(192,132,252,.12)}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:23px;font-weight:900;letter-spacing:-.8px;white-space:nowrap}
-.logo-icon{width:44px;height:44px;min-width:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:linear-gradient(135deg,#e879ff,#a855f7 45%,#6d28d9);color:#fff;font-size:20px;font-weight:900;box-shadow:0 0 12px rgba(217,70,255,.65),0 0 28px rgba(168,85,247,.22)}
-.logo-text{color:#fff;font-size:23px;font-weight:900;letter-spacing:-.8px}
-.logo-text span{color:#e879ff;text-shadow:0 0 7px #c026ff,0 0 20px rgba(192,38,255,.75)}
-.sidebar-close{display:none;width:36px;height:36px;flex-shrink:0;align-items:center;justify-content:center;border:1px solid #352542;border-radius:10px;background:#15101f;color:#d0c1e2;font-size:22px;cursor:pointer}
-.sidebar-close:hover{background:#20152e;border-color:#a855f7;color:#fff}
-.sidebar-nav{display:flex;flex-direction:column;gap:8px;padding:24px 14px}
-.nav-item{position:relative;min-height:50px;flex-shrink:0;display:flex;align-items:center;gap:12px;padding:0 14px;border:1px solid transparent;border-radius:13px;color:#d0c1e2;font-size:14px;font-weight:600;transition:background .22s,color .22s,border-color .22s,transform .22s}
-.nav-item:hover{background:linear-gradient(100deg,rgba(168,85,247,.19),rgba(168,85,247,.04));border-color:rgba(217,70,255,.42);color:#fff;transform:translateX(3px)}
-.nav-item.active{background:linear-gradient(105deg,rgba(168,85,247,.3),rgba(126,34,206,.09));border-color:rgba(217,70,255,.48);color:#fff;box-shadow:inset 3px 0 #e879ff,0 0 20px rgba(168,85,247,.15)}
-.nav-icon{width:24px;min-width:24px;display:flex;align-items:center;justify-content:center;font-size:19px;filter:drop-shadow(0 0 4px rgba(192,38,255,.28))}
-.sidebar-bottom{margin-top:auto;flex-shrink:0;padding:18px 16px;border-top:1px solid rgba(192,38,255,.14);background:rgba(7,4,12,.25)}
-.sidebar-user{display:flex;align-items:center;gap:11px;padding:4px 2px 14px}
-.user-avatar,.topbar-avatar{width:43px;height:43px;min-width:43px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(232,121,255,.75);border-radius:50%;background:linear-gradient(135deg,#d946ff,#7026c9);color:#fff;font-size:14px;font-weight:900;box-shadow:0 0 15px rgba(192,38,255,.3)}
-.user-info{min-width:0;display:flex;flex-direction:column;gap:4px}
-.user-info strong{display:block;overflow:hidden;color:#fff;font-size:13px;text-overflow:ellipsis;white-space:nowrap}
-.user-info span{display:block;color:#a697b8;font-size:12px}
-.logout-divider{height:1px;background:#352542;margin:18px 0}
-.logout-link{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:10px;color:#a697b8;font-size:14px;font-weight:600;transition:background .2s,color .2s}
-.logout-link:hover{background:rgba(251,113,133,.1);color:#fda4af}
-.logout-link span{font-size:18px}
-.sidebar-overlay{display:none;position:fixed;z-index:900;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
-.sidebar-overlay.active{display:block}
+/* VARIÁVEIS */
+:root {
+    --sidebar-width: 260px;
+    --mp-bg: #090711;
+    --mp-panel: #12101f;
+    --mp-purple: #9d4edd;
+    --mp-neon: #c77dff;
+    --mp-text: #f5f0ff;
+    --mp-muted: #aaa1bd;
+    --mp-border: rgba(174, 107, 255, 0.24);
+}
 
-/* CONTEÚDO E TOPBAR */
-.main-content{width:calc(100% - var(--sidebar-width));min-height:100vh;margin-left:var(--sidebar-width);background:radial-gradient(ellipse at 90% 0%,rgba(145,0,255,.14),transparent 38%),radial-gradient(ellipse at 15% 45%,rgba(113,34,206,.07),transparent 35%),#09060f}
-.topbar{position:sticky;z-index:500;top:0;height:72px;display:flex;align-items:center;padding:0 30px;background:rgba(10,6,16,.91);border-bottom:1px solid rgba(192,38,255,.24);box-shadow:0 6px 24px rgba(0,0,0,.12);backdrop-filter:blur(18px)}
-.menu-button{display:none;width:42px;height:42px;align-items:center;justify-content:center;border:1px solid rgba(192,132,252,.3);border-radius:12px;background:linear-gradient(145deg,#21122e,#120b1b);color:#e879ff;font-size:20px;cursor:pointer}
-.menu-button:hover{border-color:#d946ff;box-shadow:0 0 18px rgba(192,38,255,.28)}
-.topbar-title{flex:1;color:#fff;font-size:14px;font-weight:800;letter-spacing:.2px}
-.topbar-profile{margin-left:auto}
-.topbar-avatar{width:40px;height:40px;min-width:40px}
-.content{width:100%;max-width:1400px;margin:0 auto;padding:34px 34px 60px}
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* CABEÇALHO DA PÁGINA */
-.page-header{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:30px}
-.page-kicker{display:inline-block;margin-bottom:10px;color:#e879ff;font-size:14px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 15px rgba(199,125,255,.35)}
-.page-header h1{margin-bottom:10px;color:#fff;font-size:34px;line-height:1.15;text-shadow:0 0 24px rgba(157,78,221,.2)}
-.page-header p{max-width:650px;color:#aaa1bd;font-size:15px;line-height:1.6}
-.header-symbol{width:78px;height:78px;min-width:78px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#25153d,#130e20);border:1px solid rgba(199,125,255,.3);border-radius:22px;color:#e879ff;font-size:35px;font-weight:800;box-shadow:0 0 28px rgba(157,78,221,.16)}
+html {
+    scroll-behavior: smooth;
+}
 
-/* JOGOS */
-.games-section{width:100%}
-.games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.game-card{position:relative;overflow:hidden;min-width:0;display:flex;flex-direction:column;padding:22px;background:radial-gradient(ellipse at 100% 0%,rgba(168,85,247,.13),transparent 50%),linear-gradient(145deg,#1a1025,#100a18);border:1px solid rgba(168,85,247,.28);border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.035);transition:transform .25s,border-color .25s,box-shadow .25s,background .25s}
-.game-card::before{content:"";position:absolute;top:0;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,#c77dff,transparent);opacity:.65;pointer-events:none}
-.game-card:hover{transform:translateY(-5px);background:linear-gradient(145deg,#211633,#130e20);border-color:rgba(217,70,255,.7);box-shadow:0 14px 30px rgba(0,0,0,.26),0 0 23px rgba(168,85,247,.17)}
-.game-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
-.game-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(217,70,255,.4);border-radius:16px;background:linear-gradient(145deg,#3b2052,#20112e);color:#fff;font-size:30px;box-shadow:inset 0 0 15px rgba(192,38,255,.1),0 0 22px rgba(157,78,221,.18)}
-.game-caixa .game-icon{background:linear-gradient(135deg,#6528c5,#b45cff)}
-.game-memoria .game-icon{background:linear-gradient(135deg,#3c2691,#8b5cf6)}
-.game-badge{padding:6px 10px;border:1px solid rgba(199,125,255,.2);border-radius:20px;background:rgba(157,78,221,.13);color:#e5caff;font-size:11px;font-weight:800}
-.game-info{flex:1}
-.game-theme{display:inline-block;margin-bottom:7px;color:#e879ff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
-.game-info h2{margin-bottom:9px;color:#fff;font-size:23px;line-height:1.25}
-.game-info p{color:#aaa1bd;font-size:14px;line-height:1.6}
-.game-progress{margin-top:25px}
-.progress-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
-.progress-info span{color:#aaa1bd;font-size:12px;font-weight:600}
-.progress-info strong{color:#e879ff;font-size:13px}
-.progress-bar{width:100%;height:9px;overflow:hidden;background:#292039;border:1px solid rgba(199,125,255,.12);border-radius:20px}
-.progress-fill{height:100%;min-width:0;background:linear-gradient(90deg,#7928ca,#c77dff);border-radius:inherit;box-shadow:0 0 12px rgba(199,125,255,.6);transition:width .3s}
-.play-button{min-height:46px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;padding:0 16px;border:1px solid rgba(220,180,255,.25);border-radius:11px;background:linear-gradient(100deg,#7928ca,#9d4edd);color:#fff;font-size:14px;font-weight:800;box-shadow:0 5px 18px rgba(121,40,202,.23);transition:transform .2s,box-shadow .2s,background .2s}
-.play-button:hover{background:linear-gradient(100deg,#8b35e0,#bd65ff);box-shadow:0 0 25px rgba(157,78,221,.42);transform:translateY(-2px)}
-.play-button span{font-size:18px}
-.empty-state{padding:45px 25px;background:linear-gradient(145deg,#191328,#100d1b);border:1px solid var(--mp-border);border-radius:18px;text-align:center}
-.empty-icon{margin-bottom:12px;font-size:42px}
-.empty-state h2{margin-bottom:7px;color:#fff;font-size:20px}
-.empty-state p{color:#aaa1bd;font-size:14px}
-.tip-card{margin-top:25px;display:flex;align-items:flex-start;gap:15px;padding:18px 20px;background:linear-gradient(100deg,rgba(121,40,202,.17),rgba(157,78,221,.06));border:1px solid var(--mp-border);border-radius:15px}
-.tip-icon{width:42px;height:42px;min-width:42px;display:flex;align-items:center;justify-content:center;background:#20152f;border:1px solid var(--mp-border);border-radius:11px;color:#e879ff;font-size:21px}
-.tip-card strong{display:block;margin-bottom:5px;color:#e879ff;font-size:14px}
-.tip-card p{color:#aaa1bd;font-size:13px;line-height:1.5}
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(
+            ellipse at 80% 0%,
+            rgba(116, 36, 190, 0.17),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 10% 50%,
+            rgba(75, 25, 130, 0.12),
+            transparent 40%
+        ),
+        var(--mp-bg);
+    color: var(--mp-text);
+    min-height: 100vh;
+}
 
-/* TABLET */
-@media (min-width:701px) and (max-width:900px){
- .sidebar{width:260px;min-width:260px}
- .main-content{width:calc(100% - 260px);margin-left:260px}
- .topbar{padding:0 22px}
- .content{padding:28px 22px 45px}
- .page-header h1{font-size:30px}
- .games-grid{grid-template-columns:1fr}
+button,
+a {
+    font-family: inherit;
+}
+
+button {
+    border: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+    min-height: 100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+
+    background:
+        radial-gradient(
+            ellipse at 0% 0%,
+            rgba(168, 85, 247, 0.16),
+            transparent 48%
+        ),
+        linear-gradient(180deg, #120b1c, #0d0914);
+
+    border-right: 1px solid var(--mp-border);
+    box-shadow: 8px 0 35px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.3s ease;
+}
+
+/* CABEÇALHO DA SIDEBAR */
+
+.sidebar-header {
+    height: 88px;
+    min-height: 88px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -0.8px;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #e879ff,
+        #a855f7 45%,
+        #6d28d9
+    );
+
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, 0.65),
+        0 0 28px rgba(168, 85, 247, 0.22);
+}
+
+.logo-text {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -0.8px;
+}
+
+.logo-text span {
+    color: #e879ff;
+
+    text-shadow:
+        0 0 7px #c026ff,
+        0 0 20px rgba(192, 38, 255, 0.75);
+}
+
+/* BOTÃO FECHAR SIDEBAR */
+
+.sidebar-close {
+    display: none;
+
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #352542;
+    border-radius: 10px;
+
+    background: #15101f;
+    color: #d0c1e2;
+
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.sidebar-close:hover {
+    background: #20152e;
+    border-color: #a855f7;
+    color: #fff;
+}
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 24px 14px;
+}
+
+.nav-item {
+    position: relative;
+
+    min-height: 50px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 14px;
+
+    border: 1px solid transparent;
+    border-radius: 13px;
+
+    color: #d0c1e2;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease;
+}
+
+.nav-item:hover {
+    background: linear-gradient(
+        100deg,
+        rgba(168, 85, 247, 0.19),
+        rgba(168, 85, 247, 0.04)
+    );
+
+    border-color: rgba(217, 70, 255, 0.42);
+    color: #fff;
+
+    transform: translateX(3px);
+}
+
+.nav-item.active {
+    background: linear-gradient(
+        105deg,
+        rgba(168, 85, 247, 0.3),
+        rgba(126, 34, 206, 0.09)
+    );
+
+    border-color: rgba(217, 70, 255, 0.48);
+    color: #fff;
+
+    box-shadow:
+        inset 3px 0 #e879ff,
+        0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.nav-icon {
+    width: 24px;
+    min-width: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+
+    filter: drop-shadow(
+        0 0 4px rgba(192, 38, 255, 0.28)
+    );
+}
+
+/* =========================================================
+   PARTE INFERIOR DA SIDEBAR
+   ========================================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+    flex-shrink: 0;
+
+    padding: 18px 16px;
+
+    border-top: 1px solid rgba(192, 38, 255, 0.14);
+    background: rgba(7, 4, 12, 0.25);
+}
+
+/* USUÁRIO */
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 4px 2px 14px;
+}
+
+.user-avatar,
+.topbar-avatar {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(232, 121, 255, 0.75);
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #d946ff,
+        #7026c9
+    );
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+
+    box-shadow: 0 0 15px rgba(192, 38, 255, 0.3);
+}
+
+.user-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-info strong {
+    display: block;
+    overflow: hidden;
+
+    color: #fff;
+    font-size: 13px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-info span {
+    display: block;
+
+    color: #a697b8;
+    font-size: 12px;
+}
+
+/* DIVISOR DO LOGOUT */
+
+.logout-divider {
+    height: 1px;
+
+    background: #352542;
+
+    margin: 18px 0;
+}
+
+/* LOGOUT */
+
+.logout-link {
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    color: #a697b8;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.logout-link:hover {
+    background: rgba(251, 113, 133, 0.1);
+    color: #fda4af;
+}
+
+.logout-link span {
+    font-size: 18px;
+}
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    margin-left: var(--sidebar-width);
+
+    background:
+        radial-gradient(
+            ellipse at 90% 0%,
+            rgba(145, 0, 255, 0.14),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 15% 45%,
+            rgba(113, 34, 206, 0.07),
+            transparent 35%
+        ),
+        #09060f;
+}
+
+/* =========================================================
+   BARRA SUPERIOR
+   ========================================================= */
+
+.topbar {
+    position: sticky;
+    z-index: 500;
+    top: 0;
+
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 30px;
+
+    background: rgba(10, 6, 16, 0.91);
+
+    border-bottom: 1px solid rgba(192, 38, 255, 0.24);
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+
+    backdrop-filter: blur(18px);
+}
+
+.menu-button {
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(192, 132, 252, 0.3);
+    border-radius: 12px;
+
+    background: linear-gradient(
+        145deg,
+        #21122e,
+        #120b1b
+    );
+
+    color: #e879ff;
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    border-color: #d946ff;
+
+    box-shadow: 0 0 18px rgba(192, 38, 255, 0.28);
+}
+
+.topbar-title {
+    flex: 1;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.topbar-profile {
+    margin-left: auto;
+}
+
+.topbar-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+}
+
+/* =========================================================
+   ÁREA DO CONTEÚDO
+   ========================================================= */
+
+.content {
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 34px 34px 60px;
+}
+
+/* =========================================================
+   CABEÇALHO DA PÁGINA
+   ========================================================= */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+}
+
+.page-kicker {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #e879ff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    text-shadow: 0 0 15px rgba(199, 125, 255, 0.35);
+}
+
+.page-header h1 {
+    margin-bottom: 10px;
+
+    color: #fff;
+    font-size: 34px;
+    line-height: 1.15;
+
+    text-shadow: 0 0 24px rgba(157, 78, 221, 0.2);
+}
+
+.page-header p {
+    max-width: 650px;
+
+    color: #aaa1bd;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   SÍMBOLO DO CABEÇALHO
+   ========================================================= */
+
+.header-symbol {
+    width: 78px;
+    height: 78px;
+    min-width: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        145deg,
+        #25153d,
+        #130e20
+    );
+
+    border: 1px solid rgba(199, 125, 255, 0.3);
+    border-radius: 22px;
+
+    color: #e879ff;
+    font-size: 35px;
+    font-weight: 800;
+
+    box-shadow: 0 0 28px rgba(157, 78, 221, 0.16);
+}
+
+/* =========================================================
+   SEÇÃO DE JOGOS
+   ========================================================= */
+
+.games-section {
+    width: 100%;
+}
+
+.games-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+/* =========================================================
+   CARD DO JOGO
+   ========================================================= */
+
+.game-card {
+    position: relative;
+    overflow: hidden;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px;
+
+    background:
+        radial-gradient(
+            ellipse at 100% 0%,
+            rgba(168, 85, 247, 0.13),
+            transparent 50%
+        ),
+        linear-gradient(
+            145deg,
+            #1a1025,
+            #100a18
+        );
+
+    border: 1px solid rgba(168, 85, 247, 0.28);
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.22),
+        inset 0 1px rgba(255, 255, 255, 0.035);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+/* Linha neon no topo do card */
+
+.game-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #c77dff,
+        transparent
+    );
+
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+
+    background: linear-gradient(
+        145deg,
+        #211633,
+        #130e20
+    );
+
+    border-color: rgba(217, 70, 255, 0.7);
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.26),
+        0 0 23px rgba(168, 85, 247, 0.17);
+}
+
+/* =========================================================
+   TOPO DO CARD
+   ========================================================= */
+
+.game-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+/* ÍCONE DO JOGO */
+
+.game-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(217, 70, 255, 0.4);
+    border-radius: 16px;
+
+    background: linear-gradient(
+        145deg,
+        #3b2052,
+        #20112e
+    );
+
+    color: #fff;
+    font-size: 30px;
+
+    box-shadow:
+        inset 0 0 15px rgba(192, 38, 255, 0.1),
+        0 0 22px rgba(157, 78, 221, 0.18);
+}
+
+.game-caixa .game-icon {
+    background: linear-gradient(
+        135deg,
+        #6528c5,
+        #b45cff
+    );
+}
+
+.game-memoria .game-icon {
+    background: linear-gradient(
+        135deg,
+        #3c2691,
+        #8b5cf6
+    );
+}
+
+/* ETIQUETA DO JOGO */
+
+.game-badge {
+    padding: 6px 10px;
+
+    border: 1px solid rgba(199, 125, 255, 0.2);
+    border-radius: 20px;
+
+    background: rgba(157, 78, 221, 0.13);
+
+    color: #e5caff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   INFORMAÇÕES DO JOGO
+   ========================================================= */
+
+.game-info {
+    flex: 1;
+}
+
+.game-theme {
+    display: inline-block;
+
+    margin-bottom: 7px;
+
+    color: #e879ff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.game-info h2 {
+    margin-bottom: 9px;
+
+    color: #fff;
+    font-size: 23px;
+    line-height: 1.25;
+}
+
+.game-info p {
+    color: #aaa1bd;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   PROGRESSO DO JOGO
+   ========================================================= */
+
+.game-progress {
+    margin-top: 25px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+}
+
+.progress-info span {
+    color: #aaa1bd;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.progress-info strong {
+    color: #e879ff;
+    font-size: 13px;
+}
+
+/* BARRA DE PROGRESSO */
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+
+    background: #292039;
+
+    border: 1px solid rgba(199, 125, 255, 0.12);
+    border-radius: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+    min-width: 0;
+
+    background: linear-gradient(
+        90deg,
+        #7928ca,
+        #c77dff
+    );
+
+    border-radius: inherit;
+
+    box-shadow: 0 0 12px rgba(199, 125, 255, 0.6);
+
+    transition: width 0.3s ease;
+}
+
+/* =========================================================
+   BOTÃO JOGAR
+   ========================================================= */
+
+.play-button {
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 20px;
+    padding: 0 16px;
+
+    border: 1px solid rgba(220, 180, 255, 0.25);
+    border-radius: 11px;
+
+    background: linear-gradient(
+        100deg,
+        #7928ca,
+        #9d4edd
+    );
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+
+    box-shadow: 0 5px 18px rgba(121, 40, 202, 0.23);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.play-button:hover {
+    background: linear-gradient(
+        100deg,
+        #8b35e0,
+        #bd65ff
+    );
+
+    box-shadow: 0 0 25px rgba(157, 78, 221, 0.42);
+
+    transform: translateY(-2px);
+}
+
+.play-button span {
+    font-size: 18px;
+}
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.empty-state {
+    padding: 45px 25px;
+
+    background: linear-gradient(
+        145deg,
+        #191328,
+        #100d1b
+    );
+
+    border: 1px solid var(--mp-border);
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    margin-bottom: 12px;
+
+    font-size: 42px;
+}
+
+.empty-state h2 {
+    margin-bottom: 7px;
+
+    color: #fff;
+    font-size: 20px;
+}
+
+.empty-state p {
+    color: #aaa1bd;
+    font-size: 14px;
+}
+
+/* =========================================================
+   CARTÃO DE DICA
+   ========================================================= */
+
+.tip-card {
+    margin-top: 25px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 18px 20px;
+
+    background: linear-gradient(
+        100deg,
+        rgba(121, 40, 202, 0.17),
+        rgba(157, 78, 221, 0.06)
+    );
+
+    border: 1px solid var(--mp-border);
+    border-radius: 15px;
+}
+
+.tip-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #20152f;
+
+    border: 1px solid var(--mp-border);
+    border-radius: 11px;
+
+    color: #e879ff;
+    font-size: 21px;
+}
+
+.tip-card strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #e879ff;
+    font-size: 14px;
+}
+
+.tip-card p {
+    color: #aaa1bd;
+    font-size: 13px;
+    line-height: 1.5;
+}
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .sidebar {
+        width: 260px;
+        min-width: 260px;
+    }
+
+    .main-content {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
+
+    .topbar {
+        padding: 0 22px;
+    }
+
+    .content {
+        padding: 28px 22px 45px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES
+   ========================================================= */
+
+@media (min-width: 901px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-close,
+    .sidebar-overlay {
+        display: none;
+    }
+
+    .main-content {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
+
+    .menu-button {
+        display: none;
+    }
+}
+
+/* =========================================================
+   CELULARES
+   ========================================================= */
+
+@media (max-width: 700px) {
+    /* Menu lateral */
+
+    .sidebar {
+        width: 260px;
+        min-width: 260px;
+
+        transform: translateX(-100%);
+
+        box-shadow: 8px 0 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Conteúdo principal */
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* Barra superior */
+
+    .topbar {
+        height: 64px;
+        padding: 0 15px;
+    }
+
+    .menu-button {
+        display: flex;
+        margin-right: 12px;
+    }
+
+    .topbar-title {
+        font-size: 16px;
+    }
+
+    .topbar-avatar {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    /* Área de conteúdo */
+
+    .content {
+        padding: 24px 15px 40px;
+    }
+
+    /* Cabeçalho da página */
+
+    .page-header {
+        align-items: flex-start;
+        margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    .header-symbol {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+
+        border-radius: 16px;
+
+        font-size: 27px;
+    }
+
+    /* Cards dos jogos */
+
+    .game-card {
+        padding: 18px;
+        border-radius: 17px;
+    }
+
+    .game-info h2 {
+        font-size: 21px;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+   ========================================================= */
+
+@media (max-width: 450px) {
+    .page-header {
+        display: block;
+    }
+
+    .header-symbol {
+        display: none;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .page-kicker {
+        font-size: 13px;
+    }
+
+    .game-card-top {
+        margin-bottom: 17px;
+    }
+
+    .game-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 27px;
+    }
+
+    .game-info h2 {
+        font-size: 20px;
+    }
+
+    .game-info p {
+        font-size: 13px;
+    }
+
+    /* Cartão de dica */
+
+    .tip-card {
+        padding: 16px;
+        gap: 11px;
+    }
+
+    .tip-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+
+        font-size: 19px;
+    }
+}
+
+/* =========================================================
+   ACESSIBILIDADE: FOCO DO TECLADO
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #e879ff;
+    outline-offset: 4px;
+}
+
+/* =========================================================
+   ACESSIBILIDADE: MOVIMENTO REDUZIDO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
