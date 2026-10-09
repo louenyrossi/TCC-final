@@ -63,7 +63,7 @@ $jogos = $stmt->fetchAll();
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Jogos | MathPlay</title>
+    <title>Jogos | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -91,7 +91,8 @@ $jogos = $stmt->fetchAll();
                 </span>
 
                 <span class="logo-text">
-                    Math<span>Play</span>
+                    Math<span>Power
+                    </span>
                 </span>
 
             </a>
@@ -438,7 +439,7 @@ $jogos = $stmt->fetchAll();
                 <div>
 
                     <strong>
-                        Dica MathPlay
+                        Dica MathPower
                     </strong>
 
                     <p>

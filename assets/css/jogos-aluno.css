@@ -1045,3 +1045,299 @@ button {
     }
 
 }
+/* =========================================================
+   MATHPOWER — VISUAL NEON GAMER
+   Cole este bloco no FINAL do CSS
+   ========================================================= */
+
+:root {
+    --mp-bg: #090711;
+    --mp-panel: #12101f;
+    --mp-panel-hover: #1b1530;
+    --mp-purple: #9d4edd;
+    --mp-neon: #c77dff;
+    --mp-text: #f5f0ff;
+    --mp-muted: #aaa1bd;
+    --mp-border: rgba(174, 107, 255, 0.24);
+}
+
+/* Fundo geral */
+body {
+    background:
+        radial-gradient(ellipse at 80% 0%, rgba(116, 36, 190, 0.17), transparent 38%),
+        radial-gradient(ellipse at 10% 50%, rgba(75, 25, 130, 0.12), transparent 40%),
+        var(--mp-bg);
+    color: var(--mp-text);
+}
+
+/* Barra lateral */
+.sidebar {
+    background: linear-gradient(180deg, #100c1c, #0b0913);
+    border-right: 1px solid var(--mp-border);
+    box-shadow: 5px 0 30px rgba(102, 38, 180, 0.08);
+}
+
+.sidebar-header,
+.sidebar-bottom {
+    border-color: var(--mp-border);
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, #7b2ff7, #c77dff);
+    box-shadow: 0 0 18px rgba(157, 78, 221, 0.45);
+}
+
+.logo-text {
+    color: var(--mp-text);
+}
+
+.logo-text span {
+    color: var(--mp-neon);
+    text-shadow: 0 0 12px rgba(199, 125, 255, 0.55);
+}
+
+.nav-item {
+    color: var(--mp-muted);
+    transition: 0.25s ease;
+}
+
+.nav-item:hover {
+    background: rgba(157, 78, 221, 0.12);
+    color: #fff;
+}
+
+.nav-item.active {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(157, 78, 221, 0.3), rgba(157, 78, 221, 0.08));
+    border: 1px solid rgba(199, 125, 255, 0.25);
+    box-shadow: inset 3px 0 var(--mp-neon), 0 0 15px rgba(157, 78, 221, 0.08);
+}
+
+.user-info strong {
+    color: var(--mp-text);
+}
+
+.user-info span {
+    color: var(--mp-muted);
+}
+
+.user-avatar,
+.topbar-avatar {
+    color: #fff;
+    background: linear-gradient(135deg, #5724a8, #9d4edd);
+    box-shadow: 0 0 14px rgba(157, 78, 221, 0.25);
+}
+
+.logout-divider {
+    background: var(--mp-border);
+}
+
+.logout-link {
+    color: var(--mp-muted);
+}
+
+.logout-link:hover {
+    background: rgba(255, 70, 100, 0.1);
+}
+
+/* Barra superior */
+.topbar {
+    background: rgba(13, 10, 22, 0.88);
+    border-bottom: 1px solid var(--mp-border);
+    backdrop-filter: blur(14px);
+}
+
+.topbar-title {
+    color: var(--mp-text);
+}
+
+.menu-button {
+    background: #211632;
+    color: var(--mp-neon);
+}
+
+/* Título da página */
+.page-kicker {
+    color: var(--mp-neon);
+    text-shadow: 0 0 15px rgba(199, 125, 255, 0.35);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.page-header h1 {
+    color: #fff;
+    text-shadow: 0 0 24px rgba(157, 78, 221, 0.2);
+}
+
+.page-header p {
+    color: var(--mp-muted);
+}
+
+.header-symbol {
+    color: var(--mp-neon);
+    background: linear-gradient(145deg, #25153d, #130e20);
+    border: 1px solid rgba(199, 125, 255, 0.3);
+    box-shadow: 0 0 28px rgba(157, 78, 221, 0.16);
+}
+
+/* Cards dos jogos */
+.game-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #191328, #100d1b 75%);
+    border: 1px solid var(--mp-border);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, border-color 0.25s ease,
+                box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--mp-neon), transparent);
+    opacity: 0.65;
+}
+
+.game-card:hover {
+    transform: translateY(-6px);
+    background: linear-gradient(145deg, #211633, #130e20);
+    border-color: rgba(199, 125, 255, 0.65);
+    box-shadow: 0 15px 38px rgba(0, 0, 0, 0.3),
+                0 0 25px rgba(157, 78, 221, 0.14);
+}
+
+/* Ícones dos jogos */
+.game-icon {
+    color: #fff;
+    background: linear-gradient(135deg, #5724a8, #9d4edd);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 22px rgba(157, 78, 221, 0.25);
+}
+
+.game-caixa .game-icon {
+    background: linear-gradient(135deg, #6528c5, #b45cff);
+}
+
+.game-memoria .game-icon {
+    background: linear-gradient(135deg, #3c2691, #8b5cf6);
+}
+
+.game-badge {
+    color: #e5caff;
+    background: rgba(157, 78, 221, 0.13);
+    border: 1px solid rgba(199, 125, 255, 0.2);
+}
+
+.game-theme {
+    color: var(--mp-neon);
+    letter-spacing: 1px;
+}
+
+.game-info h2 {
+    color: #fff;
+}
+
+.game-info p {
+    color: var(--mp-muted);
+}
+
+/* Barra de progresso */
+.progress-info span {
+    color: var(--mp-muted);
+}
+
+.progress-info strong {
+    color: var(--mp-neon);
+}
+
+.progress-bar {
+    background: #292039;
+    border: 1px solid rgba(199, 125, 255, 0.12);
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #7928ca, #c77dff);
+    box-shadow: 0 0 12px rgba(199, 125, 255, 0.6);
+}
+
+/* Botão jogar */
+.play-button {
+    color: #fff;
+    background: linear-gradient(100deg, #7928ca, #9d4edd);
+    border: 1px solid rgba(220, 180, 255, 0.25);
+    box-shadow: 0 5px 18px rgba(121, 40, 202, 0.23);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.play-button:hover {
+    color: #fff;
+    background: linear-gradient(100deg, #8b35e0, #bd65ff);
+    box-shadow: 0 0 25px rgba(157, 78, 221, 0.42);
+    transform: translateY(-2px);
+}
+
+/* Estado vazio */
+.empty-state {
+    background: linear-gradient(145deg, #191328, #100d1b);
+    border-color: var(--mp-border);
+}
+
+.empty-state h2 {
+    color: #fff;
+}
+
+.empty-state p {
+    color: var(--mp-muted);
+}
+
+/* Cartão de dica */
+.tip-card {
+    background: linear-gradient(100deg, rgba(121, 40, 202, 0.17), rgba(157, 78, 221, 0.06));
+    border-color: var(--mp-border);
+}
+
+.tip-icon {
+    color: var(--mp-neon);
+    background: #20152f;
+    border: 1px solid var(--mp-border);
+}
+
+.tip-card strong {
+    color: var(--mp-neon);
+}
+
+.tip-card p {
+    color: var(--mp-muted);
+}
+
+/* Ajustes para celular */
+@media (max-width: 700px) {
+    .sidebar {
+        background: #100c1c;
+        box-shadow: 8px 0 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-overlay {
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(3px);
+    }
+}
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+    .game-card,
+    .play-button,
+    .nav-item {
+        transition: none;
+    }
+
+    .game-card:hover,
+    .play-button:hover {
+        transform: none;
+    }
+}
