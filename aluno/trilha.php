@@ -284,7 +284,7 @@ function linkJogo(int $jogoId): string
                 href="trilha.php"
                 class="nav-item active"
             >
-                
+                <span>📚</span>
                 <span>Trilha</span>
             </a>
 
