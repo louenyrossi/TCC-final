@@ -851,4 +851,147 @@ a {
         transform: none;
     }
 }
+/* ===== EFEITO NEON NOS CONTAINERS ===== */
+
+/* Container principal da turma */
+.class-info {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        rgba(35, 18, 51, 0.98),
+        rgba(15, 10, 27, 0.98)
+    );
+    border: 1px solid rgba(190, 70, 255, 0.65);
+    box-shadow:
+        0 0 8px rgba(190, 70, 255, 0.25),
+        0 0 22px rgba(157, 78, 221, 0.18),
+        inset 0 0 18px rgba(190, 70, 255, 0.07);
+    transition: .3s ease;
+}
+
+.class-info:hover {
+    border-color: #D966FF;
+    box-shadow:
+        0 0 12px rgba(217, 102, 255, 0.45),
+        0 0 30px rgba(157, 78, 221, 0.25),
+        inset 0 0 22px rgba(190, 70, 255, 0.1);
+}
+
+/* Container "Sua trilha ainda está sendo preparada" */
+.empty-state {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(111, 35, 157, 0.18),
+            transparent 72%
+        ),
+        linear-gradient(145deg, #191128, #0D0917);
+    border: 1px solid rgba(190, 70, 255, 0.7);
+    box-shadow:
+        0 0 10px rgba(190, 70, 255, 0.3),
+        0 0 28px rgba(157, 78, 221, 0.18),
+        inset 0 0 25px rgba(157, 78, 221, 0.08);
+    transition: .3s ease;
+}
+
+/* Linha neon no topo do container */
+.empty-state::before,
+.class-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #B84DFF,
+        #F0B3FF,
+        #B84DFF,
+        transparent
+    );
+    box-shadow: 0 0 10px #C653FF;
+    pointer-events: none;
+}
+
+.empty-state:hover {
+    border-color: #DE83FF;
+    box-shadow:
+        0 0 14px rgba(190, 70, 255, 0.45),
+        0 0 38px rgba(157, 78, 221, 0.28),
+        inset 0 0 30px rgba(157, 78, 221, 0.12);
+}
+
+/* Ícone do container */
+.empty-icon {
+    filter: drop-shadow(0 0 10px rgba(213, 95, 255, 0.6));
+}
+
+/* Título e descrição */
+.empty-state h2 {
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(190, 70, 255, 0.3);
+}
+
+.empty-state p {
+    color: #D0BDE8;
+}
+
+/* Container do nível atual */
+.level-card {
+    border-color: rgba(190, 70, 255, 0.5);
+    box-shadow:
+        0 0 10px rgba(157, 78, 221, 0.2),
+        inset 0 0 18px rgba(157, 78, 221, 0.07);
+}
+
+.level-card strong {
+    text-shadow:
+        0 0 8px rgba(223, 98, 255, 0.7),
+        0 0 20px rgba(223, 98, 255, 0.3);
+}
+
+/* Cards dos jogos, quando aparecerem na trilha */
+.path-card {
+    border-color: rgba(190, 70, 255, 0.45);
+    box-shadow:
+        0 0 8px rgba(157, 78, 221, 0.16),
+        0 0 20px rgba(157, 78, 221, 0.1),
+        inset 0 0 18px rgba(157, 78, 221, 0.05);
+    transition: .3s ease;
+}
+
+.path-card:hover {
+    transform: translateY(-3px);
+    border-color: #D966FF;
+    box-shadow:
+        0 0 12px rgba(190, 70, 255, 0.4),
+        0 0 28px rgba(157, 78, 221, 0.22),
+        inset 0 0 22px rgba(157, 78, 221, 0.08);
+}
+
+/* Brilho dos ícones */
+.class-icon,
+.game-icon {
+    box-shadow:
+        0 0 10px rgba(190, 70, 255, 0.35),
+        inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+    .class-info,
+    .empty-state,
+    .path-card {
+        transition: none;
+    }
+
+    .path-card:hover {
+        transform: none;
+    }
+}
 
