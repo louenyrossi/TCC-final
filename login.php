@@ -83,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <meta
         name="description"
-        content="Entre na plataforma MathPlay"
+        content="Entre na plataforma MathPower"
     >
 
-    <title>Login | MathPlay</title>
+    <title>Login | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div>
 
                     <h1>
-                        Math<span>Play</span>
+                        Math<span>Power</span>
                     </h1>
 
                     <p>
@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="login-footer">
 
                 <span>
-                    MathPlay
+                    MathPower
                 </span>
 
                 <span>
@@ -284,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="lateral-content">
 
                 <span class="lateral-badge">
-                    🎮 MathPlay
+                    🎮 MathPower
                 </span>
 
                 <h2>

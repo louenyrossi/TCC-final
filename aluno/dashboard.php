@@ -182,7 +182,7 @@ $porcentagemXp = min(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Dashboard | MathPlay</title>
+    <title>Dashboard | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -210,7 +210,7 @@ $porcentagemXp = min(
                 </span>
 
                 <span class="logo-text">
-                    Math<span>Play</span>
+                    Math<span>Power</span>
                 </span>
 
             </a>
