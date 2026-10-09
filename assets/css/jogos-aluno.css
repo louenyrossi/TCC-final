@@ -112,14 +112,19 @@ button {
 }
 
 .logo-text {
-    color: #292631;
-
-    font-size: 20px;
-    font-weight: 800;
+    color: #FFFFFF;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: -1.2px;
+    text-shadow: 0 0 10px rgba(190, 70, 255, 0.45);
 }
 
 .logo-text span {
-    color: #7C3AED;
+    color: #D946FF;
+    text-shadow:
+        0 0 5px #D946FF,
+        0 0 12px rgba(217, 70, 255, 0.85),
+        0 0 22px rgba(157, 78, 221, 0.65);
 }
 
 
