@@ -1,0 +1,84 @@
+
+:root,
+:root[data-tema="claro"] {
+    color-scheme: light;
+
+    --fundo: #F7F7FA;
+    --superficie: #FFFFFF;
+    --superficie-secundaria: #F0EEF4;
+    --texto: #18151F;
+    --texto-secundario: #77717F;
+    --borda: #E2DEE8;
+
+    --roxo: #7C3AED;
+}
+
+:root[data-tema="escuro"] {
+    color-scheme: dark;
+
+    --fundo: #0B0B0E;
+    --superficie: #151519;
+    --superficie-secundaria: #202026;
+    --texto: #F7F7FA;
+    --texto-secundario: #B2ADBB;
+    --borda: #33313B;
+
+    --roxo: #A78BFA;
+}
+
+html,
+body {
+    background-color: var(--fundo);
+    color: var(--texto);
+}
+
+.botao-tema {
+    width: 100%;
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+
+    background: var(--superficie);
+    color: var(--texto);
+
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.botao-tema:hover {
+    background: var(--superficie-secundaria);
+}
+
+:root[data-tema="escuro"] input,
+:root[data-tema="escuro"] select,
+:root[data-tema="escuro"] textarea {
+    color-scheme: dark;
+}
+
+:root[data-tema="escuro"] .sidebar-professor {
+    background-color: var(--superficie);
+    color: var(--texto);
+    border-color: var(--borda);
+}
+
+:root[data-tema="escuro"] .sidebar-professor .sidebar-link {
+    color: var(--texto-secundario);
+}
+
+:root[data-tema="escuro"] .sidebar-professor .sidebar-link:hover,
+:root[data-tema="escuro"] .sidebar-professor .sidebar-link.ativo {
+    background-color: var(--superficie-secundaria);
+    color: var(--texto);
+}
+
+:root[data-tema="escuro"] .sidebar-divisor {
+    background-color: var(--borda);
+}
