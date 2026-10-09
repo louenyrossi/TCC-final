@@ -184,9 +184,13 @@ $progressoXP = $xpNoNivel;
 
     <aside class="sidebar">
 
-        <div class="logo">
-            <span>Math</span>Play
-        </div>
+        
+<div class="logo">
+    <span class="logo-icon">M</span>
+    <div class="logo-text">
+        <span class="logo-math">Math</span><span class="logo-power">Power</span>
+    </div>
+</div>
 
         <nav class="menu">
 
