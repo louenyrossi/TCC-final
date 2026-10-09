@@ -321,7 +321,7 @@ function linkJogo(int $jogoId): string
                 href="../logout.php"
                 class="logout-link"
             >
-                <span>🚪</span>
+                <span>↪</span>
                 <span>Sair</span>
             </a>
 

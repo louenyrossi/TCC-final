@@ -711,3 +711,144 @@ a {
         font-size: 22px;
     }
 }
+
+/* NEON NOS CONTAINERS DA TRILHA */
+
+.path-card {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at top left,
+            rgba(174, 60, 255, 0.13),
+            transparent 65%
+        ),
+        linear-gradient(145deg, #191128, #0D0917);
+
+    border: 1px solid rgba(190, 80, 255, 0.35);
+
+    box-shadow:
+        0 0 8px rgba(157, 78, 221, 0.12),
+        0 0 20px rgba(157, 78, 221, 0.08),
+        inset 0 0 15px rgba(157, 78, 221, 0.04);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Reflexo neon na parte superior */
+
+.path-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #D86BFF,
+        #FFFFFF,
+        #A64DFF,
+        transparent
+    );
+
+    opacity: 0.7;
+    box-shadow: 0 0 10px #B84DFF;
+}
+
+/* Brilho ao passar o mouse */
+
+.path-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(218, 100, 255, 0.85);
+
+    box-shadow:
+        0 0 10px rgba(190, 70, 255, 0.3),
+        0 0 28px rgba(157, 78, 221, 0.2),
+        inset 0 0 20px rgba(157, 78, 221, 0.08);
+}
+
+/* Container da etapa atual */
+
+.path-item.current .path-card {
+    border-color: #C653FF;
+
+    box-shadow:
+        0 0 8px rgba(198, 83, 255, 0.4),
+        0 0 24px rgba(157, 78, 221, 0.2),
+        inset 0 0 18px rgba(157, 78, 221, 0.07);
+}
+
+/* Ícones com brilho neon */
+
+.game-icon,
+.class-icon {
+    border: 1px solid rgba(226, 156, 255, 0.45);
+
+    box-shadow:
+        0 0 8px rgba(184, 77, 255, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Container das informações da turma */
+
+.class-info {
+    box-shadow:
+        0 0 12px rgba(157, 78, 221, 0.12),
+        inset 0 0 18px rgba(157, 78, 221, 0.04);
+}
+
+/* Container do nível */
+
+.level-card {
+    box-shadow:
+        0 0 12px rgba(157, 78, 221, 0.15),
+        inset 0 0 15px rgba(157, 78, 221, 0.05);
+}
+
+/* Barra de progresso neon */
+
+.progress-fill {
+    box-shadow:
+        0 0 8px #B84DFF,
+        0 0 16px rgba(223, 98, 255, 0.65);
+}
+
+/* Botões com brilho */
+
+.path-button {
+    box-shadow:
+        0 0 8px rgba(174, 60, 255, 0.3),
+        0 0 18px rgba(121, 40, 202, 0.2);
+}
+
+.path-button:hover {
+    box-shadow:
+        0 0 12px rgba(218, 100, 255, 0.65),
+        0 0 28px rgba(157, 78, 221, 0.4);
+}
+
+/* Estado vazio */
+
+.empty-state {
+    border-color: rgba(190, 80, 255, 0.4);
+
+    box-shadow:
+        0 0 15px rgba(157, 78, 221, 0.15),
+        inset 0 0 25px rgba(157, 78, 221, 0.05);
+}
+
+/* Reduz os efeitos em telas pequenas */
+
+@media (max-width: 450px) {
+    .path-card:hover {
+        transform: none;
+    }
+}
+
