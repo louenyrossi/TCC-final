@@ -95,38 +95,33 @@ button {
 }
 
 .logo-icon {
-    width: 66px;
-    height: 66px;
+    width: 40px;
+    height: 40px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #d76aff, #8b2cf5);
-    border: 1px solid #e6a5ff;
-    color: #fff;
-    font-size: 36px;
-    font-weight: 900;
-    box-shadow:
-        0 0 12px rgba(217, 70, 255, 0.8),
-        0 0 28px rgba(157, 78, 221, 0.55);
+
+    border-radius: 11px;
+
+    background: #7C3AED;
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
 }
 
 .logo-text {
-    color: #fff;
-    font-family: "Trebuchet MS", Arial, sans-serif;
-    font-size: 34px;
-    font-weight: 900;
-    letter-spacing: -1.8px;
-    text-shadow: 0 0 10px rgba(190, 70, 255, 0.3);
+    color: #292631;
+
+    font-size: 20px;
+    font-weight: 800;
 }
 
 .logo-text span {
-    color: #e05aff;
-    text-shadow:
-        0 0 6px #d946ff,
-        0 0 14px rgba(217, 70, 255, 0.9),
-        0 0 25px rgba(157, 78, 221, 0.65);
+    color: #7C3AED;
 }
+
 
 /* =========================================================
    BOTÃO FECHAR SIDEBAR
