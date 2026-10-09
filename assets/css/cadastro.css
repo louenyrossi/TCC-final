@@ -1521,3 +1521,133 @@ body {
         }
     }
 }
+/* ============================================
+   MATHPOWER — SÍMBOLOS MATEMÁTICOS FLUTUANTES
+   Apenas no painel direito do cadastro
+   ============================================ */
+
+.cadastro-lateral {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 80% 18%,
+            rgba(147, 51, 234, 0.24),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(124, 58, 237, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #160B24,
+            #0D0715 65%,
+            #09060F
+        );
+}
+
+/* Mantém o conteúdo do painel acima dos efeitos */
+
+.cadastro-lateral > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Brilhos decorativos ao fundo */
+
+.cadastro-lateral::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(168, 85, 247, 0.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 25% 65%,
+            rgba(124, 58, 237, 0.12),
+            transparent 30%
+        );
+}
+
+/* Camada de símbolos matemáticos */
+
+.cadastro-lateral::after {
+    content: "+     ×       ÷       =       √       π       ∑       %";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(192, 132, 252, 0.12);
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    font-weight: 800;
+    line-height: 2.5;
+
+    letter-spacing: 1.8rem;
+    overflow-wrap: anywhere;
+    text-align: center;
+
+    text-shadow:
+        0 0 12px rgba(168, 85, 247, 0.18),
+        0 0 30px rgba(124, 58, 237, 0.12);
+
+    transform: rotate(-12deg) scale(1.1);
+
+    animation:
+        simbolos-flutuantes 18s ease-in-out infinite alternate;
+}
+
+/* Animação suave */
+
+@keyframes simbolos-flutuantes {
+    0% {
+        transform: translate3d(-10px, 12px, 0) rotate(-12deg) scale(1.05);
+    }
+
+    50% {
+        transform: translate3d(12px, -14px, 0) rotate(-7deg) scale(1.1);
+    }
+
+    100% {
+        transform: translate3d(-5px, -24px, 0) rotate(-15deg) scale(1.06);
+    }
+}
+
+/* O texto continua legível */
+
+.lateral-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Celulares: símbolos mais discretos */
+
+@media (max-width: 699px) {
+    .cadastro-lateral::after {
+        font-size: 2rem;
+        letter-spacing: 0.7rem;
+        color: rgba(192, 132, 252, 0.08);
+    }
+}
+
+/* Respeita quem prefere menos movimento */
+
+@media (prefers-reduced-motion: reduce) {
+    .cadastro-lateral::after {
+        animation: none;
+    }
+}
