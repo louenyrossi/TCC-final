@@ -130,168 +130,152 @@ function iconeConquista(string $nome): string
 </head>
 
 <body>
-<div class="layout">
 
-    <!-- MENU LATERAL -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <span class="logo-icone">🧮</span>
-            <span>Math<span class="logo-destaque">Power</span></span>
-        </div>
+<div class="pagina">
 
-        <div class="sidebar-menu">
-            <p class="menu-titulo">MENU PRINCIPAL</p>
+    <!-- CABEÇALHO -->
 
-            <a href="dashboard.php" class="menu-item">
-                <span>🏠</span>
-                <span>Dashboard</span>
-            </a>
+    
+<header class="cabecalho">
+    <div class="cabecalho-conteudo">
+        <h2 class="logo">MathPower 🧮</h2>
 
-            <a href="trilha.php" class="menu-item">
-                <span>🗺️</span>
-                <span>Minha Trilha</span>
-            </a>
+        <a href="dashboard.php" class="voltar">
+            ← Voltar
+        </a>
+    </div>
+</header>
 
-            <a href="jogos.php" class="menu-item">
-                <span>🎮</span>
-                <span>Jogos</span>
-            </a>
 
-            <a href="conquistas.php" class="menu-item ativo">
-                <span>🏆</span>
-                <span>Conquistas</span>
-            </a>
-        </div>
+    <!-- CONTEÚDO -->
 
-        <div class="sidebar-bottom">
-            <div class="sidebar-user">
-                <div class="user-avatar">
-                    <?= htmlspecialchars(
-                        mb_strtoupper(
-                            mb_substr($aluno['nome'], 0, 1)
-                        )
-                    ) ?>
-                </div>
+    <main class="conteudo">
 
-                <div class="user-info">
-                    <strong><?= htmlspecialchars($aluno['nome']) ?></strong>
-                    <span>Nível <?= (int) $aluno['nivel'] ?></span>
-                </div>
-            </div>
+        <section class="titulo-area">
 
-            <a href="../logout.php" class="sair">
-                ↪ Sair da conta
-            </a>
-        </div>
-    </aside>
+            <h1>
+                Minhas conquistas 🏆
+            </h1>
 
-    <!-- ÁREA PRINCIPAL -->
-    <main class="main-content">
+            <p>
+                Continue jogando e aprendendo para desbloquear novas medalhas!
+            </p>
 
-        <header class="topbar">
-            <div>
-                <span class="topbar-subtitulo">SUA JORNADA</span>
-                <h1>Minhas conquistas 🏆</h1>
-                <p>Veja suas medalhas e acompanhe sua evolução!</p>
-            </div>
-
-            <a href="dashboard.php" class="botao-voltar">
-                ← Dashboard
-            </a>
-        </header>
-
-        <!-- BOAS-VINDAS -->
-        <section class="boas-vindas">
-            <div>
-                <span class="boas-tag">⭐ Continue evoluindo</span>
-                <h2>Você está construindo sua jornada!</h2>
-                <p>
-                    Cada desafio concluído é uma oportunidade
-                    de aprender e conquistar novas medalhas.
-                </p>
-            </div>
-
-            <div class="boas-icone">🏆</div>
         </section>
 
-        <!-- ESTATÍSTICAS -->
+
+        <!-- RESUMO -->
+
         <section class="resumo">
 
-            <article class="resumo-card card-azul">
-                <div class="resumo-icone">🥇</div>
-                <span>Conquistas desbloqueadas</span>
-                <strong><?= $desbloqueadas ?></strong>
-                <small>Medalhas conquistadas</small>
-            </article>
+            <div class="resumo-card">
 
-            <article class="resumo-card card-roxo">
-                <div class="resumo-icone">🏆</div>
-                <span>Total de conquistas</span>
-                <strong><?= $totalConquistas ?></strong>
-                <small>Disponíveis na plataforma</small>
-            </article>
+                <span>
+                    Conquistas desbloqueadas
+                </span>
 
-            <article class="resumo-card card-verde">
-                <div class="resumo-icone">📈</div>
-                <span>Progresso geral</span>
-                <strong><?= $porcentagem ?>%</strong>
-                <small>Continue avançando!</small>
-            </article>
+                <strong>
+                    <?= $desbloqueadas ?>
+                </strong>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span>
+                    Total de conquistas
+                </span>
+
+                <strong>
+                    <?= $totalConquistas ?>
+                </strong>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span>
+                    Progresso
+                </span>
+
+                <strong>
+                    <?= $porcentagem ?>%
+                </strong>
+
+            </div>
 
         </section>
 
-        <!-- BARRA DE PROGRESSO -->
-        <section class="progresso-card">
-            <div class="progresso-topo">
-                <div>
-                    <h2>Seu progresso</h2>
-                    <p>Você está cada vez mais perto da próxima conquista.</p>
-                </div>
 
-                <strong><?= $desbloqueadas ?>/<?= $totalConquistas ?></strong>
+        <!-- PROGRESSO -->
+
+        <section class="progresso-card">
+
+            <div class="progresso-topo">
+
+                <strong>
+                    Progresso das conquistas
+                </strong>
+
+                <span>
+                    <?= $desbloqueadas ?>/<?= $totalConquistas ?>
+                </span>
+
             </div>
 
-            <div
-                class="barra"
-                role="progressbar"
-                aria-valuenow="<?= $porcentagem ?>"
-                aria-valuemin="0"
-                aria-valuemax="100"
-            >
+            <div class="barra">
+
                 <div
                     class="barra-preenchida"
-                    style="width: <?= $porcentagem ?>%"
+                    style="width: <?= $porcentagem ?>%;"
                 ></div>
+
             </div>
+
         </section>
 
-        <!-- LISTA DE CONQUISTAS -->
-        <section class="secao-conquistas">
-            <div class="secao-titulo">
-                <div>
-                    <h2>Galeria de conquistas</h2>
-                    <p>Suas medalhas e os próximos objetivos.</p>
-                </div>
 
-                <span class="contador">
-                    <?= $desbloqueadas ?> de <?= $totalConquistas ?>
-                </span>
+        <!-- LISTA DE CONQUISTAS -->
+
+        <section>
+
+            <div class="secao-titulo">
+
+                <h2>
+                    Todas as conquistas
+                </h2>
+
+                <p>
+                    Algumas conquistas serão desbloqueadas conforme você evolui.
+                </p>
+
             </div>
+
 
             <?php if (empty($conquistas)): ?>
 
                 <div class="vazio">
-                    <div class="vazio-icone">🏆</div>
-                    <h3>Nenhuma conquista cadastrada</h3>
+
+                    <div class="vazio-icone">
+                        🏆
+                    </div>
+
+                    <h3>
+                        Nenhuma conquista cadastrada
+                    </h3>
+
                     <p>
-                        As conquistas aparecerão aqui quando
-                        forem cadastradas na plataforma.
+                        As conquistas aparecerão aqui quando forem cadastradas.
                     </p>
+
                 </div>
 
             <?php else: ?>
 
                 <div class="conquistas-grid">
+
                     <?php foreach ($conquistas as $conquista): ?>
 
                         <?php
@@ -300,55 +284,85 @@ function iconeConquista(string $nome): string
                         );
                         ?>
 
-                        <article class="conquista <?= $desbloqueada ? 'conquista-liberada' : 'bloqueada' ?>">
+                        <article
+                            class="conquista <?= !$desbloqueada ? 'bloqueada' : '' ?>"
+                        >
 
                             <div class="conquista-icone">
-                                <?= iconeConquista($conquista['nome']) ?>
+
+                                <?= iconeConquista(
+                                    $conquista['nome']
+                                ) ?>
+
                             </div>
 
+
                             <div class="conquista-info">
-                                <div class="conquista-titulo">
-                                    <h3>
-                                        <?= htmlspecialchars($conquista['nome']) ?>
-                                    </h3>
-                                    <span class="status <?= $desbloqueada ? 'status-desbloqueada' : 'status-bloqueada' ?>">
-                                        <?= $desbloqueada ? '✓ Conquistada' : '🔒 Bloqueada' ?>
-                                    </span>
-                                </div>
+
+                                <h3>
+
+                                    <?= htmlspecialchars(
+                                        $conquista['nome']
+                                    ) ?>
+
+                                </h3>
+
 
                                 <p>
-                                    <?= htmlspecialchars($conquista['descricao']) ?>
+
+                                    <?= htmlspecialchars(
+                                        $conquista['descricao']
+                                    ) ?>
+
                                 </p>
 
+
                                 <?php if ($desbloqueada): ?>
-                                    <span class="data">
-                                        Conquistada em
-                                        <?= date(
-                                            'd/m/Y',
-                                            strtotime($conquista['data_desbloqueio'])
-                                        ) ?>
+
+                                    <span class="status status-desbloqueada">
+                                        ✓ Desbloqueada
                                     </span>
+
+                                    <?php if (!empty($conquista['data_desbloqueio'])): ?>
+
+                                        <span class="data">
+
+                                            Desbloqueada em
+                                            <?= date(
+                                                'd/m/Y',
+                                                strtotime(
+                                                    $conquista['data_desbloqueio']
+                                                )
+                                            ) ?>
+
+                                        </span>
+
+                                    <?php endif; ?>
+
                                 <?php else: ?>
-                                    <span class="data">
-                                        Continue jogando para desbloquear
+
+                                    <span class="status status-bloqueada">
+                                        🔒 Bloqueada
                                     </span>
+
                                 <?php endif; ?>
+
                             </div>
 
                         </article>
 
                     <?php endforeach; ?>
+
                 </div>
 
             <?php endif; ?>
+
         </section>
 
-        <footer class="rodape">
-            MathPower · Aprender também é conquistar! ✨
-        </footer>
-
     </main>
+
 </div>
+
 </body>
 
 </html>
