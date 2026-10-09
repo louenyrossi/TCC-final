@@ -268,7 +268,7 @@ function linkJogo(int $jogoId): string
                 href="dashboard.php"
                 class="nav-item"
             >
-                <span>🏠</span>
+                <span>⌂</span>
                 <span>Início</span>
             </a>
 

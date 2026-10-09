@@ -1341,3 +1341,114 @@ body {
         transform: none;
     }
 }
+/* ===== SIDEBAR NEON MATHPOWER — PÁGINA JOGOS ===== */
+
+.sidebar {
+    background: linear-gradient(180deg, #13091c 0%, #090611 100%);
+    border-right: 1px solid rgba(210, 70, 255, 0.35);
+    box-shadow: 5px 0 25px rgba(173, 45, 255, 0.08);
+}
+
+.sidebar-header {
+    border-bottom: 1px solid rgba(210, 70, 255, 0.25);
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, #e879ff, #922bff);
+    border: 1px solid #e7a1ff;
+    border-radius: 19px;
+    box-shadow: 0 0 18px rgba(209, 80, 255, 0.65);
+    color: #fff;
+}
+
+.logo-text {
+    color: #fff;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1.2px;
+    text-shadow: 0 0 12px rgba(194, 65, 255, 0.35);
+}
+
+.logo-text span {
+    color: #df62ff;
+    text-shadow: 0 0 12px rgba(223, 98, 255, 0.8);
+}
+
+.sidebar-nav {
+    padding: 30px 8px;
+    gap: 12px;
+}
+
+.nav-item {
+    min-height: 78px;
+    padding: 0 24px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color: #c8b8d5;
+    font-size: 20px;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.nav-item:hover {
+    color: #fff;
+    background: rgba(166, 57, 220, 0.12);
+    border-color: rgba(207, 92, 255, 0.3);
+}
+
+.nav-item.active {
+    color: #fff;
+    background: linear-gradient(
+        100deg,
+        rgba(146, 43, 190, 0.42),
+        rgba(76, 21, 99, 0.22)
+    );
+    border: 1px solid rgba(218, 83, 255, 0.7);
+    box-shadow:
+        inset 4px 0 0 #e56aff,
+        0 0 18px rgba(189, 55, 255, 0.12);
+}
+
+.nav-icon {
+    width: 26px;
+    font-size: 25px;
+    filter: drop-shadow(0 0 7px rgba(198, 88, 255, 0.35));
+}
+
+.sidebar-bottom {
+    border-top: 1px solid rgba(210, 70, 255, 0.25);
+}
+
+.user-info strong {
+    color: #fff;
+}
+
+.user-info span {
+    color: #b9a6c8;
+}
+
+.user-avatar {
+    background: linear-gradient(135deg, #48206c, #8e35c9);
+    color: #fff;
+}
+
+.logout-divider {
+    background: rgba(210, 70, 255, 0.2);
+}
+
+.logout-link {
+    color: #c8b8d5;
+}
+
+.logout-link:hover {
+    background: rgba(255, 70, 100, 0.12);
+}
+
+/* Botão de menu no celular */
+.menu-button,
+.sidebar-close {
+    background: #21122e;
+    color: #e879ff;
+    border: 1px solid rgba(210, 70, 255, 0.3);
+}
