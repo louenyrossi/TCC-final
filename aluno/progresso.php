@@ -171,7 +171,7 @@ $progressoXP = $xpNoNivel;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meu Progresso - MathPlay</title>
+    <title>Meu Progresso - MathPower</title>
 
     <link rel="stylesheet" href="../assets/css/progresso-aluno.css">
 </head>
@@ -195,7 +195,7 @@ $progressoXP = $xpNoNivel;
         <nav class="menu">
 
             <a href="dashboard.php">
-                🏠
+                ⌂
                 <span>Início</span>
             </a>
 
@@ -244,15 +244,26 @@ $progressoXP = $xpNoNivel;
 
         <header class="topbar">
 
-            <div>
-                <h1>Meu progresso</h1>
-                <p>Acompanhe sua evolução no MathPlay.</p>
-            </div>
-
             <div class="usuario-topo">
-                <strong><?= htmlspecialchars($usuario['nome']) ?></strong>
-                <span><?= htmlspecialchars($turmaNome) ?></span>
-            </div>
+    <div class="perfil-avatar">
+        <?= htmlspecialchars(
+            mb_strtoupper(
+                mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
+                'UTF-8'
+            )
+        ) ?>
+    </div>
+
+    <div class="perfil-info">
+        <strong>
+            <?= htmlspecialchars($usuario['nome']) ?>
+        </strong>
+
+        <span>
+            Nível <?= (int) $usuario['nivel'] ?>
+        </span>
+    </div>
+</div>
 
         </header>
 

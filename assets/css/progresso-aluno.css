@@ -750,3 +750,42 @@ tbody tr:hover {
         padding: 15px;
     }
 }
+```css
+.usuario-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.perfil-avatar {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #7E22CE, #A855F7);
+    border: 1px solid #C084FC;
+    color: white;
+    font-size: 17px;
+    font-weight: 900;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+}
+
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.perfil-info strong {
+    color: white;
+    font-size: 14px;
+}
+
+.perfil-info span {
+    color: #D8A0FF;
+    font-size: 13px;
+}
+```
