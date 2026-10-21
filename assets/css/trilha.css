@@ -1936,3 +1936,82 @@ button:focus-visible {
         flex-basis: 36px;
     }
 }
+
+/* =========================================
+   TRILHA — AJUSTE DA SIDEBAR PARA IGUALAR JOGOS
+   ========================================= */
+
+:root {
+    --sidebar-width: 260px;
+}
+
+/* Cabeçalho da sidebar */
+.sidebar-header {
+    height: 113px;
+    min-height: 113px;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
+/* Área de navegação */
+.sidebar-nav {
+    padding: 24px 14px;
+    gap: 8px;
+    flex: 0 0 auto;
+    overflow: visible;
+}
+
+/* Itens do menu */
+.sidebar-nav .nav-item {
+    min-height: 50px;
+    box-sizing: border-box;
+    padding: 0 14px;
+    gap: 12px;
+    border-radius: 13px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Perfil inferior */
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 18px 16px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(192, 38, 255, 0.14);
+    background: rgba(7, 4, 12, 0.25);
+}
+
+/* Preserva as dimensões atuais do avatar da sidebar */
+.sidebar-bottom .student-avatar {
+    flex-shrink: 0;
+}
+
+/* Evita que o conteúdo da sidebar seja comprimido */
+.sidebar-header,
+.sidebar-nav,
+.sidebar-bottom {
+    flex-shrink: 0;
+}
+
+/* Rolagem da sidebar */
+.sidebar {
+    height: 100vh;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Conteúdo principal */
+.content {
+    max-width: 1400px;
+    padding: 34px 34px 60px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+    .content {
+        padding: 24px 15px 40px;
+    }
+}
+
