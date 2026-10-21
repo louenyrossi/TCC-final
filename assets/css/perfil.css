@@ -1265,41 +1265,41 @@ body {
     font-size: 12px !important;
 }
 
-/* Progresso */
-.performance-header h2 {
-    font-size: 17px !important;
+/* AJUSTE FINAL DOS TEXTOS DO PERFIL */
+
+.performance-card .performance-header h2 {
+    font-size: 18px !important;
 }
 
-.performance-header p {
-    font-size: 12px !important;
-}
-
-.performance-value {
-    font-size: 23px !important;
-}
-
-.performance-footer {
-    font-size: 11px !important;
-}
-
-/* Perfil: nome e descrição */
-.profile-main h2 {
-    font-size: 21px !important;
-}
-
-.profile-main p {
+.performance-card .performance-header p {
     font-size: 13px !important;
 }
 
-.profile-tags .profile-tag {
-    font-size: 11px !important;
+.performance-card .performance-value {
+    font-size: 24px !important;
 }
 
-.xp-box strong {
-    font-size: 26px !important;
+.performance-card .performance-footer {
+    font-size: 12px !important;
 }
 
-.xp-box span,
-.xp-box small {
-    font-size: 11px !important;
+.profile-card .profile-main h2 {
+    font-size: 22px !important;
+}
+
+.profile-card .profile-main p {
+    font-size: 14px !important;
+}
+
+.profile-card .profile-tag {
+    font-size: 12px !important;
+}
+
+.profile-card .xp-box strong {
+    font-size: 28px !important;
+}
+
+.profile-card .xp-box span,
+.profile-card .xp-box small {
+    font-size: 12px !important;
 }
