@@ -1071,3 +1071,188 @@ a {
         z-index: 999;
     }
 }
+
+/* =========================================
+   TEMA NEON — PERFIL IGUAL À PÁGINA DE JOGOS
+   ========================================= */
+
+body {
+    background: #09060F;
+    color: #F5EDFF;
+}
+
+/* Cabeçalho da página */
+.page-header h1,
+.section-title h2,
+.profile-main h2,
+.stat-card strong,
+.achievement-info strong,
+.account-item strong,
+.performance-header h2 {
+    color: #FFFFFF;
+}
+
+.eyebrow {
+    color: #E879FF;
+}
+
+.page-header p,
+.section-title p,
+.profile-main p,
+.stat-card span,
+.performance-header p,
+.performance-footer,
+.achievement-info span,
+.achievement-info small,
+.account-item span {
+    color: #B8A6CC;
+}
+
+/* Containers principais */
+.profile-card,
+.stat-card,
+.performance-card,
+.achievement-summary,
+.account-card {
+    background: linear-gradient(145deg, #171023, #21142F);
+    border: 1px solid rgba(192, 38, 255, 0.28);
+    border-radius: 16px;
+    color: #F5EDFF;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25),
+        0 0 15px rgba(168, 85, 247, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Brilho suave ao passar o rato */
+.stat-card:hover,
+.profile-card:hover,
+.performance-card:hover,
+.achievement-summary:hover,
+.account-card:hover {
+    border-color: rgba(217, 70, 255, 0.55);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.12);
+}
+
+/* Avatar do perfil */
+.profile-avatar {
+    background: linear-gradient(135deg, #E879FF, #A855F7, #6D28D9);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 22px rgba(192, 38, 255, 0.25);
+}
+
+/* Etiquetas do perfil */
+.profile-tag {
+    background: rgba(168, 85, 247, 0.16);
+    border: 1px solid rgba(217, 70, 255, 0.3);
+    color: #E9C8FF;
+}
+
+/* Caixa de XP */
+.xp-box {
+    background: #100B19;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.xp-box span,
+.xp-box small {
+    color: #B8A6CC;
+}
+
+.xp-box strong,
+.performance-value {
+    color: #E879FF;
+}
+
+/* Ícones das estatísticas */
+.stat-icon.purple {
+    background: rgba(168, 85, 247, 0.18);
+    color: #D8B4FE;
+}
+
+.stat-icon.green {
+    background: rgba(34, 197, 94, 0.13);
+    color: #86EFAC;
+}
+
+.stat-icon.red {
+    background: rgba(239, 68, 68, 0.13);
+    color: #FCA5A5;
+}
+
+.stat-icon.yellow {
+    background: rgba(234, 179, 8, 0.13);
+    color: #FDE68A;
+}
+
+/* Barra de progresso */
+.large-progress {
+    background: #30213F;
+}
+
+.large-progress-fill {
+    background: linear-gradient(90deg, #A855F7, #E879FF);
+    box-shadow: 0 0 12px rgba(217, 70, 255, 0.35);
+}
+
+/* Conquistas */
+.achievement-icon {
+    background: rgba(234, 179, 8, 0.13);
+    border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.achievement-button,
+.secondary-button {
+    background: linear-gradient(135deg, #8B3DCE, #6D28D9);
+    border: 1px solid rgba(217, 70, 255, 0.35);
+    color: #FFFFFF;
+    transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.achievement-button:hover,
+.secondary-button:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+/* Informações da conta */
+.account-grid {
+    border-color: rgba(192, 132, 252, 0.15);
+}
+
+.account-item {
+    border-color: rgba(192, 132, 252, 0.15);
+}
+
+/* Botão de sair */
+.logout-button {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    color: #FDA4AF;
+}
+
+.logout-button:hover {
+    background: rgba(239, 68, 68, 0.16);
+}
+
+/* Botão do menu em dispositivos móveis */
+.menu-button {
+    background: rgba(168, 85, 247, 0.18);
+    color: #E9C8FF;
+    border: 1px solid rgba(192, 38, 255, 0.25);
+}
+
+.menu-button:hover {
+    background: rgba(168, 85, 247, 0.3);
+}
+
+/* Evita fundos brancos nos cartões */
+.profile-card,
+.stat-card,
+.performance-card,
+.achievement-summary,
+.account-card,
+.xp-box {
+    color-scheme: dark;
+}

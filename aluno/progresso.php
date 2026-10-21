@@ -151,7 +151,7 @@ $progressoGeral = $totalJogos > 0
 
             <a href="perfil.php" class="nav-item">
                 <span class="nav-icon">👤</span>
-                <span>Meu perfil</span>
+                <span>Perfil</span>
             </a>
         </nav>
 

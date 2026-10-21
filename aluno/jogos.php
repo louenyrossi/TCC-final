@@ -177,7 +177,7 @@ $jogos = $stmt->fetchAll();
                 class="nav-item"
             >
                 <span class="nav-icon">👤</span>
-                <span>Meu perfil</span>
+                <span>Perfil</span>
             </a>
 
         </nav>
