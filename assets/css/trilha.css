@@ -1531,27 +1531,27 @@ a {
 }
 
 .path-card {
-    border-radius: 20px;
+    border-radius: 17px;
 }
 
 .game-title h2 {
-    font-size: 23px;
+    font-size: 17px;
     line-height: 1.25;
 }
 
 .game-description {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
 }
 
 .progress-label {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .path-button {
-    min-height: 46px;
-    font-size: 14px;
-    border-radius: 11px;
+    min-height: 43px;
+    font-size: 13px;
+    border-radius: 10px;
 }
 
 /* =========================================================
@@ -1906,28 +1906,33 @@ button:focus-visible {
     background: #7c3aed;
     border-radius: 10px;
 }
-/* AVATAR DO TOPO — 43px EM TODAS AS TELAS */
+/* AVATAR DO TOPO */
 .topbar .student-avatar,
 .student-mini .student-avatar {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 43px;
-    height: 43px;
-    min-width: 43px;
-    min-height: 43px;
-    flex: 0 0 43px;
-
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    flex: 0 0 40px;
     border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
-    background: linear-gradient(135deg, #d946ff, #7026c9);
-
+    background: linear-gradient(135deg, #D946FF, #7026C9);
     color: #fff;
     font-size: 14px;
     font-weight: 900;
-
-    box-shadow: 0 0 15px rgba(192, 38, 255, 0.3);
+    box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 
-
+@media (max-width: 700px) {
+    .topbar .student-avatar,
+    .student-mini .student-avatar {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        flex-basis: 36px;
+    }
+}
