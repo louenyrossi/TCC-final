@@ -120,11 +120,10 @@ $inicial = mb_strtoupper(
     >
 
     <title>Meu Perfil | MathPlay</title>
-
-    <link
-        rel="stylesheet"
-        href="../assets/css/perfil.css"
-    >
+     
+    <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
+    <link rel="stylesheet" href="../assets/css/perfil.css">
+    
 </head>
 
 <body>
