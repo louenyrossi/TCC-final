@@ -2295,3 +2295,180 @@ button:focus-visible {
         display: none !important;
     }
 }
+
+/* =========================================
+   TRILHA — SIDEBAR IGUAL À DE JOGOS
+========================================= */
+
+/* Largura e posicionamento da sidebar */
+:root {
+    --sidebar-width: 260px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    min-width: 260px;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Cabeçalho igual ao de Jogos */
+.sidebar-header {
+    height: 88px;
+    min-height: 88px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Quadrado do M */
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Texto MathPower */
+.logo strong,
+.logo-text {
+    font-size: 23px;
+    font-weight: 900;
+}
+
+/* Navegação */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 24px 14px;
+    overflow: visible;
+}
+
+.sidebar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 50px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 13px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Ícones do menu */
+.sidebar-nav .nav-item span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Perfil inferior */
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: 18px 16px;
+}
+
+/* Foto/bolinha e nome lado a lado */
+.sidebar-student {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    min-width: 0;
+}
+
+/* Bolinha roxa */
+.sidebar-student .student-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    flex: 0 0 40px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+/* Nome e nível */
+.sidebar-student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.sidebar-student-info strong {
+    color: #fff;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-student-info small {
+    color: #a1a1aa;
+    font-size: 12px;
+}
+
+/* Conteúdo ao lado da sidebar */
+.main-content {
+    width: calc(100% - 260px);
+    margin-left: 260px;
+    min-width: 0;
+}
+
+/* Celular */
+@media (max-width: 700px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/* Desktop */
+@media (min-width: 701px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
