@@ -1,3 +1,4 @@
+```php
 <?php
 
 require_once '../includes/auth.php';
@@ -31,7 +32,6 @@ if (!$usuario) {
 $turmaNome = 'Não definida';
 
 if (!empty($usuario['turma_id'])) {
-
     $stmt = $pdo->prepare("
         SELECT nome
         FROM turmas
@@ -84,16 +84,16 @@ $stmt = $pdo->prepare("
         j.nome,
         j.descricao,
         COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'facil' THEN p.porcentagem ELSE 0 END),
-            0
+            MAX(CASE WHEN p.dificuldade = 'facil'
+                THEN p.porcentagem ELSE 0 END), 0
         ) AS facil,
         COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'medio' THEN p.porcentagem ELSE 0 END),
-            0
+            MAX(CASE WHEN p.dificuldade = 'medio'
+                THEN p.porcentagem ELSE 0 END), 0
         ) AS medio,
         COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'dificil' THEN p.porcentagem ELSE 0 END),
-            0
+            MAX(CASE WHEN p.dificuldade = 'dificil'
+                THEN p.porcentagem ELSE 0 END), 0
         ) AS dificil
     FROM jogos j
     LEFT JOIN progresso p
@@ -121,8 +121,7 @@ $stmt = $pdo->prepare("
         p.data_inicio,
         p.data_fim
     FROM partidas p
-    INNER JOIN jogos j
-        ON j.id = p.jogo_id
+    INNER JOIN jogos j ON j.id = p.jogo_id
     WHERE p.usuario_id = ?
     ORDER BY p.data_inicio DESC
     LIMIT 10
@@ -142,8 +141,7 @@ $stmt = $pdo->prepare("
         c.tipo,
         uc.data_desbloqueio
     FROM usuario_conquistas uc
-    INNER JOIN conquistas c
-        ON c.id = uc.conquista_id
+    INNER JOIN conquistas c ON c.id = uc.conquista_id
     WHERE uc.usuario_id = ?
     ORDER BY uc.data_desbloqueio DESC
 ");
@@ -160,10 +158,10 @@ $nivel = (int) $usuario['nivel'];
 
 $xpNoNivel = $xp % 100;
 $xpRestante = 100 - $xpNoNivel;
-
 $progressoXP = $xpNoNivel;
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -184,13 +182,42 @@ $progressoXP = $xpNoNivel;
 
     <aside class="sidebar">
 
-        
-<div class="logo">
-    <span class="logo-icon">M</span>
-    <div class="logo-text">
-        <span class="logo-math">Math</span><span class="logo-power">Power</span>
-    </div>
-</div>
+        <!-- LOGO -->
+
+        <div class="logo">
+            <span class="logo-icon">M</span>
+
+            <div class="logo-text">
+                <span class="logo-math">Math</span><span class="logo-power">Power</span>
+            </div>
+        </div>
+
+        <!-- PERFIL DO ALUNO DENTRO DA SIDEBAR -->
+
+        <div class="usuario-topo">
+
+            <div class="perfil-avatar">
+                <?= htmlspecialchars(
+                    mb_strtoupper(
+                        mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
+                        'UTF-8'
+                    )
+                ) ?>
+            </div>
+
+            <div class="perfil-info">
+                <strong>
+                    <?= htmlspecialchars($usuario['nome']) ?>
+                </strong>
+
+                <span>
+                    Nível <?= $nivel ?>
+                </span>
+            </div>
+
+        </div>
+
+        <!-- MENU -->
 
         <nav class="menu">
 
@@ -226,58 +253,39 @@ $progressoXP = $xpNoNivel;
 
         </nav>
 
-        <div class="sidebar-bottom">
+        <!-- SAIR -->
 
+        <div class="sidebar-bottom">
             <a href="../logout.php" class="logout">
                 ↪
                 <span>Sair</span>
             </a>
-
         </div>
 
     </aside>
 
-
-    <!-- CONTEÚDO -->
+    <!-- CONTEÚDO PRINCIPAL -->
 
     <main class="conteudo">
 
         <header class="topbar">
-
-           <div class="usuario-topo">
-    <div class="perfil-avatar">
-        <?= htmlspecialchars(
-            mb_strtoupper(
-                mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
-                'UTF-8'
-            )
-        ) ?>
-    </div>
-
-    <div class="perfil-info">
-        <strong><?= htmlspecialchars($usuario['nome']) ?></strong>
-        <span>Nível <?= (int) $usuario['nivel'] ?></span>
-    </div>
-</div>
-
+            <div>
+                <h1>Meu progresso</h1>
+                <p>Acompanhe sua evolução no MathPower.</p>
+            </div>
         </header>
-
 
         <!-- XP -->
 
         <section class="card xp-card">
 
             <div class="xp-info">
-
-                <div class="icone-nivel">
-                    ⭐
-                </div>
+                <div class="icone-nivel">⭐</div>
 
                 <div>
                     <span class="label">Nível atual</span>
                     <h2>Nível <?= $nivel ?></h2>
                 </div>
-
             </div>
 
             <div class="xp-total">
@@ -293,7 +301,6 @@ $progressoXP = $xpNoNivel;
             </div>
 
         </section>
-
 
         <!-- ESTATÍSTICAS -->
 
@@ -341,7 +348,6 @@ $progressoXP = $xpNoNivel;
 
         </section>
 
-
         <!-- PROGRESSO DOS JOGOS -->
 
         <section class="secao">
@@ -376,13 +382,8 @@ $progressoXP = $xpNoNivel;
                             </div>
 
                             <div>
-                                <h3>
-                                    <?= htmlspecialchars($jogo['nome']) ?>
-                                </h3>
-
-                                <p>
-                                    <?= htmlspecialchars($jogo['descricao']) ?>
-                                </p>
+                                <h3><?= htmlspecialchars($jogo['nome']) ?></h3>
+                                <p><?= htmlspecialchars($jogo['descricao']) ?></p>
                             </div>
 
                         </div>
@@ -390,11 +391,8 @@ $progressoXP = $xpNoNivel;
                         <div class="progresso-geral">
 
                             <div class="linha-progresso">
-
                                 <span>Progresso geral</span>
-
                                 <strong><?= $mediaJogo ?>%</strong>
-
                             </div>
 
                             <div class="barra">
@@ -406,44 +404,29 @@ $progressoXP = $xpNoNivel;
 
                         </div>
 
-
                         <div class="dificuldades">
 
                             <div>
                                 <span>Fácil</span>
-
                                 <div class="mini-barra">
-                                    <div
-                                        style="width: <?= $facil ?>%;"
-                                    ></div>
+                                    <div style="width: <?= $facil ?>%;"></div>
                                 </div>
-
                                 <strong><?= round($facil) ?>%</strong>
                             </div>
 
-
                             <div>
                                 <span>Médio</span>
-
                                 <div class="mini-barra">
-                                    <div
-                                        style="width: <?= $medio ?>%;"
-                                    ></div>
+                                    <div style="width: <?= $medio ?>%;"></div>
                                 </div>
-
                                 <strong><?= round($medio) ?>%</strong>
                             </div>
 
-
                             <div>
                                 <span>Difícil</span>
-
                                 <div class="mini-barra">
-                                    <div
-                                        style="width: <?= $dificil ?>%;"
-                                    ></div>
+                                    <div style="width: <?= $dificil ?>%;"></div>
                                 </div>
-
                                 <strong><?= round($dificil) ?>%</strong>
                             </div>
 
@@ -457,18 +440,15 @@ $progressoXP = $xpNoNivel;
 
         </section>
 
-
         <!-- HISTÓRICO -->
 
         <section class="secao">
 
             <div class="titulo-secao">
-
                 <div>
                     <h2>Histórico de partidas</h2>
                     <p>Suas últimas partidas realizadas.</p>
                 </div>
-
             </div>
 
             <?php if (empty($historico)): ?>
@@ -477,20 +457,14 @@ $progressoXP = $xpNoNivel;
                     <span>🎮</span>
                     <h3>Nenhuma partida ainda</h3>
                     <p>Jogue um dos desafios para começar seu histórico.</p>
-
-                    <a href="jogos.php" class="botao">
-                        Ver jogos
-                    </a>
+                    <a href="jogos.php" class="botao">Ver jogos</a>
                 </div>
 
             <?php else: ?>
 
                 <div class="tabela-container">
-
                     <table>
-
                         <thead>
-
                             <tr>
                                 <th>Jogo</th>
                                 <th>Acertos</th>
@@ -498,64 +472,39 @@ $progressoXP = $xpNoNivel;
                                 <th>Pontuação</th>
                                 <th>Data</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
-
-                        <?php foreach ($historico as $partida): ?>
-
-                            <tr>
-
-                                <td>
-                                    <?= htmlspecialchars($partida['jogo']) ?>
-                                </td>
-
-                                <td class="acerto">
-                                    <?= (int) $partida['acertos'] ?>
-                                </td>
-
-                                <td class="erro">
-                                    <?= (int) $partida['erros'] ?>
-                                </td>
-
-                                <td>
-                                    <?= (int) $partida['pontuacao'] ?> pts
-                                </td>
-
-                                <td>
-                                    <?= date(
-                                        'd/m/Y H:i',
-                                        strtotime($partida['data_inicio'])
-                                    ) ?>
-                                </td>
-
-                            </tr>
-
-                        <?php endforeach; ?>
-
+                            <?php foreach ($historico as $partida): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($partida['jogo']) ?></td>
+                                    <td class="acerto"><?= (int) $partida['acertos'] ?></td>
+                                    <td class="erro"><?= (int) $partida['erros'] ?></td>
+                                    <td><?= (int) $partida['pontuacao'] ?> pts</td>
+                                    <td>
+                                        <?= !empty($partida['data_inicio'])
+                                            ? date('d/m/Y H:i', strtotime($partida['data_inicio']))
+                                            : '—' ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
-
                     </table>
-
                 </div>
 
             <?php endif; ?>
 
         </section>
 
-
         <!-- CONQUISTAS -->
 
         <section class="secao">
 
             <div class="titulo-secao">
-
                 <div>
                     <h2>Minhas conquistas</h2>
                     <p>Medalhas que você já desbloqueou.</p>
                 </div>
-
             </div>
 
             <?php if (empty($conquistas)): ?>
@@ -574,28 +523,18 @@ $progressoXP = $xpNoNivel;
 
                         <div class="conquista">
 
-                            <div class="conquista-icone">
-                                🏅
-                            </div>
+                            <div class="conquista-icone">🏅</div>
 
                             <div>
-
-                                <h3>
-                                    <?= htmlspecialchars($conquista['nome']) ?>
-                                </h3>
-
-                                <p>
-                                    <?= htmlspecialchars($conquista['descricao']) ?>
-                                </p>
+                                <h3><?= htmlspecialchars($conquista['nome']) ?></h3>
+                                <p><?= htmlspecialchars($conquista['descricao']) ?></p>
 
                                 <small>
                                     Desbloqueada em
-                                    <?= date(
-                                        'd/m/Y',
-                                        strtotime($conquista['data_desbloqueio'])
-                                    ) ?>
+                                    <?= !empty($conquista['data_desbloqueio'])
+                                        ? date('d/m/Y', strtotime($conquista['data_desbloqueio']))
+                                        : '—' ?>
                                 </small>
-
                             </div>
 
                         </div>
@@ -614,3 +553,4 @@ $progressoXP = $xpNoNivel;
 
 </body>
 </html>
+```
