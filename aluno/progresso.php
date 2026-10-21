@@ -244,7 +244,7 @@ $progressoXP = $xpNoNivel;
 
         <header class="topbar">
 
-            <div class="usuario-topo">
+           <div class="usuario-topo">
     <div class="perfil-avatar">
         <?= htmlspecialchars(
             mb_strtoupper(
@@ -255,13 +255,8 @@ $progressoXP = $xpNoNivel;
     </div>
 
     <div class="perfil-info">
-        <strong>
-            <?= htmlspecialchars($usuario['nome']) ?>
-        </strong>
-
-        <span>
-            Nível <?= (int) $usuario['nivel'] ?>
-        </span>
+        <strong><?= htmlspecialchars($usuario['nome']) ?></strong>
+        <span>Nível <?= (int) $usuario['nivel'] ?></span>
     </div>
 </div>
 
