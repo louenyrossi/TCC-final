@@ -1265,41 +1265,11 @@ body {
     font-size: 12px !important;
 }
 
-/* AJUSTE FINAL DOS TEXTOS DO PERFIL */
-
-.performance-card .performance-header h2 {
-    font-size: 18px !important;
-}
-
-.performance-card .performance-header p {
+/* Texto Sair na sidebar */
+.sidebar-bottom .logout-link {
     font-size: 13px !important;
 }
 
-.performance-card .performance-value {
-    font-size: 24px !important;
-}
-
-.performance-card .performance-footer {
-    font-size: 12px !important;
-}
-
-.profile-card .profile-main h2 {
-    font-size: 22px !important;
-}
-
-.profile-card .profile-main p {
-    font-size: 14px !important;
-}
-
-.profile-card .profile-tag {
-    font-size: 12px !important;
-}
-
-.profile-card .xp-box strong {
-    font-size: 28px !important;
-}
-
-.profile-card .xp-box span,
-.profile-card .xp-box small {
-    font-size: 12px !important;
+.sidebar-bottom .logout-link span {
+    font-size: 16px !important;
 }
