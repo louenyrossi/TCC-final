@@ -1781,3 +1781,856 @@ input:focus-visible {
         font-size: 20px;
     }
 }
+
+/* ==========================================================
+   MATHPLAY — CAIXA MATEMÁTICO FUTURISTA
+   Efeitos visuais sem alterar a lógica do jogo
+========================================================== */
+
+:root {
+    --roxo: #A855F7;
+    --roxo-escuro: #7E22CE;
+    --roxo-claro: #E9D5FF;
+
+    --fundo: #090611;
+    --branco: #171024;
+
+    --texto: #F7F0FF;
+    --texto-secundario: #B9A8D2;
+
+    --verde: #4ADE80;
+    --verde-claro: #123322;
+
+    --vermelho: #FB7185;
+    --vermelho-claro: #391522;
+
+    --amarelo: #FACC15;
+    --amarelo-claro: #34270C;
+
+    --borda: rgba(192, 132, 252, 0.25);
+
+    --sombra:
+        0 0 35px rgba(168, 85, 247, 0.12),
+        0 20px 55px rgba(0, 0, 0, 0.35);
+
+    --raio: 22px;
+}
+
+/* FUNDO ESPACIAL MATEMÁTICO */
+
+html {
+    background: #090611;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 15% 20%,
+            rgba(126, 34, 206, 0.23),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 85% 65%,
+            rgba(217, 70, 255, 0.13),
+            transparent 35%
+        ),
+        linear-gradient(145deg, #090611, #12091F 50%, #090611);
+
+    color: #F7F0FF;
+}
+
+/* Símbolos e números gigantes no fundo */
+
+body::before {
+    content:
+        "＋   01   ×   π   100   ÷   √   7   9   ％   ∑   24   －   3   ＝   81";
+
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+
+    top: -10%;
+    left: -15%;
+
+    width: 140%;
+    height: 120%;
+
+    overflow: hidden;
+
+    color: #D946FF;
+    opacity: 0.10;
+
+    font-size: clamp(25px, 4vw, 58px);
+    font-weight: 900;
+    line-height: 2.7;
+    letter-spacing: 12px;
+    word-spacing: 18px;
+
+    overflow-wrap: anywhere;
+    transform: rotate(-13deg);
+
+    animation: math-drift 35s linear infinite;
+}
+
+@keyframes math-drift {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(-13deg);
+    }
+    50% {
+        transform: translate3d(2%, 2%, 0) rotate(-10deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotate(-13deg);
+    }
+}
+
+.game-page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+}
+
+/* HEADER NEON */
+
+.game-header {
+    position: relative;
+
+    background: rgba(13, 8, 25, 0.88);
+    border-bottom: 1px solid rgba(192, 132, 252, 0.25);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.18);
+}
+
+.game-brand-icon {
+    background: linear-gradient(135deg, #A855F7, #D946EF);
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 0 18px rgba(168, 85, 247, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.game-brand strong,
+.player-info strong {
+    color: #FFFFFF;
+}
+
+.game-brand span,
+.player-info span {
+    color: #C4B5FD;
+}
+
+.back-button {
+    color: #D8C6F5;
+}
+
+.back-button:hover {
+    color: #E879F9;
+}
+
+/* CARTÕES DE PONTUAÇÃO */
+
+.status-card {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(
+        145deg,
+        rgba(35, 20, 54, 0.95),
+        rgba(19, 12, 31, 0.96)
+    );
+
+    border: 1px solid rgba(192, 132, 252, 0.24);
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.status-card::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #D946EF,
+        #A855F7,
+        transparent
+    );
+
+    opacity: 0.85;
+}
+
+.status-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(217, 70, 255, 0.55);
+
+    box-shadow:
+        0 10px 30px rgba(126, 34, 206, 0.18),
+        0 0 18px rgba(168, 85, 247, 0.08);
+}
+
+.status-label {
+    color: #C4B5FD;
+    letter-spacing: 0.5px;
+}
+
+.status-card strong {
+    color: #FFFFFF;
+}
+
+.score-card strong {
+    color: #E879F9;
+    text-shadow: 0 0 15px rgba(232, 121, 249, 0.35);
+}
+
+/* BARRA DE PROGRESSO */
+
+.progress-info {
+    color: #D8C6F5;
+}
+
+.progress-bar {
+    height: 11px;
+
+    background: rgba(168, 85, 247, 0.13);
+    border: 1px solid rgba(192, 132, 252, 0.2);
+
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.progress-fill {
+    position: relative;
+
+    background: linear-gradient(
+        90deg,
+        #7C3AED,
+        #C026D3,
+        #F0ABFC
+    );
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, 0.65),
+        0 0 25px rgba(168, 85, 247, 0.3);
+}
+
+.progress-fill::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 25%;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 0.55);
+    filter: blur(5px);
+}
+
+/* MÁQUINA PRINCIPAL */
+
+.game-card {
+    position: relative;
+    isolation: isolate;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(168, 85, 247, 0.16),
+            transparent 48%
+        ),
+        linear-gradient(145deg, #21132F, #100A1C 65%, #190D28);
+
+    border: 1px solid rgba(192, 132, 252, 0.42);
+    border-radius: 25px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 0 0 5px rgba(168, 85, 247, 0.035),
+        0 0 45px rgba(147, 51, 234, 0.13),
+        0 25px 65px rgba(0, 0, 0, 0.4);
+}
+
+/* Brilho decorativo da máquina */
+
+.game-card::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: -120px;
+    right: -100px;
+
+    width: 240px;
+    height: 240px;
+
+    border-radius: 50%;
+
+    background: #A855F7;
+    opacity: 0.09;
+    filter: blur(65px);
+
+    pointer-events: none;
+}
+
+/* Painel superior da máquina */
+
+.game-card::before {
+    content: "✦  MATHPLAY  /  SMART CASHIER  ✦";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    margin: -5px -5px 22px;
+    padding: 12px;
+
+    border: 1px solid rgba(232, 121, 249, 0.35);
+    border-radius: 15px;
+
+    background: linear-gradient(
+        100deg,
+        #31104D,
+        #6D28D9,
+        #A21CAF,
+        #4C1D95
+    );
+
+    background-size: 200% 100%;
+    animation: cashier-glow 8s ease infinite;
+
+    color: #FFFFFF;
+
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+
+    box-shadow:
+        0 0 20px rgba(168, 85, 247, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+@keyframes cashier-glow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Cabeçalho interno */
+
+.game-card-header {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(192, 132, 252, 0.2);
+
+    border-radius: 16px;
+    padding: 15px;
+
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.game-card-header h1 {
+    color: #FFFFFF;
+    font-size: 23px;
+    letter-spacing: -0.6px;
+}
+
+.game-category {
+    color: #E879F9;
+    letter-spacing: 1.4px;
+}
+
+.difficulty-badge {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #86EFAC;
+}
+
+/* CENÁRIO DA COMPRA */
+
+.scenario {
+    position: relative;
+
+    background: linear-gradient(
+        110deg,
+        rgba(126, 34, 206, 0.18),
+        rgba(217, 70, 255, 0.06)
+    );
+
+    border: 1px solid rgba(192, 132, 252, 0.22);
+    border-radius: 16px;
+
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.scenario-icon {
+    background: linear-gradient(145deg, #7C3AED, #C026D3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    box-shadow:
+        0 0 22px rgba(168, 85, 247, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.scenario strong {
+    color: #F5E9FF;
+}
+
+.scenario p {
+    color: #C4B5FD;
+}
+
+/* VISOR DIGITAL DA PERGUNTA */
+
+.question-area {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(34, 197, 94, 0.09),
+            transparent 80%
+        ),
+        #090D18;
+
+    border: 2px solid #6D28D9;
+    border-radius: 17px;
+
+    padding: 23px 15px;
+    margin: 20px 0;
+
+    box-shadow:
+        inset 0 0 25px rgba(0, 0, 0, 0.65),
+        0 0 0 4px rgba(168, 85, 247, 0.07),
+        0 0 25px rgba(126, 34, 206, 0.16);
+}
+
+.question-area::before {
+    content: "▰  VISOR DIGITAL  •  MATHPLAY";
+
+    display: block;
+
+    margin-bottom: 16px;
+
+    color: #C084FC;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.8px;
+}
+
+.question-label {
+    color: #86EFAC;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+.question-area h2 {
+    color: #D9F99D;
+
+    font-size: 19px;
+    line-height: 1.6;
+
+    text-shadow: 0 0 15px rgba(190, 242, 100, 0.12);
+}
+
+/* ÁREA DA RESPOSTA */
+
+.answer-form {
+    background: rgba(126, 34, 206, 0.09);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    border-radius: 17px;
+
+    padding: 15px;
+}
+
+.answer-form label {
+    color: #E9D5FF;
+}
+
+.answer-input-wrapper {
+    background: #090D18;
+
+    border: 2px solid #5B21B6;
+    border-radius: 12px;
+
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.answer-input-wrapper:focus-within {
+    border-color: #E879F9;
+
+    box-shadow:
+        inset 0 3px 10px rgba(0, 0, 0, 0.3),
+        0 0 0 3px rgba(217, 70, 255, 0.12),
+        0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+.answer-input-wrapper span {
+    color: #C084FC;
+}
+
+.answer-input-wrapper input {
+    color: #FFFFFF;
+}
+
+.answer-input-wrapper input::placeholder {
+    color: #88769F;
+}
+
+/* TECLADO ELETRÓNICO */
+
+.numeric-keypad {
+    position: relative;
+
+    background:
+        linear-gradient(145deg, #211332, #100A1B);
+
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    border-radius: 19px;
+
+    padding: 14px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.numeric-keypad::before {
+    content: "⌗  TECLADO NUMÉRICO";
+
+    grid-column: 1 / -1;
+
+    display: block;
+
+    padding: 3px 0 7px;
+
+    color: #C084FC;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    text-align: center;
+}
+
+.key-button {
+    min-width: 0;
+    height: 58px;
+
+    background: linear-gradient(145deg, #352047, #21132F);
+
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    border-radius: 12px;
+
+    color: #F7F0FF;
+    font-size: 22px;
+    font-weight: 800;
+
+    box-shadow:
+        0 4px 0 #10091A,
+        0 5px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.key-button:hover {
+    background: linear-gradient(145deg, #7E22CE, #581C87);
+
+    border-color: #D8B4FE;
+
+    box-shadow:
+        0 4px 0 #301044,
+        0 0 18px rgba(168, 85, 247, 0.25);
+}
+
+.key-button:active {
+    transform: translateY(4px);
+
+    box-shadow:
+        0 0 0 #10091A,
+        inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.key-clear {
+    background: linear-gradient(145deg, #4C1837, #301020);
+    border-color: rgba(251, 113, 133, 0.45);
+    color: #FDA4AF;
+}
+
+.key-clear:hover {
+    background: #9F1239;
+}
+
+.key-delete {
+    background: linear-gradient(145deg, #39205B, #241338);
+    border-color: rgba(192, 132, 252, 0.45);
+    color: #E9D5FF;
+}
+
+/* BOTÃO CONFIRMAR */
+
+.answer-button {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(100deg, #7C3AED, #C026D3, #9333EA);
+    background-size: 200% 100%;
+
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 13px;
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 5px 0 #4C1D95,
+        0 9px 22px rgba(147, 51, 234, 0.25);
+}
+
+.answer-button:hover {
+    background-position: 100% 50%;
+    background-color: #A855F7;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 0 #4C1D95,
+        0 12px 25px rgba(192, 38, 211, 0.28);
+}
+
+.answer-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #4C1D95;
+}
+
+.answer-button:disabled {
+    opacity: 0.55;
+}
+
+/* BOTÃO PRÓXIMA PERGUNTA */
+
+.next-button {
+    background: linear-gradient(100deg, #312044, #4C1D95);
+
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    color: #FFFFFF;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.next-button:hover {
+    background: linear-gradient(100deg, #6D28D9, #A21CAF);
+}
+
+/* DICAS */
+
+.hint-area {
+    background: rgba(250, 204, 21, 0.055);
+    border: 1px solid rgba(250, 204, 21, 0.18);
+    border-radius: 13px;
+
+    padding: 9px;
+}
+
+.hint-button {
+    background: rgba(250, 204, 21, 0.12);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+
+    color: #FDE68A;
+}
+
+.hint-text {
+    background: rgba(250, 204, 21, 0.08);
+    border: 1px solid rgba(250, 204, 21, 0.15);
+
+    color: #FDE68A;
+}
+
+/* FEEDBACK */
+
+.feedback-success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(74, 222, 128, 0.3);
+    color: #BBF7D0;
+}
+
+.feedback-success .feedback-icon {
+    background: #16A34A;
+    color: white;
+}
+
+.feedback-error {
+    background: rgba(244, 63, 94, 0.1);
+    border-color: rgba(251, 113, 133, 0.3);
+    color: #FECDD3;
+}
+
+.feedback-error .feedback-icon {
+    background: #E11D48;
+    color: white;
+}
+
+/* CARTÕES DE DICAS */
+
+.tip-card {
+    background: linear-gradient(145deg, #1C112A, #120B1D);
+
+    border: 1px solid rgba(192, 132, 252, 0.2);
+    border-radius: 15px;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(217, 70, 255, 0.45);
+}
+
+.tip-card strong {
+    color: #F3E8FF;
+}
+
+.tip-card p {
+    color: #B9A8D2;
+}
+
+/* ACESSIBILIDADE: FOCO VISÍVEL */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid #E879F9;
+    outline-offset: 3px;
+}
+
+/* TABLET E DESKTOP */
+
+@media (min-width: 600px) {
+    .game-card {
+        padding: 28px;
+        border-radius: 26px;
+    }
+
+    .game-card::before {
+        margin: -8px -8px 24px;
+        min-height: 54px;
+    }
+
+    .question-area {
+        padding: 30px 28px;
+    }
+
+    .question-area h2 {
+        font-size: 23px;
+    }
+
+    .answer-form {
+        padding: 20px;
+    }
+
+    .key-button {
+        height: 64px;
+    }
+}
+
+@media (min-width: 900px) {
+    .game-card {
+        padding: 38px 50px;
+    }
+
+    .game-card::before {
+        margin: -15px -15px 30px;
+    }
+
+    .question-area {
+        padding: 34px 45px;
+    }
+
+    .question-area h2 {
+        font-size: 25px;
+    }
+}
+
+/* MOVIMENTO REDUZIDO, SE PREFERIDO */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* TELEMÓVEIS PEQUENOS */
+
+@media (max-width: 380px) {
+    .game-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .game-card {
+        padding: 14px;
+    }
+
+    .game-card-header {
+        gap: 8px;
+        padding: 11px;
+    }
+
+    .game-card-header h1 {
+        font-size: 19px;
+    }
+
+    .difficulty-badge {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+
+    .numeric-keypad {
+        gap: 7px;
+        padding: 10px;
+    }
+
+    .key-button {
+        height: 50px;
+        font-size: 19px;
+    }
+}
