@@ -97,7 +97,7 @@ body {
     justify-content: center;
     width: 40px;
     height: 40px;
-    border: 1px solid #A855F7;
+    border: 1px solid rgba(168, 85, 247, 0.8);
     border-radius: 12px;
     background: linear-gradient(135deg, #7E22CE, #A855F7);
     color: #ffffff;
@@ -106,7 +106,7 @@ body {
     box-shadow:
         0 0 8px rgba(168, 85, 247, 0.7),
         0 0 18px rgba(168, 85, 247, 0.45),
-        inset 0 0 8px rgba(192, 38, 255, 0.25);
+        inset 0 0 8px rgba(168, 85, 247, 0.25);
 }
 
 
