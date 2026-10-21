@@ -3016,3 +3016,119 @@ input:focus-visible {
         animation: none !important;
     }
 }
+
+/* CENA INTERATIVA DO CAIXA MATEMÁTICO */
+
+.math-scene {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 190px;
+    margin: 22px 0;
+    padding: 22px 14px;
+    border: 1px solid rgba(192, 132, 252, .5);
+    border-radius: 22px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse at 50% 100%,
+            rgba(168, 85, 247, .23), transparent 65%),
+        linear-gradient(135deg, #171027, #21113b 55%, #130d24);
+    box-shadow: inset 0 0 28px rgba(168, 85, 247, .12),
+                0 0 22px rgba(168, 85, 247, .12);
+}
+
+.scene-glow {
+    position: absolute;
+    z-index: -1;
+    width: 130px;
+    height: 130px;
+    top: 10px;
+    left: calc(50% - 65px);
+    border-radius: 50%;
+    background: rgba(168, 85, 247, .2);
+    filter: blur(28px);
+    animation: scenePulse 2.5s ease-in-out infinite alternate;
+}
+
+.scene-objects {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(22px, 7vw, 55px);
+    min-height: 100px;
+}
+
+.scene-item {
+    display: inline-block;
+    font-size: clamp(2.3rem, 8vw, 3.5rem);
+    filter: drop-shadow(0 0 12px rgba(216, 180, 254, .35));
+    animation: sceneFloat 2.4s ease-in-out infinite;
+}
+
+.scene-item:nth-child(2) {
+    font-size: clamp(3rem, 10vw, 4.3rem);
+    animation-delay: -.8s;
+}
+
+.scene-item:nth-child(3) {
+    animation-delay: -1.5s;
+}
+
+.scene-caption {
+    margin-top: 12px;
+    color: #e9d5ff;
+    font-weight: 700;
+    font-size: .95rem;
+}
+
+.math-scene.is-correct {
+    border-color: #86efac;
+    box-shadow: 0 0 30px rgba(74, 222, 128, .35);
+}
+
+.math-scene.is-wrong {
+    border-color: #fb7185;
+    animation: sceneShake .35s ease;
+}
+
+.scene-effects {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.scene-coin {
+    position: absolute;
+    bottom: 15px;
+    left: var(--coin-x);
+    font-size: 1.5rem;
+    animation: coinPop 1.1s ease-out forwards;
+}
+
+@keyframes sceneFloat {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+@keyframes scenePulse {
+    from { opacity: .45; transform: scale(.85); }
+    to { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes coinPop {
+    from { opacity: 1; transform: translateY(0) rotate(0); }
+    to { opacity: 0; transform: translateY(-125px) rotate(220deg); }
+}
+
+@keyframes sceneShake {
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scene-item, .scene-glow {
+        animation: none;
+    }
+}

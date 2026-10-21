@@ -433,17 +433,21 @@ if ($anoSerie === 7) {
                  PERGUNTA
             =============================================== -->
 
-            <div class="question-area">
+            <div class="math-scene" id="math-scene" aria-live="polite">
+    <div class="scene-glow"></div>
 
-                <span class="question-label">
-                    QUESTÃO <span id="question-number-display">1</span>
-                </span>
+    <div id="scene-objects" class="scene-objects">
+        <span class="scene-item">🛒</span>
+        <span class="scene-item">🧮</span>
+        <span class="scene-item">🪙</span>
+    </div>
 
-                <h2 id="question">
-                    Carregando questão...
-                </h2>
+    <div id="scene-caption" class="scene-caption">
+        Prepare-se para resolver o desafio!
+    </div>
 
-            </div>
+    <div id="scene-effects" class="scene-effects"></div>
+</div>
 
 
             <!-- ==============================================
