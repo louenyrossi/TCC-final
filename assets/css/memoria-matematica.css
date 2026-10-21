@@ -843,3 +843,631 @@ body::before {
         transition-duration: .01ms !important;
     }
 }
+
+/* =====================================================
+   MATHPLAY — MEMORY NEON ARCADE / PREMIUM EDITION
+   Cole no FINAL do CSS do Memória Matemática
+===================================================== */
+
+:root {
+    --m-bg: #080611;
+    --m-panel: rgba(23, 15, 40, .92);
+    --m-panel-light: rgba(37, 22, 61, .88);
+    --m-purple: #A855F7;
+    --m-violet: #7C3AED;
+    --m-pink: #F0ABFC;
+    --m-cyan: #67E8F9;
+    --m-green: #6EE7B7;
+    --m-text: #FAF5FF;
+    --m-muted: #B9A9D0;
+    --m-border: rgba(192, 132, 252, .25);
+}
+
+/* FUNDO PROFUNDO */
+
+html {
+    min-height: 100%;
+    background: var(--m-bg);
+}
+
+body {
+    min-height: 100vh;
+    color: var(--m-text);
+    background:
+        radial-gradient(ellipse at 50% -15%,
+            rgba(126, 34, 206, .29), transparent 55%),
+        radial-gradient(ellipse at 0% 50%,
+            rgba(49, 46, 129, .18), transparent 45%),
+        radial-gradient(ellipse at 100% 85%,
+            rgba(192, 38, 211, .12), transparent 38%),
+        #080611;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Textura geométrica de fundo */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: .25;
+    background-image:
+        linear-gradient(rgba(168, 85, 247, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, .08) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+/* HALOS DECORATIVOS */
+
+.pagina-jogo {
+    position: relative;
+    max-width: 1240px;
+    padding: 28px 22px 55px;
+}
+
+.pagina-jogo::before,
+.pagina-jogo::after {
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+    color: rgba(216, 180, 254, .12);
+    font-weight: 900;
+    font-family: Georgia, serif;
+}
+
+.pagina-jogo::before {
+    content: "π";
+    top: 15%;
+    left: 3%;
+    font-size: clamp(65px, 12vw, 150px);
+    animation: memoryDrift 9s ease-in-out infinite;
+}
+
+.pagina-jogo::after {
+    content: "∑";
+    right: 4%;
+    bottom: 12%;
+    font-size: clamp(70px, 13vw, 165px);
+    animation: memoryDrift 11s ease-in-out infinite reverse;
+}
+
+/* CABEÇALHO */
+
+.cabecalho-jogo {
+    margin-bottom: 30px;
+}
+
+.botao-voltar {
+    color: #D8B4FE;
+    padding: 9px 14px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(192, 132, 252, .22);
+    border-radius: 12px;
+    background: rgba(30, 20, 48, .7);
+    transition: .25s ease;
+}
+
+.botao-voltar:hover {
+    color: white;
+    border-color: var(--m-purple);
+    background: rgba(124, 58, 237, .22);
+    box-shadow: 0 0 22px rgba(168, 85, 247, .16);
+    transform: translateX(-3px);
+}
+
+.titulo-jogo {
+    gap: 18px;
+}
+
+.icone-jogo {
+    width: 66px;
+    height: 66px;
+    border-radius: 20px;
+    font-size: 31px;
+    background: linear-gradient(145deg, #A855F7, #6D28D9 60%, #4C1D95);
+    border: 1px solid rgba(240, 171, 252, .65);
+    box-shadow:
+        0 0 0 5px rgba(168, 85, 247, .08),
+        0 0 32px rgba(168, 85, 247, .38),
+        inset 0 1px rgba(255, 255, 255, .35);
+}
+
+.titulo-jogo h1 {
+    color: #FFFFFF;
+    font-size: clamp(25px, 4vw, 36px);
+    letter-spacing: -.8px;
+    text-shadow: 0 0 28px rgba(192, 132, 252, .3);
+}
+
+.titulo-jogo p {
+    color: #C4B5D9;
+    max-width: 540px;
+    line-height: 1.7;
+}
+
+/* STATUS — PAINÉIS PREMIUM */
+
+.status-jogo {
+    gap: 13px;
+    margin-bottom: 20px;
+}
+
+.status-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 92px;
+    padding: 18px;
+    border-radius: 17px;
+    background:
+        linear-gradient(135deg, rgba(38, 24, 60, .95), rgba(17, 12, 30, .96));
+    border: 1px solid var(--m-border);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, .18);
+    transition: transform .25s ease, border-color .25s ease;
+}
+
+.status-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D8B4FE, transparent);
+    opacity: .65;
+}
+
+.status-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(216, 180, 254, .65);
+}
+
+.status-card > span {
+    font-size: 27px;
+    filter: drop-shadow(0 0 9px rgba(192, 132, 252, .45));
+}
+
+.status-card small {
+    color: var(--m-muted);
+    font-size: 11px;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+.status-card strong {
+    color: #F5D0FE;
+    font-size: 23px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* PROGRESSO HOLOGRÁFICO */
+
+.progresso-container {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 17px;
+    background: var(--m-panel);
+    border: 1px solid var(--m-border);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+}
+
+.progresso-info {
+    color: var(--m-text);
+}
+
+.progresso-info span {
+    color: var(--m-muted);
+}
+
+.progresso-info strong {
+    color: var(--m-pink);
+    text-shadow: 0 0 14px rgba(232, 121, 249, .3);
+}
+
+.barra-progresso {
+    height: 11px;
+    margin-top: 14px;
+    background: #0D0918;
+    border: 1px solid rgba(192, 132, 252, .18);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .5);
+}
+
+.barra-preenchida {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #6D28D9, #A855F7, #E879F9, #67E8F9);
+    box-shadow: 0 0 16px rgba(168, 85, 247, .5);
+}
+
+.barra-preenchida::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 25%, rgba(255,255,255,.5), transparent 75%);
+    animation: memoryShimmer 2.5s linear infinite;
+}
+
+/* INSTRUÇÕES */
+
+.instrucoes {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 17px;
+    background: linear-gradient(115deg, rgba(109, 40, 217, .18), rgba(192, 38, 211, .07));
+    border: 1px solid rgba(192, 132, 252, .27);
+    box-shadow: inset 0 1px rgba(255,255,255,.025);
+}
+
+.instrucoes-icone {
+    font-size: 29px;
+    filter: drop-shadow(0 0 9px rgba(232, 121, 249, .3));
+}
+
+.instrucoes strong {
+    color: #F0ABFC;
+}
+
+.instrucoes p {
+    color: #D6C8E9;
+    line-height: 1.75;
+}
+
+/* TABULEIRO PRINCIPAL */
+
+.area-jogo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(17px, 3vw, 32px);
+    border-radius: 24px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(126, 34, 206, .14), transparent 60%),
+        linear-gradient(145deg, rgba(25, 17, 42, .98), rgba(12, 9, 23, .98));
+    border: 1px solid rgba(192, 132, 252, .3);
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, .3),
+        0 0 35px rgba(124, 58, 237, .08),
+        inset 0 1px rgba(255, 255, 255, .045);
+}
+
+.area-jogo::before {
+    content: "MATHPLAY  /  MEMORY SYSTEM";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 16px;
+    color: rgba(216, 180, 254, .48);
+    background: rgba(168, 85, 247, .055);
+    border-bottom: 1px solid rgba(192, 132, 252, .12);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    pointer-events: none;
+}
+
+.cabecalho-area {
+    position: relative;
+    margin-top: 25px;
+    margin-bottom: 24px;
+}
+
+.etiqueta {
+    color: #67E8F9;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(103, 232, 249, .25);
+}
+
+.cabecalho-area h2 {
+    color: #FAF5FF;
+    font-size: clamp(19px, 3vw, 25px);
+    letter-spacing: -.4px;
+}
+
+.dificuldade {
+    color: #F5D0FE;
+    background: rgba(168, 85, 247, .13);
+    border: 1px solid rgba(192, 132, 252, .4);
+    box-shadow: inset 0 0 14px rgba(168, 85, 247, .06);
+}
+
+/* TABULEIRO */
+
+.tabuleiro {
+    gap: clamp(8px, 1.6vw, 15px);
+    max-width: 720px;
+    perspective: 1200px;
+}
+
+/* CARTAS 3D */
+
+.carta {
+    aspect-ratio: 0.88 / 1;
+    border-radius: 17px;
+    perspective: 1000px;
+    filter: drop-shadow(0 7px 10px rgba(0, 0, 0, .23));
+    transition: filter .25s ease, transform .25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.carta:hover:not(.virada):not(.encontrada) {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 9px 15px rgba(168, 85, 247, .18));
+}
+
+.carta-conteudo {
+    border-radius: 17px;
+    transform-style: preserve-3d;
+    transition: transform .65s cubic-bezier(.2, .75, .2, 1);
+}
+
+.carta-frente,
+.carta-verso {
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+/* Verso da carta: neon, linhas e brilho */
+
+.carta-frente {
+    isolation: isolate;
+    color: white;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(240, 171, 252, .2), transparent 42%),
+        linear-gradient(145deg, #6724B8, #35105F 68%, #1B1032);
+    border: 1px solid rgba(216, 180, 254, .65);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 0 20px rgba(168, 85, 247, .14),
+        0 0 0 1px rgba(124, 58, 237, .1);
+    font-size: clamp(25px, 4vw, 39px);
+    text-shadow: 0 0 20px rgba(240, 171, 252, .75);
+    transition: background .3s, border-color .3s;
+}
+
+.carta-frente::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(216, 180, 254, .17);
+    border-radius: 11px;
+    pointer-events: none;
+}
+
+.carta-frente::after {
+    content: "π";
+    position: absolute;
+    right: 11px;
+    bottom: 4px;
+    color: rgba(255, 255, 255, .18);
+    font-family: Georgia, serif;
+    font-size: clamp(20px, 3vw, 32px);
+    text-shadow: none;
+    pointer-events: none;
+}
+
+.carta-frente:hover {
+    background:
+        radial-gradient(circle at 50% 35%, rgba(240, 171, 252, .26), transparent 48%),
+        linear-gradient(145deg, #9333EA, #581C87 70%, #2E1065);
+    border-color: #F0ABFC;
+}
+
+/* Face com a operação matemática */
+
+.carta-verso {
+    padding: 7px;
+    color: #F5D0FE;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(168, 85, 247, .15), transparent 70%),
+        linear-gradient(145deg, #211432, #120D20);
+    border: 1px solid #A855F7;
+    box-shadow:
+        inset 0 0 20px rgba(168, 85, 247, .09),
+        0 0 15px rgba(168, 85, 247, .12);
+    font-size: clamp(13px, 2vw, 21px);
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.carta.operacao .carta-verso {
+    color: #F0ABFC;
+}
+
+.carta.resultado .carta-verso {
+    color: #A5F3FC;
+    border-color: #8B5CF6;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(103, 232, 249, .09), transparent 70%),
+        linear-gradient(145deg, #17152D, #110D20);
+}
+
+/* PAR CORRETO */
+
+.carta.encontrada .carta-verso {
+    color: #A7F3D0;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(52, 211, 153, .18), transparent 70%),
+        linear-gradient(145deg, #12362E, #0B201D);
+    border: 2px solid #34D399;
+    box-shadow:
+        inset 0 0 25px rgba(52, 211, 153, .12),
+        0 0 18px rgba(52, 211, 153, .25);
+}
+
+.carta.encontrada {
+    filter: drop-shadow(0 0 9px rgba(52, 211, 153, .2));
+}
+
+/* FEEDBACK */
+
+.feedback {
+    margin-top: 24px;
+    padding: 19px;
+    border-radius: 16px;
+    animation: memoryFeedback .35s ease both;
+}
+
+.feedback.sucesso {
+    color: #BBF7D0;
+    background: linear-gradient(120deg, rgba(6, 78, 59, .45), rgba(16, 35, 32, .8));
+    border: 1px solid rgba(52, 211, 153, .55);
+    box-shadow: 0 0 25px rgba(52, 211, 153, .09);
+}
+
+.feedback.erro {
+    color: #FECDD3;
+    background: linear-gradient(120deg, rgba(136, 19, 55, .25), rgba(39, 13, 30, .8));
+    border: 1px solid rgba(251, 113, 133, .48);
+}
+
+.feedback.final {
+    color: #F5D0FE;
+    background: linear-gradient(120deg, rgba(109, 40, 217, .3), rgba(192, 38, 211, .13));
+    border: 1px solid rgba(216, 180, 254, .55);
+    box-shadow: 0 0 30px rgba(168, 85, 247, .14);
+}
+
+/* BOTÃO */
+
+.acoes {
+    margin-top: 25px;
+}
+
+.botao-secundario {
+    position: relative;
+    overflow: hidden;
+    padding: 13px 23px;
+    color: #FFFFFF;
+    background: linear-gradient(110deg, #6D28D9, #9333EA 60%, #C026D3);
+    border: 1px solid rgba(240, 171, 252, .5);
+    border-radius: 13px;
+    box-shadow: 0 7px 20px rgba(109, 40, 217, .22);
+    transition: transform .22s, box-shadow .22s, filter .22s;
+}
+
+.botao-secundario:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.13);
+    box-shadow: 0 0 28px rgba(168, 85, 247, .3);
+}
+
+.botao-secundario:active {
+    transform: scale(.98);
+}
+
+/* DICA */
+
+.dica-card {
+    padding: 20px;
+    border-radius: 17px;
+    background: linear-gradient(140deg, rgba(29, 19, 46, .96), rgba(16, 11, 27, .96));
+}
+
+.dica-card > span {
+    font-size: 28px;
+    filter: drop-shadow(0 0 10px rgba(240, 171, 252, .3));
+}
+
+.dica-card strong {
+    color: #F0ABFC;
+}
+
+.dica-card p {
+    color: #C4B5D9;
+    line-height: 1.7;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes memoryShimmer {
+    from { transform: translateX(-110%); }
+    to { transform: translateX(110%); }
+}
+
+@keyframes memoryDrift {
+    0%, 100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-20px) rotate(8deg); }
+}
+
+@keyframes memoryFeedback {
+    from { opacity: 0; transform: translateY(8px) scale(.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* RESPONSIVIDADE */
+
+@media (min-width: 600px) {
+    .area-jogo {
+        padding: 32px;
+    }
+
+    .tabuleiro {
+        gap: 14px;
+    }
+}
+
+@media (min-width: 900px) {
+    .pagina-jogo {
+        padding: 38px 35px 60px;
+    }
+
+    .tabuleiro {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .pagina-jogo {
+        padding: 16px 12px 35px;
+    }
+
+    .area-jogo {
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .tabuleiro {
+        gap: 7px;
+    }
+
+    .carta {
+        border-radius: 11px;
+    }
+
+    .carta-frente,
+    .carta-verso,
+    .carta-conteudo {
+        border-radius: 11px;
+    }
+
+    .carta-verso {
+        padding: 3px;
+        font-size: 12px;
+    }
+
+    .status-card {
+        padding: 12px;
+    }
+}
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+    .pagina-jogo::before,
+    .pagina-jogo::after,
+    .barra-preenchida::after {
+        animation: none !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: .01ms !important;
+    }
+}
