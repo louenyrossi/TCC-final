@@ -1,4 +1,4 @@
-```php
+
 <?php
 
 require_once '../includes/auth.php';
@@ -8,566 +8,355 @@ protegerPagina('aluno');
 
 $usuarioId = usuarioId();
 
-/* =========================
-   DADOS DO USUÁRIO
-========================= */
+/*
+|--------------------------------------------------------------------------
+| Dados do aluno
+|--------------------------------------------------------------------------
+*/
 
-$stmt = $pdo->prepare("
-    SELECT nome, email, nivel, xp, turma_id
+$sqlUsuario = "
+    SELECT id, nome, nivel, xp
     FROM usuarios
     WHERE id = ?
-");
-$stmt->execute([$usuarioId]);
-$usuario = $stmt->fetch();
+    LIMIT 1
+";
 
-if (!$usuario) {
-    header('Location: ../logout.php');
+$stmtUsuario = $pdo->prepare($sqlUsuario);
+$stmtUsuario->execute([$usuarioId]);
+$aluno = $stmtUsuario->fetch();
+
+if (!$aluno) {
+    session_unset();
+    session_destroy();
+    header('Location: ../login.php');
     exit;
 }
 
-/* =========================
-   TURMA
-========================= */
+$nomeAluno = $aluno['nome'];
+$nivel = (int) $aluno['nivel'];
+$xp = (int) $aluno['xp'];
 
-$turmaNome = 'Não definida';
+$inicial = mb_strtoupper(
+    mb_substr($nomeAluno, 0, 1, 'UTF-8'),
+    'UTF-8'
+);
 
-if (!empty($usuario['turma_id'])) {
-    $stmt = $pdo->prepare("
-        SELECT nome
-        FROM turmas
-        WHERE id = ?
-    ");
+/*
+|--------------------------------------------------------------------------
+| Estatísticas dos jogos
+|--------------------------------------------------------------------------
+*/
 
-    $stmt->execute([$usuario['turma_id']]);
-    $turma = $stmt->fetch();
-
-    if ($turma) {
-        $turmaNome = $turma['nome'];
-    }
-}
-
-/* =========================
-   ESTATÍSTICAS
-========================= */
-
-$stmt = $pdo->prepare("
-    SELECT
-        COUNT(*) AS partidas,
-        COALESCE(SUM(acertos), 0) AS acertos,
-        COALESCE(SUM(erros), 0) AS erros,
-        COALESCE(SUM(pontuacao), 0) AS pontuacao
-    FROM partidas
-    WHERE usuario_id = ?
-");
-
-$stmt->execute([$usuarioId]);
-$estatisticas = $stmt->fetch();
-
-$partidas = (int) $estatisticas['partidas'];
-$acertos = (int) $estatisticas['acertos'];
-$erros = (int) $estatisticas['erros'];
-$pontuacao = (int) $estatisticas['pontuacao'];
-
-$totalRespostas = $acertos + $erros;
-
-$taxaAcerto = $totalRespostas > 0
-    ? round(($acertos / $totalRespostas) * 100)
-    : 0;
-
-/* =========================
-   PROGRESSO DOS JOGOS
-========================= */
-
-$stmt = $pdo->prepare("
+$sqlJogos = "
     SELECT
         j.id,
         j.nome,
         j.descricao,
-        COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'facil'
-                THEN p.porcentagem ELSE 0 END), 0
-        ) AS facil,
-        COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'medio'
-                THEN p.porcentagem ELSE 0 END), 0
-        ) AS medio,
-        COALESCE(
-            MAX(CASE WHEN p.dificuldade = 'dificil'
-                THEN p.porcentagem ELSE 0 END), 0
-        ) AS dificil
+        j.tema,
+        COALESCE(MAX(p.porcentagem), 0) AS porcentagem
     FROM jogos j
     LEFT JOIN progresso p
         ON p.jogo_id = j.id
         AND p.usuario_id = ?
-    WHERE j.nome IN ('Caixa Matemático', 'Memória Matemática')
-    GROUP BY j.id, j.nome, j.descricao
-    ORDER BY j.id
-");
+    WHERE j.ativo = 1
+    GROUP BY j.id, j.nome, j.descricao, j.tema
+    ORDER BY j.id ASC
+";
 
-$stmt->execute([$usuarioId]);
-$jogos = $stmt->fetchAll();
+$stmtJogos = $pdo->prepare($sqlJogos);
+$stmtJogos->execute([$usuarioId]);
+$jogos = $stmtJogos->fetchAll();
 
-/* =========================
-   HISTÓRICO
-========================= */
+$totalJogos = count($jogos);
+$jogosIniciados = 0;
+$jogosConcluidos = 0;
+$somaProgresso = 0;
 
-$stmt = $pdo->prepare("
-    SELECT
-        p.id,
-        j.nome AS jogo,
-        p.acertos,
-        p.erros,
-        p.pontuacao,
-        p.data_inicio,
-        p.data_fim
-    FROM partidas p
-    INNER JOIN jogos j ON j.id = p.jogo_id
-    WHERE p.usuario_id = ?
-    ORDER BY p.data_inicio DESC
-    LIMIT 10
-");
+foreach ($jogos as $jogo) {
+    $porcentagem = min(100, max(0, (float) $jogo['porcentagem']));
 
-$stmt->execute([$usuarioId]);
-$historico = $stmt->fetchAll();
+    $somaProgresso += $porcentagem;
 
-/* =========================
-   CONQUISTAS
-========================= */
+    if ($porcentagem > 0) {
+        $jogosIniciados++;
+    }
 
-$stmt = $pdo->prepare("
-    SELECT
-        c.nome,
-        c.descricao,
-        c.tipo,
-        uc.data_desbloqueio
-    FROM usuario_conquistas uc
-    INNER JOIN conquistas c ON c.id = uc.conquista_id
-    WHERE uc.usuario_id = ?
-    ORDER BY uc.data_desbloqueio DESC
-");
+    if ($porcentagem >= 100) {
+        $jogosConcluidos++;
+    }
+}
 
-$stmt->execute([$usuarioId]);
-$conquistas = $stmt->fetchAll();
-
-/* =========================
-   XP / NÍVEL
-========================= */
-
-$xp = (int) $usuario['xp'];
-$nivel = (int) $usuario['nivel'];
-
-$xpNoNivel = $xp % 100;
-$xpRestante = 100 - $xpNoNivel;
-$progressoXP = $xpNoNivel;
+$progressoGeral = $totalJogos > 0
+    ? round($somaProgresso / $totalJogos)
+    : 0;
 
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meu Progresso - MathPower</title>
+    <title>Meu progresso | MathPower</title>
 
+    <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
     <link rel="stylesheet" href="../assets/css/progresso-aluno.css">
 </head>
 
 <body>
 
-<div class="layout">
+<div class="app">
 
-    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
 
-    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.php" class="logo">
+                <span class="logo-icon">M</span>
+                <span class="logo-text">Math<span>Power</span></span>
+            </a>
 
-        <!-- LOGO -->
-
-        <div class="logo">
-            <span class="logo-icon">M</span>
-
-            <div class="logo-text">
-                <span class="logo-math">Math</span><span class="logo-power">Power</span>
-            </div>
+            <button
+                type="button"
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Fechar menu"
+            >×</button>
         </div>
 
-        <!-- PERFIL DO ALUNO DENTRO DA SIDEBAR -->
-
-        <div class="usuario-topo">
-
-            <div class="perfil-avatar">
-                <?= htmlspecialchars(
-                    mb_strtoupper(
-                        mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
-                        'UTF-8'
-                    )
-                ) ?>
-            </div>
-
-            <div class="perfil-info">
-                <strong>
-                    <?= htmlspecialchars($usuario['nome']) ?>
-                </strong>
-
-                <span>
-                    Nível <?= $nivel ?>
-                </span>
-            </div>
-
-        </div>
-
-        <!-- MENU -->
-
-        <nav class="menu">
-
-            <a href="dashboard.php">
-                ⌂
+        <nav class="sidebar-nav">
+            <a href="dashboard.php" class="nav-item">
+                <span class="nav-icon">⌂</span>
                 <span>Início</span>
             </a>
 
-            <a href="jogos.php">
-                🎮
+            <a href="jogos.php" class="nav-item">
+                <span class="nav-icon">🎮</span>
                 <span>Jogos</span>
             </a>
 
-            <a href="trilha.php">
-                📚
+            <a href="trilha.php" class="nav-item">
+                <span class="nav-icon">📚</span>
                 <span>Trilha</span>
             </a>
 
-            <a href="conquistas.php">
-                🏆
+            <a href="conquistas.php" class="nav-item">
+                <span class="nav-icon">🏆</span>
                 <span>Conquistas</span>
             </a>
 
-            <a href="progresso.php" class="ativo">
-                📊
+            <a href="progresso.php" class="nav-item active">
+                <span class="nav-icon">📊</span>
                 <span>Meu progresso</span>
             </a>
 
-            <a href="perfil.php">
-                👤
+            <a href="perfil.php" class="nav-item">
+                <span class="nav-icon">👤</span>
                 <span>Meu perfil</span>
             </a>
-
         </nav>
 
-        <!-- SAIR -->
-<div class="sidebar-bottom">
+        <div class="sidebar-bottom">
 
-    <div class="usuario-topo">
-        <div class="perfil-avatar">
-            <?= htmlspecialchars(
-                mb_strtoupper(
-                    mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
-                    'UTF-8'
-                )
-            ) ?>
+            <div class="sidebar-user">
+                <div class="user-avatar">
+                    <?= htmlspecialchars($inicial) ?>
+                </div>
+
+                <div class="user-info">
+                    <strong>
+                        <?= htmlspecialchars($nomeAluno) ?>
+                    </strong>
+
+                    <span>Nível <?= $nivel ?></span>
+                </div>
+            </div>
+
+            <div class="logout-divider"></div>
+
+            <a href="../logout.php" class="logout-link">
+                <span>↪</span>
+                <span>Sair</span>
+            </a>
         </div>
-
-        <div class="perfil-info">
-            <strong><?= htmlspecialchars($usuario['nome']) ?></strong>
-            <span>Nível <?= (int) $usuario['nivel'] ?></span>
-        </div>
-    </div>
-
-    <a href="../logout.php" class="logout">
-        ↪
-        <span>Sair</span>
-    </a>
-
-</div>
 
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-
-    <main class="conteudo">
+    <main class="main-content">
 
         <header class="topbar">
-            <div>
-                <h1>Meu progresso</h1>
-                <p>Acompanhe sua evolução no MathPower.</p>
-            </div>
+            <button
+                type="button"
+                class="menu-button"
+                id="menuButton"
+                aria-label="Abrir menu"
+            >☰</button>
+
+            <div class="topbar-title">Meu progresso</div>
         </header>
 
-        <!-- XP -->
+        <div class="content">
 
-        <section class="card xp-card">
-
-            <div class="xp-info">
-                <div class="icone-nivel">⭐</div>
-
+            <section class="page-header">
                 <div>
-                    <span class="label">Nível atual</span>
-                    <h2>Nível <?= $nivel ?></h2>
+                    <span class="page-kicker">📊 Sua jornada</span>
+                    <h1>Meu progresso</h1>
+                    <p>
+                        Acompanhe suas atividades, seu XP e sua evolução
+                        no MathPower.
+                    </p>
                 </div>
-            </div>
 
-            <div class="xp-total">
-                <strong><?= $xp ?> XP</strong>
-                <span><?= $xpRestante ?> XP para o próximo nível</span>
-            </div>
+                <div class="header-symbol">🚀</div>
+            </section>
 
-            <div class="barra">
-                <div
-                    class="barra-preenchida"
-                    style="width: <?= $progressoXP ?>%;"
-                ></div>
-            </div>
+            <section class="stats-grid">
 
-        </section>
+                <article class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <span>Experiência total</span>
+                    <strong><?= number_format($xp, 0, ',', '.') ?> XP</strong>
+                    <p>Seus pontos acumulados</p>
+                </article>
 
-        <!-- ESTATÍSTICAS -->
+                <article class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <span>Nível atual</span>
+                    <strong><?= $nivel ?></strong>
+                    <p>Continue aprendendo!</p>
+                </article>
 
-        <section class="estatisticas">
+                <article class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <span>Jogos iniciados</span>
+                    <strong><?= $jogosIniciados ?></strong>
+                    <p>Jogos com progresso registrado</p>
+                </article>
 
-            <div class="stat-card">
-                <span class="stat-icone">🎮</span>
-                <div>
-                    <strong><?= $partidas ?></strong>
-                    <span>Partidas</span>
+                <article class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <span>Jogos concluídos</span>
+                    <strong><?= $jogosConcluidos ?></strong>
+                    <p>Jogos com 100% de progresso</p>
+                </article>
+
+            </section>
+
+            <section class="progress-overview card">
+                <div class="section-heading">
+                    <div>
+                        <span class="page-kicker">📈 Visão geral</span>
+                        <h2>Seu avanço nos jogos</h2>
+                    </div>
+
+                    <strong class="percentage">
+                        <?= $progressoGeral ?>%
+                    </strong>
                 </div>
-            </div>
 
-            <div class="stat-card">
-                <span class="stat-icone">✅</span>
-                <div>
-                    <strong><?= $acertos ?></strong>
-                    <span>Acertos</span>
+                <div class="progress-bar">
+                    <div
+                        class="progress-fill"
+                        style="width: <?= $progressoGeral ?>%;"
+                    ></div>
                 </div>
-            </div>
 
-            <div class="stat-card">
-                <span class="stat-icone">❌</span>
-                <div>
-                    <strong><?= $erros ?></strong>
-                    <span>Erros</span>
+                <p>
+                    Você concluiu, em média,
+                    <?= $progressoGeral ?>% do progresso dos jogos disponíveis.
+                </p>
+            </section>
+
+            <section class="games-progress card">
+                <div class="section-heading">
+                    <div>
+                        <span class="page-kicker">🎯 Atividades</span>
+                        <h2>Progresso por jogo</h2>
+                    </div>
                 </div>
-            </div>
 
-            <div class="stat-card">
-                <span class="stat-icone">🏆</span>
-                <div>
-                    <strong><?= $pontuacao ?></strong>
-                    <span>Pontuação</span>
-                </div>
-            </div>
+                <?php if ($totalJogos > 0): ?>
 
-            <div class="stat-card">
-                <span class="stat-icone">📈</span>
-                <div>
-                    <strong><?= $taxaAcerto ?>%</strong>
-                    <span>Taxa de acerto</span>
-                </div>
-            </div>
+                    <div class="progress-list">
 
-        </section>
+                        <?php foreach ($jogos as $jogo): ?>
 
-        <!-- PROGRESSO DOS JOGOS -->
+                            <?php
+                            $porcentagem = min(
+                                100,
+                                max(0, (float) $jogo['porcentagem'])
+                            );
+                            ?>
 
-        <section class="secao">
+                            <article class="progress-item">
 
-            <div class="titulo-secao">
-                <div>
-                    <h2>Progresso dos jogos</h2>
-                    <p>Veja como está sua evolução em cada jogo.</p>
-                </div>
-            </div>
+                                <div class="game-icon">🎮</div>
 
-            <div class="jogos-progresso">
+                                <div class="progress-item-info">
+                                    <h3>
+                                        <?= htmlspecialchars($jogo['nome']) ?>
+                                    </h3>
 
-                <?php foreach ($jogos as $jogo): ?>
+                                    <p>
+                                        <?= htmlspecialchars(
+                                            $jogo['descricao'] ?? ''
+                                        ) ?>
+                                    </p>
 
-                    <?php
-                    $facil = (float) $jogo['facil'];
-                    $medio = (float) $jogo['medio'];
-                    $dificil = (float) $jogo['dificil'];
-
-                    $mediaJogo = round(
-                        ($facil + $medio + $dificil) / 3
-                    );
-                    ?>
-
-                    <article class="jogo-card">
-
-                        <div class="jogo-header">
-
-                            <div class="jogo-icone">
-                                <?= $jogo['nome'] === 'Caixa Matemático' ? '🛒' : '🧠' ?>
-                            </div>
-
-                            <div>
-                                <h3><?= htmlspecialchars($jogo['nome']) ?></h3>
-                                <p><?= htmlspecialchars($jogo['descricao']) ?></p>
-                            </div>
-
-                        </div>
-
-                        <div class="progresso-geral">
-
-                            <div class="linha-progresso">
-                                <span>Progresso geral</span>
-                                <strong><?= $mediaJogo ?>%</strong>
-                            </div>
-
-                            <div class="barra">
-                                <div
-                                    class="barra-preenchida"
-                                    style="width: <?= $mediaJogo ?>%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
-                        <div class="dificuldades">
-
-                            <div>
-                                <span>Fácil</span>
-                                <div class="mini-barra">
-                                    <div style="width: <?= $facil ?>%;"></div>
+                                    <div class="progress-bar">
+                                        <div
+                                            class="progress-fill"
+                                            style="width: <?= $porcentagem ?>%;"
+                                        ></div>
+                                    </div>
                                 </div>
-                                <strong><?= round($facil) ?>%</strong>
-                            </div>
 
-                            <div>
-                                <span>Médio</span>
-                                <div class="mini-barra">
-                                    <div style="width: <?= $medio ?>%;"></div>
-                                </div>
-                                <strong><?= round($medio) ?>%</strong>
-                            </div>
+                                <strong class="game-percentage">
+                                    <?= round($porcentagem) ?>%
+                                </strong>
 
-                            <div>
-                                <span>Difícil</span>
-                                <div class="mini-barra">
-                                    <div style="width: <?= $dificil ?>%;"></div>
-                                </div>
-                                <strong><?= round($dificil) ?>%</strong>
-                            </div>
+                            </article>
 
-                        </div>
+                        <?php endforeach; ?>
 
-                    </article>
+                    </div>
 
-                <?php endforeach; ?>
+                <?php else: ?>
 
-            </div>
+                    <div class="empty-state">
+                        <div class="empty-icon">🎮</div>
+                        <h3>Nenhum jogo disponível</h3>
+                        <p>
+                            Quando os jogos estiverem disponíveis,
+                            seu progresso aparecerá aqui.
+                        </p>
+                        <a href="jogos.php" class="action-button">
+                            Ver jogos
+                        </a>
+                    </div>
 
-        </section>
+                <?php endif; ?>
+            </section>
 
-        <!-- HISTÓRICO -->
+            <section class="tip-card">
+                <div class="tip-icon">💡</div>
 
-        <section class="secao">
-
-            <div class="titulo-secao">
                 <div>
-                    <h2>Histórico de partidas</h2>
-                    <p>Suas últimas partidas realizadas.</p>
+                    <strong>Dica MathPower</strong>
+                    <p>
+                        Pratique no seu ritmo e acompanhe sua evolução.
+                        Cada atividade é uma oportunidade de aprender algo novo!
+                    </p>
                 </div>
-            </div>
+            </section>
 
-            <?php if (empty($historico)): ?>
-
-                <div class="vazio">
-                    <span>🎮</span>
-                    <h3>Nenhuma partida ainda</h3>
-                    <p>Jogue um dos desafios para começar seu histórico.</p>
-                    <a href="jogos.php" class="botao">Ver jogos</a>
-                </div>
-
-            <?php else: ?>
-
-                <div class="tabela-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Jogo</th>
-                                <th>Acertos</th>
-                                <th>Erros</th>
-                                <th>Pontuação</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <?php foreach ($historico as $partida): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($partida['jogo']) ?></td>
-                                    <td class="acerto"><?= (int) $partida['acertos'] ?></td>
-                                    <td class="erro"><?= (int) $partida['erros'] ?></td>
-                                    <td><?= (int) $partida['pontuacao'] ?> pts</td>
-                                    <td>
-                                        <?= !empty($partida['data_inicio'])
-                                            ? date('d/m/Y H:i', strtotime($partida['data_inicio']))
-                                            : '—' ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
-            <?php endif; ?>
-
-        </section>
-
-        <!-- CONQUISTAS -->
-
-        <section class="secao">
-
-            <div class="titulo-secao">
-                <div>
-                    <h2>Minhas conquistas</h2>
-                    <p>Medalhas que você já desbloqueou.</p>
-                </div>
-            </div>
-
-            <?php if (empty($conquistas)): ?>
-
-                <div class="vazio">
-                    <span>🏆</span>
-                    <h3>Nenhuma conquista ainda</h3>
-                    <p>Continue jogando para desbloquear medalhas.</p>
-                </div>
-
-            <?php else: ?>
-
-                <div class="conquistas">
-
-                    <?php foreach ($conquistas as $conquista): ?>
-
-                        <div class="conquista">
-
-                            <div class="conquista-icone">🏅</div>
-
-                            <div>
-                                <h3><?= htmlspecialchars($conquista['nome']) ?></h3>
-                                <p><?= htmlspecialchars($conquista['descricao']) ?></p>
-
-                                <small>
-                                    Desbloqueada em
-                                    <?= !empty($conquista['data_desbloqueio'])
-                                        ? date('d/m/Y', strtotime($conquista['data_desbloqueio']))
-                                        : '—' ?>
-                                </small>
-                            </div>
-
-                        </div>
-
-                    <?php endforeach; ?>
-
-                </div>
-
-            <?php endif; ?>
-
-        </section>
-
+        </div>
     </main>
 
 </div>
 
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="../assets/js/jogos-aluno.js"></script>
+
 </body>
 </html>
-```
