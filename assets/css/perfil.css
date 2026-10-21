@@ -1267,7 +1267,7 @@ body {
 
 /* Texto Sair na sidebar */
 .sidebar-bottom .logout-link {
-    font-size: 13px !important;
+    font-size: 12px !important;
 }
 
 .sidebar-bottom .logout-link span {
