@@ -322,11 +322,12 @@
         gap: 12px;
     }
 }
-.performance-card .performance-header h2 {
-    font-size: 17px !important;
+/* PROGRESSO — FORÇAR TAMANHOS */
+.performance-card h2 {
+    font-size: 14px !important;
 }
 
-.performance-card .performance-header p {
+.performance-card p {
     font-size: 14px !important;
 }
 
@@ -334,6 +335,7 @@
     font-size: 14px !important;
 }
 
-.performance-card .performance-footer {
+.performance-card .performance-footer,
+.performance-card .performance-footer span {
     font-size: 14px !important;
 }
