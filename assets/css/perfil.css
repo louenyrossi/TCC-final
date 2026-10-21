@@ -1267,39 +1267,39 @@ body {
 
 /* Progresso */
 .performance-header h2 {
-    font-size: 15px !important;
+    font-size: 17px !important;
 }
 
 .performance-header p {
-    font-size: 11px !important;
+    font-size: 12px !important;
 }
 
 .performance-value {
-    font-size: 21px !important;
+    font-size: 23px !important;
 }
 
 .performance-footer {
-    font-size: 10px !important;
+    font-size: 11px !important;
 }
 
 /* Perfil: nome e descrição */
 .profile-main h2 {
-    font-size: 19px !important;
+    font-size: 21px !important;
 }
 
 .profile-main p {
-    font-size: 12px !important;
+    font-size: 13px !important;
 }
 
 .profile-tags .profile-tag {
-    font-size: 10px !important;
+    font-size: 11px !important;
 }
 
 .xp-box strong {
-    font-size: 24px !important;
+    font-size: 26px !important;
 }
 
 .xp-box span,
 .xp-box small {
-    font-size: 10px !important;
+    font-size: 11px !important;
 }
