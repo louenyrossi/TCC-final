@@ -2484,7 +2484,7 @@ button:focus-visible {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 4px 2px 14px;
+    padding: 4px 2px 24px;
     border-top: none;
 }
 
@@ -2512,7 +2512,6 @@ button:focus-visible {
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-
     flex: 1;
     min-width: 0;
 }
