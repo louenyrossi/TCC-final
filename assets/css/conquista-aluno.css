@@ -81,9 +81,9 @@ body {
 .logo .power {
     color: #c026ff;
     text-shadow:
-        0 0 5px rgba(216, 160, 255, 0.9),
-        0 0 12px rgba(192, 38, 255, 0.7),
-        0 0 22px rgba(168, 85, 247, 0.5);
+        0 0 5px rgba(192, 38, 255, 0.8),
+        0 0 12px rgba(192, 38, 255, 0.5),
+        0 0 22px rgba(168, 85, 247, 0.3);
 }
 
 .logo .math {
