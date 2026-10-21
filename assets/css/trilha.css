@@ -2226,7 +2226,7 @@ button:focus-visible {
 
 /* Destaque específico para o ícone Início */
 .sidebar-nav .nav-item:first-child span:first-child {
-    font-size: 17px;
+    font-size: 18px;
     transform: scale(1.08);
     transform-origin: center;
 }
