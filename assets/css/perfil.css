@@ -1265,11 +1265,11 @@ body {
     font-size: 12px !important;
 }
 
-/* Texto Sair na sidebar */
-.sidebar-bottom .logout-link {
-    font-size: 7px !important;
+/* Reduz apenas o texto Sair da sidebar */
+.sidebar-bottom a.logout-link {
+    font-size: 12px !important;
 }
 
-.sidebar-bottom .logout-link span {
-    font-size: 16px !important;
+.sidebar-bottom a.logout-link span:last-child {
+    font-size: 12px !important;
 }
