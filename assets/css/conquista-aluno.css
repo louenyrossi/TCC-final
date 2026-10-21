@@ -71,10 +71,24 @@ body {
 
 .logo {
     margin-right: auto;
-    color: var(--branco);
+    color: #ffffff;
     font-size: 25px;
     font-weight: 900;
     letter-spacing: -0.8px;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
+}
+
+.logo .math {
+    color: #c026ff;
+    text-shadow:
+        0 0 5px rgba(192, 38, 255, 0.8),
+        0 0 12px rgba(192, 38, 255, 0.5),
+        0 0 22px rgba(168, 85, 247, 0.3);
+}
+
+.logo .power {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
 }
 
 .cabecalho-conteudo > span {
@@ -137,15 +151,17 @@ body {
 
 .titulo-area h1 {
     margin-bottom: 10px;
-    color: var(--branco);
+    color: #ffffff;
     font-size: clamp(28px, 4vw, 36px);
     font-weight: 900;
     letter-spacing: -0.8px;
     line-height: 1.25;
+    text-shadow: none;
 }
 
 .titulo-area h1::first-letter {
-    color: var(--roxo-neon);
+    c color: #ffffff;
+    text-shadow: none;
 }
 
 .titulo-area p {
