@@ -2532,7 +2532,7 @@ button:focus-visible {
 
 .sidebar-student-info small {
     display: block;
-    color: var(--gray);
+    color: #A39AB5;
     font-size: 12px;
     font-weight: 400;
     line-height: 1.3;
