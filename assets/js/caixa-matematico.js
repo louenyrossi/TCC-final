@@ -10,12 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const questionElement = document.getElementById('question');
     const questionNumberElement = document.getElementById('question-number-display');
-    
-    const mathScene = document.getElementById('math-scene');
-    const sceneObjects = document.getElementById('scene-objects');
-    const sceneCaption = document.getElementById('scene-caption');
-    const sceneEffects = document.getElementById('scene-effects');
-
     const questionNumberTopElement = document.getElementById('question-number');
     const questionTotalElement = document.getElementById('question-total');
 
@@ -81,81 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    
-function atualizarCena(enunciado) {
-    if (!mathScene || !sceneObjects || !sceneCaption) return;
 
-    const texto = enunciado.toLowerCase();
-
-    mathScene.classList.remove('is-correct', 'is-wrong');
-
-    let itens = ['🛒', '🧮', '🪙'];
-    let legenda = 'Observe os valores e resolva o desafio!';
-
-    if (/troco|pagou|devolveu|recebeu/.test(texto)) {
-        itens = ['💵', '🧑‍💼', '🪙'];
-        legenda = '💰 Calcule o pagamento e descubra o troco!';
-    } else if (/total|somou|juntou|ao todo|comprou/.test(texto)) {
-        itens = ['🥖', '🥛', '🛒'];
-        legenda = '🛍️ Some os valores da compra!';
-    } else if (/vezes|multiplic|produto de/.test(texto)) {
-        itens = ['🔢', '✖️', '✨'];
-        legenda = '⚡ Encontre o resultado da multiplicação!';
-    } else if (/divid|repart|cada um/.test(texto)) {
-        itens = ['🍎', '➗', '🧺'];
-        legenda = '🧩 Descubra como repartir os valores!';
-    } else if (/menos|diferença|retirou|gastou/.test(texto)) {
-        itens = ['💰', '➖', '🪙'];
-        legenda = '🔎 Descubra quanto sobrou!';
-    } else if (/mais|somar|adição/.test(texto)) {
-        itens = ['🔢', '➕', '💜'];
-        legenda = '🧠 Junte os valores para encontrar a resposta!';
-    }
-
-    sceneObjects.replaceChildren();
-
-    itens.forEach((item, indice) => {
-        const elemento = document.createElement('span');
-        elemento.className = 'scene-item';
-        elemento.textContent = item;
-        elemento.style.animationDelay = `${indice * -0.4}s`;
-        sceneObjects.appendChild(elemento);
-    });
-
-    sceneCaption.textContent = legenda;
-
-    if (sceneEffects) sceneEffects.replaceChildren();
-}
-
-function animarResultado(correta) {
-    if (!mathScene) return;
-
-    mathScene.classList.remove('is-correct', 'is-wrong');
-
-    // Reinicia a animação para cada resposta.
-    void mathScene.offsetWidth;
-
-    mathScene.classList.add(correta ? 'is-correct' : 'is-wrong');
-
-    if (sceneCaption) {
-        sceneCaption.textContent = correta
-            ? '🎉 Mandou bem! Dinheiro conquistado!'
-            : '💪 Continue pensando! Você consegue!';
-    }
-
-    if (correta && sceneEffects) {
-        sceneEffects.replaceChildren();
-
-        for (let i = 0; i < 9; i++) {
-            const moeda = document.createElement('span');
-            moeda.className = 'scene-coin';
-            moeda.textContent = i % 2 === 0 ? '🪙' : '✨';
-            moeda.style.setProperty('--coin-x', `${8 + i * 10}%`);
-            moeda.style.animationDelay = `${i * 0.06}s`;
-            sceneEffects.appendChild(moeda);
-        }
-    }
-}
     /*
     |--------------------------------------------------------------------------
     | Carregar pergunta
