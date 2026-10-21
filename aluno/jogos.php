@@ -6,7 +6,37 @@ require_once '../config/config.php';
 protegerPagina('aluno');
 
 $usuarioId = usuarioId();
+/*
+|--------------------------------------------------------------------------
+| Dados do aluno — iguais ao Dashboard
+|--------------------------------------------------------------------------
+*/
 
+$sqlUsuario = "
+    SELECT
+        u.id,
+        u.nome,
+        u.nivel,
+        u.xp
+    FROM usuarios u
+    WHERE u.id = ?
+    LIMIT 1
+";
+
+$stmtUsuario = $pdo->prepare($sqlUsuario);
+$stmtUsuario->execute([$usuarioId]);
+
+$aluno = $stmtUsuario->fetch();
+
+if (!$aluno) {
+    session_unset();
+    session_destroy();
+
+    header('Location: ../login.php');
+    exit;
+}
+
+$nivel = (int) $aluno['nivel'];
 /*
 |--------------------------------------------------------------------------
 | Buscar os jogos disponíveis
@@ -158,14 +188,8 @@ $jogos = $stmt->fetchAll();
 
                 <div class="user-avatar">
 
-                    <?= htmlspecialchars(
-                        strtoupper(
-                            mb_substr(
-                                nomeUsuario(),
-                                0,
-                                1
-                            )
-                        )
+                   <?= htmlspecialchars(
+                        strtoupper(mb_substr($aluno['nome'], 0, 1))
                     ) ?>
 
                 </div>
@@ -173,7 +197,7 @@ $jogos = $stmt->fetchAll();
                 <div class="user-info">
 
                     <strong>
-                        <?= htmlspecialchars(nomeUsuario()) ?>
+                        <?= htmlspecialchars($aluno['nome']) ?>
                     </strong>
 
                     <span>
