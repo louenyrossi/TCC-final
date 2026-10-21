@@ -1158,3 +1158,626 @@ body {
         font-size: 20px;
     }
 }
+
+/* ==========================================================
+   MATHPLAY — CAIXA ELETRÓNICA NEON
+   Redesign visual — mantém o funcionamento do jogo
+========================================================== */
+
+:root {
+    --roxo: #A855F7;
+    --roxo-escuro: #7E22CE;
+    --roxo-claro: #E9D5FF;
+
+    --fundo: #0B0712;
+    --branco: #171020;
+
+    --texto: #F8F3FF;
+    --texto-secundario: #B9A9CB;
+
+    --verde: #22C55E;
+    --verde-claro: #123523;
+
+    --vermelho: #FB4768;
+    --vermelho-claro: #3A1524;
+
+    --amarelo: #FBBF24;
+    --amarelo-claro: #392A12;
+
+    --borda: rgba(192, 132, 252, 0.2);
+    --sombra: 0 18px 55px rgba(0, 0, 0, 0.3);
+    --raio: 22px;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(126, 34, 206, .20), transparent 48%),
+        #0B0712;
+    color: var(--texto);
+}
+
+/* HEADER */
+
+.game-header {
+    background: rgba(17, 10, 27, .92);
+    border-bottom: 1px solid rgba(168, 85, 247, .24);
+    backdrop-filter: blur(14px);
+}
+
+.back-button {
+    color: #D3C0E8;
+}
+
+.back-button:hover {
+    color: #E879F9;
+}
+
+.game-brand-icon {
+    background: linear-gradient(135deg, #7E22CE, #C026D3);
+    box-shadow: 0 0 22px rgba(168, 85, 247, .3);
+}
+
+.game-brand span {
+    color: #B9A9CB;
+}
+
+.game-brand strong,
+.player-info strong {
+    color: #F8F3FF;
+}
+
+.player-info span {
+    color: #B9A9CB;
+}
+
+/* CONTEÚDO */
+
+.game-container {
+    max-width: 1050px;
+}
+
+/* ESTATÍSTICAS */
+
+.status-card {
+    background: linear-gradient(145deg, #1D1429, #120C1B);
+    border: 1px solid rgba(192, 132, 252, .2);
+    border-radius: 17px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    transition: transform .2s ease, border-color .2s ease;
+}
+
+.status-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(216, 180, 254, .5);
+}
+
+.status-label,
+.status-card > span:last-child {
+    color: #B9A9CB;
+}
+
+.status-card strong {
+    color: #F8F3FF;
+}
+
+.score-card strong {
+    color: #D879FF;
+    text-shadow: 0 0 16px rgba(216, 121, 255, .3);
+}
+
+/* PROGRESSO */
+
+.progress-info {
+    color: #CBB9DF;
+}
+
+.progress-bar {
+    height: 11px;
+    background: #241633;
+    border: 1px solid rgba(192, 132, 252, .18);
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #7E22CE, #C026D3, #E879F9);
+    box-shadow: 0 0 14px rgba(192, 38, 211, .55);
+}
+
+/* MÁQUINA PRINCIPAL */
+
+.game-card {
+    position: relative;
+    overflow: hidden;
+    padding: 22px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, .13), transparent 42%),
+        linear-gradient(155deg, #21152F, #110B1B 72%);
+    border: 1px solid rgba(192, 132, 252, .38);
+    border-radius: 26px;
+    box-shadow:
+        0 0 0 1px rgba(126, 34, 206, .1),
+        0 20px 60px rgba(0, 0, 0, .38),
+        0 0 38px rgba(126, 34, 206, .10);
+}
+
+/* Topo decorativo da máquina */
+
+.game-card::before {
+    content: "✦  MATHPLAY  /  SMART CASH";
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    margin: -22px -22px 25px;
+    padding: 13px 20px;
+    color: #F3D9FF;
+    background: linear-gradient(100deg, #42136C, #711BA5 55%, #40135D);
+    border-bottom: 1px solid rgba(232, 121, 249, .5);
+    border-radius: 0;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 14px rgba(232, 121, 249, .5);
+}
+
+/* TÍTULO */
+
+.game-card-header {
+    padding: 17px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, .025);
+    border: 1px solid rgba(192, 132, 252, .18);
+    border-radius: 17px;
+    box-shadow: inset 0 1px rgba(255, 255, 255, .035);
+}
+
+.game-card-header h1 {
+    color: #FFF8FF;
+    font-size: 25px;
+    letter-spacing: -.5px;
+}
+
+.game-category {
+    color: #E879F9;
+    letter-spacing: 1.4px;
+}
+
+.difficulty-badge {
+    background: rgba(168, 85, 247, .14);
+    color: #E9D5FF;
+    border: 1px solid rgba(192, 132, 252, .3);
+}
+
+/* SITUAÇÃO DA COMPRA */
+
+.scenario {
+    gap: 14px;
+    padding: 16px;
+    background: linear-gradient(110deg, rgba(126, 34, 206, .16), rgba(217, 70, 239, .045));
+    border: 1px solid rgba(168, 85, 247, .22);
+    border-radius: 17px;
+}
+
+.scenario-icon {
+    background: linear-gradient(145deg, #9333EA, #C026D3);
+    color: white;
+    box-shadow: 0 0 23px rgba(168, 85, 247, .3);
+}
+
+.scenario strong {
+    color: #F8F3FF;
+}
+
+.scenario p {
+    color: #C2B1D5;
+}
+
+/* VISOR DIGITAL */
+
+.question-area {
+    position: relative;
+    margin: 23px 0;
+    padding: 24px 17px;
+    overflow-wrap: anywhere;
+    background:
+        linear-gradient(135deg, rgba(12, 8, 19, .98), rgba(26, 12, 38, .98));
+    border: 2px solid #62318A;
+    border-radius: 17px;
+    box-shadow:
+        inset 0 0 25px rgba(0, 0, 0, .5),
+        inset 0 0 35px rgba(126, 34, 206, .09),
+        0 0 20px rgba(168, 85, 247, .12);
+}
+
+.question-area::before {
+    content: "▰  VISOR DIGITAL";
+    display: block;
+    margin-bottom: 14px;
+    color: #C084FC;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.question-label {
+    color: #A78BFA;
+}
+
+.question-area h2 {
+    color: #F5E9FF;
+    font-size: 20px;
+    line-height: 1.6;
+    text-shadow: 0 0 16px rgba(216, 180, 254, .12);
+}
+
+/* DICA */
+
+.hint-area {
+    padding: 10px;
+    background: rgba(251, 191, 36, .06);
+    border: 1px solid rgba(251, 191, 36, .15);
+    border-radius: 14px;
+}
+
+.hint-button {
+    color: #FCD875;
+    background: #30220F;
+    border: 1px solid rgba(251, 191, 36, .3);
+}
+
+.hint-button:hover {
+    background: #463015;
+}
+
+.hint-text {
+    color: #FDE7A5;
+    background: rgba(251, 191, 36, .09);
+    border: 1px solid rgba(251, 191, 36, .16);
+}
+
+/* ÁREA DE RESPOSTA */
+
+.answer-form {
+    gap: 12px;
+    padding: 17px;
+    background: linear-gradient(145deg, #20142D, #171020);
+    border: 1px solid rgba(192, 132, 252, .25);
+    border-radius: 18px;
+}
+
+.answer-form label {
+    color: #E9D5FF;
+}
+
+.answer-input-wrapper {
+    min-height: 60px;
+    background: #0D0914;
+    border: 2px solid #49305E;
+    border-radius: 13px;
+    box-shadow: inset 0 3px 12px rgba(0, 0, 0, .3);
+}
+
+.answer-input-wrapper:focus-within {
+    border-color: #C084FC;
+    box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, .2),
+        0 0 0 3px rgba(168, 85, 247, .13),
+        0 0 20px rgba(168, 85, 247, .12);
+}
+
+.answer-input-wrapper span {
+    color: #D8B4FE;
+}
+
+.answer-input-wrapper input {
+    color: #FFFFFF;
+    caret-color: #E879F9;
+}
+
+.answer-input-wrapper input::placeholder {
+    color: #79678B;
+}
+
+/* TECLADO NUMÉRICO */
+
+.numeric-keypad {
+    max-width: 430px;
+    gap: 11px;
+    margin: 20px auto;
+    padding: 16px;
+    background: linear-gradient(145deg, #21152F, #130C1E);
+    border: 1px solid rgba(192, 132, 252, .32);
+    border-radius: 20px;
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, .035),
+        0 12px 30px rgba(0, 0, 0, .2);
+}
+
+.key-button {
+    min-width: 0;
+    height: 62px;
+    color: #F8EEFF;
+    background: linear-gradient(160deg, #38234D, #241531);
+    border: 1px solid #654083;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: 800;
+    box-shadow:
+        0 4px 0 #160D20,
+        inset 0 1px rgba(255, 255, 255, .08);
+    transition:
+        transform .12s ease,
+        background .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+.key-button:hover {
+    background: linear-gradient(145deg, #60328A, #402052);
+    border-color: #D8B4FE;
+    box-shadow:
+        0 4px 0 #160D20,
+        0 0 16px rgba(168, 85, 247, .2);
+}
+
+.key-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #160D20;
+}
+
+.key-clear {
+    color: #FF91A7;
+    background: linear-gradient(145deg, #512033, #301422);
+    border-color: #8E3652;
+}
+
+.key-clear:hover {
+    background: linear-gradient(145deg, #762A48, #4B1C31);
+    border-color: #FB7185;
+}
+
+.key-delete {
+    color: #E9D5FF;
+    background: linear-gradient(145deg, #492461, #2D183D);
+    border-color: #8450A5;
+}
+
+.key-delete:hover {
+    background: linear-gradient(145deg, #67358A, #422156);
+}
+
+/* BOTÕES PRINCIPAIS */
+
+.answer-button,
+.next-button {
+    min-height: 51px;
+    border-radius: 13px;
+    font-size: 14px;
+    letter-spacing: .2px;
+}
+
+.answer-button {
+    color: white;
+    background: linear-gradient(100deg, #7E22CE, #A855F7 55%, #C026D3);
+    border: 1px solid rgba(232, 121, 249, .55);
+    box-shadow:
+        0 5px 0 #4C167B,
+        0 8px 22px rgba(168, 85, 247, .2);
+}
+
+.answer-button:hover {
+    background: linear-gradient(100deg, #9333EA, #C084FC 55%, #D946EF);
+    box-shadow:
+        0 5px 0 #4C167B,
+        0 0 25px rgba(192, 38, 211, .25);
+    transform: translateY(-1px);
+}
+
+.answer-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #4C167B;
+}
+
+.answer-button:disabled {
+    box-shadow: none;
+}
+
+.next-button {
+    color: #F3E8FF;
+    background: #2A1A3A;
+    border: 1px solid #70458E;
+}
+
+.next-button:hover {
+    background: #42245A;
+}
+
+/* FEEDBACK DAS RESPOSTAS */
+
+.feedback {
+    border-radius: 15px;
+}
+
+.feedback-success {
+    color: #BBF7D0;
+    background: rgba(22, 163, 74, .12);
+    border-color: rgba(34, 197, 94, .35);
+}
+
+.feedback-success .feedback-icon {
+    color: white;
+    background: #16A34A;
+}
+
+.feedback-error {
+    color: #FECDD3;
+    background: rgba(225, 29, 72, .12);
+    border-color: rgba(251, 71, 104, .35);
+}
+
+.feedback-error .feedback-icon {
+    color: white;
+    background: #E11D48;
+}
+
+/* CARTÕES DE DICAS */
+
+.tip-card {
+    background: linear-gradient(145deg, #1D1429, #130D1D);
+    border: 1px solid rgba(192, 132, 252, .2);
+    border-radius: 15px;
+    transition: transform .2s ease, border-color .2s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(192, 132, 252, .45);
+}
+
+.tip-card strong {
+    color: #F3E8FF;
+}
+
+.tip-card p {
+    color: #B9A9CB;
+}
+
+/* FOCO ACESSÍVEL */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid #E879F9;
+    outline-offset: 3px;
+}
+
+/* TABLET E COMPUTADOR */
+
+@media (min-width: 600px) {
+    .game-card {
+        padding: 30px;
+        border-radius: 27px;
+    }
+
+    .game-card::before {
+        margin: -30px -30px 28px;
+        padding: 17px 25px;
+        border-radius: 0;
+    }
+
+    .game-card-header h1 {
+        font-size: 28px;
+    }
+
+    .question-area {
+        padding: 30px 28px;
+    }
+
+    .question-area h2 {
+        font-size: 23px;
+    }
+
+    .answer-form {
+        padding: 22px;
+    }
+}
+
+@media (min-width: 900px) {
+    .game-card {
+        padding: 38px 50px;
+    }
+
+    .game-card::before {
+        margin: -38px -50px 32px;
+        padding: 19px 32px;
+    }
+
+    .question-area {
+        padding: 34px 45px;
+    }
+
+    .question-area h2 {
+        font-size: 25px;
+    }
+}
+
+/* TELEMÓVEL */
+
+@media (max-width: 599px) {
+    .game-header {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .game-brand {
+        gap: 7px;
+    }
+
+    .game-brand-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+
+    .game-brand strong {
+        font-size: 12px;
+    }
+
+    .back-button {
+        font-size: 12px;
+    }
+
+    .game-container {
+        padding: 18px 12px 32px;
+    }
+
+    .game-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .game-card::before {
+        margin: -16px -16px 20px;
+        padding: 14px 15px;
+        font-size: 10px;
+        letter-spacing: 1.1px;
+    }
+
+    .game-card-header {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .game-card-header h1 {
+        font-size: 21px;
+    }
+
+    .difficulty-badge {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+
+    .scenario {
+        padding: 12px;
+    }
+
+    .question-area {
+        padding: 21px 13px;
+    }
+
+    .question-area h2 {
+        font-size: 18px;
+    }
+
+    .answer-form {
+        padding: 13px;
+    }
+
+    .numeric-keypad {
+        gap: 8px;
+        padding: 11px;
+    }
+
+    .key-button {
+        height: 54px;
+        font-size: 20px;
+    }
+}
