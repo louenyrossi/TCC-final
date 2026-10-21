@@ -146,7 +146,7 @@ $progressoGeral = $totalJogos > 0
 
             <a href="progresso.php" class="nav-item active">
                 <span class="nav-icon">📊</span>
-                <span>Meu progresso</span>
+                <span>Progresso</span>
             </a>
 
             <a href="perfil.php" class="nav-item">

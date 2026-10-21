@@ -1,3 +1,4 @@
+
 <?php
 require_once '../includes/auth.php';
 require_once '../config/config.php';
@@ -111,7 +112,6 @@ $inicial = mb_strtoupper(
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -125,7 +125,6 @@ $inicial = mb_strtoupper(
         rel="stylesheet"
         href="../assets/css/perfil.css"
     >
-
 </head>
 
 <body>
@@ -140,99 +139,85 @@ $inicial = mb_strtoupper(
 
             <div class="logo">
 
-                <span class="logo-icon">
-                    M
-                </span>
+                <span class="logo-icon">M</span>
 
                 <div>
-
-                    <strong>
-                        MathPlay
-                    </strong>
-
-                    <small>
-                        Aprenda jogando
-                    </small>
-
+                    <strong>MathPlay</strong>
+                    <small>Aprenda jogando</small>
                 </div>
 
             </div>
 
         </div>
 
-
         <nav class="sidebar-nav">
 
-            <a
-                href="dashboard.php"
-                class="nav-item"
-            >
+            <a href="dashboard.php" class="nav-item">
                 <span>🏠</span>
                 <span>Início</span>
             </a>
 
-
-            <a
-                href="jogos.php"
-                class="nav-item"
-            >
+            <a href="jogos.php" class="nav-item">
                 <span>🎮</span>
                 <span>Jogos</span>
             </a>
 
-
-            <a
-                href="trilha.php"
-                class="nav-item"
-            >
+            <a href="trilha.php" class="nav-item">
                 <span>🛤️</span>
                 <span>Trilha</span>
             </a>
 
-
-            <a
-                href="conquistas.php"
-                class="nav-item"
-            >
+            <a href="conquistas.php" class="nav-item">
                 <span>🏆</span>
                 <span>Conquistas</span>
             </a>
 
-
-            <a
-                href="progresso.php"
-                class="nav-item"
-            >
+            <a href="progresso.php" class="nav-item">
                 <span>📊</span>
                 <span>Progresso</span>
             </a>
 
-
-            <a
-                href="perfil.php"
-                class="nav-item active"
-            >
+            <a href="perfil.php" class="nav-item active">
                 <span>👤</span>
                 <span>Perfil</span>
             </a>
 
         </nav>
 
+        <!-- USUÁRIO E SAIR NA PARTE INFERIOR -->
 
         <div class="sidebar-bottom">
 
-            <a
-                href="../logout.php"
-                class="logout-link"
-            >
-                <span>🚪</span>
+            <div class="sidebar-user">
+
+                <div class="user-avatar">
+                    <?= htmlspecialchars($inicial) ?>
+                </div>
+
+                <div class="user-info">
+
+                    <strong>
+                        <?= htmlspecialchars($aluno['nome']) ?>
+                    </strong>
+
+                    <span>
+                        Nível <?= (int) $aluno['nivel'] ?>
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="logout-divider"></div>
+
+            <a href="../logout.php" class="logout-link">
+                <span>↪</span>
                 <span>Sair</span>
             </a>
 
         </div>
 
     </aside>
-
 
     <!-- CONTEÚDO -->
 
@@ -249,41 +234,11 @@ $inicial = mb_strtoupper(
                 ☰
             </button>
 
-
             <div class="topbar-title">
-
-                <strong>
-                    Meu Perfil
-                </strong>
-
-            </div>
-
-
-            <div class="student-mini">
-
-                <div class="student-avatar">
-
-                    <?= htmlspecialchars($inicial) ?>
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        <?= htmlspecialchars($aluno['nome']) ?>
-                    </strong>
-
-                    <small>
-                        Nível <?= (int) $aluno['nivel'] ?>
-                    </small>
-
-                </div>
-
+                <strong>Meu Perfil</strong>
             </div>
 
         </header>
-
 
         <section class="content">
 
@@ -292,35 +247,25 @@ $inicial = mb_strtoupper(
             <div class="page-header">
 
                 <div>
+                    <span class="eyebrow">MINHA CONTA</span>
 
-                    <span class="eyebrow">
-                        MINHA CONTA
-                    </span>
-
-                    <h1>
-                        Meu Perfil 👤
-                    </h1>
+                    <h1>Meu Perfil 👤</h1>
 
                     <p>
                         Veja suas informações e acompanhe
                         sua evolução no MathPlay.
                     </p>
-
                 </div>
 
             </div>
-
 
             <!-- PERFIL PRINCIPAL -->
 
             <section class="profile-card">
 
                 <div class="profile-avatar">
-
                     <?= htmlspecialchars($inicial) ?>
-
                 </div>
-
 
                 <div class="profile-main">
 
@@ -337,142 +282,85 @@ $inicial = mb_strtoupper(
                         <span class="profile-tag">
                             🎓
                             <?= htmlspecialchars(
-                                $aluno['turma']
-                                ?: 'Turma não definida'
+                                $aluno['turma'] ?: 'Turma não definida'
                             ) ?>
                         </span>
 
                         <span class="profile-tag">
-                            ⭐
-                            Nível <?= (int) $aluno['nivel'] ?>
+                            ⭐ Nível <?= (int) $aluno['nivel'] ?>
                         </span>
 
                     </div>
 
                 </div>
 
-
                 <div class="xp-box">
 
-                    <span>
-                        XP atual
-                    </span>
+                    <span>XP atual</span>
 
                     <strong>
                         <?= (int) $aluno['xp'] ?>
                     </strong>
 
-                    <small>
-                        pontos de experiência
-                    </small>
+                    <small>pontos de experiência</small>
 
                 </div>
 
             </section>
-
 
             <!-- ESTATÍSTICAS -->
 
             <section class="section">
 
                 <div class="section-title">
-
                     <div>
-
-                        <h2>
-                            Minhas estatísticas
-                        </h2>
-
-                        <p>
-                            Seu desempenho nas partidas.
-                        </p>
-
+                        <h2>Minhas estatísticas</h2>
+                        <p>Seu desempenho nas partidas.</p>
                     </div>
-
                 </div>
-
 
                 <div class="stats-grid">
 
                     <div class="stat-card">
 
-                        <div class="stat-icon purple">
-                            🎮
-                        </div>
+                        <div class="stat-icon purple">🎮</div>
 
                         <div>
-
-                            <span>
-                                Partidas
-                            </span>
-
-                            <strong>
-                                <?= $partidas ?>
-                            </strong>
-
+                            <span>Partidas</span>
+                            <strong><?= $partidas ?></strong>
                         </div>
 
                     </div>
 
-
                     <div class="stat-card">
 
-                        <div class="stat-icon green">
-                            ✓
-                        </div>
+                        <div class="stat-icon green">✓</div>
 
                         <div>
-
-                            <span>
-                                Acertos
-                            </span>
-
-                            <strong>
-                                <?= $acertos ?>
-                            </strong>
-
+                            <span>Acertos</span>
+                            <strong><?= $acertos ?></strong>
                         </div>
 
                     </div>
 
-
                     <div class="stat-card">
 
-                        <div class="stat-icon red">
-                            ✕
-                        </div>
+                        <div class="stat-icon red">✕</div>
 
                         <div>
-
-                            <span>
-                                Erros
-                            </span>
-
-                            <strong>
-                                <?= $erros ?>
-                            </strong>
-
+                            <span>Erros</span>
+                            <strong><?= $erros ?></strong>
                         </div>
 
                     </div>
 
-
                     <div class="stat-card">
 
-                        <div class="stat-icon yellow">
-                            🏆
-                        </div>
+                        <div class="stat-icon yellow">🏆</div>
 
                         <div>
-
-                            <span>
-                                Pontuação
-                            </span>
-
-                            <strong>
-                                <?= $pontuacao ?>
-                            </strong>
-
+                            <span>Pontuação</span>
+                            <strong><?= $pontuacao ?></strong>
                         </div>
 
                     </div>
@@ -480,7 +368,6 @@ $inicial = mb_strtoupper(
                 </div>
 
             </section>
-
 
             <!-- DESEMPENHO -->
 
@@ -491,24 +378,18 @@ $inicial = mb_strtoupper(
                     <div class="performance-header">
 
                         <div>
-
-                            <h2>
-                                Taxa de acerto
-                            </h2>
+                            <h2>Taxa de acerto</h2>
 
                             <p>
                                 Baseada nas respostas das suas partidas.
                             </p>
-
                         </div>
-
 
                         <strong class="performance-value">
                             <?= $taxaAcerto ?>%
                         </strong>
 
                     </div>
-
 
                     <div class="large-progress">
 
@@ -519,16 +400,10 @@ $inicial = mb_strtoupper(
 
                     </div>
 
-
                     <div class="performance-footer">
 
-                        <span>
-                            <?= $acertos ?> acertos
-                        </span>
-
-                        <span>
-                            <?= $erros ?> erros
-                        </span>
+                        <span><?= $acertos ?> acertos</span>
+                        <span><?= $erros ?> erros</span>
 
                     </div>
 
@@ -536,26 +411,19 @@ $inicial = mb_strtoupper(
 
             </section>
 
-
             <!-- CONQUISTAS -->
 
             <section class="section">
 
                 <div class="achievement-summary">
 
-                    <div class="achievement-icon">
-                        🏆
-                    </div>
+                    <div class="achievement-icon">🏆</div>
 
                     <div class="achievement-info">
 
-                        <span>
-                            Conquistas desbloqueadas
-                        </span>
+                        <span>Conquistas desbloqueadas</span>
 
-                        <strong>
-                            <?= $conquistas ?>
-                        </strong>
+                        <strong><?= $conquistas ?></strong>
 
                         <small>
                             Continue jogando para conquistar
@@ -563,7 +431,6 @@ $inicial = mb_strtoupper(
                         </small>
 
                     </div>
-
 
                     <a
                         href="conquistas.php"
@@ -577,7 +444,6 @@ $inicial = mb_strtoupper(
 
             </section>
 
-
             <!-- INFORMAÇÕES DA CONTA -->
 
             <section class="section">
@@ -585,114 +451,61 @@ $inicial = mb_strtoupper(
                 <div class="account-card">
 
                     <div class="section-title">
-
                         <div>
-
-                            <h2>
-                                Informações da conta
-                            </h2>
-
+                            <h2>Informações da conta</h2>
                         </div>
-
                     </div>
-
 
                     <div class="account-grid">
 
                         <div class="account-item">
-
-                            <span>
-                                Nome
-                            </span>
-
+                            <span>Nome</span>
                             <strong>
-                                <?= htmlspecialchars(
-                                    $aluno['nome']
-                                ) ?>
+                                <?= htmlspecialchars($aluno['nome']) ?>
                             </strong>
-
                         </div>
 
-
                         <div class="account-item">
-
-                            <span>
-                                E-mail
-                            </span>
-
+                            <span>E-mail</span>
                             <strong>
-                                <?= htmlspecialchars(
-                                    $aluno['email']
-                                ) ?>
+                                <?= htmlspecialchars($aluno['email']) ?>
                             </strong>
-
                         </div>
 
-
                         <div class="account-item">
-
-                            <span>
-                                Turma
-                            </span>
-
+                            <span>Turma</span>
                             <strong>
                                 <?= htmlspecialchars(
-                                    $aluno['turma']
-                                    ?: 'Não definida'
+                                    $aluno['turma'] ?: 'Não definida'
                                 ) ?>
                             </strong>
-
                         </div>
 
-
                         <div class="account-item">
-
-                            <span>
-                                Ano/Série
-                            </span>
-
+                            <span>Ano/Série</span>
                             <strong>
-
                                 <?php if (!empty($aluno['ano_serie'])): ?>
-
                                     <?= (int) $aluno['ano_serie'] ?>º ano
-
                                 <?php else: ?>
-
                                     Não definido
-
                                 <?php endif; ?>
-
                             </strong>
-
                         </div>
 
-
                         <div class="account-item">
-
-                            <span>
-                                Nível
-                            </span>
-
+                            <span>Nível</span>
                             <strong>
                                 Nível <?= (int) $aluno['nivel'] ?>
                             </strong>
-
                         </div>
 
-
                         <div class="account-item">
-
-                            <span>
-                                Cadastro
-                            </span>
-
+                            <span>Cadastro</span>
                             <strong>
                                 <?= htmlspecialchars(
                                     $dataCadastro ?: 'Não disponível'
                                 ) ?>
                             </strong>
-
                         </div>
 
                     </div>
@@ -700,7 +513,6 @@ $inicial = mb_strtoupper(
                 </div>
 
             </section>
-
 
             <!-- AÇÕES -->
 
@@ -712,7 +524,6 @@ $inicial = mb_strtoupper(
                 >
                     ← Voltar para início
                 </a>
-
 
                 <a
                     href="../logout.php"
@@ -729,15 +540,12 @@ $inicial = mb_strtoupper(
 
 </div>
 
-
 <div
     class="sidebar-overlay"
     id="sidebar-overlay"
 ></div>
 
-
 <script src="../assets/js/perfil.js"></script>
 
 </body>
-
 </html>

@@ -169,7 +169,7 @@ $jogos = $stmt->fetchAll();
                 class="nav-item"
             >
                 <span class="nav-icon">📊</span>
-                <span>Meu progresso</span>
+                <span>Progresso</span>
             </a>
 
             <a
