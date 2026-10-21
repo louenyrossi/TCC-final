@@ -475,3 +475,371 @@ a {
     }
 
 }
+
+/* ==========================================
+   MATHPLAY — MEMÓRIA MATEMÁTICA NEON
+   Tema inspirado no Caixa Matemático
+========================================== */
+
+:root {
+    --mem-purple: #A855F7;
+    --mem-pink: #E879F9;
+    --mem-violet: #7C3AED;
+    --mem-bg: #0B0714;
+    --mem-panel: #171025;
+    --mem-text: #F3E8FF;
+    --mem-muted: #C4B5D9;
+    --mem-border: rgba(192, 132, 252, .28);
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 15% 15%, rgba(126, 34, 206, .19), transparent 38%),
+        radial-gradient(ellipse at 85% 70%, rgba(217, 70, 239, .12), transparent 35%),
+        #0B0714;
+    color: var(--mem-text);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Números e símbolos decorativos */
+
+body::before {
+    content: "+     π     7     ×     ÷     √     3     =     ∑     9";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: rgba(216, 180, 254, .075);
+    font-size: clamp(25px, 5vw, 65px);
+    font-weight: 900;
+    letter-spacing: 12px;
+    line-height: 2.5;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}
+
+/* Cabeçalho */
+
+.botao-voltar {
+    color: #D8B4FE;
+    transition: color .2s, transform .2s;
+}
+
+.botao-voltar:hover {
+    color: #F0ABFC;
+    transform: translateX(-4px);
+}
+
+.icone-jogo {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #7C3AED, #C026D3);
+    border: 1px solid rgba(232, 121, 249, .6);
+    box-shadow: 0 0 24px rgba(168, 85, 247, .35);
+}
+
+.titulo-jogo h1 {
+    color: #F5E9FF;
+    text-shadow: 0 0 18px rgba(192, 132, 252, .3);
+}
+
+.titulo-jogo p,
+.status-card small,
+.progresso-info span,
+.dica-card p {
+    color: var(--mem-muted);
+}
+
+/* Cartões de status */
+
+.status-card,
+.progresso-container,
+.area-jogo,
+.dica-card {
+    background: linear-gradient(145deg, #1B132B, #120D1F);
+    border: 1px solid var(--mem-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .2);
+}
+
+.status-card {
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+.status-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(216, 180, 254, .65);
+    box-shadow: 0 0 18px rgba(168, 85, 247, .12);
+}
+
+.status-card strong {
+    color: #F5D0FE;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Progresso */
+
+.progresso-info strong {
+    color: #E879F9;
+}
+
+.barra-progresso {
+    background: #30203F;
+    border: 1px solid rgba(192, 132, 252, .2);
+}
+
+.barra-preenchida {
+    background: linear-gradient(90deg, #7C3AED, #D946EF, #F0ABFC);
+    box-shadow: 0 0 13px rgba(217, 70, 239, .6);
+}
+
+/* Instruções */
+
+.instrucoes {
+    background: linear-gradient(120deg, rgba(124, 58, 237, .2), rgba(217, 70, 239, .09));
+    border: 1px solid var(--mem-border);
+    border-radius: 16px;
+}
+
+.instrucoes strong,
+.dica-card strong {
+    color: #E9D5FF;
+}
+
+.instrucoes p {
+    color: #D8CBE8;
+}
+
+/* Área principal */
+
+.area-jogo {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .28),
+                0 0 28px rgba(124, 58, 237, .08);
+}
+
+.area-jogo::before {
+    content: "π  +  ×  ÷  √";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: rgba(216, 180, 254, .09);
+    font-size: 24px;
+    font-weight: 900;
+    pointer-events: none;
+}
+
+.etiqueta {
+    color: #E879F9;
+}
+
+.cabecalho-area h2 {
+    color: #F3E8FF;
+}
+
+.dificuldade {
+    color: #F3D5FF;
+    background: rgba(168, 85, 247, .17);
+    border: 1px solid rgba(192, 132, 252, .35);
+}
+
+/* Tabuleiro */
+
+.tabuleiro {
+    perspective: 1000px;
+    gap: 11px;
+}
+
+/* Cartas */
+
+.carta {
+    border-radius: 15px;
+    outline-offset: 4px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.carta-conteudo {
+    border-radius: 15px;
+    transition: transform .5s cubic-bezier(.2, .75, .25, 1);
+}
+
+.carta-frente,
+.carta-verso {
+    border-radius: 15px;
+}
+
+.carta-frente {
+    position: relative;
+    overflow: hidden;
+    color: #FFFFFF;
+    background:
+        radial-gradient(circle at 50% 25%, rgba(255, 255, 255, .17), transparent 45%),
+        linear-gradient(145deg, #9333EA, #581C87 75%, #3B0764);
+    border: 1px solid rgba(232, 121, 249, .65);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18),
+                0 5px 15px rgba(0, 0, 0, .28),
+                0 0 12px rgba(168, 85, 247, .12);
+    font-size: clamp(25px, 4vw, 36px);
+    transition: background .25s, box-shadow .25s;
+}
+
+.carta-frente::before {
+    content: "π";
+    position: absolute;
+    right: 9px;
+    bottom: 1px;
+    color: rgba(255, 255, 255, .13);
+    font-size: 25px;
+    pointer-events: none;
+}
+
+.carta-frente:hover {
+    background: linear-gradient(145deg, #A855F7, #7E22CE);
+    box-shadow: 0 0 24px rgba(192, 132, 252, .42);
+}
+
+.carta:focus-visible {
+    outline: 3px solid #F0ABFC;
+}
+
+.carta-verso {
+    color: #F3E8FF;
+    background: linear-gradient(145deg, #211432, #171025);
+    border: 2px solid #A855F7;
+    box-shadow: inset 0 0 20px rgba(168, 85, 247, .1),
+                0 0 13px rgba(168, 85, 247, .14);
+    overflow-wrap: anywhere;
+}
+
+.carta.operacao .carta-verso {
+    color: #F0ABFC;
+}
+
+.carta.resultado .carta-verso {
+    color: #E9D5FF;
+    background: linear-gradient(145deg, #20162F, #130D20);
+}
+
+/* Par encontrado */
+
+.carta.encontrada .carta-verso {
+    color: #D1FAE5;
+    background: linear-gradient(145deg, #12332E, #10251F);
+    border-color: #34D399;
+    box-shadow: inset 0 0 18px rgba(52, 211, 153, .12),
+                0 0 20px rgba(52, 211, 153, .24);
+}
+
+.carta.encontrada {
+    filter: drop-shadow(0 0 8px rgba(52, 211, 153, .12));
+}
+
+/* Feedback */
+
+.feedback {
+    border-radius: 15px;
+    animation: memoriaEntrada .3s ease both;
+}
+
+.feedback.sucesso {
+    color: #BBF7D0;
+    background: rgba(22, 101, 52, .2);
+    border: 1px solid rgba(74, 222, 128, .5);
+    box-shadow: 0 0 20px rgba(74, 222, 128, .09);
+}
+
+.feedback.erro {
+    color: #FECDD3;
+    background: rgba(159, 18, 57, .18);
+    border: 1px solid rgba(251, 113, 133, .45);
+}
+
+.feedback.final {
+    color: #F3E8FF;
+    background: linear-gradient(135deg, rgba(124, 58, 237, .22), rgba(217, 70, 239, .13));
+    border: 1px solid rgba(216, 180, 254, .5);
+    box-shadow: 0 0 25px rgba(168, 85, 247, .15);
+}
+
+/* Botão de ação */
+
+.botao-secundario {
+    color: #F3E8FF;
+    background: linear-gradient(135deg, #6D28D9, #9333EA);
+    border: 1px solid rgba(216, 180, 254, .45);
+    border-radius: 12px;
+    box-shadow: 0 5px 16px rgba(91, 33, 182, .22);
+    transition: transform .2s, box-shadow .2s, filter .2s;
+}
+
+.botao-secundario:hover {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #7C3AED, #C026D3);
+    box-shadow: 0 0 23px rgba(168, 85, 247, .3);
+    transform: translateY(-2px);
+}
+
+/* Dica */
+
+.dica-card > span {
+    filter: drop-shadow(0 0 8px rgba(232, 121, 249, .35));
+}
+
+/* Animações */
+
+@keyframes memoriaEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Telas pequenas */
+
+@media (max-width: 380px) {
+    .pagina-jogo {
+        padding: 12px;
+    }
+
+    .area-jogo {
+        padding: 13px;
+    }
+
+    .tabuleiro {
+        gap: 7px;
+    }
+
+    .carta-verso {
+        padding: 4px;
+        font-size: 12px;
+    }
+
+    .carta-frente {
+        font-size: 25px;
+    }
+}
+
+/* Acessibilidade: respeitar preferência por menos animação */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
