@@ -7,15 +7,14 @@
 
 :root {
     --sidebar-width: 260px;
-    --bg: #090711;
-    --panel: #12101f;
-    --panel-light: #191128;
-    --purple: #9d4edd;
-    --neon: #df62ff;
-    --neon-light: #c77dff;
-    --text: #f8f2ff;
-    --muted: #b9acc9;
-    --border: rgba(199, 125, 255, .24);
+    --bg: #0A0710;
+    --panel: #15101F;
+    --purple: #A855F7;
+    --neon: #D946FF;
+    --neon-light: #E879FF;
+    --text: #F7F0FF;
+    --muted: #A697B8;
+    --border: rgba(217, 70, 255, 0.35);
 }
 
 html {
@@ -266,8 +265,6 @@ button {
     color: var(--muted);
     font-size: 11px;
 }
-
-.student-avatar {
     
 .student-avatar {
     width: 43px;
@@ -286,7 +283,6 @@ button {
     box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 
-}
 
 .menu-button {
     display: none;
