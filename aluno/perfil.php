@@ -152,7 +152,7 @@ $inicial = mb_strtoupper(
         <nav class="sidebar-nav">
 
             <a href="dashboard.php" class="nav-item">
-                <span>🏠</span>
+                <span>⌂</span>
                 <span>Início</span>
             </a>
 
@@ -162,7 +162,7 @@ $inicial = mb_strtoupper(
             </a>
 
             <a href="trilha.php" class="nav-item">
-                <span>🛤️</span>
+                <span>📚</span>
                 <span>Trilha</span>
             </a>
 
