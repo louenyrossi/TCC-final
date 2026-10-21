@@ -55,22 +55,19 @@ html {
 
 body {
     min-height: 100vh;
-
-    font-family: Inter, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-
+    font-family: Inter, Arial, Helvetica, sans-serif;
     color: var(--text);
 
     background:
         radial-gradient(
-            ellipse at 85% 5%,
-            rgba(126, 34, 206, 0.13),
+            ellipse at 80% 0%,
+            rgba(168, 85, 247, 0.12),
             transparent 38%
         ),
         radial-gradient(
-            ellipse at 10% 55%,
-            rgba(192, 38, 255, 0.05),
-            transparent 35%
+            ellipse at 10% 50%,
+            rgba(168, 85, 247, 0.07),
+            transparent 40%
         ),
         var(--background);
 }
