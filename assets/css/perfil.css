@@ -1256,3 +1256,50 @@ body {
 .xp-box {
     color-scheme: dark;
 }
+
+/* CORREÇÃO FORÇADA DOS TAMANHOS DAS LETRAS */
+
+/* Sidebar: Sair */
+.sidebar-bottom .logout-link,
+.sidebar-bottom .logout-link span {
+    font-size: 12px !important;
+}
+
+/* Progresso */
+.performance-header h2 {
+    font-size: 15px !important;
+}
+
+.performance-header p {
+    font-size: 11px !important;
+}
+
+.performance-value {
+    font-size: 21px !important;
+}
+
+.performance-footer {
+    font-size: 10px !important;
+}
+
+/* Perfil: nome e descrição */
+.profile-main h2 {
+    font-size: 19px !important;
+}
+
+.profile-main p {
+    font-size: 12px !important;
+}
+
+.profile-tags .profile-tag {
+    font-size: 10px !important;
+}
+
+.xp-box strong {
+    font-size: 24px !important;
+}
+
+.xp-box span,
+.xp-box small {
+    font-size: 10px !important;
+}
