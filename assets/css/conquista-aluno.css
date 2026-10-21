@@ -78,7 +78,7 @@ body {
     text-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
 }
 
-.logo .math {
+.logo .power {
     color: #c026ff;
     text-shadow:
         0 0 5px rgba(192, 38, 255, 0.8),
@@ -86,7 +86,7 @@ body {
         0 0 22px rgba(168, 85, 247, 0.3);
 }
 
-.logo .power {
+.logo .math {
     color: #ffffff;
     text-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
 }
