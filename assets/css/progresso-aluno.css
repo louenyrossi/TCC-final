@@ -864,3 +864,70 @@ tbody tr:hover {
     color: #D8A0FF;
     font-size: 12px;
 }
+```css
+/* Sidebar com perfil fixo na parte inferior */
+
+.sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sidebar .menu {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    flex-shrink: 0;
+    padding: 12px;
+    border-top: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.sidebar-bottom .usuario-topo {
+    position: static !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    padding: 8px 0 14px;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.sidebar-bottom .perfil-avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7E22CE, #A855F7);
+    border: 1px solid #C084FC;
+    color: white;
+    font-size: 17px;
+    font-weight: 900;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+}
+
+.sidebar-bottom .perfil-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.sidebar-bottom .perfil-info strong {
+    color: white;
+    font-size: 14px;
+}
+
+.sidebar-bottom .perfil-info span {
+    color: #D8A0FF;
+    font-size: 12px;
+}
+```

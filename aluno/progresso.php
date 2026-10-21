@@ -254,13 +254,30 @@ $progressoXP = $xpNoNivel;
         </nav>
 
         <!-- SAIR -->
+<div class="sidebar-bottom">
 
-        <div class="sidebar-bottom">
-            <a href="../logout.php" class="logout">
-                ↪
-                <span>Sair</span>
-            </a>
+    <div class="usuario-topo">
+        <div class="perfil-avatar">
+            <?= htmlspecialchars(
+                mb_strtoupper(
+                    mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
+                    'UTF-8'
+                )
+            ) ?>
         </div>
+
+        <div class="perfil-info">
+            <strong><?= htmlspecialchars($usuario['nome']) ?></strong>
+            <span>Nível <?= (int) $usuario['nivel'] ?></span>
+        </div>
+    </div>
+
+    <a href="../logout.php" class="logout">
+        ↪
+        <span>Sair</span>
+    </a>
+
+</div>
 
     </aside>
 
