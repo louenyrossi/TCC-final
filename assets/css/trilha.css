@@ -2484,9 +2484,11 @@ button:focus-visible {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 4px 2px 50px;
-    margin-bottom: 20px;
+    padding: 4px 2px 24px;
+    margin-bottom: 24px;
     border-top: none;
+    border-bottom: 1px solid rgba(192, 132, 252, 0.25);
+
 }
 
 .sidebar-student .student-avatar {
