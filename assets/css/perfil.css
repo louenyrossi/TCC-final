@@ -1267,9 +1267,9 @@ body {
 
 /* Reduz apenas o texto Sair da sidebar */
 .sidebar-bottom a.logout-link {
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 
 .sidebar-bottom a.logout-link span:last-child {
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
