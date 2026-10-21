@@ -322,3 +322,18 @@
         gap: 12px;
     }
 }
+.performance-card .performance-header h2 {
+    font-size: 17px !important;
+}
+
+.performance-card .performance-header p {
+    font-size: 14px !important;
+}
+
+.performance-card .performance-value {
+    font-size: 14px !important;
+}
+
+.performance-card .performance-footer {
+    font-size: 14px !important;
+}
