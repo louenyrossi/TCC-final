@@ -6,13 +6,24 @@
 /* VARIÁVEIS */
 :root {
     --sidebar-width: 260px;
-    --mp-bg: #090711;
-    --mp-panel: #12101f;
-    --mp-purple: #9d4edd;
-    --mp-neon: #c77dff;
-    --mp-text: #f5f0ff;
-    --mp-muted: #aaa1bd;
-    --mp-border: rgba(174, 107, 255, 0.24);
+
+    /* Cores do Dashboard */
+    --background: #0A0710;
+    --surface: #15101F;
+    --surface-light: #21152E;
+    --purple: #A855F7;
+    --purple-light: #D946FF;
+    --text: #F7F0FF;
+    --gray: #A697B8;
+
+    /* Compatibilidade com os estilos de Jogos */
+    --mp-bg: var(--background);
+    --mp-panel: var(--surface);
+    --mp-purple: var(--purple);
+    --mp-neon: var(--purple-light);
+    --mp-text: var(--text);
+    --mp-muted: var(--gray);
+    --mp-border: rgba(217, 70, 255, 0.24);
 }
 
 /* RESET */
@@ -27,20 +38,22 @@ html {
 }
 
 body {
-    font-family: Inter, Arial, Helvetica, sans-serif;
+     font-family: Inter, Arial, Helvetica, sans-serif;
+
     background:
         radial-gradient(
             ellipse at 80% 0%,
-            rgba(116, 36, 190, 0.17),
+            rgba(168, 85, 247, 0.12),
             transparent 38%
         ),
         radial-gradient(
             ellipse at 10% 50%,
-            rgba(75, 25, 130, 0.12),
+            rgba(168, 85, 247, 0.07),
             transparent 40%
         ),
-        var(--mp-bg);
-    color: var(--mp-text);
+        var(--background);
+
+    color: var(--text);
     min-height: 100vh;
 }
 
@@ -85,17 +98,20 @@ a {
     overflow-y: auto;
 
     background:
-        radial-gradient(
-            ellipse at 0% 0%,
-            rgba(168, 85, 247, 0.16),
-            transparent 48%
-        ),
-        linear-gradient(180deg, #120b1c, #0d0914);
+         radial-gradient(
+        ellipse at 0% 0%,
+        rgba(168, 85, 247, 0.16),
+        transparent 48%
+    ),
+    linear-gradient(180deg, #12091D 0%, #09060F 100%);
 
-    border-right: 1px solid var(--mp-border);
-    box-shadow: 8px 0 35px rgba(0, 0, 0, 0.2);
+border-right: 1px solid rgba(217, 70, 255, 0.35);
 
-    transition: transform 0.3s ease;
+box-shadow:
+    8px 0 35px rgba(0, 0, 0, 0.35),
+    2px 0 18px rgba(168, 85, 247, 0.08);
+
+transition: transform 0.3s ease;
 }
 
 /* CABEÇALHO DA SIDEBAR */
@@ -401,17 +417,17 @@ a {
     margin-left: var(--sidebar-width);
 
     background:
-        radial-gradient(
-            ellipse at 90% 0%,
-            rgba(145, 0, 255, 0.14),
-            transparent 38%
-        ),
-        radial-gradient(
-            ellipse at 15% 45%,
-            rgba(113, 34, 206, 0.07),
-            transparent 35%
-        ),
-        #09060f;
+       radial-gradient(
+        ellipse at 90% 0%,
+        rgba(168, 85, 247, 0.12),
+        transparent 38%
+    ),
+    radial-gradient(
+        ellipse at 15% 45%,
+        rgba(168, 85, 247, 0.07),
+        transparent 35%
+    ),
+    var(--background);
 }
 
 /* =========================================================
