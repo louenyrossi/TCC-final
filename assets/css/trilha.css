@@ -2478,13 +2478,14 @@ button:focus-visible {
 ========================================= */
 
 .sidebar-student {
-   display: flex;
+    display: flex;
     align-items: center;
     gap: 11px;
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 4px 2px 24px;
+    padding: 4px 2px 50px;
+    margin-bottom: 20px;
     border-top: none;
 }
 
