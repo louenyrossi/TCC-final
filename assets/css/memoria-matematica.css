@@ -1682,18 +1682,9 @@ main.pagina-jogo > header.game-header .back-button:hover {
     color: #c44dff !important;
 }
 
-/* Espaço entre o cabeçalho e os primeiros cards */
-.game-header + .game-status,
-.game-header + .game-container .game-status,
-.game-header + main .game-status,
-.game-header ~ .game-status {
+/* Espaçamento entre o nav e os cards da Memória Matemática */
+.pagina-jogo > .status-jogo {
     margin-top: 24px !important;
-}
-
-/* Se os cards estiverem dentro do contêiner principal */
-.game-header + .game-container,
-.game-header + main {
-    padding-top: 24px !important;
 }
 
 
