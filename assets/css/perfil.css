@@ -1273,3 +1273,10 @@ body {
 .sidebar-bottom a.logout-link span:last-child {
     font-size: 14px !important;
 }
+/* LOGO MATHPOWER — ROXO NEON */
+.logo strong span {
+    color: #E879FF;
+    text-shadow:
+        0 0 7px #C026FF,
+        0 0 20px rgba(192, 38, 255, 0.75);
+}

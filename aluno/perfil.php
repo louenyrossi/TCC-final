@@ -119,7 +119,7 @@ $inicial = mb_strtoupper(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Meu Perfil | MathPlay</title>
+    <title>Meu Perfil | MathPower</title>
      
     <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
@@ -141,7 +141,7 @@ $inicial = mb_strtoupper(
                 <span class="logo-icon">M</span>
 
                 <div>
-                    <strong>MathPlay</strong>
+                    <strong>MathPower</strong>
                     <small>Aprenda jogando</small>
                 </div>
 
@@ -252,7 +252,7 @@ $inicial = mb_strtoupper(
 
                     <p>
                         Veja suas informações e acompanhe
-                        sua evolução no MathPlay.
+                        sua evolução no MathPower.
                     </p>
                 </div>
 
