@@ -1673,4 +1673,13 @@ body {
     overflow-x: hidden;
 }
 
+/* Efeito ao passar o mouse em Voltar aos jogos */
+main.pagina-jogo > header.game-header .back-button {
+    transition: color 0.2s ease;
+}
+
+main.pagina-jogo > header.game-header .back-button:hover {
+    color: #c44dff !important;
+}
+
 
