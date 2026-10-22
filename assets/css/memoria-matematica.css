@@ -1655,4 +1655,22 @@ main.pagina-jogo {
     }
 }
 
+/* Faz o nav ocupar a largura inteira da tela */
+main.pagina-jogo > header.game-header {
+    width: 100vw !important;
+    max-width: none !important;
+    margin: 0 !important;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    box-sizing: border-box !important;
+    border-radius: 0 !important;
+}
+
+/* Evita rolagem horizontal causada pelo nav */
+html,
+body {
+    overflow-x: hidden;
+}
+
 
