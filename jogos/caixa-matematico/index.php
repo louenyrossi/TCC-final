@@ -196,7 +196,7 @@ if ($anoSerie === 7) {
     >
 
     <title>
-        Caixa Matemático - MathPlay
+        Caixa Matemático - MathPower
     </title>
 
     <link
