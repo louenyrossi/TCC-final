@@ -5,6 +5,32 @@ require_once '../../config/config.php';
 
 protegerPagina('aluno');
 
+$usuarioId = usuarioId();
+
+if (!$usuarioId) {
+    header('Location: ../../login.php');
+    exit;
+}
+
+/* =========================
+   BUSCAR ALUNO
+========================= */
+
+$stmt = $pdo->prepare("
+    SELECT id, nome
+    FROM usuarios
+    WHERE id = ?
+    LIMIT 1
+");
+
+$stmt->execute([$usuarioId]);
+
+$aluno = $stmt->fetch();
+
+if (!$aluno) {
+    die('Aluno não encontrado.');
+}
+
 /* =========================
    BUSCAR JOGO
 ========================= */
@@ -26,7 +52,6 @@ if (!$jogo) {
 }
 
 $jogoId = (int) $jogo['id'];
-
 
 /* =========================
    BUSCAR PERGUNTAS
@@ -52,20 +77,13 @@ if (empty($perguntasBanco)) {
     die('Nenhuma pergunta cadastrada para este jogo.');
 }
 
-
 /* =========================
    DADOS PÚBLICOS
 ========================= */
 
-/*
- * A resposta correta não é enviada
- * diretamente para o JavaScript.
- */
-
 $perguntasPublicas = [];
 
 foreach ($perguntasBanco as $pergunta) {
-
     $perguntasPublicas[] = [
         'id' => (int) $pergunta['id'],
         'enunciado' => $pergunta['enunciado'],
@@ -74,13 +92,13 @@ foreach ($perguntasBanco as $pergunta) {
         'pontuacao' => (int) $pergunta['pontuacao']
     ];
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -88,43 +106,53 @@ foreach ($perguntasBanco as $pergunta) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Memória Matemática - MathPlay</title>
+    <title>Memória Matemática - MathPower</title>
 
     <link
         rel="stylesheet"
         href="../../assets/css/memoria-matematica.css"
     >
-
 </head>
 
 <body>
 
 <main class="pagina-jogo">
 
-    <!-- CABEÇALHO -->
+    <!-- CABEÇALHO NO ESTILO DO CAIXA MATEMÁTICO -->
 
-    <header class="cabecalho-jogo">
+    <header class="game-header">
 
         <a
             href="../../aluno/jogos.php"
-            class="botao-voltar"
+            class="back-button"
         >
             ← Voltar aos jogos
         </a>
 
-        <div class="titulo-jogo">
+        <div class="game-brand">
 
-            <span class="icone-jogo">🧠</span>
+            <div class="game-brand-icon">
+                🧠
+            </div>
 
             <div>
-
-                <h1>Memória Matemática</h1>
-
-                <p>
-                    Encontre os pares entre operações e resultados.
-                </p>
-
+                <span>MathPower</span>
+                <strong>Memória Matemática</strong>
             </div>
+
+        </div>
+
+        <div class="player-info">
+
+            <span>Aluno</span>
+
+            <strong>
+                <?= htmlspecialchars(
+                    $aluno['nome'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </strong>
 
         </div>
 
@@ -136,50 +164,39 @@ foreach ($perguntasBanco as $pergunta) {
     <section class="status-jogo">
 
         <div class="status-card">
-
             <span>🎯</span>
 
             <div>
                 <small>Pares</small>
                 <strong id="paresEncontrados">0</strong>
             </div>
-
         </div>
 
-
         <div class="status-card">
-
             <span>⭐</span>
 
             <div>
                 <small>Pontuação</small>
                 <strong id="pontuacao">0</strong>
             </div>
-
         </div>
 
-
         <div class="status-card">
-
             <span>✅</span>
 
             <div>
                 <small>Acertos</small>
                 <strong id="acertos">0</strong>
             </div>
-
         </div>
 
-
         <div class="status-card">
-
             <span>❌</span>
 
             <div>
                 <small>Erros</small>
                 <strong id="erros">0</strong>
             </div>
-
         </div>
 
     </section>
@@ -190,13 +207,9 @@ foreach ($perguntasBanco as $pergunta) {
     <section class="progresso-container">
 
         <div class="progresso-info">
-
             <span>Progresso</span>
 
-            <strong id="progressoTexto">
-                0%
-            </strong>
-
+            <strong id="progressoTexto">0%</strong>
         </div>
 
         <div class="barra-progresso">
@@ -221,14 +234,12 @@ foreach ($perguntasBanco as $pergunta) {
         </div>
 
         <div>
-
             <strong>Como jogar?</strong>
 
             <p>
                 Clique em duas cartas para revelar seu conteúdo.
                 Encontre o resultado correspondente à operação.
             </p>
-
         </div>
 
     </section>
@@ -241,15 +252,9 @@ foreach ($perguntasBanco as $pergunta) {
         <div class="cabecalho-area">
 
             <div>
+                <span class="etiqueta">DESAFIO</span>
 
-                <span class="etiqueta">
-                    DESAFIO
-                </span>
-
-                <h2>
-                    Encontre os pares matemáticos
-                </h2>
-
+                <h2>Encontre os pares matemáticos</h2>
             </div>
 
             <div
@@ -302,14 +307,12 @@ foreach ($perguntasBanco as $pergunta) {
         <span>🧠</span>
 
         <div>
-
             <strong>Dica</strong>
 
             <p>
                 Tente memorizar a posição das cartas que você já revelou.
                 Isso ajuda a encontrar os pares mais rapidamente.
             </p>
-
         </div>
 
     </section>
@@ -320,30 +323,23 @@ foreach ($perguntasBanco as $pergunta) {
 <!-- DADOS PARA O JAVASCRIPT -->
 
 <script>
+window.MathPowerMemoria = {
+    perguntas: <?= json_encode(
+        $perguntasPublicas,
+        JSON_UNESCAPED_UNICODE |
+        JSON_UNESCAPED_SLASHES
+    ) ?>,
 
-    window.MathPlayMemoria = {
+    usuarioId: <?= (int) $usuarioId ?>,
 
-        perguntas: <?= json_encode(
-            $perguntasPublicas,
-            JSON_UNESCAPED_UNICODE |
-            JSON_UNESCAPED_SLASHES
-        ) ?>,
-
-        usuarioId: <?= (int) usuarioId() ?>,
-
-        jogoId: <?= $jogoId ?>
-
-    };
-
+    jogoId: <?= (int) $jogoId ?>
+};
 </script>
 
 
 <!-- JAVASCRIPT DO JOGO -->
 
-<script
-    src="../../assets/js/memoria-matematica.js"
-></script>
+<script src="../../assets/js/memoria-matematica.js"></script>
 
 </body>
-
 </html>
