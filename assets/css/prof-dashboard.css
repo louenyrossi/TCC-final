@@ -1455,3 +1455,65 @@ button {
         animation-iteration-count: 1 !important;
     }
 }
+
+/* Logo no mesmo estilo do dashboard do aluno */
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #C084FC, #9333EA 65%, #7E22CE);
+    color: #FFFFFF;
+
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 14px;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, .65),
+        0 0 28px rgba(168, 85, 247, .35);
+}
+
+/* Nome da marca */
+.logo strong {
+    display: block;
+    color: #F7F0FF;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -.7px;
+    line-height: 1.15;
+}
+
+.logo strong span {
+    color: #D946FF;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
+}
+
+/* Barra de rolagem roxa neon do menu */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #9333EA #100B18;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #100B18;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #A855F7, #7E22CE);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(217, 70, 255, .45);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D946FF;
+}
