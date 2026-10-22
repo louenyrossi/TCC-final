@@ -1682,4 +1682,9 @@ main.pagina-jogo > header.game-header .back-button:hover {
     color: #c44dff !important;
 }
 
+/* Espaçamento entre o nav e os cards de status */
+main.pagina-jogo > .game-status {
+    margin-top: 20px;
+}
+
 
