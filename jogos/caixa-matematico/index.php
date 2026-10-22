@@ -235,7 +235,7 @@ if ($anoSerie === 7) {
             <div>
 
                 <span>
-                    MathPlay
+                    MathPower
                 </span>
 
                 <strong>
