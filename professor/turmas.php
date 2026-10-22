@@ -105,7 +105,7 @@ if (isset($_GET['id'])) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Turmas | MathPlay</title>
+    <title>Turmas | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -135,7 +135,7 @@ if (isset($_GET['id'])) {
                 <div>
 
                     <strong>
-                        MathPlay
+                        MathPower
                     </strong>
 
                     <small>
