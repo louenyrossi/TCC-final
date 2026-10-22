@@ -196,7 +196,7 @@ if ($anoSerie === 7) {
     >
 
     <title>
-        Caixa Matemático - MathPower
+        Caixa Matemático - MathPlay
     </title>
 
     <link
@@ -235,7 +235,7 @@ if ($anoSerie === 7) {
             <div>
 
                 <span>
-                    MathPower
+                    MathPlay
                 </span>
 
                 <strong>
@@ -656,7 +656,7 @@ if ($anoSerie === 7) {
 
 <script>
 
-window.MathPowerCaixa = {
+window.MathPlayCaixa = {
 
     usuarioId: <?= (int) $usuarioId ?>,
 
