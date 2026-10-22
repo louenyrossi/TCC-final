@@ -1517,40 +1517,34 @@ button {
     background: #D946FF;
 }
 /* ==========================================
-   BARRA DE ROLAGEM ROXA NEON — SIDEBAR
+   BARRA ROXO NEON — SIDEBAR
    ========================================== */
 
 aside.sidebar {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
-
     scrollbar-width: thin !important;
-    scrollbar-color: #D946FF #100B18 !important;
+    scrollbar-color: #A855FF #100817 !important;
 }
 
 /* Chrome, Edge e Safari */
 aside.sidebar::-webkit-scrollbar {
-    width: 8px !important;
+    width: 7px !important;
 }
 
 aside.sidebar::-webkit-scrollbar-track {
-    background: #100B18 !important;
-    border-radius: 10px !important;
+    background: #100817 !important;
 }
 
 aside.sidebar::-webkit-scrollbar-thumb {
-    background: #D946FF !important;
-    border-radius: 10px !important;
-    border: 1px solid #F0ABFC !important;
+    background: #A020F0 !important;
+    border-radius: 8px !important;
     box-shadow:
-        0 0 5px #D946FF,
-        0 0 10px #D946FF,
-        0 0 20px #A855F7 !important;
+        0 0 5px #A020F0,
+        0 0 10px #8B2BFF,
+        0 0 16px #8B2BFF !important;
 }
 
 aside.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #F0ABFC !important;
-    box-shadow:
-        0 0 8px #D946FF,
-        0 0 18px #D946FF !important;
+    background: #C04DFF !important;
 }
