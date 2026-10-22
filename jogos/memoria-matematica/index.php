@@ -323,7 +323,7 @@ foreach ($perguntasBanco as $pergunta) {
 <!-- DADOS PARA O JAVASCRIPT -->
 
 <script>
-window.MathPowerMemoria = {
+window.MathPlayMemoria = {
     perguntas: <?= json_encode(
         $perguntasPublicas,
         JSON_UNESCAPED_UNICODE |
