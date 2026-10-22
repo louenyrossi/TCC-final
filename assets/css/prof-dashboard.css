@@ -1516,18 +1516,16 @@ button {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #D946FF;
 }
-/* ==========================================
-   BARRA ROXO NEON — SIDEBAR
-   ========================================== */
+/* ===== BARRA DE ROLAGEM ROXO NEON ===== */
 
 aside.sidebar {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
     scrollbar-width: thin !important;
-    scrollbar-color: #A855FF #100817 !important;
+    scrollbar-color: #A020F0 #100817 !important;
 }
 
-/* Chrome, Edge e Safari */
+/* Chrome e Edge */
 aside.sidebar::-webkit-scrollbar {
     width: 7px !important;
 }
@@ -1538,13 +1536,11 @@ aside.sidebar::-webkit-scrollbar-track {
 
 aside.sidebar::-webkit-scrollbar-thumb {
     background: #A020F0 !important;
-    border-radius: 8px !important;
-    box-shadow:
-        0 0 5px #A020F0,
-        0 0 10px #8B2BFF,
-        0 0 16px #8B2BFF !important;
+    border-radius: 6px !important;
+    border: 1px solid #C84DFF !important;
+    box-shadow: 0 0 8px #A020F0, 0 0 15px #A020F0 !important;
 }
 
 aside.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #C04DFF !important;
+    background: #D946FF !important;
 }
