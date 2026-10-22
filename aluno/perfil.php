@@ -149,19 +149,17 @@ $inicial = mb_strtoupper(
 
     <aside class="sidebar">
 
-        <div class="sidebar-header">
-
-            <div class="logo">
-
-                <span class="logo-icon">M</span>
+        
+    <div class="sidebar-header">
+        <div class="logo">
+            <span class="logo-icon">M</span>
 
             <div class="logo-text">
                 <strong>Math<span class="logo-power">Power</span></strong>
             </div>
-
-            </div>
-
         </div>
+    </div>
+
 
         <nav class="sidebar-nav">
 
