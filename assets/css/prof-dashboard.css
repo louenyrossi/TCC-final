@@ -1517,28 +1517,44 @@ button {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #D946FF;
 }
-/* BARRA DE ROLAGEM ROXA NEON DA SIDEBAR */
-.sidebar {
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: #9333EA #100B18;
+/* ==========================================
+   BARRA DE ROLAGEM ROXA NEON — SIDEBAR
+   ========================================== */
+
+aside.sidebar {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+
+    scrollbar-width: thin !important;
+    scrollbar-color: #A855F7 #100B18 !important;
 }
 
-.sidebar::-webkit-scrollbar {
-    width: 6px;
+/* Chrome, Edge e Safari */
+aside.sidebar::-webkit-scrollbar {
+    width: 6px !important;
+    display: block !important;
 }
 
-.sidebar::-webkit-scrollbar-track {
-    background: #100B18;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #A855F7, #7E22CE);
+aside.sidebar::-webkit-scrollbar-track {
+    background: #100B18 !important;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(217, 70, 255, .45);
 }
 
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #D946FF;
+aside.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #D946FF 0%,
+        #A855F7 50%,
+        #7E22CE 100%
+    ) !important;
+
+    border-radius: 10px !important;
+    border: none !important;
+
+    box-shadow: 0 0 10px rgba(217, 70, 255, .65) !important;
+}
+
+aside.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D946FF !important;
+    box-shadow: 0 0 14px rgba(217, 70, 255, .85) !important;
 }
