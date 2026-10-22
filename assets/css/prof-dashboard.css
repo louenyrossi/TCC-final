@@ -1517,3 +1517,29 @@ button {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #D946FF;
 }
+/* Barra de rolagem roxa neon */
+.sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: #9333EA #100B18;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #100B18;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #A855F7, #7E22CE);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(217, 70, 255, .45);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D946FF;
+}

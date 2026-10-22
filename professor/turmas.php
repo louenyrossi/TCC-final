@@ -135,7 +135,7 @@ if (isset($_GET['id'])) {
                 <div>
 
                     <strong>
-                        MathPower
+                        Math<span>Power</span>
                     </strong>
 
                     <small>

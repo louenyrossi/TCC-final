@@ -1004,3 +1004,11 @@ button {
         animation-iteration-count: 1 !important;
     }
 }
+
+/* POWER em roxo neon */
+.logo strong span {
+    color: #D946FF !important;
+    text-shadow:
+        0 0 6px rgba(217, 70, 255, .65),
+        0 0 14px rgba(217, 70, 255, .45);
+}
