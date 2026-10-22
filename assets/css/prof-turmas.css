@@ -1,687 +1,160 @@
 
-/* ==========================================
-   MATPOWER — TURMAS DO PROFESSOR
-   Mesmo estilo neon do dashboard do aluno
-   ========================================== */
+/* =========================================
+   PÁGINA DE DETALHES DA TURMA
+   Complementa prof-dashboard.css
+========================================= */
 
-:root {
-    --purple: #A855F7;
-    --purple-dark: #7E22CE;
-    --purple-light: #C084FC;
-    --purple-neon: #D946FF;
-
-    --background: #0A0710;
-    --background-soft: #100B18;
-    --surface: #15101F;
-    --surface-hover: #20152E;
-    --surface-light: #261834;
-
-    --white: #FFFFFF;
-    --text: #F7F0FF;
-    --text-soft: #D0C1E2;
-    --gray: #A697B8;
-
-    --success: #4ADE80;
-
-    --shadow: 0 12px 35px rgba(0, 0, 0, .25);
-    --neon-shadow: 0 0 18px rgba(168, 85, 247, .18);
-
-    --radius-small: 10px;
-    --radius: 16px;
-    --radius-large: 24px;
-
-    --sidebar-width: 260px;
-}
-
-
-/* RESET */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    min-height: 100%;
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    color: var(--text);
-
-    background:
-        radial-gradient(
-            ellipse at 15% 0%,
-            rgba(126, 34, 206, .15),
-            transparent 36%
-        ),
-        radial-gradient(
-            ellipse at 90% 20%,
-            rgba(217, 70, 255, .07),
-            transparent 30%
-        ),
-        var(--background);
-}
-
-body.menu-open {
-    overflow: hidden;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button {
-    font: inherit;
-}
-
-.app {
-    min-height: 100vh;
-}
-
-
-/* ==========================================
-   SIDEBAR
-   ========================================== */
-
-.sidebar {
-    width: var(--sidebar-width);
-    height: 100vh;
-    min-height: 100vh;
-    overflow-y: auto;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-
+.turma-page-header {
     display: flex;
-    flex-direction: column;
-
-    background:
-        radial-gradient(
-            ellipse at top left,
-            rgba(168, 85, 247, .13),
-            transparent 48%
-        ),
-        linear-gradient(
-            180deg,
-            #12091D 0%,
-            #0A0710 55%,
-            #09060F 100%
-        );
-
-    border-right: 1px solid rgba(217, 70, 255, .35);
-
-    box-shadow:
-        8px 0 35px rgba(0, 0, 0, .24),
-        0 0 22px rgba(168, 85, 247, .05);
-
-    transform: translateX(-100%);
-    transition: transform .25s ease;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
 }
 
-.sidebar.open {
-    transform: translateX(0);
-}
-
-.sidebar-header {
-    min-height: 82px;
-    padding: 18px;
-
-    display: flex;
-    align-items: center;
-
-    border-bottom: 1px solid rgba(217, 70, 255, .20);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.turma-heading {
+    width: 100%;
     min-width: 0;
 }
 
-.logo-icon {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-
-    display: flex;
+.back-link {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        #C084FC,
-        #9333EA 65%,
-        #7E22CE
-    );
-
-    color: var(--white);
-
-    border: 1px solid rgba(255, 255, 255, .45);
-    border-radius: 14px;
-
-    font-size: 23px;
-    font-weight: 900;
-
-    box-shadow:
-        0 0 12px rgba(217, 70, 255, .65),
-        0 0 28px rgba(168, 85, 247, .35);
-}
-
-.logo strong {
-    display: block;
-
-    color: var(--text);
-    font-size: 23px;
-    font-weight: 900;
-    letter-spacing: -.7px;
-    line-height: 1.15;
-}
-
-.logo strong span {
-    color: var(--purple-neon);
-    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
-}
-
-.logo small {
-    display: block;
-    margin-top: 5px;
-
-    color: var(--gray);
-    font-size: 11px;
-    font-weight: 600;
-}
-
-
-/* Navegação */
-
-.sidebar-nav {
-    padding: 24px 14px;
-
-    display: flex;
-    flex-direction: column;
     gap: 8px;
-}
-
-.nav-item {
-    min-height: 50px;
-    padding: 0 14px;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    border: 1px solid transparent;
-    border-radius: 13px;
-
-    color: var(--text-soft);
+    margin-bottom: 24px;
+    color: #b7a6ff;
     font-size: 14px;
     font-weight: 600;
-
-    transition: .2s ease;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.nav-item span:first-child {
-    width: 24px;
-    flex-shrink: 0;
-    text-align: center;
-    font-size: 18px;
+.back-link:hover {
+    color: #ffffff;
+    transform: translateX(-3px);
 }
 
-.nav-item:hover {
-    color: var(--white);
-    background: rgba(168, 85, 247, .12);
-    border-color: rgba(168, 85, 247, .25);
-    box-shadow: 0 0 16px rgba(168, 85, 247, .08);
+.turma-heading .eyebrow {
+    margin-bottom: 10px;
 }
 
-.nav-item.active {
-    color: var(--white);
-
-    background: linear-gradient(
-        110deg,
-        rgba(168, 85, 247, .24),
-        rgba(217, 70, 255, .10)
-    );
-
-    border-color: rgba(217, 70, 255, .40);
-
-    box-shadow:
-        0 0 18px rgba(168, 85, 247, .12),
-        inset 3px 0 0 var(--purple-neon);
+.turma-heading h1 {
+    margin: 0;
+    overflow-wrap: anywhere;
 }
 
-
-/* Sair */
-
-.sidebar-bottom {
-    margin-top: auto;
-    padding: 15px 14px 20px;
-
-    border-top: 1px solid rgba(217, 70, 255, .20);
-}
-
-.logout-link {
-    min-height: 48px;
-    padding: 0 14px;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    border: 1px solid transparent;
-    border-radius: 13px;
-
-    color: var(--text-soft);
-    font-size: 14px;
-    font-weight: 600;
-
-    transition: .2s ease;
-}
-
-.logout-link:hover {
-    color: #FB7185;
-    background: rgba(251, 113, 133, .09);
-    border-color: rgba(251, 113, 133, .20);
-}
-
-.logout-link span:first-child {
-    width: 24px;
-    text-align: center;
-}
-
-
-/* Barra de rolagem neon */
-
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #9333EA #100B18;
-}
-
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #100B18;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #A855F7, #7E22CE);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(217, 70, 255, .45);
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #D946FF;
-}
-
-
-/* ==========================================
-   CONTEÚDO PRINCIPAL
-   ========================================== */
-
-.main-content {
-    width: 100%;
-    min-height: 100vh;
-    margin-left: 0;
-}
-
-.topbar {
-    height: 72px;
-    padding: 0 16px;
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    background: rgba(16, 11, 24, .88);
-    border-bottom: 1px solid rgba(217, 70, 255, .25);
-
-    box-shadow: 0 5px 22px rgba(0, 0, 0, .12);
-
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-}
-
-.topbar > strong {
-    color: var(--text);
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.menu-button {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid rgba(217, 70, 255, .35);
-    border-radius: 12px;
-
-    background: rgba(168, 85, 247, .12);
-    color: var(--purple-light);
-
-    font-size: 20px;
-    cursor: pointer;
-
-    transition: .2s ease;
-}
-
-.menu-button:hover {
-    background: rgba(168, 85, 247, .24);
-    border-color: var(--purple-neon);
-    box-shadow: 0 0 15px rgba(168, 85, 247, .18);
-}
-
-
-/* Área interna */
-
-.content {
-    width: 100%;
-    max-width: 1400px;
-
-    margin: 0 auto;
-    padding: 22px 16px 42px;
-}
-
-
-/* ==========================================
-   CABEÇALHO
-   ========================================== */
-
-.page-header {
-    margin-bottom: 28px;
-}
-
-.eyebrow {
-    display: inline-block;
-    margin-bottom: 8px;
-
-    color: var(--purple-light);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-
-    text-shadow: 0 0 14px rgba(168, 85, 247, .20);
-}
-
-.page-header h1 {
-    color: var(--text);
-
-    font-size: 29px;
-    font-weight: 900;
-    line-height: 1.2;
-    letter-spacing: -.8px;
-}
-
-.page-header p {
-    max-width: 760px;
+.page-description {
     margin-top: 10px;
-
-    color: var(--text-soft);
+    color: #a9a3c7;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
-
-/* ==========================================
-   GRADE DE TURMAS
-   ========================================== */
-
-.classes-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
+.description-separator {
+    padding: 0 5px;
+    color: #71688f;
 }
 
-.class-card {
-    min-width: 0;
-    padding: 19px;
+/* =========================================
+   SEÇÃO DE ALUNOS
+========================================= */
 
-    display: flex;
-    flex-direction: column;
-
-    background:
-        radial-gradient(
-            ellipse at top right,
-            rgba(168, 85, 247, .09),
-            transparent 55%
-        ),
-        linear-gradient(
-            145deg,
-            rgba(26, 17, 38, .98),
-            rgba(17, 11, 26, .98)
-        );
-
-    border: 1px solid rgba(168, 85, 247, .29);
-    border-radius: var(--radius);
-
-    box-shadow: var(--neon-shadow);
-
-    transition:
-        transform .22s ease,
-        border-color .22s ease,
-        box-shadow .22s ease;
+.turma-students-section {
+    margin-top: 12px;
 }
 
-.class-card:hover {
-    transform: translateY(-5px);
-
-    border-color: rgba(217, 70, 255, .65);
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, .25),
-        0 0 22px rgba(168, 85, 247, .16);
-}
-
-.class-top {
+.turma-students-section .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
-.class-icon {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        rgba(168, 85, 247, .22),
-        rgba(217, 70, 255, .09)
-    );
-
-    border: 1px solid rgba(168, 85, 247, .30);
-    border-radius: 13px;
-
-    font-size: 21px;
-
-    box-shadow: 0 0 14px rgba(168, 85, 247, .08);
+.turma-students-section .section-header h2 {
+    margin: 0;
 }
 
-.grade {
-    padding: 7px 10px;
-
-    background: rgba(168, 85, 247, .12);
-    border: 1px solid rgba(168, 85, 247, .27);
-    border-radius: 9px;
-
-    color: var(--purple-light);
-    font-size: 11px;
-    font-weight: 800;
-    white-space: nowrap;
-}
-
-.class-card h2 {
-    margin-top: 18px;
-
-    color: var(--text);
-    font-size: 18px;
-    font-weight: 900;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
+.turma-students-section .section-header p {
+    margin-top: 6px;
+    color: #a9a3c7;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .student-count {
-    margin-top: 10px;
-
-    color: var(--text-soft);
-    font-size: 12px;
-    line-height: 1.7;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid rgba(166, 132, 255, 0.28);
+    border-radius: 12px;
+    background: rgba(139, 92, 246, 0.12);
+    color: #cbbcff;
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.class-footer {
-    margin-top: 20px;
-    padding-top: 14px;
-
-    border-top: 1px solid rgba(168, 85, 247, .18);
-
-    color: var(--purple-light);
-    font-size: 12px;
-    font-weight: 900;
-
-    transition: color .2s ease;
-}
-
-.class-card:hover .class-footer {
-    color: var(--purple-neon);
-    text-shadow: 0 0 12px rgba(217, 70, 255, .28);
-}
-
-
-/* ==========================================
-   SEÇÃO DA TURMA SELECIONADA
-   ========================================== */
-
-.students-section {
-    margin-top: 38px;
-}
-
-.section-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 15px;
-
-    margin-bottom: 18px;
-}
-
-.section-header h2 {
-    color: var(--text);
-
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
-}
-
-.section-header p {
-    margin-top: 7px;
-
-    color: var(--gray);
-    font-size: 12px;
-    line-height: 1.7;
-}
-
-
-/* ==========================================
-   CARDS DE ALUNOS
-   ========================================== */
+/* =========================================
+   GRADE DE ALUNOS
+========================================= */
 
 .students-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
 }
 
 .student-card {
-    min-width: 0;
-    padding: 15px;
-
     display: flex;
     align-items: center;
-    gap: 13px;
-
+    gap: 15px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid rgba(153, 128, 230, 0.16);
+    border-radius: 18px;
     background: linear-gradient(
         145deg,
-        rgba(26, 17, 38, .98),
-        rgba(17, 11, 26, .98)
+        rgba(35, 28, 66, 0.96),
+        rgba(25, 21, 49, 0.96)
     );
-
-    border: 1px solid rgba(168, 85, 247, .26);
-    border-radius: var(--radius);
-
-    box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
-
+    color: inherit;
+    text-decoration: none;
     transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .student-card:hover {
     transform: translateY(-3px);
-
+    border-color: rgba(167, 139, 250, 0.55);
     background: linear-gradient(
         145deg,
-        #20152E,
-        #15101F
+        rgba(43, 34, 80, 0.98),
+        rgba(29, 24, 57, 0.98)
     );
-
-    border-color: rgba(217, 70, 255, .55);
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, .22),
-        0 0 18px rgba(168, 85, 247, .12);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
 }
 
 .student-avatar {
-    width: 46px;
-    height: 46px;
-    flex-shrink: 0;
-
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        rgba(192, 132, 252, .28),
-        rgba(126, 34, 206, .30)
-    );
-
-    border: 1px solid rgba(217, 70, 255, .40);
-    border-radius: 14px;
-
-    color: var(--text);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(196, 181, 253, 0.24);
+    border-radius: 15px;
+    background: linear-gradient(135deg, #8b5cf6, #6d42cf);
+    color: #ffffff;
     font-size: 19px;
-    font-weight: 900;
-
-    box-shadow: 0 0 13px rgba(168, 85, 247, .12);
+    font-weight: 800;
+    box-shadow: 0 5px 16px rgba(109, 66, 207, 0.22);
 }
 
 .student-info {
@@ -689,326 +162,151 @@ button {
     min-width: 0;
 }
 
-.student-info strong {
-    display: block;
+.student-info h3 {
+    margin: 0;
+    overflow: hidden;
+    color: #f4f0ff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 800;
+.student-email {
+    margin: 5px 0 0;
+    overflow: hidden;
+    color: #a9a3c7;
+    font-size: 12px;
     line-height: 1.5;
-
-    overflow-wrap: anywhere;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.student-info span {
-    display: block;
-    margin-top: 4px;
-
-    color: var(--text-soft);
-    font-size: 11px;
+.student-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
 }
 
-.student-info small {
-    display: inline-block;
-    margin-top: 6px;
-
-    color: var(--purple-light);
+.student-meta span {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border: 1px solid rgba(153, 128, 230, 0.17);
+    border-radius: 8px;
+    background: rgba(139, 92, 246, 0.09);
+    color: #cbbcff;
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .student-arrow {
     flex-shrink: 0;
-
-    color: var(--purple-light);
+    margin-left: auto;
+    color: #9380ce;
     font-size: 21px;
-    font-weight: 800;
-
-    transition:
-        color .2s ease,
-        transform .2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .student-card:hover .student-arrow {
-    color: var(--purple-neon);
-    transform: translateX(3px);
+    transform: translateX(4px);
+    color: #ffffff;
 }
 
+/* =========================================
+   ESTADO VAZIO
+========================================= */
 
-/* ==========================================
-   ESTADOS VAZIOS
-   ========================================== */
-
-.empty-card {
-    padding: 42px 20px;
-
-    background:
-        radial-gradient(
-            ellipse at top,
-            rgba(168, 85, 247, .10),
-            transparent 65%
-        ),
-        linear-gradient(
-            145deg,
-            rgba(26, 17, 38, .98),
-            rgba(17, 11, 26, .98)
-        );
-
-    border: 1px solid rgba(168, 85, 247, .28);
-    border-radius: var(--radius);
-
-    box-shadow: var(--neon-shadow);
-
+.turma-students-section .empty-card {
+    padding: 44px 24px;
     text-align: center;
 }
 
 .empty-icon {
-    font-size: 38px;
-    filter: drop-shadow(0 0 12px rgba(168, 85, 247, .20));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+    border: 1px solid rgba(167, 139, 250, 0.22);
+    border-radius: 18px;
+    background: rgba(139, 92, 246, 0.12);
+    color: #cbbcff;
+    font-size: 27px;
 }
 
-.empty-card h2 {
-    margin-top: 13px;
-
-    color: var(--text);
-    font-size: 19px;
-    font-weight: 900;
-}
-
-.empty-card p {
-    max-width: 460px;
-    margin: 9px auto 0;
-
-    color: var(--gray);
-    font-size: 12px;
-    line-height: 1.8;
-}
-
-.empty-card.small {
-    padding: 32px 18px;
-}
-
-.empty-card.small .empty-icon {
-    font-size: 32px;
-}
-
-.empty-card.small h2 {
+.turma-students-section .empty-card h3 {
+    margin: 0 0 8px;
+    color: #f4f0ff;
     font-size: 17px;
 }
 
-
-/* ==========================================
-   OVERLAY MOBILE
-   ========================================== */
-
-.sidebar-overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-
-    background: rgba(5, 3, 9, .72);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-
-    transition:
-        opacity .25s ease,
-        visibility .25s ease;
+.turma-students-section .empty-card p {
+    max-width: 430px;
+    margin: 0 auto;
+    color: #a9a3c7;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
-.sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
 
-
-/* ==========================================
-   TABLET
-   ========================================== */
-
-@media (min-width: 600px) {
-    .content {
-        padding: 28px 24px 48px;
-    }
-
-    .classes-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 15px;
-    }
-
+@media (max-width: 1100px) {
     .students-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+        grid-template-columns: 1fr;
     }
 }
 
-
-/* ==========================================
-   DESKTOP
-   ========================================== */
-
-@media (min-width: 901px) {
-    .sidebar {
-        transform: translateX(0);
+@media (max-width: 600px) {
+    .turma-page-header {
+        margin-bottom: 24px;
     }
 
-    .main-content {
-        width: calc(100% - var(--sidebar-width));
-        margin-left: var(--sidebar-width);
+    .back-link {
+        margin-bottom: 20px;
     }
 
-    .topbar {
-        padding: 0 28px;
+    .turma-students-section .section-header {
+        align-items: flex-start;
     }
 
-    .menu-button {
-        display: none;
-    }
-
-    .content {
-        padding: 34px 34px 60px;
-    }
-
-    .page-header h1 {
-        font-size: 34px;
-    }
-
-    .classes-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-    }
-
-    .students-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 15px;
-    }
-
-    .class-card {
-        padding: 21px;
-    }
-}
-
-
-/* ==========================================
-   TELAS GRANDES
-   ========================================== */
-
-@media (min-width: 1200px) {
-    .content {
-        padding: 34px 45px 60px;
-    }
-
-    .page-header h1 {
-        font-size: 39px;
-    }
-
-    .classes-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .students-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-/* ==========================================
-   CELULAR
-   ========================================== */
-
-@media (max-width: 599px) {
-    .sidebar {
-        width: min(280px, 86vw);
-    }
-
-    .topbar {
-        height: 66px;
-        padding: 0 14px;
-    }
-
-    .content {
-        padding: 22px 16px 42px;
-    }
-
-    .page-header {
-        margin-bottom: 23px;
-    }
-
-    .page-header h1 {
-        font-size: 25px;
-        letter-spacing: -.5px;
-    }
-
-    .page-header p {
-        font-size: 13px;
-    }
-
-    .classes-grid,
-    .students-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 12px;
-    }
-
-    .class-card {
-        padding: 17px;
-    }
-
-    .students-section {
-        margin-top: 32px;
-    }
-
-    .section-header h2 {
-        font-size: 19px;
-    }
-
-    .empty-card {
-        padding: 34px 16px;
-    }
-}
-
-
-/* CELULARES MUITO PEQUENOS */
-
-@media (max-width: 380px) {
-    .content {
-        padding-right: 12px;
-        padding-left: 12px;
-    }
-
-    .class-card,
     .student-card {
-        padding: 13px;
+        gap: 12px;
+        padding: 15px;
+        border-radius: 15px;
     }
 
-    .section-header h2 {
+    .student-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        font-size: 17px;
+    }
+
+    .student-info h3 {
+        font-size: 14px;
+    }
+
+    .student-email {
+        font-size: 11px;
+    }
+
+    .student-meta {
+        gap: 6px;
+        margin-top: 9px;
+    }
+
+    .student-meta span {
+        padding: 4px 7px;
+        font-size: 10px;
+    }
+
+    .student-arrow {
         font-size: 18px;
     }
-}
-
-
-/* ACESSIBILIDADE */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-    }
-}
-
-/* POWER em roxo neon */
-.logo strong span {
-    color: #D946FF !important;
-    text-shadow:
-        0 0 6px rgba(217, 70, 255, .65),
-        0 0 14px rgba(217, 70, 255, .45);
 }
