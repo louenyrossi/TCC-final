@@ -120,10 +120,25 @@ $inicial = mb_strtoupper(
     >
 
     <title>Meu Perfil | MathPower</title>
-     
+
     <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
-    
+
+    <!-- Cor do logo MathPower -->
+    <style>
+        .sidebar .logo strong {
+            color: #FFFFFF !important;
+        }
+
+        .sidebar .logo strong .logo-power {
+            color: #E879FF !important;
+            -webkit-text-fill-color: #E879FF !important;
+            text-shadow:
+                0 0 7px #C026FF,
+                0 0 15px #C026FF,
+                0 0 25px rgba(192, 38, 255, 0.8) !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -140,10 +155,9 @@ $inicial = mb_strtoupper(
 
                 <span class="logo-icon">M</span>
 
-                <div>
-                    <strong>MathPower</strong>
-                    <small>Aprenda jogando</small>
-                </div>
+            <div class="logo-text">
+                <strong>Math<span class="logo-power">Power</span></strong>
+            </div>
 
             </div>
 
@@ -183,7 +197,7 @@ $inicial = mb_strtoupper(
 
         </nav>
 
-        <!-- USUÁRIO E SAIR NA PARTE INFERIOR -->
+        <!-- USUÁRIO E SAIR -->
 
         <div class="sidebar-bottom">
 
@@ -321,47 +335,39 @@ $inicial = mb_strtoupper(
                 <div class="stats-grid">
 
                     <div class="stat-card">
-
                         <div class="stat-icon purple">🎮</div>
 
                         <div>
                             <span>Partidas</span>
                             <strong><?= $partidas ?></strong>
                         </div>
-
                     </div>
 
                     <div class="stat-card">
-
                         <div class="stat-icon green">✓</div>
 
                         <div>
                             <span>Acertos</span>
                             <strong><?= $acertos ?></strong>
                         </div>
-
                     </div>
 
                     <div class="stat-card">
-
                         <div class="stat-icon red">✕</div>
 
                         <div>
                             <span>Erros</span>
                             <strong><?= $erros ?></strong>
                         </div>
-
                     </div>
 
                     <div class="stat-card">
-
                         <div class="stat-icon yellow">🏆</div>
 
                         <div>
                             <span>Pontuação</span>
                             <strong><?= $pontuacao ?></strong>
                         </div>
-
                     </div>
 
                 </div>
@@ -391,19 +397,15 @@ $inicial = mb_strtoupper(
                     </div>
 
                     <div class="large-progress">
-
                         <div
                             class="large-progress-fill"
                             style="width: <?= $taxaAcerto ?>%"
                         ></div>
-
                     </div>
 
                     <div class="performance-footer">
-
                         <span><?= $acertos ?> acertos</span>
                         <span><?= $erros ?> erros</span>
-
                     </div>
 
                 </div>
