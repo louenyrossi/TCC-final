@@ -1,4 +1,3 @@
-
 /* ==========================================
    MATPOWER — DASHBOARD DO PROFESSOR
    Identidade visual do dashboard do aluno
@@ -1517,30 +1516,41 @@ button {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #D946FF;
 }
-/* BARRA DE ROLAGEM ROXO NEON */
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #D946FF #100B18;
+/* ==========================================
+   BARRA DE ROLAGEM ROXA NEON — SIDEBAR
+   ========================================== */
+
+aside.sidebar {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+
+    scrollbar-width: thin !important;
+    scrollbar-color: #D946FF #100B18 !important;
 }
 
-.sidebar::-webkit-scrollbar {
-    width: 8px;
+/* Chrome, Edge e Safari */
+aside.sidebar::-webkit-scrollbar {
+    width: 8px !important;
 }
 
-.sidebar::-webkit-scrollbar-track {
-    background: #100B18;
+aside.sidebar::-webkit-scrollbar-track {
+    background: #100B18 !important;
+    border-radius: 10px !important;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
-    background: #D946FF;
-    border-radius: 10px;
-    box-shadow: 0 0 8px #D946FF,
-                0 0 16px #A855F7;
-    border: 1px solid #E879F9;
+aside.sidebar::-webkit-scrollbar-thumb {
+    background: #D946FF !important;
+    border-radius: 10px !important;
+    border: 1px solid #F0ABFC !important;
+    box-shadow:
+        0 0 5px #D946FF,
+        0 0 10px #D946FF,
+        0 0 20px #A855F7 !important;
 }
 
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #E879F9;
-    box-shadow: 0 0 12px #D946FF,
-                0 0 22px #A855F7;
+aside.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #F0ABFC !important;
+    box-shadow:
+        0 0 8px #D946FF,
+        0 0 18px #D946FF !important;
 }
