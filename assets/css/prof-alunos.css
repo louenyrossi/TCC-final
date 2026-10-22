@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +23,6 @@ a {
 .app {
     min-height: 100vh;
 }
-
 
 /* SIDEBAR */
 
@@ -125,7 +125,6 @@ a {
     color: #DC2626;
 }
 
-
 /* MAIN */
 
 .main-content {
@@ -153,7 +152,6 @@ a {
     padding: 35px 25px 60px;
 }
 
-
 /* HEADER */
 
 .page-header {
@@ -177,7 +175,6 @@ a {
     color: #6B6675;
     font-size: 14px;
 }
-
 
 /* SUMMARY */
 
@@ -223,7 +220,6 @@ a {
     margin-top: 4px;
     font-size: 23px;
 }
-
 
 /* FILTROS */
 
@@ -274,7 +270,6 @@ a {
     outline: none;
 }
 
-
 /* SECTION */
 
 .students-section {
@@ -294,7 +289,6 @@ a {
     color: #6B6675;
     font-size: 12px;
 }
-
 
 /* STUDENTS */
 
@@ -370,7 +364,6 @@ a {
     font-size: 18px;
 }
 
-
 /* EMPTY */
 
 .empty-card {
@@ -419,29 +412,23 @@ a {
     font-size: 12px;
 }
 
-
 /* OVERLAY */
 
 .sidebar-overlay {
     display: none;
 }
 
-
 /* TABLET */
 
 @media (max-width: 900px) {
-
     .students-list {
         grid-template-columns: 1fr;
     }
-
 }
-
 
 /* MOBILE */
 
 @media (max-width: 800px) {
-
     .sidebar {
         transform: translateX(-100%);
         transition: transform .25s ease;
@@ -499,14 +486,11 @@ a {
     .filters-card select {
         width: 100%;
     }
-
 }
-
 
 /* CELULAR */
 
 @media (max-width: 550px) {
-
     .summary-grid {
         grid-template-columns: 1fr;
     }
@@ -519,11 +503,9 @@ a {
         width: 43px;
         height: 43px;
     }
-
 }
-/* =========================================================
-   SEPARAÇÃO DAS TURMAS
-   ========================================================= */
+
+/* SEPARAÇÃO DAS TURMAS */
 
 .students-list {
     display: block;
@@ -569,7 +551,7 @@ a {
     white-space: nowrap;
 }
 
-/* Alunos de cada turma */
+/* ALUNOS DE CADA TURMA */
 
 .turma-students {
     display: grid;
@@ -578,26 +560,23 @@ a {
     width: 100%;
 }
 
-/* Cards dos alunos */
+/* CARDS DOS ALUNOS */
 
 .turma-students .student-card {
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Separação visual entre turmas */
+/* SEPARAÇÃO VISUAL ENTRE TURMAS */
 
 .turma-group + .turma-group {
     padding-top: 8px;
     border-top: 1px solid #EDE9FE;
 }
 
-/* =========================================================
-   CELULAR
-   ========================================================= */
+/* RESPONSIVIDADE DAS TURMAS */
 
 @media (max-width: 768px) {
-
     .turma-group {
         margin-bottom: 26px;
     }
@@ -621,5 +600,4 @@ a {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-
 }
