@@ -1517,11 +1517,10 @@ button {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #D946FF;
 }
-/* Barra de rolagem roxa neon */
+/* BARRA DE ROLAGEM ROXA NEON DA SIDEBAR */
 .sidebar {
     overflow-y: auto;
     overflow-x: hidden;
-
     scrollbar-width: thin;
     scrollbar-color: #9333EA #100B18;
 }
