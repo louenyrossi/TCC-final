@@ -156,7 +156,7 @@ $inicial = mb_strtoupper(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Dashboard | MathPlay</title>
+    <title>Dashboard | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -184,7 +184,7 @@ $inicial = mb_strtoupper(
                 <div>
 
                     <strong>
-                        MathPlay
+                        MathPower
                     </strong>
 
                     <small>
