@@ -1,3 +1,4 @@
+
 /* ==========================================
    MATPOWER — DASHBOARD DO PROFESSOR
    Identidade visual do dashboard do aluno
@@ -101,6 +102,7 @@ button {
     height: 100vh;
     min-height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
 
     position: fixed;
     top: 0;
@@ -137,6 +139,52 @@ button {
     transform: translateX(0);
 }
 
+
+/* ==========================================
+   BARRA DE ROLAGEM ROXO NEON
+   ========================================== */
+
+/* Firefox */
+.sidebar {
+    scrollbar-width: thin !important;
+    scrollbar-color: #B026FF #100817 !important;
+}
+
+/* Chrome, Edge e Safari */
+.sidebar::-webkit-scrollbar {
+    width: 7px !important;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #100817 !important;
+    border-radius: 10px !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #A020F0 !important;
+    border: 1px solid #D946FF !important;
+    border-radius: 10px !important;
+
+    box-shadow:
+        0 0 5px #D946FF,
+        0 0 10px #D946FF,
+        0 0 18px #A020F0 !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D946FF !important;
+
+    box-shadow:
+        0 0 8px #D946FF,
+        0 0 16px #D946FF,
+        0 0 24px #A020F0 !important;
+}
+
+
+/* ==========================================
+   CABEÇALHO E LOGO
+   ========================================== */
+
 .sidebar-header {
     min-height: 88px;
     padding: 20px 18px;
@@ -163,31 +211,38 @@ button {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(255, 255, 255, .15);
-    border-radius: 14px;
-
     background: linear-gradient(
         135deg,
-        var(--purple),
-        var(--purple-dark)
+        #C084FC,
+        #9333EA 65%,
+        #7E22CE
     );
 
-    color: var(--white);
-    font-size: 22px;
+    color: #FFFFFF;
+
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 14px;
+
+    font-size: 23px;
     font-weight: 900;
 
     box-shadow:
-        0 0 20px rgba(168, 85, 247, .32),
-        inset 0 1px 0 rgba(255, 255, 255, .16);
+        0 0 12px rgba(217, 70, 255, .65),
+        0 0 28px rgba(168, 85, 247, .35);
 }
 
 .logo strong {
     display: block;
-    color: var(--text);
+    color: #F7F0FF;
     font-size: 23px;
     font-weight: 900;
-    letter-spacing: -.6px;
+    letter-spacing: -.7px;
     line-height: 1.15;
+}
+
+.logo strong span {
+    color: #D946FF;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
 }
 
 .logo small {
@@ -201,7 +256,9 @@ button {
 }
 
 
-/* Navegação */
+/* ==========================================
+   NAVEGAÇÃO
+   ========================================== */
 
 .sidebar-nav {
     padding: 24px 14px;
@@ -248,7 +305,6 @@ button {
 
 .nav-item:hover {
     color: var(--white);
-
     background: rgba(168, 85, 247, .12);
     border-color: rgba(168, 85, 247, .25);
 
@@ -273,7 +329,9 @@ button {
 }
 
 
-/* Rodapé do menu */
+/* ==========================================
+   RODAPÉ DO MENU
+   ========================================== */
 
 .sidebar-bottom {
     margin-top: auto;
@@ -302,7 +360,6 @@ button {
 
 .logout-link:hover {
     color: var(--danger);
-
     background: rgba(251, 113, 133, .09);
     border-color: rgba(251, 113, 133, .20);
 }
@@ -401,7 +458,9 @@ button {
 }
 
 
-/* Botão do menu mobile */
+/* ==========================================
+   BOTÃO DO MENU MOBILE
+   ========================================== */
 
 .menu-button {
     width: 42px;
@@ -433,7 +492,9 @@ button {
 }
 
 
-/* Área de conteúdo */
+/* ==========================================
+   ÁREA DE CONTEÚDO
+   ========================================== */
 
 .content {
     width: 100%;
@@ -467,7 +528,6 @@ button {
 
 .page-header h1 {
     color: var(--text);
-
     font-size: 29px;
     font-weight: 900;
     line-height: 1.2;
@@ -644,9 +704,6 @@ button {
     line-height: 1.6;
 }
 
-
-/* Indicadores da visão geral */
-
 .overview-stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -662,7 +719,6 @@ button {
     border-radius: 12px;
 
     text-align: center;
-
     transition: .2s ease;
 }
 
@@ -690,9 +746,6 @@ button {
 
     overflow-wrap: anywhere;
 }
-
-
-/* Taxa de acerto */
 
 .accuracy-area {
     margin-top: 22px;
@@ -737,7 +790,6 @@ button {
     );
 
     box-shadow: 0 0 12px rgba(217, 70, 255, .40);
-
     transition: width .4s ease;
 }
 
@@ -907,7 +959,6 @@ button {
 
 .class-card:hover {
     transform: translateY(-4px);
-
     border-color: rgba(217, 70, 255, .60);
 
     box-shadow:
@@ -1060,9 +1111,6 @@ button {
     border-bottom: 0;
 }
 
-
-/* Indicador de acerto */
-
 .accuracy-badge {
     min-width: 29px;
     min-height: 29px;
@@ -1106,7 +1154,6 @@ button {
     border-radius: var(--radius);
 
     box-shadow: var(--neon-shadow);
-
     text-align: center;
 }
 
@@ -1410,7 +1457,9 @@ button {
 }
 
 
-/* CELULARES MUITO PEQUENOS */
+/* ==========================================
+   CELULARES MUITO PEQUENOS
+   ========================================== */
 
 @media (max-width: 380px) {
     .content {
@@ -1453,108 +1502,4 @@ button {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
     }
-}
-
-/* Logo no mesmo estilo do dashboard do aluno */
-.logo-icon {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(135deg, #C084FC, #9333EA 65%, #7E22CE);
-    color: #FFFFFF;
-
-    border: 1px solid rgba(255, 255, 255, .45);
-    border-radius: 14px;
-
-    font-size: 23px;
-    font-weight: 900;
-
-    box-shadow:
-        0 0 12px rgba(217, 70, 255, .65),
-        0 0 28px rgba(168, 85, 247, .35);
-}
-
-/* Nome da marca */
-.logo strong {
-    display: block;
-    color: #F7F0FF;
-    font-size: 23px;
-    font-weight: 900;
-    letter-spacing: -.7px;
-    line-height: 1.15;
-}
-
-.logo strong span {
-    color: #D946FF;
-    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
-}
-
-/* Barra de rolagem roxa neon do menu */
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #9333EA #100B18;
-}
-
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #100B18;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #A855F7, #7E22CE);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(217, 70, 255, .45);
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #D946FF;
-}
-/* ==========================================
-   SIDEBAR — BARRA ROXO NEON
-   ========================================== */
-
-.sidebar {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-
-    scrollbar-width: thin !important;
-    scrollbar-color: #B026FF #100817 !important;
-}
-
-/* Chrome, Edge e Safari */
-.sidebar::-webkit-scrollbar {
-    width: 7px !important;
-    background: #100817 !important;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #100817 !important;
-    border-radius: 10px !important;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: #A020F0 !important;
-    border: 1px solid #D946FF !important;
-    border-radius: 10px !important;
-
-    box-shadow:
-        0 0 5px #D946FF,
-        0 0 10px #D946FF,
-        0 0 18px #A020F0 !important;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #D946FF !important;
-
-    box-shadow:
-        0 0 8px #D946FF,
-        0 0 16px #D946FF,
-        0 0 24px #A020F0 !important;
 }
