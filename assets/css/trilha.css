@@ -62,31 +62,25 @@ button {
     top: 0;
     left: 0;
     z-index: 1000;
-
     display: flex;
     flex-direction: column;
-
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
     height: 100vh;
     min-height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-
     background: linear-gradient(180deg, #13091c, #090611);
     border-right: 1px solid var(--border);
-
     transition: transform .25s ease;
 }
 
 .sidebar-header {
     display: flex;
     align-items: center;
-
     height: 88px;
     min-height: 88px;
     padding: 0 20px;
-
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
 }
@@ -134,7 +128,6 @@ button {
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     padding: 24px 14px;
 }
 
@@ -142,17 +135,13 @@ button {
     display: flex;
     align-items: center;
     gap: 12px;
-
     min-height: 50px;
     padding: 0 14px;
-
     border: 1px solid transparent;
     border-radius: 13px;
-
     color: #c8b8d5;
     font-size: 14px;
     font-weight: 700;
-
     transition:
         background .2s ease,
         color .2s ease,
@@ -198,17 +187,13 @@ button {
     display: flex;
     align-items: center;
     gap: 12px;
-
     min-height: 44px;
     padding: 0 12px;
-
     border: 1px solid transparent;
     border-radius: 10px;
-
     color: #a6a6b3;
     font-size: 14px;
     font-weight: 700;
-
     transition: .2s ease;
 }
 
@@ -483,33 +468,27 @@ button {
 .path-item {
     position: relative;
     z-index: 1;
-
     display: grid;
     grid-template-columns: 64px minmax(0, 1fr);
     align-items: start;
     gap: 20px;
-
     margin-bottom: 28px;
 }
 
 .path-node {
     position: relative;
     z-index: 2;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 64px;
     height: 64px;
     border: 4px solid #bd67ff;
     border-radius: 50%;
-
     background: #21132f;
     color: #fff;
     font-size: 18px;
     font-weight: 800;
-
     box-shadow: 0 0 15px rgba(157, 78, 221, .2);
 }
 
@@ -548,11 +527,9 @@ button {
     position: relative;
     min-width: 0;
     overflow: hidden;
-
     padding: 20px;
     border: 1px solid rgba(190, 80, 255, .45);
     border-radius: 17px;
-
     background:
         radial-gradient(
             ellipse at top left,
@@ -560,12 +537,10 @@ button {
             transparent 65%
         ),
         linear-gradient(145deg, #191128, #0d0917);
-
     box-shadow:
         0 0 8px rgba(157, 78, 221, .16),
         0 0 20px rgba(157, 78, 221, .1),
         inset 0 0 18px rgba(157, 78, 221, .05);
-
     transition:
         transform .25s ease,
         border-color .25s ease,
@@ -580,7 +555,6 @@ button {
     width: 76%;
     height: 1px;
     pointer-events: none;
-
     background: linear-gradient(
         90deg,
         transparent,
@@ -589,7 +563,6 @@ button {
         #a64dff,
         transparent
     );
-
     opacity: .7;
     box-shadow: 0 0 10px #b84dff;
 }
@@ -597,7 +570,6 @@ button {
 .path-card:hover {
     transform: translateY(-3px);
     border-color: #d966ff;
-
     box-shadow:
         0 0 12px rgba(190, 70, 255, .4),
         0 0 28px rgba(157, 78, 221, .22),
@@ -606,7 +578,6 @@ button {
 
 .path-item.current .path-card {
     border-color: #c653ff;
-
     box-shadow:
         0 0 8px rgba(198, 83, 255, .4),
         0 0 24px rgba(157, 78, 221, .2),
@@ -630,18 +601,14 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 48px;
     height: 48px;
     flex-shrink: 0;
-
     border: 1px solid rgba(226, 156, 255, .45);
     border-radius: 13px;
-
     background: linear-gradient(135deg, #5724a8, #9d4edd);
     color: #fff;
     font-size: 25px;
-
     box-shadow:
         0 0 10px rgba(190, 70, 255, .35),
         inset 0 0 12px rgba(255, 255, 255, .08);
@@ -669,10 +636,8 @@ button {
 .status-badge {
     flex-shrink: 0;
     padding: 6px 9px;
-
     border: 1px solid rgba(199, 125, 255, .25);
     border-radius: 20px;
-
     background: rgba(157, 78, 221, .13);
     color: #e5caff;
     font-size: 10px;
@@ -716,7 +681,6 @@ button {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-
     margin-bottom: 7px;
     color: var(--muted);
     font-size: 11px;
@@ -737,9 +701,7 @@ button {
 .progress-fill {
     height: 100%;
     border-radius: 10px;
-
     background: linear-gradient(90deg, #7928ca, #df62ff);
-
     box-shadow:
         0 0 8px #b84dff,
         0 0 16px rgba(223, 98, 255, .65);
@@ -759,28 +721,21 @@ button {
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     width: 100%;
     min-height: 43px;
     margin-top: 17px;
     padding: 10px 15px;
-
     border: 1px solid rgba(230, 165, 255, .25);
     border-radius: 10px;
-
     background: linear-gradient(100deg, #7928ca, #a43ee8);
     color: #fff;
-
     font-size: 13px;
     font-weight: 800;
     text-align: center;
-
     cursor: pointer;
-
     box-shadow:
         0 0 8px rgba(174, 60, 255, .3),
         0 0 18px rgba(121, 40, 202, .2);
-
     transition:
         background .2s ease,
         box-shadow .2s ease,
@@ -790,7 +745,6 @@ button {
 .path-button:hover {
     transform: translateY(-1px);
     background: linear-gradient(100deg, #8b35e0, #c35aff);
-
     box-shadow:
         0 0 12px rgba(218, 100, 255, .65),
         0 0 28px rgba(157, 78, 221, .4);
@@ -809,13 +763,10 @@ button {
 .locked-message {
     margin-top: 17px;
     padding: 11px 13px;
-
     border: 1px solid rgba(150, 140, 160, .17);
     border-radius: 10px;
-
     background: rgba(150, 140, 160, .06);
     color: #a99bb7;
-
     font-size: 12px;
     line-height: 1.4;
 }
@@ -827,11 +778,9 @@ button {
 .empty-state {
     position: relative;
     overflow: hidden;
-
     padding: 45px 25px;
     border: 1px solid rgba(190, 70, 255, .7);
     border-radius: 18px;
-
     background:
         radial-gradient(
             ellipse at center,
@@ -839,9 +788,7 @@ button {
             transparent 72%
         ),
         linear-gradient(145deg, #191128, #0d0917);
-
     text-align: center;
-
     box-shadow:
         0 0 10px rgba(190, 70, 255, .3),
         0 0 28px rgba(157, 78, 221, .18),
@@ -858,7 +805,6 @@ button {
     width: 80%;
     height: 1px;
     pointer-events: none;
-
     background: linear-gradient(
         90deg,
         transparent,
@@ -867,13 +813,11 @@ button {
         #b84dff,
         transparent
     );
-
     box-shadow: 0 0 10px #c653ff;
 }
 
 .empty-state:hover {
     border-color: #de83ff;
-
     box-shadow:
         0 0 14px rgba(190, 70, 255, .45),
         0 0 38px rgba(157, 78, 221, .28),
@@ -947,19 +891,15 @@ button {
         display: flex;
         align-items: center;
         justify-content: center;
-
         width: 38px;
         height: 38px;
         flex-shrink: 0;
         margin-right: 12px;
-
         border: 1px solid rgba(210, 70, 255, .3);
         border-radius: 9px;
-
         background: #21122e;
         color: var(--neon);
         font-size: 19px;
-
         cursor: pointer;
     }
 
@@ -1171,7 +1111,6 @@ body {
             transparent 40%
         ),
         var(--bg);
-
     color: var(--text);
 }
 
@@ -1188,7 +1127,6 @@ a {
     width: 260px;
     min-width: 260px;
     height: 100vh;
-
     background:
         radial-gradient(
             ellipse at 0% 0%,
@@ -1196,11 +1134,8 @@ a {
             transparent 48%
         ),
         linear-gradient(180deg, #120b1c, #0d0914);
-
     border-right: 1px solid var(--border);
-
     box-shadow: 8px 0 35px rgba(0, 0, 0, 0.2);
-
     transition: transform 0.3s ease;
 }
 
@@ -1208,11 +1143,9 @@ a {
     height: 88px;
     min-height: 88px;
     padding: 0 20px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-bottom: 1px solid rgba(192, 132, 252, 0.12);
 }
 
@@ -1222,7 +1155,6 @@ a {
     display: flex;
     align-items: center;
     gap: 12px;
-
     min-width: 0;
     white-space: nowrap;
 }
@@ -1232,25 +1164,20 @@ a {
     height: 44px;
     min-width: 44px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 14px;
-
     background: linear-gradient(
         135deg,
         #e879ff,
         #a855f7 45%,
         #6d28d9
     );
-
     color: #fff;
     font-size: 20px;
     font-weight: 900;
-
     box-shadow:
         0 0 12px rgba(217, 70, 255, 0.65),
         0 0 28px rgba(168, 85, 247, 0.22);
@@ -1260,18 +1187,15 @@ a {
 
 .logo strong {
     display: block;
-
     color: #fff;
     font-size: 23px;
     font-weight: 900;
     letter-spacing: -0.8px;
-
     text-shadow: none;
 }
 
 .logo strong span {
     color: #e879ff;
-
     text-shadow:
         0 0 7px #c026ff,
         0 0 20px rgba(192, 38, 255, 0.75);
@@ -1294,13 +1218,10 @@ a {
     min-height: 50px;
     padding: 0 14px;
     gap: 12px;
-
     border-radius: 13px;
-
     color: #d0c1e2;
     font-size: 14px;
     font-weight: 600;
-
     transition:
         background 0.22s ease,
         color 0.22s ease,
@@ -1317,7 +1238,6 @@ a {
 
     border-color: rgba(217, 70, 255, 0.42);
     color: #fff;
-
     transform: translateX(3px);
 }
 
@@ -1330,7 +1250,6 @@ a {
 
     border-color: rgba(217, 70, 255, 0.48);
     color: #fff;
-
     box-shadow:
         inset 3px 0 #e879ff,
         0 0 20px rgba(168, 85, 247, 0.15);
@@ -1340,7 +1259,6 @@ a {
 
 .sidebar-bottom {
     padding: 18px 16px;
-
     border-top: 1px solid rgba(192, 38, 255, 0.14);
     background: rgba(7, 4, 12, 0.25);
 }
@@ -1349,9 +1267,7 @@ a {
     min-height: 44px;
     padding: 0 12px;
     gap: 10px;
-
     border-radius: 10px;
-
     color: #a697b8;
     font-size: 14px;
     font-weight: 600;
@@ -1371,7 +1287,6 @@ a {
     min-width: 0;
     min-height: 100vh;
     margin-left: var(--sidebar-width);
-
     background:
         radial-gradient(
             ellipse at 90% 0%,
@@ -1392,21 +1307,16 @@ a {
     position: sticky;
     z-index: 500;
     top: 0;
-
     height: 72px;
     padding: 0 30px;
-
     background: rgba(10, 6, 16, 0.91);
     border-bottom: 1px solid rgba(192, 38, 255, 0.24);
-
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-
     backdrop-filter: blur(18px);
 }
 
 .topbar-title {
     flex: 1;
-
     color: #fff;
     font-size: 14px;
     font-weight: 800;
@@ -1429,15 +1339,12 @@ a {
     width: 40px;
     height: 40px;
     min-width: 40px;
-
     border: 1px solid rgba(232, 121, 255, 0.75);
-
     background: linear-gradient(
         135deg,
         #d946ff,
         #7026c9
     );
-
     font-size: 14px;
     font-weight: 900;
 }
@@ -1447,16 +1354,13 @@ a {
 .menu-button {
     width: 42px;
     height: 42px;
-
     border: 1px solid rgba(192, 132, 252, 0.3);
     border-radius: 12px;
-
     background: linear-gradient(
         145deg,
         #21122e,
         #120b1b
     );
-
     color: #e879ff;
     font-size: 20px;
 }
@@ -1466,7 +1370,6 @@ a {
 .content {
     width: 100%;
     max-width: 1400px;
-
     margin: 0 auto;
     padding: 34px 34px 60px;
 }
@@ -1481,34 +1384,27 @@ a {
 
 .eyebrow {
     display: inline-block;
-
     margin-bottom: 10px;
-
     color: #e879ff;
     font-size: 14px;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-
     text-shadow: 0 0 15px rgba(199, 125, 255, 0.35);
 }
 
 .page-header h1 {
     margin-top: 0;
     margin-bottom: 10px;
-
     color: #fff;
     font-size: 34px;
     line-height: 1.15;
-
     text-shadow: 0 0 24px rgba(157, 78, 221, 0.2);
 }
 
 .page-header p {
     max-width: 650px;
-
     margin-top: 0;
-
     color: #aaa1bd;
     font-size: 15px;
     line-height: 1.6;
@@ -1613,9 +1509,7 @@ a {
     .sidebar {
         width: 260px;
         min-width: 260px;
-
         transform: translateX(-100%);
-
         box-shadow: 8px 0 35px rgba(0, 0, 0, 0.5);
     }
 
@@ -1628,7 +1522,6 @@ a {
         position: fixed;
         inset: 0;
         z-index: 999;
-
         background: rgba(0, 0, 0, 0.72);
     }
 
@@ -1646,7 +1539,6 @@ a {
         display: flex;
         align-items: center;
         justify-content: center;
-
         flex-shrink: 0;
         margin-right: 12px;
     }
@@ -2105,18 +1997,14 @@ button:focus-visible {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 260px;
     min-width: 260px;
     height: 100vh;
     height: 100dvh;
-
     display: flex;
     flex-direction: column;
-
     overflow-x: hidden;
     overflow-y: auto;
-
     box-sizing: border-box;
     background:
         radial-gradient(
@@ -2125,7 +2013,6 @@ button:focus-visible {
             transparent 48%
         ),
         linear-gradient(180deg, #120b1c, #0d0914);
-
     border-right: 1px solid rgba(217, 70, 255, 0.35);
     box-shadow: 8px 0 35px rgba(0, 0, 0, 0.2);
 }
@@ -2135,10 +2022,8 @@ button:focus-visible {
     height: 88px;
     min-height: 88px;
     padding: 0 20px;
-
     display: flex;
     align-items: center;
-
     box-sizing: border-box;
     flex-shrink: 0;
 }
@@ -2156,26 +2041,21 @@ button:focus-visible {
     height: 44px;
     min-width: 44px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 14px;
-
     background: linear-gradient(
         135deg,
         #e879ff,
         #a855f7 45%,
         #6d28d9
     );
-
     color: #fff;
     font-size: 23px;
     line-height: 1;
     font-weight: 900;
-
     box-shadow:
         0 0 12px rgba(217, 70, 255, 0.55),
         0 0 24px rgba(168, 85, 247, 0.2);
@@ -2187,7 +2067,6 @@ button:focus-visible {
     flex-direction: column;
     flex: 0 0 auto;
     gap: 8px;
-
     padding: 24px 14px;
     overflow: visible;
 }
@@ -2196,14 +2075,11 @@ button:focus-visible {
     display: flex;
     align-items: center;
     gap: 12px;
-
     width: 100%;
     min-height: 50px;
     padding: 0 14px;
-
     box-sizing: border-box;
     border-radius: 13px;
-
     font-size: 14px;
     font-weight: 600;
 }
@@ -2213,12 +2089,10 @@ button:focus-visible {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     width: 24px;
     min-width: 24px;
     height: 24px;
     flex-shrink: 0;
-
     font-size: 20px;
     line-height: 1;
     text-align: center;
@@ -2244,10 +2118,8 @@ button:focus-visible {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-
     margin-top: auto;
     padding: 18px 16px;
-
     border-top: 1px solid rgba(192, 38, 255, 0.14);
     background: rgba(7, 4, 12, 0.25);
 }
@@ -2547,5 +2419,25 @@ button:focus-visible {
         flex-basis: 36px;
     }
 }
+/* Sinais matemáticos no final da Trilha */
+.main-content > .content::after {
+    content: "＋   ×   ÷   π   √   ∞";
+    display: block;
+    width: 100%;
+    margin-top: 70px;
+    padding-bottom: 10px;
+    color: #5a456e;
+    font-size: 38px;
+    line-height: 1.3;
+    letter-spacing: 10px;
+    text-align: center;
+    pointer-events: none;
+}
 
-
+@media (max-width: 700px) {
+    .main-content > .content::after {
+        margin-top: 50px;
+        font-size: 28px;
+        letter-spacing: 5px;
+    }
+}
