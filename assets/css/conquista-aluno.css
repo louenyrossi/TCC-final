@@ -164,7 +164,7 @@ body {
 }
 
 .titulo-area h1::first-letter {
-    c color: #ffffff;
+    color: #ffffff;
     text-shadow: none;
 }
 
@@ -710,4 +710,49 @@ body {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }
+}
+
+/* ========================================
+   BORDAS ROXO NEON NOS CONTAINERS
+======================================== */
+
+/* Resumo e progresso */
+.resumo-card,
+.progresso-card {
+    border: 1px solid #a855f7;
+
+    box-shadow:
+        0 0 8px rgba(168, 85, 247, 0.35),
+        0 0 18px rgba(168, 85, 247, 0.15);
+}
+
+/* Cards de conquistas */
+.conquista {
+    border: 1px solid #a855f7;
+
+    box-shadow:
+        0 0 8px rgba(168, 85, 247, 0.30),
+        0 0 16px rgba(168, 85, 247, 0.12);
+}
+
+/* Brilho mais forte ao passar o mouse */
+.resumo-card:hover,
+.progresso-card:hover,
+.conquista:hover {
+    border-color: #c026ff;
+
+    box-shadow:
+        0 0 10px rgba(192, 38, 255, 0.50),
+        0 0 22px rgba(168, 85, 247, 0.25);
+}
+
+/* Mantém as conquistas bloqueadas mais discretas */
+.conquista.bloqueada {
+    border-color: #554064;
+    box-shadow: none;
+}
+
+.conquista.bloqueada:hover {
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.18);
 }
