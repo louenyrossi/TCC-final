@@ -1001,64 +1001,57 @@ body {
     box-shadow: 0 0 18px rgba(168, 85, 247, .35);
 }
 
-/* LOGO MATHPOWER NEON — IGUAL AO DASHBOARD */
+/* LOGO MATHPOWER — TAMANHO PADRÃO DAS OUTRAS PÁGINAS */
 
 .sidebar-header .logo {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .sidebar-header .logo-icon {
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px;
+    border-radius: 12px !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
 
     background: linear-gradient(
         135deg,
-        #7E22CE 0%,
-        #A855F7 50%,
-        #D946FF 100%
+        #7E22CE,
+        #A855F7,
+        #D946FF
     ) !important;
 
     color: #FFFFFF !important;
-    border: 1px solid rgba(217, 70, 255, .8) !important;
-    border-radius: 14px !important;
-
-    font-size: 24px !important;
-    font-weight: 900 !important;
+    border: 1px solid rgba(217, 70, 255, .7) !important;
 
     box-shadow:
-        0 0 8px rgba(168, 85, 247, .7),
-        0 0 20px rgba(217, 70, 255, .4),
-        inset 0 0 10px rgba(255, 255, 255, .1) !important;
+        0 0 8px rgba(168, 85, 247, .55),
+        0 0 16px rgba(217, 70, 255, .25) !important;
 }
 
 .sidebar-header .logo strong {
     display: block;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    letter-spacing: -.4px;
+    line-height: 1.2;
     color: #F7F0FF !important;
-    font-size: 25px !important;
-    font-weight: 900 !important;
-    letter-spacing: -1px;
-    line-height: 1.1;
     white-space: nowrap;
 }
 
 .sidebar-header .logo strong span {
     color: #D946FF !important;
-    text-shadow:
-        0 0 7px rgba(217, 70, 255, .8),
-        0 0 16px rgba(217, 70, 255, .45);
+    text-shadow: 0 0 10px rgba(217, 70, 255, .45);
 }
 
 .sidebar-header .logo small {
     display: block;
-    margin-top: 5px;
+    margin-top: 3px;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0;
     color: #C084FC !important;
-    font-size: 11px !important;
-    font-weight: 700;
-    letter-spacing: 1px;
 }
