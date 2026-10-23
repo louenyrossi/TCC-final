@@ -1397,16 +1397,16 @@ button:focus-visible {
     position: relative;
     z-index: 1;
 }
-/* Sinais matemáticos no final da área de conteúdo */
-.main-content::after {
+/* Sinais matemáticos discretos no final do conteúdo */
+.main-content .content::after {
     content: "＋   ×   ÷   π   √   ∞";
     display: block;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 10px;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 8px;
     color: #5a456e;
-    font-size: 26px;
-    text-align: center;
+    font-size: 24px;
     letter-spacing: 8px;
+    text-align: center;
     pointer-events: none;
 }
