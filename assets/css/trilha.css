@@ -2442,10 +2442,9 @@ button:focus-visible {
     }
 }
 
-/* ========================================
-   FUNDO DECORATIVO — TRILHA MATHPOWER
-======================================== */
-
+/* =========================================
+   FUNDO MÁGICO E DECORADO — MATHPOWER
+========================================= */
 
 .main-content {
     position: relative;
@@ -2454,70 +2453,104 @@ button:focus-visible {
     background: transparent;
 }
 
-
-/* Decorações espalhadas pelo fundo */
+/* Muitas estrelas, pontos e brilhos */
 .main-content::before {
-    content: "✦      ·          ✧             ·      ⋆";
+    content:
+        "✦      ·       ✧          ⋆       ·      ✨";
     position: absolute;
     z-index: -1;
     top: 100px;
-    left: 2%;
-    width: 96%;
-    color: rgba(133, 98, 190, 0.25);
-    font-size: 27px;
-    letter-spacing: 18px;
-    line-height: 3;
-    pointer-events: none;
-    white-space: normal;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    color: rgba(142, 99, 196, 0.38);
+    font-size: 25px;
+    line-height: 4;
+    letter-spacing: 15px;
     overflow-wrap: anywhere;
+    pointer-events: none;
 }
 
-/* Segunda camada de estrelinhas e símbolos */
+/* Segunda camada de símbolos decorativos */
 .main-content::after {
-    content: "·      ✧       +          ·       ✦";
+    content:
+        "＋       ·       ✧       ÷       ⋆       ×";
     position: absolute;
     z-index: -1;
-    top: 400px;
-    left: 3%;
-    width: 94%;
-    color: rgba(190, 132, 181, 0.23);
-    font-size: 24px;
-    letter-spacing: 20px;
-    line-height: 4;
-    pointer-events: none;
-    white-space: normal;
+    top: 280px;
+    right: 0;
+    width: 100%;
+    min-height: 100%;
+    color: rgba(220, 132, 183, 0.32);
+    font-size: 23px;
+    line-height: 5;
+    letter-spacing: 17px;
     overflow-wrap: anywhere;
+    pointer-events: none;
 }
 
-/* Mantém o conteúdo acima das decorações */
+/* Mantém o conteúdo à frente das decorações */
 .main-content > .topbar,
 .main-content > .content {
     position: relative;
     z-index: 1;
 }
 
-/* Pequenos brilhos atrás dos cards, sem atrapalhar a leitura */
-.learning-path {
-    position: relative;
-    isolation: isolate;
+/* Pontinhos coloridos distribuídos no fundo */
+.main-content > .content {
+    background-image:
+        radial-gradient(circle, rgba(153, 112, 205, 0.30) 2px, transparent 3px),
+        radial-gradient(circle, rgba(255, 157, 201, 0.30) 3px, transparent 4px),
+        radial-gradient(circle, rgba(112, 164, 235, 0.25) 2px, transparent 3px),
+        radial-gradient(circle, rgba(244, 190, 104, 0.30) 2px, transparent 3px);
+    background-size:
+        83px 91px,
+        127px 113px,
+        151px 139px,
+        109px 157px;
+    background-position:
+        10px 15px,
+        45px 60px,
+        80px 25px,
+        20px 100px;
+    background-repeat: repeat;
 }
 
-.path-item {
+/* Pequenos detalhes nos cards */
+.path-card {
     position: relative;
-    z-index: 1;
+    overflow: hidden;
 }
 
-/* Ajustes para celular */
+.path-card::after {
+    content: "✧";
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    color: rgba(151, 111, 197, 0.30);
+    font-size: 23px;
+    pointer-events: none;
+}
+
+/* Decoração adaptada para celular */
 @media (max-width: 700px) {
     .main-content::before {
-        top: 80px;
-        font-size: 21px;
-        letter-spacing: 10px;
+        font-size: 19px;
+        letter-spacing: 8px;
+        line-height: 4;
     }
 
     .main-content::after {
-        top: 350px;
-        font-size: 19px;
-        letter-spacing: 12px;
+        font-size: 18px;
+        letter-spacing: 9px;
+        line-height: 4;
+    }
+
+    .main-content > .content {
+        background-size:
+            65px 75px,
+            95px 91px,
+            113px 107px,
+            87px 121px;
     }
 }
