@@ -838,3 +838,164 @@ body {
             181px 157px;
     }
 }
+
+/* ==========================================
+   MATHPOWER — DECORAÇÃO NEON PREMIUM ✨
+========================================== */
+
+/* Fundo com halos roxos */
+.pagina {
+    background:
+        radial-gradient(
+            circle at 8% 18%,
+            rgba(168, 85, 247, 0.16),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 92% 38%,
+            rgba(192, 38, 255, 0.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 45% 90%,
+            rgba(126, 34, 206, 0.12),
+            transparent 30%
+        ),
+        #09090d;
+}
+
+/* Estrelas decorativas nas laterais */
+.pagina::after {
+    content: "✦";
+    position: absolute;
+    top: 175px;
+    right: 5%;
+    color: #e9b5ff;
+    font-size: 34px;
+    text-shadow:
+        0 0 8px #c026ff,
+        0 0 20px #a855f7,
+        0 0 38px #7e22ce;
+    pointer-events: none;
+    animation: estrelaBrilho 3s ease-in-out infinite;
+    z-index: 0;
+}
+
+/* Pequenas estrelas nos títulos */
+.titulo-area,
+.secao-titulo {
+    position: relative;
+}
+
+.titulo-area::after {
+    content: "✧  ·  ✦";
+    display: block;
+    margin-top: 12px;
+    color: #c026ff;
+    font-size: 17px;
+    letter-spacing: 8px;
+    text-shadow: 0 0 12px rgba(192, 38, 255, 0.8);
+    opacity: 0.85;
+}
+
+/* Símbolos matemáticos decorativos */
+.secao-titulo::after {
+    content: "＋   ÷   ×   ＝";
+    display: block;
+    margin-top: 12px;
+    color: #a855f7;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 9px;
+    opacity: 0.55;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+}
+
+/* Luz suave na borda dos cards */
+.resumo-card,
+.progresso-card,
+.conquista {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Reflexo decorativo no canto superior */
+.resumo-card::after,
+.progresso-card::after,
+.conquista:not(.bloqueada)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(
+        circle at top right,
+        rgba(192, 38, 255, 0.15),
+        transparent 72%
+    );
+    pointer-events: none;
+}
+
+/* Ícones com brilho neon */
+.conquista:not(.bloqueada) .conquista-icone {
+    border-color: rgba(192, 38, 255, 0.55);
+    box-shadow:
+        0 0 12px rgba(168, 85, 247, 0.18),
+        inset 0 0 16px rgba(192, 38, 255, 0.10);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.conquista:not(.bloqueada):hover .conquista-icone {
+    transform: rotate(-5deg) scale(1.07);
+    box-shadow:
+        0 0 15px rgba(192, 38, 255, 0.4),
+        inset 0 0 18px rgba(192, 38, 255, 0.15);
+}
+
+/* Linha de luz no topo do resumo */
+.resumo-card {
+    overflow: hidden;
+}
+
+.resumo-card::before {
+    width: 3px;
+    box-shadow: 0 0 15px rgba(192, 38, 255, 0.8);
+}
+
+/* Brilho animado nas estrelas */
+@keyframes estrelaBrilho {
+    0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.85) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15) rotate(15deg);
+    }
+}
+
+/* Movimento reduzido para quem prefere */
+@media (prefers-reduced-motion: reduce) {
+    .pagina::after {
+        animation: none;
+    }
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    .pagina::after {
+        top: 145px;
+        right: 4%;
+        font-size: 25px;
+    }
+
+    .titulo-area::after {
+        font-size: 15px;
+    }
+
+    .secao-titulo::after {
+        letter-spacing: 5px;
+    }
+}
