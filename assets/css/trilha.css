@@ -2554,3 +2554,101 @@ button:focus-visible {
             87px 121px;
     }
 }
+
+/* ==========================================
+   UNIVERSO MATEMÁTICO — DECORAÇÃO ESPECIAL
+========================================== */
+
+/* Planeta decorativo no canto superior direito */
+.main-content > .content {
+    position: relative;
+    isolation: isolate;
+}
+
+.main-content > .content::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 115px;
+    right: 25px;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle at 30% 28%,
+            rgba(255, 255, 255, 0.95) 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 65% 65%,
+            rgba(255, 255, 255, 0.30) 0 9px,
+            transparent 10px
+        ),
+        linear-gradient(
+            135deg,
+            #f6c7e5,
+            #c9b5f3 55%,
+            #9db9f5
+        );
+    box-shadow:
+        0 0 35px rgba(179, 142, 233, 0.25),
+        inset -12px -12px 22px rgba(112, 87, 173, 0.15);
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+/* Anel do planeta */
+.main-content > .content::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 150px;
+    right: 5px;
+    width: 165px;
+    height: 55px;
+    border: 3px solid rgba(163, 128, 216, 0.42);
+    border-radius: 50%;
+    transform: rotate(-25deg);
+    pointer-events: none;
+}
+
+/* Enfeites nos cards */
+.path-card {
+    border: 1px solid rgba(179, 147, 224, 0.25);
+    box-shadow: 0 8px 24px rgba(103, 79, 145, 0.07);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+    .path-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(123, 89, 176, 0.15);
+    }
+}
+
+/* Brilho discreto no título da página */
+.page-header h1 {
+    text-shadow: 0 2px 18px rgba(164, 128, 219, 0.16);
+}
+
+/* No celular, o planeta fica menor */
+@media (max-width: 700px) {
+    .main-content > .content::before {
+        top: 135px;
+        right: 8px;
+        width: 75px;
+        height: 75px;
+        opacity: 0.4;
+    }
+
+    .main-content > .content::after {
+        top: 155px;
+        right: 0;
+        width: 100px;
+        height: 35px;
+        border-width: 2px;
+    }
+}
