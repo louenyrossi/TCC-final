@@ -1087,3 +1087,114 @@ body {
         height: 48px;
     }
 }
+
+/* ===== DESTAQUE VISUAL DA PÁGINA ===== */
+
+/* Aura neon no fundo */
+.pagina {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.20), transparent 48%),
+        radial-gradient(ellipse at 100% 60%, rgba(192, 38, 255, 0.09), transparent 35%),
+        #09090d;
+}
+
+/* Título com brilho */
+.titulo-area h1 {
+    color: #fff;
+    text-shadow:
+        0 0 8px rgba(192, 38, 255, 0.8),
+        0 0 22px rgba(168, 85, 247, 0.55);
+    animation: tituloNeon 3s ease-in-out infinite alternate;
+}
+
+@keyframes tituloNeon {
+    from {
+        text-shadow: 0 0 8px rgba(192, 38, 255, 0.45);
+    }
+    to {
+        text-shadow:
+            0 0 12px rgba(192, 38, 255, 0.95),
+            0 0 30px rgba(168, 85, 247, 0.7);
+    }
+}
+
+/* Cards com aparência de recompensa */
+.resumo-card,
+.progresso-card,
+.conquista {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse */
+.resumo-card:hover,
+.progresso-card:hover {
+    transform: translateY(-6px) scale(1.015);
+    border-color: #d946ef;
+    box-shadow:
+        0 0 12px rgba(192, 38, 255, 0.45),
+        0 0 30px rgba(168, 85, 247, 0.22);
+}
+
+/* Brilho passando pelos cards */
+.resumo-card::after,
+.conquista:not(.bloqueada)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: -120%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255, 255, 255, 0.10),
+        transparent
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+
+.resumo-card:hover::after,
+.conquista:not(.bloqueada):hover::after {
+    animation: brilhoPassando 0.8s ease;
+}
+
+@keyframes brilhoPassando {
+    from { left: -120%; }
+    to { left: 160%; }
+}
+
+/* Conquistas desbloqueadas em destaque */
+.conquista:not(.bloqueada):hover {
+    transform: translateY(-7px);
+    border-color: #e879f9;
+    box-shadow:
+        0 0 14px rgba(192, 38, 255, 0.45),
+        0 0 32px rgba(168, 85, 247, 0.2);
+}
+
+/* Ícones das conquistas */
+.conquista:not(.bloqueada) .icone {
+    filter: drop-shadow(0 0 8px rgba(192, 38, 255, 0.6));
+    transition: transform 0.3s ease;
+}
+
+.conquista:not(.bloqueada):hover .icone {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+/* Animações mais suaves em celulares */
+@media (prefers-reduced-motion: reduce) {
+    .titulo-area h1 {
+        animation: none;
+    }
+
+    .resumo-card,
+    .progresso-card,
+    .conquista {
+        transition: none;
+    }
+}
