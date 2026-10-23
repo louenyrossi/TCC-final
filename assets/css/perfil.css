@@ -1645,3 +1645,186 @@ body {
         gap: 15px;
     }
 }
+
+/* ========================================
+   DECORAÇÕES DOS CONTAINERS — MATHPOWER
+======================================== */
+
+/* Cartão principal do perfil */
+.profile-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    background:
+        radial-gradient(circle at 100% 0%,
+            rgba(168, 85, 247, 0.15),
+            transparent 35%),
+        linear-gradient(135deg, #171329, #100d20);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+}
+
+/* Brilho decorativo no canto */
+.profile-card::before {
+    content: "π";
+    position: absolute;
+    top: -28px;
+    right: 22px;
+    font-size: 110px;
+    font-weight: 900;
+    color: rgba(192, 132, 252, 0.08);
+    pointer-events: none;
+}
+
+/* Conteúdo acima da decoração */
+.profile-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Containers das estatísticas */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    background:
+        linear-gradient(145deg,
+            rgba(31, 24, 55, 0.98),
+            rgba(17, 14, 32, 0.98));
+    transition: transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+/* Pequena faixa neon no topo */
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    width: 45px;
+    height: 3px;
+    border-radius: 0 0 6px 6px;
+    background: #c084fc;
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.8);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(192, 132, 252, 0.75);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.13);
+}
+
+/* Números das estatísticas */
+.stat-card .stat-value {
+    color: #e9d5ff;
+    text-shadow: 0 0 12px rgba(192, 132, 252, 0.2);
+}
+
+/* Container de desempenho */
+.performance-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    background:
+        radial-gradient(circle at 100% 100%,
+            rgba(56, 189, 248, 0.09),
+            transparent 38%),
+        #151225;
+    border-radius: 18px;
+}
+
+/* Linha decorativa do desempenho */
+.performance-card::before {
+    content: "";
+    display: block;
+    width: 55px;
+    height: 3px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    background: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.65);
+}
+
+/* Container de conquistas */
+.achievement-summary {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(250, 204, 21, 0.25);
+    background:
+        radial-gradient(circle at 100% 0%,
+            rgba(250, 204, 21, 0.09),
+            transparent 35%),
+        #171329;
+    border-radius: 18px;
+}
+
+/* Detalhe dourado nas conquistas */
+.achievement-summary::before {
+    content: "★";
+    position: absolute;
+    top: 10px;
+    right: 22px;
+    font-size: 65px;
+    color: rgba(250, 204, 21, 0.09);
+    pointer-events: none;
+}
+
+/* Container dos dados da conta */
+.account-card {
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    border-radius: 18px;
+    background:
+        linear-gradient(145deg,
+            rgba(25, 35, 39, 0.95),
+            rgba(17, 14, 32, 0.98));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+}
+
+/* Separação visual dos dados da conta */
+.account-card .account-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.2s ease;
+}
+
+.account-card .account-item:last-child {
+    border-bottom: none;
+}
+
+.account-card .account-item:hover {
+    background: rgba(52, 211, 153, 0.045);
+}
+
+/* Títulos das seções */
+.profile-page h2,
+.profile-content h2 {
+    position: relative;
+}
+
+/* Botões com brilho discreto */
+.profile-actions a,
+.profile-actions button {
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.profile-actions a:hover,
+.profile-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.2);
+}
+
+/* Respeita usuários que preferem menos animações */
+@media (prefers-reduced-motion: reduce) {
+    .stat-card,
+    .account-card .account-item,
+    .profile-actions a,
+    .profile-actions button {
+        transition: none;
+    }
+
+    .stat-card:hover,
+    .profile-actions a:hover,
+    .profile-actions button:hover {
+        transform: none;
+    }
+}
