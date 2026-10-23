@@ -209,10 +209,10 @@ $precisaoGeral = $totalRespostas > 0
 
     <title>Desempenho - MathPlay</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/prof-desempenho.css"
-    >
+    
+    <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
+    <link rel="stylesheet" href="../assets/css/prof-desempenho.css">
+
 
 </head>
 
@@ -231,8 +231,8 @@ $precisaoGeral = $totalRespostas > 0
                 <span class="logo-icon">M</span>
 
                 <div>
-                    <strong>MathPlay</strong>
-                    <small>Professor</small>
+                    <strong>Math<span>Power</span></strong>
+                    <small>Área do Professor</small>
                 </div>
 
             </div>

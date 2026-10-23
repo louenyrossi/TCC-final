@@ -566,3 +566,311 @@ td {
     }
 
 }
+
+/* ==========================================
+   MATHPOWER — DESEMPENHO
+   Tema visual igual ao Dashboard
+   ========================================== */
+
+:root {
+    --purple: #A855F7;
+    --purple-dark: #7E22CE;
+    --purple-light: #C084FC;
+    --purple-neon: #D946FF;
+    --background: #0A0710;
+    --surface: #15101F;
+    --surface-hover: #20152E;
+    --text: #F7F0FF;
+    --text-soft: #D0C1E2;
+    --gray: #A697B8;
+    --border-purple: rgba(168, 85, 247, .29);
+}
+
+body {
+    background:
+        radial-gradient(
+            ellipse at 15% 0%,
+            rgba(126, 34, 206, .15),
+            transparent 36%
+        ),
+        radial-gradient(
+            ellipse at 90% 20%,
+            rgba(217, 70, 255, .07),
+            transparent 30%
+        ),
+        #0A0710 !important;
+    color: var(--text) !important;
+}
+
+.main-content {
+    background: transparent !important;
+}
+
+.topbar {
+    background: rgba(16, 11, 24, .88) !important;
+    border-bottom: 1px solid rgba(217, 70, 255, .25) !important;
+    box-shadow: 0 5px 22px rgba(0, 0, 0, .12);
+    backdrop-filter: blur(16px);
+}
+
+.topbar-title,
+.topbar-title span,
+.topbar-title strong {
+    color: var(--text) !important;
+}
+
+.content {
+    background: transparent !important;
+}
+
+.page-header h1,
+.panel-header h2 {
+    color: var(--text) !important;
+}
+
+.page-header p,
+.panel-header p {
+    color: var(--text-soft) !important;
+}
+
+.eyebrow {
+    color: var(--purple-light) !important;
+    text-shadow: 0 0 14px rgba(168, 85, 247, .20);
+}
+
+/* Filtros */
+.filters {
+    background: linear-gradient(
+        145deg,
+        rgba(26, 17, 38, .98),
+        rgba(17, 11, 26, .98)
+    ) !important;
+    border: 1px solid var(--border-purple) !important;
+    border-radius: 16px;
+    box-shadow: 0 0 18px rgba(168, 85, 247, .08);
+}
+
+.filter-group label {
+    color: var(--text-soft) !important;
+}
+
+.filter-group select,
+.filter-group input {
+    background: #100B18 !important;
+    color: var(--text) !important;
+    border: 1px solid rgba(168, 85, 247, .35) !important;
+    border-radius: 10px;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--purple-neon) !important;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, .13);
+}
+
+.filter-group option {
+    background: #15101F;
+    color: var(--text);
+}
+
+.filter-button {
+    background: linear-gradient(
+        110deg,
+        #7E22CE,
+        #A855F7
+    ) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(217, 70, 255, .4) !important;
+}
+
+.filter-button:hover {
+    box-shadow: 0 0 18px rgba(168, 85, 247, .25);
+}
+
+.clear-button {
+    color: var(--purple-light) !important;
+}
+
+/* Cards de estatísticas */
+.stats-grid .stat-card {
+    background: linear-gradient(
+        145deg,
+        rgba(26, 17, 38, .98),
+        rgba(17, 11, 26, .98)
+    ) !important;
+
+    color: var(--text) !important;
+    border: 1px solid var(--border-purple) !important;
+    border-radius: 16px;
+
+    box-shadow: 0 0 18px rgba(168, 85, 247, .08);
+    transition: transform .22s ease, border-color .22s ease;
+}
+
+.stats-grid .stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(217, 70, 255, .6) !important;
+}
+
+.stat-card span {
+    color: var(--text-soft) !important;
+}
+
+.stat-card strong {
+    color: var(--text) !important;
+}
+
+.stat-icon {
+    background: rgba(168, 85, 247, .17) !important;
+    color: var(--purple-light) !important;
+    border: 1px solid rgba(168, 85, 247, .25) !important;
+    border-radius: 13px;
+}
+
+/* Painel de resultados */
+.panel {
+    background: linear-gradient(
+        145deg,
+        rgba(26, 17, 38, .97),
+        rgba(17, 11, 26, .98)
+    ) !important;
+
+    color: var(--text) !important;
+    border: 1px solid var(--border-purple) !important;
+    border-radius: 16px;
+    box-shadow: 0 0 18px rgba(168, 85, 247, .08);
+}
+
+.panel-header {
+    border-color: rgba(168, 85, 247, .2) !important;
+}
+
+.panel-header h2 {
+    color: var(--text) !important;
+}
+
+.panel-header p {
+    color: var(--gray) !important;
+}
+
+/* Tabela */
+.table-wrapper {
+    background: #15101F !important;
+    border: 1px solid rgba(168, 85, 247, .2) !important;
+    border-radius: 12px;
+    scrollbar-color: #7E22CE #100B18;
+}
+
+.table-wrapper table {
+    background: #15101F !important;
+    color: var(--text-soft) !important;
+    border-collapse: collapse;
+}
+
+.table-wrapper thead,
+.table-wrapper th {
+    background: #100B18 !important;
+    color: var(--purple-light) !important;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+    border-bottom: 1px solid rgba(168, 85, 247, .16) !important;
+}
+
+.table-wrapper tbody tr {
+    background: #15101F !important;
+    transition: background .2s ease;
+}
+
+.table-wrapper tbody tr:hover {
+    background: #20152E !important;
+}
+
+.student-cell strong {
+    color: var(--text) !important;
+}
+
+.student-cell span {
+    color: var(--gray) !important;
+}
+
+.student-avatar {
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, .3),
+        rgba(217, 70, 255, .12)
+    ) !important;
+    color: var(--purple-light) !important;
+    border: 1px solid rgba(217, 70, 255, .35) !important;
+}
+
+.correct {
+    color: #4ADE80 !important;
+}
+
+.wrong {
+    color: #FB7185 !important;
+}
+
+.accuracy-cell strong {
+    color: var(--purple-light) !important;
+}
+
+.accuracy-bar {
+    background: #261834 !important;
+}
+
+.accuracy-fill {
+    background: linear-gradient(
+        90deg,
+        #7E22CE,
+        #A855F7,
+        #D946FF
+    ) !important;
+    box-shadow: 0 0 12px rgba(217, 70, 255, .3);
+}
+
+.view-button {
+    background: rgba(168, 85, 247, .13) !important;
+    color: var(--purple-light) !important;
+    border: 1px solid rgba(168, 85, 247, .3) !important;
+    border-radius: 9px;
+}
+
+.view-button:hover {
+    background: rgba(168, 85, 247, .25) !important;
+    border-color: var(--purple-neon) !important;
+}
+
+/* Estado sem resultados */
+.empty-state {
+    background: transparent !important;
+    color: var(--text) !important;
+}
+
+.empty-state > span {
+    color: var(--purple-light) !important;
+}
+
+.empty-state strong {
+    color: var(--text) !important;
+}
+
+.empty-state p {
+    color: var(--gray) !important;
+}
+
+/* Links */
+.content a:hover {
+    color: var(--purple-neon);
+}
+
+/* Ajuste para celular */
+@media (max-width: 900px) {
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
