@@ -1,4 +1,3 @@
-
 /* =========================================================
    MATHPOWER — DASHBOARD DO ALUNO
    Tema Gamer Neon | Layout alinhado aos Jogos
@@ -9,36 +8,16 @@
     --purple-dark: #7E22CE;
     --purple-light: #C084FC;
     --purple-neon: #D946FF;
-    --purple-soft: rgba(168, 85, 247, 0.13);
-
     --background: #0A0710;
-    --background-soft: #100B18;
     --surface: #15101F;
-    --surface-hover: #20152E;
-    --surface-light: #261834;
-
-    --white: #FFFFFF;
     --text: #F7F0FF;
     --text-soft: #D0C1E2;
     --gray: #A697B8;
     --gray-light: #352542;
-    --gray-lighter: #21172C;
-
-    --success: #4ADE80;
-    --warning: #FBBF24;
-    --danger: #FB7185;
-
-    --shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-    --neon-shadow: 0 0 18px rgba(168, 85, 247, 0.18);
-    --neon-glow: rgba(192, 38, 255, 0.38);
-
-    --radius-small: 10px;
     --radius: 16px;
     --radius-large: 24px;
-
     --sidebar-width: 260px;
 }
-
 /* =========================================================
    RESET
 ========================================================= */
@@ -100,7 +79,7 @@ button {
 }
 
 /* =========================================================
-   SIDEBAR
+   SIDEBAR — MANTIDA SEM ALTERAÇÕES
 ========================================================= */
 
 .sidebar {
@@ -145,9 +124,7 @@ button {
     transform: translateX(0);
 }
 
-/* =========================================================
-   CABEÇALHO DA SIDEBAR
-========================================================= */
+/* CABEÇALHO DA SIDEBAR */
 
 .sidebar-header {
     height: 88px;
@@ -162,8 +139,6 @@ button {
 
     border-bottom: 1px solid rgba(192, 38, 255, 0.20);
 }
-
-/* LOGO */
 
 .logo {
     display: flex;
@@ -222,8 +197,6 @@ button {
         0 0 20px rgba(192, 38, 255, 0.75);
 }
 
-/* BOTÃO FECHAR */
-
 .sidebar-close {
     width: 36px;
     height: 36px;
@@ -247,14 +220,12 @@ button {
 }
 
 .sidebar-close:hover {
-    background: var(--surface-hover);
+    background: #20152E;
     border-color: var(--purple-neon);
     color: #FFFFFF;
 }
 
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
+/* NAVEGAÇÃO */
 
 .sidebar-nav {
     display: flex;
@@ -344,9 +315,7 @@ button {
     filter: drop-shadow(0 0 7px #D946FF);
 }
 
-/* =========================================================
-   USUÁRIO E SAIR
-========================================================= */
+/* USUÁRIO E SAIR */
 
 .sidebar-bottom {
     margin-top: auto;
@@ -371,24 +340,30 @@ button {
     height: 43px;
     min-width: 43px;
     flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
+
     background: linear-gradient(
         135deg,
         #D946FF,
         #7026C9
     );
+
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 900;
+
     box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 
 .user-info {
     min-width: 0;
+
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -407,7 +382,7 @@ button {
 
 .user-info span {
     display: block;
-    color:#a697b8;
+    color: #A697B8;
     font-size: 12px;
 }
 
@@ -445,9 +420,7 @@ button {
     font-size: 18px;
 }
 
-/* =========================================================
-   OVERLAY DO MENU MOBILE
-========================================================= */
+/* OVERLAY DO MENU MOBILE */
 
 .sidebar-overlay {
     position: fixed;
@@ -492,9 +465,7 @@ button {
         #09060F;
 }
 
-/* =========================================================
-   BARRA SUPERIOR
-========================================================= */
+/* BARRA SUPERIOR */
 
 .topbar {
     position: sticky;
@@ -574,9 +545,7 @@ button {
     min-width: 40px;
 }
 
-/* =========================================================
-   ÁREA DO DASHBOARD
-========================================================= */
+/* ÁREA DO DASHBOARD */
 
 .content {
     width: 100%;
@@ -587,9 +556,7 @@ button {
     padding: 22px 16px 42px;
 }
 
-/* =========================================================
-   BOAS-VINDAS
-========================================================= */
+/* BOAS-VINDAS */
 
 .welcome-section {
     position: relative;
@@ -722,9 +689,7 @@ button {
     pointer-events: none;
 }
 
-/* =========================================================
-   CARTÃO DE NÍVEL E XP
-========================================================= */
+/* CARTÃO DE NÍVEL E XP */
 
 .level-card {
     position: relative;
@@ -755,7 +720,9 @@ button {
         0 9px 28px rgba(0, 0, 0, 0.20),
         inset 0 1px rgba(255, 255, 255, 0.035);
 
-    transition: border-color 0.25s ease, transform 0.25s ease,
+    transition:
+        border-color 0.25s ease,
+        transform 0.25s ease,
         box-shadow 0.25s ease;
 }
 
@@ -880,9 +847,7 @@ button {
     font-size: 10px;
 }
 
-/* =========================================================
-   ESTATÍSTICAS
-========================================================= */
+/* ESTATÍSTICAS */
 
 .stats-grid {
     display: grid;
@@ -1007,9 +972,7 @@ button {
     text-shadow: 0 0 14px rgba(192, 38, 255, 0.13);
 }
 
-/* =========================================================
-   SEÇÕES
-========================================================= */
+/* SEÇÕES */
 
 .section {
     margin-top: 36px;
@@ -1061,9 +1024,7 @@ button {
     text-shadow: 0 0 12px rgba(217, 70, 255, 0.70);
 }
 
-/* =========================================================
-   CARTÕES DOS JOGOS
-========================================================= */
+/* CARTÕES DOS JOGOS */
 
 .games-grid {
     display: grid;
@@ -1266,9 +1227,7 @@ button {
     transform: translateY(-1px);
 }
 
-/* =========================================================
-   CONQUISTAS
-========================================================= */
+/* CONQUISTAS */
 
 .achievements-grid {
     display: grid;
@@ -1357,9 +1316,7 @@ button {
     line-height: 1.6;
 }
 
-/* =========================================================
-   ESTADO VAZIO
-========================================================= */
+/* ESTADO VAZIO */
 
 .empty-state {
     padding: 36px 20px;
@@ -1508,9 +1465,7 @@ button {
     }
 }
 
-/* =========================================================
-   TELAS GRANDES
-========================================================= */
+/* TELAS GRANDES */
 
 @media (min-width: 1200px) {
     .content {
@@ -1535,9 +1490,7 @@ button {
     }
 }
 
-/* =========================================================
-   CELULARES
-========================================================= */
+/* CELULARES */
 
 @media (max-width: 599px) {
     .sidebar {
@@ -1715,9 +1668,7 @@ button {
     }
 }
 
-/* =========================================================
-   CELULARES PEQUENOS
-========================================================= */
+/* CELULARES PEQUENOS */
 
 @media (max-width: 450px) {
     .logo {
@@ -1822,9 +1773,7 @@ button {
     }
 }
 
-/* =========================================================
-   ACESSIBILIDADE
-========================================================= */
+/* ACESSIBILIDADE */
 
 a:focus-visible,
 button:focus-visible {
@@ -1842,7 +1791,10 @@ button:focus-visible {
     }
 }
 
-/* ROLAGEM DA SIDEBAR INTEIRA */
+/* =========================================================
+   ROLAGEM DA SIDEBAR — MANTIDA
+========================================================= */
+
 .sidebar {
     height: 100vh;
     height: 100dvh;
@@ -1869,6 +1821,7 @@ button:focus-visible {
 }
 
 /* Impede que as seções sejam comprimidas */
+
 .sidebar-header,
 .sidebar-nav,
 .sidebar-bottom {
@@ -1876,12 +1829,14 @@ button:focus-visible {
 }
 
 /* Evita uma segunda barra de rolagem nos links */
+
 .sidebar-nav {
     overflow-y: visible;
     flex: 0 0 auto;
 }
 
 /* Mantém o perfil e o botão Sair no final */
+
 .sidebar-bottom {
     margin-top: auto;
 }
