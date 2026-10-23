@@ -1532,3 +1532,30 @@ td:not(:first-child) {
 .sidebar-overlay {
     z-index: 999;
 }
+
+/* SIDEBAR — TEXTOS EM NEGRITO */
+
+.sidebar .nav-item {
+    font-weight: 700;
+}
+
+.sidebar .logo strong {
+    font-weight: 900;
+}
+
+.sidebar .logo small {
+    font-weight: 700;
+}
+
+.sidebar .logout-link,
+.sidebar .logout-btn {
+    font-weight: 700;
+}
+
+.sidebar .user-name {
+    font-weight: 700;
+}
+
+.sidebar .user-role {
+    font-weight: 700;
+}
