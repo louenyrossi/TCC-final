@@ -1902,3 +1902,88 @@ button:focus-visible {
         display: none;
     }
 }
+
+/* =========================================================
+   MATHPOWER — CÉU ESTRELADO NOS CONTAINERS
+========================================================= */
+
+/* Boas-vindas */
+.welcome-section {
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(232,121,255,.9) 1.3px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.65) 1px, transparent 1.8px),
+        radial-gradient(ellipse at 88% 18%, rgba(255,255,255,.23), transparent 25%),
+        radial-gradient(ellipse at 100% 100%, rgba(217,70,255,.34), transparent 42%),
+        linear-gradient(115deg, #6815B8 0%, #4C117F 48%, #210D35 100%);
+    background-size:
+        75px 83px,
+        113px 107px,
+        157px 139px,
+        auto,
+        auto,
+        auto;
+    background-position:
+        10px 12px,
+        38px 27px,
+        65px 8px,
+        center,
+        center,
+        center;
+}
+
+/* Cartão de XP */
+.level-card {
+    background-image:
+        radial-gradient(circle, rgba(232,121,255,.8) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(255,255,255,.65) 1px, transparent 1.8px),
+        radial-gradient(ellipse at 0% 0%, rgba(168,85,247,.16), transparent 60%),
+        linear-gradient(135deg, #1A1025, #100A18);
+    background-size:
+        91px 87px,
+        137px 119px,
+        auto,
+        auto;
+}
+
+/* Estatísticas */
+.stat-card {
+    background-image:
+        radial-gradient(circle, rgba(232,121,255,.75) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1.8px),
+        radial-gradient(ellipse at 100% 0%, rgba(168,85,247,.15), transparent 52%),
+        linear-gradient(145deg, #1B1127, #100A18);
+    background-size:
+        83px 79px,
+        127px 113px,
+        auto,
+        auto;
+}
+
+/* Cards dos jogos */
+.game-card {
+    background-image:
+        radial-gradient(circle, rgba(232,121,255,.7) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1.8px),
+        radial-gradient(ellipse at 100% 0%, rgba(168,85,247,.13), transparent 50%),
+        linear-gradient(145deg, #1A1025, #100A18);
+    background-size:
+        97px 89px,
+        139px 127px,
+        auto,
+        auto;
+}
+
+/* Cards de conquistas */
+.achievement-card {
+    background-image:
+        radial-gradient(circle, rgba(232,121,255,.7) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1.8px),
+        radial-gradient(ellipse at 100% 0%, rgba(168,85,247,.13), transparent 50%),
+        linear-gradient(145deg, #1A1025, #100A18);
+    background-size:
+        89px 83px,
+        131px 121px,
+        auto,
+        auto;
+}
