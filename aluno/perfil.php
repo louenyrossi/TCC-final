@@ -123,6 +123,8 @@ $inicial = mb_strtoupper(
 
     <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 
     <!-- Cor do logo MathPower -->
     <style>
@@ -545,6 +547,8 @@ $inicial = mb_strtoupper(
 ></div>
 
 <script src="../assets/js/perfil.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>

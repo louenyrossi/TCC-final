@@ -126,6 +126,8 @@ function iconeConquista(string $nome): string
         rel="stylesheet"
         href="../assets/css/conquista-aluno.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 
 </head>
 
@@ -365,6 +367,8 @@ function iconeConquista(string $nome): string
     </main>
 
 </div>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 

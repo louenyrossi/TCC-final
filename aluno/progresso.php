@@ -101,6 +101,8 @@ $progressoGeral = $totalJogos > 0
 
     <link rel="stylesheet" href="../assets/css/jogos-aluno.css">
     <link rel="stylesheet" href="../assets/css/progresso-aluno.css">
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 </head>
 
 <body>
@@ -357,6 +359,8 @@ $progressoGeral = $totalJogos > 0
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../assets/js/jogos-aluno.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>

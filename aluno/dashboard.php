@@ -181,6 +181,8 @@ $porcentagemXp = min(
         rel="stylesheet"
         href="../assets/css/dashboard-aluno.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 </head>
 
 <body>
@@ -654,6 +656,8 @@ $porcentagemXp = min(
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../assets/js/dashboard-aluno.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>

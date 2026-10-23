@@ -252,6 +252,8 @@ function linkJogo(int $jogoId): string
         rel="stylesheet"
         href="../assets/css/trilha.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 
 </head>
 
@@ -768,6 +770,8 @@ function linkJogo(int $jogoId): string
 
 
 <script src="../assets/js/trilha.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 
