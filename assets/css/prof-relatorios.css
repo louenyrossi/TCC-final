@@ -1654,8 +1654,8 @@ td:not(:first-child) {
     letter-spacing: .2px;
 }
 .sidebar .logo-icon {
-    width: 38px;
+    width: 40px;
     height: 44px;
-    min-width: 38px;
+    min-width: 40px;
     box-sizing: border-box;
 }
