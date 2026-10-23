@@ -634,168 +634,165 @@ a {
     }
 }
 
-/* SIDEBAR PADRONIZADO COM O DASHBOARD */
+/* =========================================
+   MATHPLAY — TEMA ESCURO DO DASHBOARD
+   ========================================= */
+
+:root {
+    --fundo: #0D0712;
+    --painel: #150C1D;
+    --painel-hover: #20102D;
+    --roxo: #C026F7;
+    --roxo-escuro: #A21CAF;
+    --roxo-claro: #351344;
+    --texto: #F7F0FF;
+    --texto-secundario: #B9A8C9;
+    --borda: #382044;
+}
+
+body {
+    background: var(--fundo);
+    color: var(--texto);
+}
 
 .sidebar {
-    width: 250px;
-    min-width: 250px;
-    height: 100vh;
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    background: #FFFFFF;
-    border-right: 1px solid #E7E3EF;
-    z-index: 1000;
+    background: #0D0712;
+    border-right-color: var(--borda);
 }
 
 .sidebar-header {
-    padding: 24px 20px;
-    border-bottom: 1px solid #F0EDF5;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: #7C3AED;
-    color: #FFFFFF;
-    font-size: 22px;
-    font-weight: 800;
+    border-bottom-color: var(--borda);
 }
 
 .logo strong {
-    display: block;
-    font-size: 19px;
+    color: var(--texto);
+}
+
+.logo strong span {
+    color: #D946EF;
 }
 
 .logo small {
-    display: block;
-    margin-top: 3px;
-    color: #6B6675;
-    font-size: 12px;
+    color: var(--texto-secundario);
 }
 
-.sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 18px 12px;
+.logo-icon {
+    background: linear-gradient(135deg, #D946EF, #7C3AED);
+    box-shadow: 0 0 20px rgba(192, 38, 247, .35);
 }
 
 .nav-item,
 .logout-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    color: #6B6675;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
+    color: #CDBDDA;
 }
 
 .nav-item:hover,
 .nav-item.active {
-    background: #EDE9FE;
-    color: #5B21B6;
+    background: linear-gradient(90deg, #351344, #24102F);
+    color: #FFFFFF;
+    border: 1px solid #77269A;
 }
 
-.nav-item span:first-child,
-.logout-link span:first-child {
-    width: 22px;
-    flex-shrink: 0;
-    text-align: center;
+.nav-item.active {
+    box-shadow: inset 4px 0 #D946EF;
 }
 
 .sidebar-bottom {
-    margin-top: auto;
-    padding: 15px 12px;
-    border-top: 1px solid #E7E3EF;
-}
-
-.logout-link:hover {
-    background: #FDECEC;
-    color: #DC2626;
+    border-top-color: var(--borda);
 }
 
 .main-content {
-    width: calc(100% - 250px);
-    min-width: 0;
-    min-height: 100vh;
-    margin-left: 250px;
+    background: var(--fundo);
 }
 
 .topbar {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    background: #FFFFFF;
-    border-bottom: 1px solid #E7E3EF;
-    font-size: 16px;
+    background: #100916;
+    color: var(--texto);
+    border-bottom-color: var(--borda);
+}
+
+.content {
+    background: var(--fundo);
+}
+
+.page-header h1,
+.section-header h2,
+.empty-card h2 {
+    color: var(--texto);
+}
+
+.page-header p,
+.section-header p,
+.student-info span,
+.empty-card p {
+    color: var(--texto-secundario);
+}
+
+.eyebrow {
+    color: #C77DFF;
+}
+
+.class-card,
+.student-card,
+.empty-card {
+    background: linear-gradient(145deg, #190F22, #110A17);
+    border-color: var(--borda);
+    color: var(--texto);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .15);
+}
+
+.class-card:hover,
+.student-card:hover {
+    background: var(--painel-hover);
+    border-color: #8B2EB0;
+}
+
+.class-card.selected {
+    background: #20102D;
+    border-color: #C026F7;
+}
+
+.class-icon,
+.student-avatar {
+    background: #30203D;
+    color: #D8A1FF;
+}
+
+.grade,
+.student-count {
+    color: var(--texto-secundario);
+}
+
+.class-card h2,
+.student-info strong {
+    color: var(--texto);
+}
+
+.class-footer,
+.student-info small,
+.student-arrow {
+    color: #D946EF;
+}
+
+.class-footer {
+    border-top-color: var(--borda);
 }
 
 .menu-button {
-    display: none;
+    background: #351344;
+    color: #F7F0FF;
+}
+
+.sidebar-overlay.active {
+    background: rgba(0, 0, 0, .65);
 }
 
 @media (max-width: 800px) {
     .sidebar {
-        width: 250px;
-        min-width: 250px;
-        transform: translateX(-100%);
-        transition: transform .25s ease;
-        box-shadow: 8px 0 25px rgba(0, 0, 0, .08);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .main-content {
-        width: 100%;
-        margin-left: 0;
+        background: #0D0712;
     }
 
     .topbar {
-        padding: 0 16px;
-    }
-
-    .menu-button {
-        display: flex;
-        width: 38px;
-        height: 38px;
-        flex-shrink: 0;
-        margin-right: 12px;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        border-radius: 9px;
-        background: #EDE9FE;
-        color: #5B21B6;
-        font-size: 19px;
-        cursor: pointer;
-    }
-
-    .sidebar-overlay.active {
-        display: block;
-        position: fixed;
-        inset: 0;
-        z-index: 999;
-        background: rgba(23, 21, 28, .35);
+        background: #100916;
     }
 }
