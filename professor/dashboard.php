@@ -156,7 +156,7 @@ $inicial = mb_strtoupper(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Dashboard | MathPlay</title>
+    <title>Dashboard | MathPower</title>
 
     <link
         rel="stylesheet"
@@ -175,28 +175,14 @@ $inicial = mb_strtoupper(
 
         <div class="sidebar-header">
 
-            <div class="logo">
-
-                <span class="logo-icon">
-                    M
-                </span>
-
-                <div>
-
-                    <strong>
-                        MathPlay
-                    </strong>
-
-                    <small>
-                        Área do Professor
-                    </small>
-
-                </div>
-
+        <div class="logo">
+            <div class="logo-icon">M</div>
+            <div>
+                <strong>Math<span>Power</span></strong>
+                <small>Área do Professor</small>
             </div>
-
+            </div>
         </div>
-
 
         <nav class="sidebar-nav">
 

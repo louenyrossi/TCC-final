@@ -1273,3 +1273,82 @@ body {
 .sidebar-bottom a.logout-link span:last-child {
     font-size: 14px !important;
 }
+/* =========================================================
+   LOGO MATHPOWER — IGUAL À PÁGINA DE JOGOS
+   ========================================================= */
+
+.sidebar .sidebar-header {
+    height: 88px;
+    min-height: 88px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -0.8px;
+}
+
+.sidebar .logo-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #E879FF,
+        #A855F7 45%,
+        #6D28D9
+    );
+
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, 0.65),
+        0 0 28px rgba(168, 85, 247, 0.22);
+}
+
+.sidebar .logo-text {
+    display: block;
+    color: #FFFFFF;
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.8px;
+    white-space: nowrap;
+}
+
+.sidebar .logo-text strong {
+    color: #FFFFFF !important;
+    font-size: inherit;
+    font-weight: 900;
+}
+
+.sidebar .logo-text .logo-power {
+    color: #E879FF !important;
+    -webkit-text-fill-color: #E879FF !important;
+
+    text-shadow:
+        0 0 7px #C026FF,
+        0 0 20px rgba(192, 38, 255, 0.75);
+}
+
+.sidebar .logo-text small {
+    display: none !important;
+}
