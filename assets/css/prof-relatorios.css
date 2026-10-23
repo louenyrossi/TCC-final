@@ -1,4 +1,3 @@
-
 /* =========================================
    MATHPOWER — RELATÓRIOS DO PROFESSOR
    Tema escuro roxo/neon
@@ -105,11 +104,9 @@ select {
     overflow-y: auto;
 
     background:
-        radial-gradient(
-            circle at 10% 0%,
+        radial-gradient(circle at 10% 0%,
             rgba(168, 85, 247, .09),
-            transparent 32%
-        ),
+            transparent 32%),
         var(--background-soft);
 
     border-right: 1px solid rgba(217, 70, 255, .20);
@@ -151,12 +148,10 @@ select {
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(
-        135deg,
-        #C084FC,
-        #9333EA 65%,
-        #7E22CE
-    );
+    background: linear-gradient(135deg,
+            #C084FC,
+            #9333EA 65%,
+            #7E22CE);
 
     color: #FFFFFF;
     border: 1px solid rgba(255, 255, 255, .45);
@@ -199,121 +194,271 @@ select {
    NAVEGAÇÃO LATERAL
    ========================================= */
 
-.sidebar-nav {
+/* MENU LATERAL */
+
+.sidebar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
     display: flex;
     flex-direction: column;
-    gap: 6px;
 
-    padding: 22px 12px;
+    background:
+        radial-gradient(ellipse at top left,
+            rgba(168, 85, 247, .13),
+            transparent 48%),
+        linear-gradient(180deg,
+            #12091D 0%,
+            #0A0710 55%,
+            #09060F 100%);
+
+    border-right: 1px solid rgba(217, 70, 255, .35);
+
+    box-shadow:
+        8px 0 35px rgba(0, 0, 0, .24),
+        0 0 22px rgba(168, 85, 247, .05);
+
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #B026FF #100817;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #100817;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #A020F0;
+    border: 1px solid #D946FF;
+    border-radius: 10px;
+    box-shadow:
+        0 0 5px #D946FF,
+        0 0 10px #D946FF,
+        0 0 18px #A020F0;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D946FF;
+}
+
+/* CABEÇALHO E LOGO — VALORES DO DASHBOARD */
+
+.sidebar-header {
+    min-height: 88px;
+    padding: 20px 18px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid rgba(217, 70, 255, .20);
+}
+
+.sidebar-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.sidebar-header .logo-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg,
+            #C084FC,
+            #9333EA 65%,
+            #7E22CE);
+
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 14px;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, .65),
+        0 0 28px rgba(168, 85, 247, .35);
+}
+
+.sidebar-header .logo strong {
+    display: block;
+    margin: 0;
+
+    color: #F7F0FF;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -.7px;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.sidebar-header .logo strong span {
+    color: #D946FF;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
+}
+
+.sidebar-header .logo small {
+    display: block;
+    margin-top: 5px;
+
+    color: #A697B8;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+/* NAVEGAÇÃO */
+
+.sidebar-nav {
     flex: 1;
+    padding: 24px 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .nav-item {
-    min-height: 44px;
-    padding: 11px 13px;
-
     display: flex;
     align-items: center;
     gap: 12px;
 
-    color: var(--gray);
-    background: transparent;
+    min-height: 50px;
+    padding: 0 14px;
 
     border: 1px solid transparent;
-    border-radius: 10px;
+    border-radius: 13px;
 
-    font-size: 13px;
+    color: var(--text-soft);
+    font-size: 14px;
     font-weight: 600;
 
     transition:
-        color .2s ease,
         background .2s ease,
+        color .2s ease,
         border-color .2s ease,
-        box-shadow .2s ease;
+        box-shadow .2s ease,
+        transform .2s ease;
 }
 
 .nav-item:hover {
-    color: var(--text);
-    background: var(--surface-hover);
-    border-color: rgba(168, 85, 247, .18);
+    color: var(--white);
+    background: rgba(168, 85, 247, .12);
+    border-color: rgba(168, 85, 247, .25);
+    box-shadow: 0 0 16px rgba(168, 85, 247, .08);
+    transform: translateX(2px);
 }
 
 .nav-item.active {
-    color: #FFFFFF;
+    color: var(--white);
 
-    background: linear-gradient(
-        100deg,
-        rgba(168, 85, 247, .22),
-        rgba(217, 70, 255, .08)
-    );
+    background: linear-gradient(110deg,
+            rgba(168, 85, 247, .24),
+            rgba(217, 70, 255, .10));
 
-    border-color: rgba(217, 70, 255, .30);
+    border-color: rgba(217, 70, 255, .40);
 
-    box-shadow: inset 3px 0 0 var(--purple-neon);
+    box-shadow:
+        0 0 18px rgba(168, 85, 247, .12),
+        inset 3px 0 0 var(--purple-neon);
 }
 
-.nav-icon {
-    width: 21px;
-    min-width: 21px;
+.nav-icon,
+.nav-item span:first-child {
+    width: 24px;
+    flex-shrink: 0;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
     color: var(--purple-light);
-    font-size: 17px;
+    font-size: 19px;
+    text-align: center;
 }
 
-.nav-item.active .nav-icon {
-    color: var(--purple-neon);
-}
+/* RODAPÉ DO MENU */
 
 .sidebar-bottom {
-    padding: 14px 12px 20px;
-    border-top: 1px solid rgba(217, 70, 255, .14);
+    margin-top: auto;
+    padding: 15px 14px 20px;
+    border-top: 1px solid rgba(217, 70, 255, .20);
 }
 
 .logout-link {
-    min-height: 44px;
-    padding: 11px 13px;
+    min-height: 48px;
+    padding: 0 14px;
 
     display: flex;
     align-items: center;
     gap: 12px;
 
-    color: var(--gray);
     border: 1px solid transparent;
-    border-radius: 10px;
+    border-radius: 13px;
 
-    font-size: 13px;
+    color: var(--text-soft);
+    font-size: 14px;
     font-weight: 600;
 
     transition: .2s ease;
 }
 
 .logout-link:hover {
-    color: #FDA4AF;
-    background: rgba(251, 113, 133, .08);
+    color: var(--danger);
+    background: rgba(251, 113, 133, .09);
     border-color: rgba(251, 113, 133, .20);
 }
 
-/* =========================================
-   FUNDO DO MENU MOBILE
-   ========================================= */
+.logout-link span:first-child {
+    width: 24px;
+    text-align: center;
+}
+
+/* SOBREPOSIÇÃO DO MENU MOBILE */
 
 .sidebar-overlay {
     position: fixed;
+    z-index: 999;
     inset: 0;
-    z-index: 900;
 
-    background: rgba(0, 0, 0, .65);
-    backdrop-filter: blur(3px);
+    background: rgba(5, 3, 9, .72);
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    transition: opacity .25s ease, visibility .25s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
 }
 
 .sidebar-overlay.active {
@@ -331,11 +476,9 @@ select {
     margin-left: var(--sidebar-width);
 
     background:
-        radial-gradient(
-            ellipse at 80% 0%,
+        radial-gradient(ellipse at 80% 0%,
             rgba(126, 34, 206, .07),
-            transparent 36%
-        ),
+            transparent 36%),
         var(--background);
 }
 
@@ -469,11 +612,9 @@ select {
 
     color: #FFFFFF;
 
-    background: linear-gradient(
-        135deg,
-        #A855F7,
-        #7E22CE
-    );
+    background: linear-gradient(135deg,
+            #A855F7,
+            #7E22CE);
 
     border: 1px solid rgba(217, 70, 255, .50);
     border-radius: 10px;
@@ -754,7 +895,7 @@ select {
     background: var(--purple-neon);
 }
 
-.report-stat > span {
+.report-stat>span {
     display: block;
     margin-bottom: 10px;
 
@@ -1151,7 +1292,7 @@ td:not(:first-child) {
         font-size: 23px;
     }
 
-    .report-stat > span {
+    .report-stat>span {
         font-size: 10px;
     }
 
@@ -1269,7 +1410,7 @@ td:not(:first-child) {
         break-inside: avoid;
     }
 
-    .report-stat > span,
+    .report-stat>span,
     .report-stat small {
         color: #555555;
     }
