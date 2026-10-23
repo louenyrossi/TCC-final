@@ -1559,3 +1559,32 @@ td:not(:first-child) {
 .sidebar .user-role {
     font-weight: 700;
 }
+/* LOGO MATHPOWER — TAMANHOS PADRONIZADOS */
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar .logo-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.sidebar .logo-text {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.sidebar .logo strong {
+    font-size: inherit;
+    font-weight: 900;
+    line-height: inherit;
+}
