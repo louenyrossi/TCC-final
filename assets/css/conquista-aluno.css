@@ -1198,3 +1198,59 @@ body {
         transition: none;
     }
 }
+
+/* ===== NAV COM EFEITO NEON ===== */
+
+/* Links do menu */
+nav a {
+    position: relative;
+    transition: color 0.25s ease, background 0.25s ease,
+                box-shadow 0.25s ease, transform 0.25s ease;
+    border-radius: 10px;
+}
+
+/* Passar o mouse */
+nav a:hover {
+    color: #ffffff;
+    background: linear-gradient(
+        90deg,
+        rgba(168, 85, 247, 0.22),
+        rgba(192, 38, 255, 0.08)
+    );
+    box-shadow: inset 3px 0 0 #c026ff,
+                0 0 15px rgba(168, 85, 247, 0.15);
+    transform: translateX(3px);
+}
+
+/* Brilho nos ícones */
+nav a:hover i,
+nav a:hover svg {
+    color: #e9b5ff;
+    filter: drop-shadow(0 0 6px #c026ff);
+}
+
+/* Item da página atual
+   Adicione a classe "ativo" ao link correspondente */
+nav a.ativo {
+    color: #ffffff;
+    background: linear-gradient(
+        90deg,
+        rgba(168, 85, 247, 0.30),
+        rgba(192, 38, 255, 0.10)
+    );
+    box-shadow: inset 3px 0 0 #d946ef,
+                0 0 18px rgba(168, 85, 247, 0.18);
+    text-shadow: 0 0 8px rgba(192, 38, 255, 0.55);
+}
+
+/* Linha neon embaixo do item ativo */
+nav a.ativo::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c026ff, transparent);
+    box-shadow: 0 0 8px #c026ff;
+}
