@@ -1000,3 +1000,37 @@ body {
     font-weight: 800;
     box-shadow: 0 0 18px rgba(168, 85, 247, .35);
 }
+
+/* Logo consistente com o tema original MathPlay */
+.sidebar-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-header .logo strong {
+    color: #292631 !important;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.sidebar-header .logo small {
+    color: #7C3AED !important;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.sidebar-header .logo-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #7C3AED !important;
+    color: #FFFFFF !important;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: none;
+}
