@@ -271,8 +271,8 @@ function e($valor): string
                     <strong>Math<span>Power</span></strong>
                     <small>Área do Professor</small>
                 </div>
+                 </div>
             </div>
-        </div>
 
         <nav class="sidebar-nav">
             <a href="dashboard.php" class="nav-item">
