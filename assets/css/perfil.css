@@ -1352,3 +1352,296 @@ body {
 .sidebar .logo-text small {
     display: none !important;
 }
+
+/* =========================================
+   MATHPOWER — PERFIL NEON MATEMÁTICO
+   ========================================= */
+
+.content {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Título principal */
+.page-header h1 {
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: .5px;
+    text-shadow:
+        0 0 10px rgba(168, 85, 247, .6),
+        0 0 25px rgba(192, 38, 255, .2);
+}
+
+.eyebrow {
+    color: #E879FF;
+    letter-spacing: 2px;
+}
+
+/* Card principal */
+.profile-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid rgba(192, 38, 255, .42);
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(168, 85, 247, .18),
+            transparent 35%
+        ),
+        linear-gradient(135deg, #21142F, #120B1C);
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, .25),
+        0 0 22px rgba(168, 85, 247, .08);
+}
+
+/* Fórmulas decorativas no fundo do perfil */
+.profile-card::after {
+    content: "π  ∑  √  ∞";
+    position: absolute;
+    right: 18px;
+    bottom: 5px;
+    z-index: -1;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 900;
+    letter-spacing: 7px;
+    color: rgba(192, 38, 255, .15);
+}
+
+/* Avatar */
+.profile-avatar {
+    border: 2px solid #D8B4FE;
+    background: linear-gradient(135deg, #E879FF, #A855F7, #6D28D9);
+    box-shadow:
+        0 0 0 5px rgba(168, 85, 247, .10),
+        0 0 25px rgba(192, 38, 255, .4);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 30px rgba(192, 38, 255, .65);
+}
+
+/* Nome do aluno */
+.profile-main h2 {
+    color: #fff;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 900;
+    text-shadow: 0 0 12px rgba(192, 38, 255, .25);
+    overflow-wrap: anywhere;
+}
+
+/* Etiquetas de turma e nível */
+.profile-tag {
+    background: rgba(168, 85, 247, .16);
+    color: #E9D5FF;
+    border: 1px solid rgba(192, 38, 255, .3);
+}
+
+/* XP */
+.xp-box {
+    background: rgba(9, 6, 15, .7);
+    border: 1px solid rgba(192, 38, 255, .35);
+    box-shadow: inset 0 0 20px rgba(168, 85, 247, .07);
+}
+
+.xp-box strong {
+    color: #E879FF;
+    font-size: 32px;
+    text-shadow: 0 0 15px rgba(192, 38, 255, .4);
+}
+
+/* Cards de estatísticas */
+.stat-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(145deg, #21142F, #140D20);
+    border: 1px solid rgba(168, 85, 247, .3);
+    box-shadow: 0 7px 22px rgba(0, 0, 0, .16);
+    transition: transform .25s ease, border-color .25s ease,
+                box-shadow .25s ease;
+}
+
+/* Sinais matemáticos nos quatro cards */
+.stat-card:nth-child(1)::after {
+    content: "×";
+}
+
+.stat-card:nth-child(2)::after {
+    content: "√";
+}
+
+.stat-card:nth-child(3)::after {
+    content: "−";
+}
+
+.stat-card:nth-child(4)::after {
+    content: "∑";
+}
+
+.stat-card::after {
+    position: absolute;
+    right: 10px;
+    bottom: -13px;
+    z-index: -1;
+    pointer-events: none;
+    color: rgba(192, 38, 255, .17);
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: 75px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(217, 70, 255, .7);
+    box-shadow: 0 0 22px rgba(168, 85, 247, .15);
+}
+
+.stat-card > div:last-child {
+    min-width: 0;
+}
+
+.stat-card strong {
+    color: #fff;
+    font-size: 25px;
+}
+
+/* Ícones */
+.stat-icon {
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, .06);
+}
+
+/* Desempenho */
+.performance-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #21142F, #140D20);
+    border: 1px solid rgba(168, 85, 247, .32);
+}
+
+.performance-header h2,
+.section-title h2 {
+    color: #fff;
+    font-weight: 800;
+}
+
+.performance-value {
+    color: #E879FF;
+    font-weight: 900;
+    text-shadow: 0 0 12px rgba(192, 38, 255, .3);
+}
+
+.large-progress {
+    background: #352343;
+    border: 1px solid rgba(168, 85, 247, .15);
+}
+
+.large-progress-fill {
+    background: linear-gradient(90deg, #7C3AED, #C026FF, #E879FF);
+    box-shadow: 0 0 14px rgba(192, 38, 255, .5);
+}
+
+/* Resumo das conquistas */
+.achievement-summary {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #261630, #160D21);
+    border: 1px solid rgba(217, 70, 255, .4);
+}
+
+.achievement-icon {
+    background: rgba(234, 179, 8, .13);
+    border: 1px solid rgba(234, 179, 8, .22);
+    box-shadow: 0 0 18px rgba(234, 179, 8, .08);
+}
+
+.achievement-info strong {
+    color: #E879FF;
+    font-size: 28px;
+}
+
+.achievement-button,
+.secondary-button {
+    background: linear-gradient(135deg, #9333EA, #6D28D9);
+    border: 1px solid rgba(232, 121, 255, .35);
+    color: #fff;
+    transition: filter .2s ease, box-shadow .2s ease;
+}
+
+.achievement-button:hover,
+.secondary-button:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 18px rgba(168, 85, 247, .3);
+}
+
+/* Informações da conta */
+.account-card {
+    background: linear-gradient(145deg, #21142F, #140D20);
+    border: 1px solid rgba(168, 85, 247, .3);
+}
+
+.account-grid,
+.account-item {
+    border-color: rgba(192, 132, 252, .15);
+}
+
+.account-item strong {
+    color: #F5EDFF;
+}
+
+/* Títulos das seções com detalhe neon */
+.section-title h2 {
+    position: relative;
+    padding-left: 12px;
+}
+
+.section-title h2::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 0;
+    width: 3px;
+    border-radius: 5px;
+    background: #C026FF;
+    box-shadow: 0 0 10px rgba(192, 38, 255, .7);
+}
+
+/* Animações acessíveis */
+@media (prefers-reduced-motion: reduce) {
+    .profile-avatar,
+    .stat-card,
+    .achievement-button,
+    .secondary-button {
+        transition: none;
+    }
+
+    .profile-avatar:hover,
+    .stat-card:hover {
+        transform: none;
+    }
+}
+
+/* Ajustes para celulares */
+@media (max-width: 550px) {
+    .profile-card::after {
+        right: 8px;
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+
+    .stat-card::after {
+        font-size: 60px;
+    }
+
+    .profile-card {
+        gap: 15px;
+    }
+}
