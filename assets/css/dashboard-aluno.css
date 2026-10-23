@@ -2003,55 +2003,17 @@ button:focus-visible {
     visibility: visible !important;
 }
 
-/* Imagens de fundo dos cards de jogos do dashboard */
-.game-card {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background-color: #1b1028;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+/* TESTE: imagem de fundo dos jogos */
+.games-grid .game-card.game-caixa {
+    background-image: url("../img/caixa\ matematico.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }
 
-/* Camada escura para manter os textos legíveis */
-.game-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: linear-gradient(
-        180deg,
-        rgba(18, 8, 35, 0.25) 0%,
-        rgba(18, 8, 35, 0.88) 100%
-    );
-}
-
-/* Caixa Matemático */
-.game-card.game-caixa {
-    background-image:
-        linear-gradient(
-            180deg,
-            rgba(18, 8, 35, 0.25),
-            rgba(18, 8, 35, 0.75)
-        ),
-        url("../img/caixa\ matematico.jpg");
-}
-
-/* Memória Matemática */
-.game-card.game-memoria {
-    background-image:
-        linear-gradient(
-            180deg,
-            rgba(18, 8, 35, 0.25),
-            rgba(18, 8, 35, 0.75)
-        ),
-        url("../img/jogo\ da\ memoria.jpg");
-}
-
-/* Mantém o conteúdo acima das imagens */
-.game-card > * {
-    position: relative;
-    z-index: 1;
+.games-grid .game-card.game-memoria {
+    background-image: url("../img/jogo\ da\ memoria.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }
