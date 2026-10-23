@@ -999,3 +999,91 @@ body {
         letter-spacing: 5px;
     }
 }
+
+/* ========================================
+   ELEMENTOS VISUAIS NOS CARDS DE RESUMO
+======================================== */
+
+.resumo-card {
+    isolation: isolate;
+    min-height: 150px;
+}
+
+/* Ícones decorativos */
+.resumo-card:nth-child(1)::after,
+.resumo-card:nth-child(2)::after {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 43px;
+    opacity: 0.85;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px rgba(192, 38, 255, 0.65));
+}
+
+.resumo-card:nth-child(1)::after {
+    content: "🏆";
+}
+
+.resumo-card:nth-child(2)::after {
+    content: "🏅";
+}
+
+/* Espaço para os ícones sem cobrir os números */
+.resumo-card span,
+.resumo-card strong {
+    position: relative;
+    z-index: 1;
+    max-width: 72%;
+}
+
+/* Terceiro card: indicador circular */
+.resumo-card:nth-child(3)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 22px;
+    width: 60px;
+    height: 60px;
+    transform: translateY(-50%);
+    border: 3px solid rgba(168, 85, 247, 0.25);
+    border-top-color: #c026ff;
+    border-right-color: #a855f7;
+    border-radius: 50%;
+    box-shadow:
+        0 0 12px rgba(192, 38, 255, 0.25),
+        inset 0 0 12px rgba(168, 85, 247, 0.08);
+    pointer-events: none;
+}
+
+/* Pequenos pontos de luz */
+.resumo-card {
+    background-image:
+        radial-gradient(circle at 88% 18%, rgba(192, 38, 255, 0.18) 1px, transparent 3px),
+        radial-gradient(circle at 75% 82%, rgba(168, 85, 247, 0.15) 2px, transparent 4px);
+}
+
+/* Realce ao passar o mouse */
+.resumo-card:hover::after {
+    filter: drop-shadow(0 0 15px rgba(192, 38, 255, 0.9));
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 600px) {
+    .resumo-card {
+        min-height: 125px;
+    }
+
+    .resumo-card:nth-child(1)::after,
+    .resumo-card:nth-child(2)::after {
+        right: 18px;
+        font-size: 35px;
+    }
+
+    .resumo-card:nth-child(3)::after {
+        right: 18px;
+        width: 48px;
+        height: 48px;
+    }
+}
