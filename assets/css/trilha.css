@@ -2555,100 +2555,203 @@ button:focus-visible {
     }
 }
 
-/* ==========================================
-   UNIVERSO MATEMÁTICO — DECORAÇÃO ESPECIAL
-========================================== */
+/* =================================
+   RESUMO DA TRILHA
+================================= */
 
-/* Planeta decorativo no canto superior direito */
-.main-content > .content {
+.trail-summary {
     position: relative;
-    isolation: isolate;
+    margin: 28px 0 35px;
+    padding: 26px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff, #faf6ff);
+    border: 1px solid #e8dcfa;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(104, 76, 151, 0.08);
 }
 
-.main-content > .content::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 115px;
-    right: 25px;
-    width: 125px;
-    height: 125px;
+.summary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.summary-heading h2 {
+    margin: 7px 0;
+    color: #493566;
+    font-size: 24px;
+}
+
+.summary-heading p {
+    margin: 0;
+    color: #81738f;
+    font-size: 14px;
+}
+
+.summary-percentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 82px;
+    height: 82px;
     border-radius: 50%;
-    background:
-        radial-gradient(
-            circle at 30% 28%,
-            rgba(255, 255, 255, 0.95) 0 3px,
-            transparent 4px
-        ),
-        radial-gradient(
-            circle at 65% 65%,
-            rgba(255, 255, 255, 0.30) 0 9px,
-            transparent 10px
-        ),
-        linear-gradient(
-            135deg,
-            #f6c7e5,
-            #c9b5f3 55%,
-            #9db9f5
-        );
-    box-shadow:
-        0 0 35px rgba(179, 142, 233, 0.25),
-        inset -12px -12px 22px rgba(112, 87, 173, 0.15);
-    opacity: 0.65;
-    pointer-events: none;
+    background: #eee4ff;
+    border: 4px solid #d8c4ff;
 }
 
-/* Anel do planeta */
-.main-content > .content::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 150px;
-    right: 5px;
-    width: 165px;
-    height: 55px;
-    border: 3px solid rgba(163, 128, 216, 0.42);
-    border-radius: 50%;
-    transform: rotate(-25deg);
-    pointer-events: none;
+.summary-percentage strong {
+    color: #7650b3;
+    font-size: 23px;
 }
 
-/* Enfeites nos cards */
-.path-card {
-    border: 1px solid rgba(179, 147, 224, 0.25);
-    box-shadow: 0 8px 24px rgba(103, 79, 145, 0.07);
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+.summary-percentage span {
+    color: #806b9b;
+    font-size: 11px;
 }
 
-@media (hover: hover) {
-    .path-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 30px rgba(123, 89, 176, 0.15);
+.summary-progress {
+    height: 10px;
+    margin-bottom: 23px;
+    overflow: hidden;
+    background: #eee7f7;
+    border-radius: 20px;
+}
+
+.summary-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #a98ae7, #d69bd8);
+    transition: width 0.4s ease;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 17px 14px;
+    border: 1px solid transparent;
+    border-radius: 17px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(91, 65, 132, 0.08);
+}
+
+.summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    font-size: 22px;
+}
+
+.summary-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.summary-card span {
+    color: #756984;
+    font-size: 12px;
+}
+
+.summary-card strong {
+    color: #493566;
+    font-size: 25px;
+}
+
+.summary-total {
+    background: #f2ecff;
+    border-color: #e5d8ff;
+}
+
+.summary-total .summary-icon {
+    background: #e3d5ff;
+}
+
+.summary-completed {
+    background: #eaf8ef;
+    border-color: #d3efdc;
+}
+
+.summary-completed .summary-icon {
+    background: #d5f0dd;
+}
+
+.summary-available {
+    background: #eaf3ff;
+    border-color: #d7e7ff;
+}
+
+.summary-available .summary-icon {
+    background: #d7e7ff;
+}
+
+.summary-locked {
+    background: #fff3e8;
+    border-color: #ffe4ca;
+}
+
+.summary-locked .summary-icon {
+    background: #ffe4ca;
+}
+
+/* Responsividade */
+@media (max-width: 1000px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/* Brilho discreto no título da página */
-.page-header h1 {
-    text-shadow: 0 2px 18px rgba(164, 128, 219, 0.16);
-}
-
-/* No celular, o planeta fica menor */
-@media (max-width: 700px) {
-    .main-content > .content::before {
-        top: 135px;
-        right: 8px;
-        width: 75px;
-        height: 75px;
-        opacity: 0.4;
+@media (max-width: 600px) {
+    .trail-summary {
+        padding: 18px;
+        border-radius: 20px;
     }
 
-    .main-content > .content::after {
-        top: 155px;
-        right: 0;
-        width: 100px;
-        height: 35px;
-        border-width: 2px;
+    .summary-heading {
+        align-items: flex-start;
+    }
+
+    .summary-heading h2 {
+        font-size: 20px;
+    }
+
+    .summary-percentage {
+        width: 66px;
+        height: 66px;
+    }
+
+    .summary-percentage strong {
+        font-size: 19px;
+    }
+
+    .summary-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 13px;
+    }
+
+    .summary-card strong {
+        font-size: 23px;
     }
 }

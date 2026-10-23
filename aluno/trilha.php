@@ -158,6 +158,31 @@ foreach ($jogos as $index => &$jogo) {
 
 unset($jogo);
 
+/* Resumo da trilha */
+$totalJogos = count($jogos);
+
+$jogosConcluidos = 0;
+$jogosDisponiveis = 0;
+$jogosBloqueados = 0;
+
+foreach ($jogos as $jogo) {
+    if ($jogo['status'] === 'concluido') {
+        $jogosConcluidos++;
+    } elseif (
+        $jogo['status'] === 'disponivel' ||
+        $jogo['status'] === 'em_andamento'
+    ) {
+        $jogosDisponiveis++;
+    } elseif ($jogo['status'] === 'bloqueado') {
+        $jogosBloqueados++;
+    }
+}
+
+$progressoTrilha = $totalJogos > 0
+    ? (int) round(($jogosConcluidos / $totalJogos) * 100)
+    : 0;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -466,6 +491,69 @@ function linkJogo(int $jogoId): string
                 </div>
 
             </div>
+
+            
+<!-- RESUMO DA TRILHA -->
+<section class="trail-summary">
+
+    <div class="summary-heading">
+        <div>
+            <span class="eyebrow">SEU DESEMPENHO</span>
+            <h2>Resumo da trilha ✨</h2>
+            <p>Acompanhe sua jornada de aprendizagem.</p>
+        </div>
+
+        <div class="summary-percentage">
+            <strong><?= $progressoTrilha ?>%</strong>
+            <span>concluído</span>
+        </div>
+    </div>
+
+    <div class="summary-progress">
+        <div
+            class="summary-progress-fill"
+            style="width: <?= $progressoTrilha ?>%"
+        ></div>
+    </div>
+
+    <div class="summary-grid">
+
+        <article class="summary-card summary-total">
+            <div class="summary-icon">🎮</div>
+            <div>
+                <span>Total de jogos</span>
+                <strong><?= $totalJogos ?></strong>
+            </div>
+        </article>
+
+        <article class="summary-card summary-completed">
+            <div class="summary-icon">🏆</div>
+            <div>
+                <span>Concluídos</span>
+                <strong><?= $jogosConcluidos ?></strong>
+            </div>
+        </article>
+
+        <article class="summary-card summary-available">
+            <div class="summary-icon">🚀</div>
+            <div>
+                <span>Disponíveis</span>
+                <strong><?= $jogosDisponiveis ?></strong>
+            </div>
+        </article>
+
+        <article class="summary-card summary-locked">
+            <div class="summary-icon">🔒</div>
+            <div>
+                <span>Bloqueados</span>
+                <strong><?= $jogosBloqueados ?></strong>
+            </div>
+        </article>
+
+    </div>
+
+</section>
+
 
 
             <!-- TRILHA -->
