@@ -1987,36 +1987,3 @@ button:focus-visible {
         auto,
         auto;
 }
-
-/* Decoração matemática discreta no fundo */
-.main-content {
-    position: relative;
-    isolation: isolate;
-}
-
-.main-content::before {
-    content: "+     ÷        π        ×        √";
-    position: fixed;
-    top: 18%;
-    left: 30%;
-    width: 65%;
-    color: rgba(168, 85, 247, 0.10);
-    font-size: 42px;
-    font-weight: bold;
-    letter-spacing: 24px;
-    line-height: 3;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Evita interferência com a navegação em telas pequenas */
-@media (max-width: 768px) {
-    .main-content::before {
-        left: 8%;
-        width: 85%;
-        font-size: 30px;
-        letter-spacing: 14px;
-    }
-}
