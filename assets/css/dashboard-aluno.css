@@ -2003,17 +2003,35 @@ button:focus-visible {
     visibility: visible !important;
 }
 
-/* TESTE: imagem de fundo dos jogos */
+/* Imagens de fundo dos jogos no dashboard */
 .games-grid .game-card.game-caixa {
-    background-image: url("../img/caixa\ matematico.jpg") !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(20, 10, 35, 0.20),
+            rgba(20, 10, 35, 0.92)
+        ),
+        url("../img/caixa\ matematico.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .games-grid .game-card.game-memoria {
-    background-image: url("../img/jogo\ da\ memoria.jpg") !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(20, 10, 35, 0.20),
+            rgba(20, 10, 35, 0.92)
+        ),
+        url("../img/jogo\ da\ memoria.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Mantém o conteúdo dos cards visível */
+.games-grid .game-card {
+    position: relative;
+    overflow: hidden;
 }

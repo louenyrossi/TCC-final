@@ -1,3 +1,4 @@
+
 <?php
 
 require_once '../includes/auth.php';
@@ -143,13 +144,6 @@ $jogos = $stmtJogos->fetchAll();
 $xp = (int) $aluno['xp'];
 $nivel = (int) $aluno['nivel'];
 
-/*
-| Exemplo:
-| Nível 1 = 0 a 99 XP
-| Nível 2 = 100 a 199 XP
-| etc.
-*/
-
 $xpBaseNivel = ($nivel - 1) * 100;
 $xpProximoNivel = $nivel * 100;
 
@@ -174,7 +168,6 @@ $porcentagemXp = min(
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -188,31 +181,24 @@ $porcentagemXp = min(
         rel="stylesheet"
         href="../assets/css/dashboard-aluno.css"
     >
-
 </head>
 
 <body>
 
 <div class="app">
 
-    <!-- =========================================================
-         SIDEBAR
-    ========================================================== -->
+    <!-- SIDEBAR: mantida -->
 
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
 
             <a href="dashboard.php" class="logo">
-
-                <span class="logo-icon">
-                    M
-                </span>
+                <span class="logo-icon">M</span>
 
                 <span class="logo-text">
                     Math<span>Power</span>
                 </span>
-
             </a>
 
             <button
@@ -228,50 +214,32 @@ $porcentagemXp = min(
 
         <nav class="sidebar-nav">
 
-            <a
-                href="dashboard.php"
-                class="nav-item active"
-            >
+            <a href="dashboard.php" class="nav-item active">
                 <span class="nav-icon">⌂</span>
                 <span>Início</span>
             </a>
 
-            <a
-                href="jogos.php"
-                class="nav-item"
-            >
+            <a href="jogos.php" class="nav-item">
                 <span class="nav-icon">🎮</span>
                 <span>Jogos</span>
             </a>
 
-            <a
-                href="trilha.php"
-                class="nav-item"
-            >
+            <a href="trilha.php" class="nav-item">
                 <span class="nav-icon">📚</span>
                 <span>Trilha</span>
             </a>
 
-            <a
-                href="conquistas.php"
-                class="nav-item"
-            >
+            <a href="conquistas.php" class="nav-item">
                 <span class="nav-icon">🏆</span>
                 <span>Conquistas</span>
             </a>
 
-            <a
-                href="progresso.php"
-                class="nav-item"
-            >
+            <a href="progresso.php" class="nav-item">
                 <span class="nav-icon">📊</span>
                 <span>Progresso</span>
             </a>
 
-            <a
-                href="perfil.php"
-                class="nav-item"
-            >
+            <a href="perfil.php" class="nav-item">
                 <span class="nav-icon">👤</span>
                 <span>Perfil</span>
             </a>
@@ -283,35 +251,24 @@ $porcentagemXp = min(
             <div class="sidebar-user">
 
                 <div class="user-avatar">
-
                     <?= htmlspecialchars(
-                        strtoupper(
-                            mb_substr($aluno['nome'], 0, 1)
-                        )
+                        strtoupper(mb_substr($aluno['nome'], 0, 1))
                     ) ?>
-
                 </div>
 
                 <div class="user-info">
-
                     <strong>
                         <?= htmlspecialchars($aluno['nome']) ?>
                     </strong>
 
-                    <span>
-                        Nível <?= $nivel ?>
-                    </span>
-
+                    <span>Nível <?= $nivel ?></span>
                 </div>
 
             </div>
 
             <div class="logout-divider"></div>
 
-            <a
-                href="../logout.php"
-                class="logout-link"
-            >
+            <a href="../logout.php" class="logout-link">
                 <span>↪</span>
                 Sair
             </a>
@@ -320,9 +277,7 @@ $porcentagemXp = min(
 
     </aside>
 
-    <!-- =========================================================
-         CONTEÚDO
-    ========================================================== -->
+    <!-- CONTEÚDO PRINCIPAL -->
 
     <main class="main-content">
 
@@ -338,11 +293,7 @@ $porcentagemXp = min(
             </button>
 
             <div class="topbar-title">
-
-                <span>
-                    Área do aluno
-                </span>
-
+                <span>Área do aluno</span>
             </div>
 
             <a
@@ -350,84 +301,58 @@ $porcentagemXp = min(
                 class="topbar-profile"
                 aria-label="Meu perfil"
             >
-
                 <div class="topbar-avatar">
-
                     <?= htmlspecialchars(
-                        strtoupper(
-                            mb_substr($aluno['nome'], 0, 1)
-                        )
+                        strtoupper(mb_substr($aluno['nome'], 0, 1))
                     ) ?>
-
                 </div>
-
             </a>
 
         </header>
 
         <div class="content">
 
-            <!-- =================================================
-                 BOAS-VINDAS
-            ================================================== -->
+            <!-- BOAS-VINDAS -->
 
             <section class="welcome-section">
 
                 <div>
 
-                    <span class="welcome-label">
-                        👋 Olá!
-                    </span>
+                    <span class="welcome-label">👋 Olá!</span>
 
                     <h1>
                         <?= htmlspecialchars($aluno['nome']) ?>
                     </h1>
 
                     <p>
-                        Pronto para continuar sua jornada
-                        matemática?
+                        Pronto para continuar sua jornada matemática?
                     </p>
 
                     <?php if (!empty($aluno['turma'])): ?>
-
                         <span class="class-badge">
                             Turma <?= htmlspecialchars($aluno['turma']) ?>
                         </span>
-
                     <?php endif; ?>
 
                 </div>
 
-                <div class="welcome-decoration">
-                    ∑
-                </div>
+                <div class="welcome-decoration">∑</div>
 
             </section>
 
-            <!-- =================================================
-                 XP / NÍVEL
-            ================================================== -->
+            <!-- XP / NÍVEL -->
 
             <section class="level-card">
 
-                <div class="level-icon">
-                    ⭐
-                </div>
+                <div class="level-icon">⭐</div>
 
                 <div class="level-content">
 
                     <div class="level-top">
 
                         <div>
-
-                            <span class="small-label">
-                                Seu nível
-                            </span>
-
-                            <strong>
-                                Nível <?= $nivel ?>
-                            </strong>
-
+                            <span class="small-label">Seu nível</span>
+                            <strong>Nível <?= $nivel ?></strong>
                         </div>
 
                         <span class="xp-value">
@@ -437,12 +362,10 @@ $porcentagemXp = min(
                     </div>
 
                     <div class="xp-bar">
-
                         <div
                             class="xp-progress"
                             style="width: <?= $porcentagemXp ?>%;"
                         ></div>
-
                     </div>
 
                     <div class="xp-footer">
@@ -461,118 +384,59 @@ $porcentagemXp = min(
 
             </section>
 
-            <!-- =================================================
-                 ESTATÍSTICAS
-            ================================================== -->
+            <!-- ESTATÍSTICAS -->
 
             <section class="stats-grid">
 
                 <article class="stat-card">
-
-                    <div class="stat-icon">
-                        🎮
-                    </div>
-
+                    <div class="stat-icon">🎮</div>
                     <div>
-
-                        <span>
-                            Partidas
-                        </span>
-
-                        <strong>
-                            <?= $partidas ?>
-                        </strong>
-
+                        <span>Partidas</span>
+                        <strong><?= $partidas ?></strong>
                     </div>
-
                 </article>
 
                 <article class="stat-card">
-
-                    <div class="stat-icon">
-                        ✅
-                    </div>
-
+                    <div class="stat-icon">✅</div>
                     <div>
-
-                        <span>
-                            Acertos
-                        </span>
-
-                        <strong>
-                            <?= $acertos ?>
-                        </strong>
-
+                        <span>Acertos</span>
+                        <strong><?= $acertos ?></strong>
                     </div>
-
                 </article>
 
                 <article class="stat-card">
-
-                    <div class="stat-icon">
-                        ⭐
-                    </div>
-
+                    <div class="stat-icon">⭐</div>
                     <div>
-
-                        <span>
-                            Pontos
-                        </span>
-
-                        <strong>
-                            <?= $pontos ?>
-                        </strong>
-
+                        <span>Pontos</span>
+                        <strong><?= $pontos ?></strong>
                     </div>
-
                 </article>
 
                 <article class="stat-card">
-
-                    <div class="stat-icon">
-                        📈
-                    </div>
-
+                    <div class="stat-icon">📈</div>
                     <div>
-
-                        <span>
-                            Taxa de acerto
-                        </span>
-
-                        <strong>
-                            <?= $taxaAcerto ?>%
-                        </strong>
-
+                        <span>Taxa de acerto</span>
+                        <strong><?= $taxaAcerto ?>%</strong>
                     </div>
-
                 </article>
 
             </section>
 
-            <!-- =================================================
-                 JOGOS
-            ================================================== -->
+            <!-- JOGOS -->
 
             <section class="section">
 
                 <div class="section-heading">
 
                     <div>
-
                         <span class="section-kicker">
                             Continue aprendendo
                         </span>
 
-                        <h2>
-                            Seus jogos
-                        </h2>
-
+                        <h2>Seus jogos</h2>
                     </div>
 
-                    <a
-                        href="jogos.php"
-                        class="see-all"
-                    >
+                    <a href="jogos.php" class="see-all">
                         Ver todos →
                     </a>
 
@@ -585,53 +449,39 @@ $porcentagemXp = min(
                         <?php foreach ($jogos as $jogo): ?>
 
                             <?php
-
-                            $porcentagem =
-                                (float) $jogo['porcentagem'];
-
+                            $porcentagem = (float) $jogo['porcentagem'];
                             $nomeJogo = $jogo['nome'];
 
                             $icone = '🎮';
+                            $classeImagem = '';
 
-                            if (
-                                stripos(
-                                    $nomeJogo,
-                                    'Caixa'
-                                ) !== false
-                            ) {
+                            if (stripos($nomeJogo, 'Caixa') !== false) {
                                 $icone = '🛒';
                             }
 
-                            if (
-                                stripos(
-                                    $nomeJogo,
-                                    'Memória'
-                                ) !== false
-                            ) {
+                            if (stripos($nomeJogo, 'Memória') !== false) {
                                 $icone = '🧠';
                             }
 
-                            if (
-                                stripos(
-                                    $nomeJogo,
-                                    'Espacial'
-                                ) !== false
-                            ) {
+                            if (stripos($nomeJogo, 'Espacial') !== false) {
                                 $icone = '🚀';
                             }
 
-                            if (
-                                stripos(
-                                    $nomeJogo,
-                                    'Construtor'
-                                ) !== false
-                            ) {
+                            if (stripos($nomeJogo, 'Construtor') !== false) {
                                 $icone = '📐';
                             }
 
+                            /*
+                             * Classes usadas pelo CSS para as imagens.
+                             */
+                            if ($nomeJogo === 'Caixa Matemático') {
+                                $classeImagem = 'game-caixa';
+                            } elseif ($nomeJogo === 'Memória Matemática') {
+                                $classeImagem = 'game-memoria';
+                            }
                             ?>
 
-                            <article class="game-card">
+                            <article class="game-card <?= htmlspecialchars($classeImagem) ?>">
 
                                 <div class="game-icon">
                                     <?= $icone ?>
@@ -640,21 +490,15 @@ $porcentagemXp = min(
                                 <div class="game-info">
 
                                     <span class="game-theme">
-                                        <?= htmlspecialchars(
-                                            $jogo['tema']
-                                        ) ?>
+                                        <?= htmlspecialchars($jogo['tema'] ?? '') ?>
                                     </span>
 
                                     <h3>
-                                        <?= htmlspecialchars(
-                                            $jogo['nome']
-                                        ) ?>
+                                        <?= htmlspecialchars($jogo['nome']) ?>
                                     </h3>
 
                                     <p>
-                                        <?= htmlspecialchars(
-                                            $jogo['descricao']
-                                        ) ?>
+                                        <?= htmlspecialchars($jogo['descricao'] ?? '') ?>
                                     </p>
 
                                 </div>
@@ -663,9 +507,7 @@ $porcentagemXp = min(
 
                                     <div class="progress-header">
 
-                                        <span>
-                                            Progresso
-                                        </span>
+                                        <span>Progresso</span>
 
                                         <strong>
                                             <?= round($porcentagem) ?>%
@@ -683,10 +525,6 @@ $porcentagemXp = min(
                                     </div>
 
                                 </div>
-
-                                <!-- =================================================
-                                     BOTÃO DO JOGO
-                                ================================================== -->
 
                                 <?php if ($nomeJogo === 'Caixa Matemático'): ?>
 
@@ -727,17 +565,12 @@ $porcentagemXp = min(
 
                     <div class="empty-state">
 
-                        <div>
-                            🎮
-                        </div>
+                        <div>🎮</div>
 
-                        <h3>
-                            Nenhum jogo disponível
-                        </h3>
+                        <h3>Nenhum jogo disponível</h3>
 
                         <p>
-                            Os jogos aparecerão aqui quando
-                            estiverem disponíveis.
+                            Os jogos aparecerão aqui quando estiverem disponíveis.
                         </p>
 
                     </div>
@@ -746,30 +579,21 @@ $porcentagemXp = min(
 
             </section>
 
-            <!-- =================================================
-                 CONQUISTAS
-            ================================================== -->
+            <!-- CONQUISTAS -->
 
             <section class="section">
 
                 <div class="section-heading">
 
                     <div>
-
                         <span class="section-kicker">
                             Suas recompensas
                         </span>
 
-                        <h2>
-                            Conquistas recentes
-                        </h2>
-
+                        <h2>Conquistas recentes</h2>
                     </div>
 
-                    <a
-                        href="conquistas.php"
-                        class="see-all"
-                    >
+                    <a href="conquistas.php" class="see-all">
                         Ver todas →
                     </a>
 
@@ -783,22 +607,16 @@ $porcentagemXp = min(
 
                             <article class="achievement-card">
 
-                                <div class="achievement-icon">
-                                    🏆
-                                </div>
+                                <div class="achievement-icon">🏆</div>
 
                                 <div>
 
                                     <h3>
-                                        <?= htmlspecialchars(
-                                            $conquista['nome']
-                                        ) ?>
+                                        <?= htmlspecialchars($conquista['nome']) ?>
                                     </h3>
 
                                     <p>
-                                        <?= htmlspecialchars(
-                                            $conquista['descricao']
-                                        ) ?>
+                                        <?= htmlspecialchars($conquista['descricao']) ?>
                                     </p>
 
                                 </div>
@@ -813,17 +631,12 @@ $porcentagemXp = min(
 
                     <div class="empty-state">
 
-                        <div>
-                            🏆
-                        </div>
+                        <div>🏆</div>
 
-                        <h3>
-                            Ainda não há conquistas
-                        </h3>
+                        <h3>Ainda não há conquistas</h3>
 
                         <p>
-                            Continue jogando para desbloquear
-                            suas primeiras medalhas!
+                            Continue jogando para desbloquear suas primeiras medalhas!
                         </p>
 
                     </div>
@@ -838,14 +651,9 @@ $porcentagemXp = min(
 
 </div>
 
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../assets/js/dashboard-aluno.js"></script>
 
 </body>
-
 </html>
-
