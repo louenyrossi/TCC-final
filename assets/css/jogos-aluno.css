@@ -1401,12 +1401,12 @@ button:focus-visible {
 .main-content .content::after {
     content: "＋   ×   ÷   π   √   ∞";
     display: block;
-    height: 24px;
-    line-height: 24px;
-    margin-top: 8px;
+    height: 45px;
+    line-height: 45px;
+    margin-top: 25px;
     color: #5a456e;
-    font-size: 24px;
-    letter-spacing: 8px;
+    font-size: 36px;
+    letter-spacing: 10px;
     text-align: center;
     pointer-events: none;
 }
