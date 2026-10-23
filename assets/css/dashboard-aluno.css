@@ -1987,3 +1987,26 @@ button:focus-visible {
         auto,
         auto;
 }
+
+/* Símbolos matemáticos perto de Conquistas Recentes */
+.main-content::after {
+    content: "＋     ×     ÷     π     √     ∞";
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    margin-top: 15px;
+    color: rgba(168, 85, 247, 0.18);
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 12px;
+    text-align: center;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .main-content::after {
+        font-size: 22px;
+        letter-spacing: 5px;
+    }
+}
