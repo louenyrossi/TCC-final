@@ -1653,3 +1653,9 @@ td:not(:first-child) {
     font-weight: 600;
     letter-spacing: .2px;
 }
+.sidebar .logo-icon {
+    width: 38px;
+    height: 44px;
+    min-width: 38px;
+    box-sizing: border-box;
+}
