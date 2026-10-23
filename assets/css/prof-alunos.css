@@ -1081,3 +1081,141 @@ select {
         margin-left: 0;
     }
 }
+
+/* ==========================================
+   ALUNOS — TEMA ESCURO DO DASHBOARD
+   ========================================== */
+
+body {
+    background:
+        radial-gradient(
+            ellipse at 15% 0%,
+            rgba(126, 34, 206, .15),
+            transparent 36%
+        ),
+        radial-gradient(
+            ellipse at 90% 20%,
+            rgba(217, 70, 255, .07),
+            transparent 30%
+        ),
+        #0A0710 !important;
+    color: #F7F0FF !important;
+}
+
+/* Barra superior */
+.topbar {
+    background: rgba(16, 11, 24, .92) !important;
+    border-bottom: 1px solid rgba(217, 70, 255, .25) !important;
+    box-shadow: 0 5px 22px rgba(0, 0, 0, .12);
+}
+
+.topbar-title,
+.page-header h1,
+.content h1,
+.content h2,
+.content h3 {
+    color: #F7F0FF !important;
+}
+
+.page-header p,
+.content p {
+    color: #D0C1E2;
+}
+
+/* Cards, painéis e áreas de conteúdo */
+.stat-card,
+.overview-card,
+.quick-card,
+.class-card,
+.student-card,
+.students-section,
+.filter-card,
+.content-card,
+.empty-card,
+.card {
+    background: linear-gradient(
+        145deg,
+        rgba(26, 17, 38, .97),
+        rgba(17, 11, 26, .98)
+    ) !important;
+
+    color: #F7F0FF !important;
+    border-color: rgba(168, 85, 247, .29) !important;
+    box-shadow: 0 0 18px rgba(168, 85, 247, .08);
+}
+
+/* Textos e informações secundárias */
+.stat-card span,
+.stat-card p,
+.student-card p,
+.student-card span,
+.content small,
+.content label {
+    color: #D0C1E2;
+}
+
+/* Campos de busca, filtros e formulários */
+.content input,
+.content select,
+.content textarea {
+    background: #15101F !important;
+    color: #F7F0FF !important;
+    border: 1px solid rgba(168, 85, 247, .35) !important;
+}
+
+.content input::placeholder,
+.content textarea::placeholder {
+    color: #A697B8 !important;
+}
+
+.content input:focus,
+.content select:focus,
+.content textarea:focus {
+    outline: none;
+    border-color: #D946FF !important;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, .13);
+}
+
+/* Tabelas, se houver */
+.content table {
+    color: #D0C1E2;
+    background: #15101F;
+}
+
+.content th {
+    background: #100B18;
+    color: #D946FF;
+}
+
+.content td,
+.content th {
+    border-color: rgba(168, 85, 247, .20);
+}
+
+.content tr:hover {
+    background: rgba(168, 85, 247, .08);
+}
+
+/* Links e destaques */
+.content a {
+    color: #C084FC;
+}
+
+.content a:hover {
+    color: #D946FF;
+}
+
+/* Botões */
+.content button {
+    transition: .2s ease;
+}
+
+.content button:not(.menu-button) {
+    border-color: rgba(168, 85, 247, .35);
+}
+
+/* Fundo dos elementos que ainda usam branco */
+.content .stat-icon,
+.content .student-avatar {
+    border-color: rgba(168, 85, 247, .28);
+}
