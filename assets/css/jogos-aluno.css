@@ -1397,6 +1397,8 @@ button:focus-visible {
     position: relative;
     z-index: 1;
 }
+
+/* Sinais matemáticos no rodapé — igual ao dashboard */
 .main-content::after {
     content: "＋   ×   ÷   π   √   ∞" !important;
     display: block !important;
@@ -1409,4 +1411,5 @@ button:focus-visible {
     letter-spacing: 12px !important;
     opacity: 1 !important;
     visibility: visible !important;
+    pointer-events: none;
 }
