@@ -1221,107 +1221,129 @@ body {
 }
 
 /* ==========================================
-   CORREÇÃO DOS CONTAINERS — ALUNOS
-   Tema igual ao Dashboard
+   MATHPOWER — TODOS OS CONTAINERS ESCUROS
+   Não altera a sidebar
    ========================================== */
 
-.content,
-.content > section,
-.content > div,
-.students-container,
-.students-list,
-.students-grid,
-.student-group,
-.student-list,
-.students-section,
-.filter-container,
-.filters,
-.filters-container,
-.search-container,
-.table-container,
-.table-wrapper,
-.stats-grid,
-.stat-card,
-.student-card,
-.class-card,
-.card,
-.panel,
-.empty-state,
-.empty-card {
-    background-color: #0A0710;
-    color: #F7F0FF;
+:root {
+    --branco: #15101F;
+    --fundo: #0A0710;
+    --texto: #F7F0FF;
+    --texto-secundario: #D0C1E2;
+    --borda: rgba(168, 85, 247, .29);
 }
 
-/* Containers e cards internos */
-.content .student-group,
-.content .students-section,
-.content .students-container,
-.content .students-list,
-.content .students-grid,
-.content .filter-container,
-.content .filters,
-.content .filters-container,
-.content .search-container,
-.content .table-container,
-.content .table-wrapper,
-.content .card,
-.content .panel {
+/* Fundo geral */
+html,
+body,
+.app,
+.main-content,
+.content {
+    background-color: #0A0710 !important;
+    color: #F7F0FF !important;
+}
+
+/* Todos os blocos e containers dentro do conteúdo */
+.main-content .content div,
+.main-content .content section,
+.main-content .content article,
+.main-content .content form,
+.main-content .content fieldset,
+.main-content .content li,
+.main-content .content .stat-card,
+.main-content .content .student-card,
+.main-content .content .class-card,
+.main-content .content .card,
+.main-content .content .panel,
+.main-content .content .container,
+.main-content .content .filter-group,
+.main-content .content .filters,
+.main-content .content .student-group,
+.main-content .content .students-group,
+.main-content .content .students-list,
+.main-content .content .students-grid,
+.main-content .content .empty-state,
+.main-content .content .empty-card {
+    background-color: #15101F !important;
+    color: #F7F0FF !important;
+    border-color: rgba(168, 85, 247, .29);
+}
+
+/* Containers principais com gradiente do Dashboard */
+.main-content .content .stat-card,
+.main-content .content .student-card,
+.main-content .content .class-card,
+.main-content .content .card,
+.main-content .content .panel,
+.main-content .content .student-group,
+.main-content .content .students-group,
+.main-content .content .students-list,
+.main-content .content .students-grid,
+.main-content .content .empty-state,
+.main-content .content .empty-card {
     background: linear-gradient(
         145deg,
         rgba(26, 17, 38, .98),
         rgba(17, 11, 26, .98)
     ) !important;
 
-    border: 1px solid rgba(168, 85, 247, .29) !important;
+    border: 1px solid rgba(168, 85, 247, .29);
     border-radius: 16px;
-    color: #F7F0FF !important;
     box-shadow: 0 0 18px rgba(168, 85, 247, .08);
 }
 
-/* Títulos e textos dentro dos containers */
-.content .student-group h2,
-.content .student-group h3,
-.content .students-section h2,
-.content .students-section h3,
-.content .card h2,
-.content .card h3,
-.content .panel h2,
-.content .panel h3 {
-    color: #F7F0FF !important;
+/* Textos */
+.main-content .content h1,
+.main-content .content h2,
+.main-content .content h3,
+.main-content .content h4,
+.main-content .content label,
+.main-content .content strong {
+    color: #F7F0FF;
 }
 
-.content .student-group p,
-.content .students-section p,
-.content .card p,
-.content .panel p,
-.content .student-group span {
+.main-content .content p,
+.main-content .content small,
+.main-content .content .description {
     color: #D0C1E2;
 }
 
-/* Campos de pesquisa e seleção */
-.content input,
-.content select,
-.content textarea {
-    background: #15101F !important;
+/* Campos de pesquisa e filtros */
+.main-content .content input,
+.main-content .content select,
+.main-content .content textarea {
+    background: #100B18 !important;
     color: #F7F0FF !important;
     border: 1px solid rgba(168, 85, 247, .35) !important;
 }
 
-.content input::placeholder {
+.main-content .content input::placeholder,
+.main-content .content textarea::placeholder {
     color: #A697B8 !important;
 }
 
-/* Remove fundos brancos de elementos internos */
-.content * {
-    scrollbar-color: #7E22CE #100B18;
+/* Tabelas */
+.main-content .content table,
+.main-content .content thead,
+.main-content .content tbody,
+.main-content .content tr,
+.main-content .content th,
+.main-content .content td {
+    background-color: #15101F !important;
+    color: #F7F0FF !important;
+    border-color: rgba(168, 85, 247, .20) !important;
 }
 
-.content [style*="background: white"],
-.content [style*="background:white"],
-.content [style*="background-color: white"],
-.content [style*="background-color:white"],
-.content [style*="background: #fff"],
-.content [style*="background-color: #fff"] {
-    background: #15101F !important;
-    color: #F7F0FF !important;
+.main-content .content th {
+    background-color: #100B18 !important;
+    color: #D946FF !important;
+}
+
+/* Mantém os botões roxos e os estados de destaque */
+.main-content .content button {
+    color: #F7F0FF;
+}
+
+.main-content .content a {
+    color: #C084FC;
 }
