@@ -411,7 +411,7 @@ function linkJogo(int $jogoId): string
                     </span>
 
                     <h1>
-                        Trilha de Aprendizagem 🛤️
+                        Trilha de Aprendizagem 
                     </h1>
 
                     <p>

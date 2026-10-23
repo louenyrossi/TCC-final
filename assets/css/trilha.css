@@ -2441,3 +2441,102 @@ button:focus-visible {
         letter-spacing: 5px;
     }
 }
+
+/* ========================================
+   FUNDO DECORATIVO — TRILHA MATHPOWER
+======================================== */
+
+.main-content {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(177, 145, 226, 0.13) 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 85% 22%,
+            rgba(255, 193, 218, 0.20) 0 4px,
+            transparent 5px
+        ),
+        radial-gradient(
+            circle at 75% 65%,
+            rgba(160, 190, 255, 0.16) 0 3px,
+            transparent 4px
+        ),
+        linear-gradient(
+            145deg,
+            #fbf9ff 0%,
+            #f7f4ff 48%,
+            #fff8fc 100%
+        );
+}
+
+/* Decorações espalhadas pelo fundo */
+.main-content::before {
+    content: "✦      ·          ✧             ·      ⋆";
+    position: absolute;
+    z-index: -1;
+    top: 100px;
+    left: 2%;
+    width: 96%;
+    color: rgba(133, 98, 190, 0.25);
+    font-size: 27px;
+    letter-spacing: 18px;
+    line-height: 3;
+    pointer-events: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Segunda camada de estrelinhas e símbolos */
+.main-content::after {
+    content: "·      ✧       +          ·       ✦";
+    position: absolute;
+    z-index: -1;
+    top: 400px;
+    left: 3%;
+    width: 94%;
+    color: rgba(190, 132, 181, 0.23);
+    font-size: 24px;
+    letter-spacing: 20px;
+    line-height: 4;
+    pointer-events: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Mantém o conteúdo acima das decorações */
+.main-content > .topbar,
+.main-content > .content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Pequenos brilhos atrás dos cards, sem atrapalhar a leitura */
+.learning-path {
+    position: relative;
+    isolation: isolate;
+}
+
+.path-item {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajustes para celular */
+@media (max-width: 700px) {
+    .main-content::before {
+        top: 80px;
+        font-size: 21px;
+        letter-spacing: 10px;
+    }
+
+    .main-content::after {
+        top: 350px;
+        font-size: 19px;
+        letter-spacing: 12px;
+    }
+}
