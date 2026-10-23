@@ -817,3 +817,56 @@ select {
         transition-duration: .01ms !important;
     }
 }
+/* SIDEBAR — PADRÃO COMPARTILHADO */
+.sidebar {
+    background: #1E1B2E;
+    border-right: 1px solid #383248;
+}
+
+.sidebar-header {
+    border-bottom: 1px solid #383248;
+}
+
+.logo strong {
+    color: #FFFFFF;
+}
+
+.logo strong span {
+    color: #A78BFA;
+}
+
+.logo small {
+    color: #A7A3B8;
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, #7C3AED, #A855F7);
+    color: #FFFFFF;
+}
+
+.nav-item {
+    color: #C4C0D2;
+}
+
+.nav-item:hover {
+    background: #302A45;
+    color: #FFFFFF;
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, #7C3AED, #9333EA);
+    color: #FFFFFF;
+}
+
+.sidebar-bottom {
+    border-top: 1px solid #383248;
+}
+
+.logout-link {
+    color: #C4C0D2;
+}
+
+.logout-link:hover {
+    background: #302A45;
+    color: #FFFFFF;
+}

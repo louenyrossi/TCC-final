@@ -123,10 +123,8 @@ foreach ($alunos as $aluno) {
 
     <title>Alunos | MathPlay</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/prof-alunos.css"
-    >
+    <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
+    <link rel="stylesheet" href="../assets/css/prof-alunos.css">
 
 </head>
 
@@ -140,91 +138,49 @@ foreach ($alunos as $aluno) {
 
     <aside class="sidebar" id="sidebar">
 
-        <div class="sidebar-header">
-
-            <div class="logo">
-
-                <span class="logo-icon">
-                    M
-                </span>
-
-                <div>
-
-                    <strong>
-                        MathPlay
-                    </strong>
-
-                    <small>
-                        Área do Professor
-                    </small>
-
-                </div>
-
+    <div class="sidebar-header">
+        <div class="logo">
+            <div class="logo-icon">M</div>
+            <div>
+                <strong>Math<span>Power</span></strong>
+                <small>Área do Professor</small>
             </div>
-
         </div>
+    </div>
 
+    <nav class="sidebar-nav">
+        <a href="dashboard.php" class="nav-item">
+            <span>▦</span>
+            <span>Dashboard</span>
+        </a>
 
-        <nav class="sidebar-nav">
+        <a href="turmas.php" class="nav-item">
+            <span>👥</span>
+            <span>Turmas</span>
+        </a>
 
-            <a
-                href="dashboard.php"
-                class="nav-item"
-            >
-                <span>▦</span>
-                <span>Dashboard</span>
-            </a>
+        <a href="alunos.php" class="nav-item active">
+            <span>🎓</span>
+            <span>Alunos</span>
+        </a>
 
+        <a href="desempenho.php" class="nav-item">
+            <span>📊</span>
+            <span>Desempenho</span>
+        </a>
 
-            <a
-                href="turmas.php"
-                class="nav-item"
-            >
-                <span>👥</span>
-                <span>Turmas</span>
-            </a>
+        <a href="relatorios.php" class="nav-item">
+            <span>📄</span>
+            <span>Relatórios</span>
+        </a>
+    </nav>
 
-
-            <a
-                href="alunos.php"
-                class="nav-item active"
-            >
-                <span>🎓</span>
-                <span>Alunos</span>
-            </a>
-
-
-            <a
-                href="desempenho.php"
-                class="nav-item"
-            >
-                <span>📊</span>
-                <span>Desempenho</span>
-            </a>
-
-
-            <a
-                href="relatorios.php"
-                class="nav-item"
-            >
-                <span>📄</span>
-                <span>Relatórios</span>
-            </a>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <a
-                href="../logout.php"
-                class="logout-link"
-            >
-                <span>↪</span>
-                <span>Sair</span>
-            </a>
-
-        </div>
+    <div class="sidebar-bottom">
+        <a href="../logout.php" class="logout-link">
+            <span>↪</span>
+            <span>Sair</span>
+        </a>
+    </div>
 
     </aside>
 
