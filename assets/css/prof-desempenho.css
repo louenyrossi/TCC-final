@@ -1001,7 +1001,12 @@ body {
     box-shadow: 0 0 18px rgba(168, 85, 247, .35);
 }
 
-/* LOGO MATHPOWER — TAMANHO PADRÃO DAS OUTRAS PÁGINAS */
+/* LOGO ORIGINAL DO DASHBOARD */
+
+.sidebar-header {
+    padding: 22px 20px !important;
+    border-bottom: 1px solid rgba(168, 85, 247, .2) !important;
+}
 
 .sidebar-header .logo {
     display: flex;
@@ -1013,9 +1018,11 @@ body {
     width: 42px !important;
     height: 42px !important;
     min-width: 42px;
-    border-radius: 12px !important;
-    font-size: 20px !important;
-    font-weight: 800 !important;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: linear-gradient(
         135deg,
@@ -1025,20 +1032,23 @@ body {
     ) !important;
 
     color: #FFFFFF !important;
-    border: 1px solid rgba(217, 70, 255, .7) !important;
+    border: 1px solid rgba(217, 70, 255, .6);
+    border-radius: 12px !important;
 
-    box-shadow:
-        0 0 8px rgba(168, 85, 247, .55),
-        0 0 16px rgba(217, 70, 255, .25) !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+
+    box-shadow: 0 0 14px rgba(168, 85, 247, .4);
 }
 
 .sidebar-header .logo strong {
     display: block;
+    margin: 0;
+    color: #F7F0FF !important;
     font-size: 18px !important;
     font-weight: 800 !important;
-    letter-spacing: -.4px;
-    line-height: 1.2;
-    color: #F7F0FF !important;
+    letter-spacing: normal;
+    line-height: normal;
     white-space: nowrap;
 }
 
@@ -1049,9 +1059,9 @@ body {
 
 .sidebar-header .logo small {
     display: block;
-    margin-top: 3px;
+    margin-top: 3px !important;
+    color: #C084FC !important;
     font-size: 12px !important;
     font-weight: 700 !important;
-    letter-spacing: 0;
-    color: #C084FC !important;
+    letter-spacing: normal;
 }
