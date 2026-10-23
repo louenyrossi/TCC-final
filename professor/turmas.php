@@ -109,7 +109,7 @@ if (isset($_GET['id'])) {
 
     
 <link rel="stylesheet" href="../assets/css/prof-turmas.css">
-<link rel="stylesheet" href="../assets/css/prof-sidebar.css">
+<link rel="stylesheet" href="../assets/css/prof-dashboard.css">
 
 
 </head>
@@ -123,7 +123,9 @@ if (isset($_GET['id'])) {
     ========================================================== -->
 
 
+<!-- SIDEBAR -->
 <aside class="sidebar">
+
     <div class="sidebar-header">
         <div class="logo">
             <div class="logo-icon">M</div>
@@ -167,9 +169,8 @@ if (isset($_GET['id'])) {
             <span>Sair</span>
         </a>
     </div>
+
 </aside>
-
-
 
     <!-- =========================================================
          CONTEÚDO PRINCIPAL
