@@ -226,16 +226,13 @@ $precisaoGeral = $totalRespostas > 0
 
         <div class="sidebar-header">
 
-            <div class="logo">
-
-                <span class="logo-icon">M</span>
-
-                <div>
-                    <strong>Math<span>Power</span></strong>
-                    <small>Área do Professor</small>
-                </div>
-
+           <div class="logo">
+            <div class="logo-icon">M</div>
+            <div>
+                <strong>Math<span>Power</span></strong>
+                <small>Área do Professor</small>
             </div>
+        </div>
 
         </div>
 
