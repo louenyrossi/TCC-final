@@ -483,6 +483,7 @@ $jogos = $stmt->fetchAll();
 ></div>
 
 <?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 <script src="../assets/js/jogos-aluno.js"></script>
 
 </body>
