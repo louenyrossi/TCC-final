@@ -1283,9 +1283,9 @@ button:focus-visible {
 .game-caixa {
     background:
         linear-gradient(
-            135deg,
-            rgba(18, 8, 35, 0.78),
-            rgba(18, 8, 35, 0.96)
+            180deg,
+            rgba(20, 10, 35, 0.20),
+            rgba(20, 10, 35, 0.75)
         ),
         url(../img/caixa\ matematico.jpg) center / cover no-repeat,
         #21152e;
@@ -1295,9 +1295,9 @@ button:focus-visible {
 .game-memoria {
     background:
         linear-gradient(
-            135deg,
-            rgba(18, 8, 35, 0.78),
-            rgba(18, 8, 35, 0.96)
+            180deg,
+            rgba(20, 10, 35, 0.20),
+            rgba(20, 10, 35, 0.75)
         ),
         url("../img/jogo\ da\ memoria.jpg") center / cover no-repeat,
         #21152e;
