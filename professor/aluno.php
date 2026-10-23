@@ -227,14 +227,14 @@ function formatarData(?string $data): string
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
-            <div class="logo">
-                <span class="logo-icon">M</span>
+           <div class="logo">
+    <div class="logo-icon">M</div>
 
-                <div>
-                    <strong>MathPlay</strong>
-                    <small>Professor</small>
-                </div>
-            </div>
+    <div>
+        <strong>Math<span>Power</span></strong>
+        <small>Área do Professor</small>
+    </div>
+</div>
         </div>
 
         <nav class="sidebar-nav">

@@ -840,3 +840,433 @@ a:focus-visible {
         font-size: 17px;
     }
 }
+
+/* ==========================================
+   CONTAINERS — DETALHES DO ALUNO
+========================================== */
+
+.student-profile,
+.stat-card,
+.panel {
+    background: linear-gradient(
+        145deg,
+        rgba(31, 20, 46, 0.98),
+        rgba(17, 11, 27, 0.98)
+    );
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 18px;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.20),
+        0 0 16px rgba(168, 85, 247, 0.08);
+    color: #F7F0FF;
+}
+
+/* Perfil principal */
+.student-profile {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 26px;
+    margin: 20px 0 24px;
+    flex-wrap: wrap;
+}
+
+.student-main-info {
+    flex: 1;
+    min-width: 180px;
+}
+
+.student-main-info h1 {
+    color: #F7F0FF;
+    font-size: 26px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.student-main-info p {
+    color: #BFAED2;
+    margin-top: 7px;
+    overflow-wrap: anywhere;
+}
+
+.student-avatar {
+    background: linear-gradient(135deg, #9333EA, #D946FF);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+}
+
+.student-xp {
+    padding: 14px 20px;
+    text-align: center;
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(217, 70, 255, 0.3);
+    border-radius: 14px;
+}
+
+.student-xp span {
+    display: block;
+    color: #C084FC;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.student-xp strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 25px;
+    margin-top: 4px;
+}
+
+/* Etiquetas do aluno */
+.student-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.student-tags .tag {
+    padding: 7px 11px;
+    color: #E9D5FF;
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 9px;
+    font-size: 12px;
+}
+
+/* Cartões de estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 19px 16px;
+    transition: transform .2s ease, border-color .2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(217, 70, 255, 0.65);
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    background: rgba(168, 85, 247, 0.14);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.stat-card span {
+    display: block;
+    color: #BFAED2;
+    font-size: 12px;
+}
+
+.stat-card strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 23px;
+    font-weight: 900;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+}
+
+/* Painéis de desempenho e conquistas */
+.details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.panel {
+    min-width: 0;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.details-grid .panel {
+    margin-bottom: 0;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.panel-header h2 {
+    color: #F7F0FF;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.panel-header p {
+    color: #A697B8;
+    font-size: 13px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* Desempenho por jogo */
+.games-list,
+.achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.game-performance,
+.achievement-item {
+    min-width: 0;
+    padding: 16px;
+    background: rgba(10, 7, 16, 0.65);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 13px;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.game-icon,
+.achievement-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    font-size: 21px;
+}
+
+.game-info h3,
+.achievement-item strong {
+    color: #F7F0FF;
+    font-size: 14px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.game-info span,
+.achievement-item p,
+.achievement-item small {
+    display: block;
+    color: #A697B8;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 5px;
+}
+
+.game-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.game-numbers > div {
+    padding: 10px;
+    background: rgba(168, 85, 247, 0.07);
+    border-radius: 9px;
+}
+
+.game-numbers span {
+    display: block;
+    color: #A697B8;
+    font-size: 11px;
+}
+
+.game-numbers strong {
+    display: block;
+    color: #E9D5FF;
+    font-size: 17px;
+    margin-top: 5px;
+}
+
+.mini-progress {
+    height: 7px;
+    overflow: hidden;
+    margin-top: 16px;
+    background: #2A1B38;
+    border-radius: 20px;
+}
+
+.mini-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #9333EA, #D946FF);
+    border-radius: inherit;
+    box-shadow: 0 0 10px rgba(217, 70, 255, 0.4);
+}
+
+/* Conquistas */
+.achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.achievement-item p {
+    margin-bottom: 6px;
+}
+
+.achievement-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    color: #FFFFFF;
+    background: rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(217, 70, 255, 0.35);
+    border-radius: 10px;
+    font-weight: 900;
+}
+
+/* Partidas recentes */
+.recent-panel {
+    margin-top: 4px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+}
+
+.table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #F7F0FF;
+}
+
+.table-wrapper th {
+    padding: 14px;
+    background: rgba(168, 85, 247, 0.13);
+    color: #D8B4FE;
+    text-align: left;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.table-wrapper td {
+    padding: 14px;
+    border-top: 1px solid rgba(168, 85, 247, 0.15);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.table-wrapper tbody tr:hover {
+    background: rgba(168, 85, 247, 0.08);
+}
+
+.correct-value {
+    color: #4ADE80;
+    font-weight: 800;
+}
+
+.wrong-value {
+    color: #FB7185;
+    font-weight: 800;
+}
+
+/* Estado vazio */
+.empty-state {
+    padding: 30px 18px;
+    text-align: center;
+    background: rgba(10, 7, 16, 0.55);
+    border: 1px dashed rgba(168, 85, 247, 0.3);
+    border-radius: 13px;
+}
+
+.empty-state > span {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.empty-state strong {
+    display: block;
+    color: #F7F0FF;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #A697B8;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .details-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 14px 11px;
+        gap: 9px;
+    }
+
+    .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 17px;
+    }
+
+    .stat-card strong {
+        font-size: 19px;
+    }
+
+    .student-profile,
+    .panel {
+        padding: 17px;
+    }
+
+    .student-main-info h1 {
+        font-size: 22px;
+    }
+
+    .game-numbers {
+        gap: 6px;
+    }
+
+    .game-numbers > div {
+        padding: 8px 6px;
+    }
+}
