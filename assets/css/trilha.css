@@ -2758,18 +2758,8 @@ button:focus-visible {
     }
 }
 
-.trail-summary .summary-heading h2 {
-    color: #ffffff;
-}
-
 .trail-summary .summary-heading p {
     color: #c5bbd6;
 }
 
-.trail-summary .summary-card strong {
-    color: #ffffff;
-}
 
-.trail-summary .summary-card span {
-    color: #e0d8eb;
-}
