@@ -6,8 +6,6 @@
 /* VARIÁVEIS */
 :root {
     --sidebar-width: 260px;
-
-    /* Cores do Dashboard */
     --background: #0A0710;
     --surface: #15101F;
     --surface-light: #21152E;
@@ -39,7 +37,6 @@ html {
 
 body {
      font-family: Inter, Arial, Helvetica, sans-serif;
-
     background:
         radial-gradient(
             ellipse at 80% 0%,
@@ -52,7 +49,6 @@ body {
             transparent 40%
         ),
         var(--background);
-
     color: var(--text);
     min-height: 100vh;
 }
@@ -88,15 +84,12 @@ a {
     z-index: 1000;
     top: 0;
     left: 0;
-
     display: flex;
     flex-direction: column;
-
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
     height: 100vh;
     overflow-y: auto;
-
     background:
          radial-gradient(
         ellipse at 0% 0%,
@@ -104,13 +97,10 @@ a {
         transparent 48%
     ),
     linear-gradient(180deg, #12091D 0%, #09060F 100%);
-
 border-right: 1px solid rgba(217, 70, 255, 0.35);
-
 box-shadow:
     8px 0 35px rgba(0, 0, 0, 0.35),
     2px 0 18px rgba(168, 85, 247, 0.08);
-
 transition: transform 0.3s ease;
 }
 
@@ -120,13 +110,10 @@ transition: transform 0.3s ease;
     height: 88px;
     min-height: 88px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 20px;
-
     border-bottom: 1px solid rgba(192, 132, 252, 0.12);
 }
 
@@ -148,25 +135,20 @@ transition: transform 0.3s ease;
     height: 44px;
     min-width: 44px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 14px;
-
     background: linear-gradient(
         135deg,
         #e879ff,
         #a855f7 45%,
         #6d28d9
     );
-
     color: #fff;
     font-size: 20px;
     font-weight: 900;
-
     box-shadow:
         0 0 12px rgba(217, 70, 255, 0.65),
         0 0 28px rgba(168, 85, 247, 0.22);
@@ -181,7 +163,6 @@ transition: transform 0.3s ease;
 
 .logo-text span {
     color: #e879ff;
-
     text-shadow:
         0 0 7px #c026ff,
         0 0 20px rgba(192, 38, 255, 0.75);
@@ -191,20 +172,15 @@ transition: transform 0.3s ease;
 
 .sidebar-close {
     display: none;
-
     width: 36px;
     height: 36px;
     flex-shrink: 0;
-
     align-items: center;
     justify-content: center;
-
     border: 1px solid #352542;
     border-radius: 10px;
-
     background: #15101f;
     color: #d0c1e2;
-
     font-size: 22px;
     cursor: pointer;
 }
@@ -223,29 +199,22 @@ transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     padding: 24px 14px;
 }
 
 .nav-item {
     position: relative;
-
     min-height: 50px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     padding: 0 14px;
-
     border: 1px solid transparent;
     border-radius: 13px;
-
     color: #d0c1e2;
     font-size: 14px;
     font-weight: 600;
-
     transition:
         background 0.22s ease,
         color 0.22s ease,
@@ -259,10 +228,8 @@ transition: transform 0.3s ease;
         rgba(168, 85, 247, 0.19),
         rgba(168, 85, 247, 0.04)
     );
-
     border-color: rgba(217, 70, 255, 0.42);
     color: #fff;
-
     transform: translateX(3px);
 }
 
@@ -272,10 +239,8 @@ transition: transform 0.3s ease;
         rgba(168, 85, 247, 0.3),
         rgba(126, 34, 206, 0.09)
     );
-
     border-color: rgba(217, 70, 255, 0.48);
     color: #fff;
-
     box-shadow:
         inset 3px 0 #e879ff,
         0 0 20px rgba(168, 85, 247, 0.15);
@@ -284,13 +249,10 @@ transition: transform 0.3s ease;
 .nav-icon {
     width: 24px;
     min-width: 24px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 19px;
-
     filter: drop-shadow(
         0 0 4px rgba(192, 38, 255, 0.28)
     );
@@ -303,9 +265,7 @@ transition: transform 0.3s ease;
 .sidebar-bottom {
     margin-top: auto;
     flex-shrink: 0;
-
     padding: 18px 16px;
-
     border-top: 1px solid rgba(192, 38, 255, 0.14);
     background: rgba(7, 4, 12, 0.25);
 }
@@ -316,7 +276,6 @@ transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     gap: 11px;
-
     padding: 4px 2px 14px;
 }
 
@@ -352,10 +311,8 @@ transition: transform 0.3s ease;
 .user-info strong {
     display: block;
     overflow: hidden;
-
     color: #fff;
     font-size: 13px;
-
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -365,14 +322,11 @@ transition: transform 0.3s ease;
     color: #a697b8;
     font-size: 12px;
 }
-
 /* DIVISOR DO LOGOUT */
 
 .logout-divider {
     height: 1px;
-
     background: #352542;
-
     margin: 18px 0;
 }
 
@@ -380,19 +334,14 @@ transition: transform 0.3s ease;
 
 .logout-link {
     min-height: 44px;
-
     display: flex;
     align-items: center;
     gap: 10px;
-
     padding: 0 12px;
-
     border-radius: 10px;
-
     color: #a697b8;
     font-size: 14px;
     font-weight: 600;
-
     transition:
         background 0.2s ease,
         color 0.2s ease;
@@ -414,7 +363,6 @@ transition: transform 0.3s ease;
     width: calc(100% - var(--sidebar-width));
     min-height: 100vh;
     margin-left: var(--sidebar-width);
-
     background:
        radial-gradient(
         ellipse at 90% 0%,
@@ -437,56 +385,41 @@ transition: transform 0.3s ease;
     position: sticky;
     z-index: 500;
     top: 0;
-
     height: 72px;
-
     display: flex;
     align-items: center;
-
     padding: 0 30px;
-
     background: rgba(10, 6, 16, 0.91);
-
     border-bottom: 1px solid rgba(192, 38, 255, 0.24);
-
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-
     backdrop-filter: blur(18px);
 }
 
 .menu-button {
     display: none;
-
     width: 42px;
     height: 42px;
-
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(192, 132, 252, 0.3);
     border-radius: 12px;
-
     background: linear-gradient(
         145deg,
         #21122e,
         #120b1b
     );
-
     color: #e879ff;
     font-size: 20px;
-
     cursor: pointer;
 }
 
 .menu-button:hover {
     border-color: #d946ff;
-
     box-shadow: 0 0 18px rgba(192, 38, 255, 0.28);
 }
 
 .topbar-title {
     flex: 1;
-
     color: #fff;
     font-size: 14px;
     font-weight: 800;
@@ -510,9 +443,7 @@ transition: transform 0.3s ease;
 .content {
     width: 100%;
     max-width: 1400px;
-
     margin: 0 auto;
-
     padding: 34px 34px 60px;
 }
 
@@ -524,40 +455,31 @@ transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 25px;
-
     margin-bottom: 30px;
 }
 
 .page-kicker {
     display: inline-block;
-
     margin-bottom: 10px;
-
     color: #e879ff;
     font-size: 14px;
     font-weight: 800;
     letter-spacing: 1.5px;
-
     text-transform: uppercase;
-
     text-shadow: 0 0 15px rgba(199, 125, 255, 0.35);
 }
 
 .page-header h1 {
     margin-bottom: 10px;
-
     color: #fff;
     font-size: 34px;
     line-height: 1.15;
-
     text-shadow: 0 0 24px rgba(157, 78, 221, 0.2);
 }
 
 .page-header p {
     max-width: 650px;
-
     color: #aaa1bd;
     font-size: 15px;
     line-height: 1.6;
@@ -571,11 +493,9 @@ transition: transform 0.3s ease;
     width: 78px;
     height: 78px;
     min-width: 78px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: linear-gradient(
         145deg,
         #25153d,
@@ -584,11 +504,9 @@ transition: transform 0.3s ease;
 
     border: 1px solid rgba(199, 125, 255, 0.3);
     border-radius: 22px;
-
     color: #e879ff;
     font-size: 35px;
     font-weight: 800;
-
     box-shadow: 0 0 28px rgba(157, 78, 221, 0.16);
 }
 
@@ -602,9 +520,7 @@ transition: transform 0.3s ease;
 
 .games-grid {
     display: grid;
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 20px;
 }
 /* =========================================================
@@ -614,14 +530,10 @@ transition: transform 0.3s ease;
 .game-card {
     position: relative;
     overflow: hidden;
-
     min-width: 0;
-
     display: flex;
     flex-direction: column;
-
     padding: 22px;
-
     background:
         radial-gradient(
             ellipse at 100% 0%,
@@ -633,10 +545,8 @@ transition: transform 0.3s ease;
             #1a1025,
             #100a18
         );
-
     border: 1px solid rgba(168, 85, 247, 0.28);
     border-radius: 20px;
-
     box-shadow:
         0 8px 25px rgba(0, 0, 0, 0.22),
         inset 0 1px rgba(255, 255, 255, 0.035);
@@ -647,33 +557,27 @@ transition: transform 0.3s ease;
         box-shadow 0.25s ease,
         background 0.25s ease;
 }
-
 /* Linha neon no topo do card */
 
 .game-card::before {
     content: "";
-
     position: absolute;
     top: 0;
     left: 12%;
     right: 12%;
-
     height: 2px;
-
     background: linear-gradient(
         90deg,
         transparent,
         #c77dff,
         transparent
     );
-
     opacity: 0.65;
     pointer-events: none;
 }
 
 .game-card:hover {
     transform: translateY(-5px);
-
     background: linear-gradient(
         145deg,
         #211633,
@@ -681,7 +585,6 @@ transition: transform 0.3s ease;
     );
 
     border-color: rgba(217, 70, 255, 0.7);
-
     box-shadow:
         0 14px 30px rgba(0, 0, 0, 0.26),
         0 0 23px rgba(168, 85, 247, 0.17);
@@ -695,9 +598,7 @@ transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 10px;
-
     margin-bottom: 20px;
 }
 
@@ -706,23 +607,18 @@ transition: transform 0.3s ease;
 .game-icon {
     width: 58px;
     height: 58px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(217, 70, 255, 0.4);
     border-radius: 16px;
-
     background: linear-gradient(
         145deg,
         #3b2052,
         #20112e
     );
-
     color: #fff;
     font-size: 30px;
-
     box-shadow:
         inset 0 0 15px rgba(192, 38, 255, 0.1),
         0 0 22px rgba(157, 78, 221, 0.18);
@@ -748,12 +644,9 @@ transition: transform 0.3s ease;
 
 .game-badge {
     padding: 6px 10px;
-
     border: 1px solid rgba(199, 125, 255, 0.2);
     border-radius: 20px;
-
     background: rgba(157, 78, 221, 0.13);
-
     color: #e5caff;
     font-size: 11px;
     font-weight: 800;
@@ -769,20 +662,16 @@ transition: transform 0.3s ease;
 
 .game-theme {
     display: inline-block;
-
     margin-bottom: 7px;
-
     color: #e879ff;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 1px;
-
     text-transform: uppercase;
 }
 
 .game-info h2 {
     margin-bottom: 9px;
-
     color: #fff;
     font-size: 23px;
     line-height: 1.25;
@@ -806,9 +695,7 @@ transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 10px;
-
     margin-bottom: 8px;
 }
 
@@ -828,11 +715,8 @@ transition: transform 0.3s ease;
 .progress-bar {
     width: 100%;
     height: 9px;
-
     overflow: hidden;
-
     background: #292039;
-
     border: 1px solid rgba(199, 125, 255, 0.12);
     border-radius: 20px;
 }
@@ -840,17 +724,13 @@ transition: transform 0.3s ease;
 .progress-fill {
     height: 100%;
     min-width: 0;
-
     background: linear-gradient(
         90deg,
         #7928ca,
         #c77dff
     );
-
     border-radius: inherit;
-
     box-shadow: 0 0 12px rgba(199, 125, 255, 0.6);
-
     transition: width 0.3s ease;
 }
 
@@ -860,19 +740,14 @@ transition: transform 0.3s ease;
 
 .play-button {
     min-height: 46px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 8px;
-
     margin-top: 20px;
     padding: 0 16px;
-
     border: 1px solid rgba(220, 180, 255, 0.25);
     border-radius: 11px;
-
     background: linear-gradient(
         100deg,
         #7928ca,
@@ -882,9 +757,7 @@ transition: transform 0.3s ease;
     color: #fff;
     font-size: 14px;
     font-weight: 800;
-
     box-shadow: 0 5px 18px rgba(121, 40, 202, 0.23);
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
@@ -897,9 +770,7 @@ transition: transform 0.3s ease;
         #8b35e0,
         #bd65ff
     );
-
     box-shadow: 0 0 25px rgba(157, 78, 221, 0.42);
-
     transform: translateY(-2px);
 }
 
@@ -913,28 +784,23 @@ transition: transform 0.3s ease;
 
 .empty-state {
     padding: 45px 25px;
-
     background: linear-gradient(
         145deg,
         #191328,
         #100d1b
     );
-
     border: 1px solid var(--mp-border);
     border-radius: 18px;
-
     text-align: center;
 }
 
 .empty-icon {
     margin-bottom: 12px;
-
     font-size: 42px;
 }
 
 .empty-state h2 {
     margin-bottom: 7px;
-
     color: #fff;
     font-size: 20px;
 }
@@ -950,20 +816,15 @@ transition: transform 0.3s ease;
 
 .tip-card {
     margin-top: 25px;
-
     display: flex;
     align-items: flex-start;
-
     gap: 15px;
-
     padding: 18px 20px;
-
     background: linear-gradient(
         100deg,
         rgba(121, 40, 202, 0.17),
         rgba(157, 78, 221, 0.06)
     );
-
     border: 1px solid var(--mp-border);
     border-radius: 15px;
 }
@@ -972,25 +833,19 @@ transition: transform 0.3s ease;
     width: 42px;
     height: 42px;
     min-width: 42px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #20152f;
-
     border: 1px solid var(--mp-border);
     border-radius: 11px;
-
     color: #e879ff;
     font-size: 21px;
 }
 
 .tip-card strong {
     display: block;
-
     margin-bottom: 5px;
-
     color: #e879ff;
     font-size: 14px;
 }
@@ -1299,14 +1154,11 @@ button:focus-visible {
     height: 43px;
     min-width: 43px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid rgba(232, 121, 255, 0.75);
     border-radius: 50%;
-
     background: linear-gradient(
         135deg,
         #D946FF,
@@ -1315,8 +1167,7 @@ button:focus-visible {
 
     color: #FFFFFF;
     font-size: 14px;
-    font-weight: 900;
-
+    font-weight: 900; 
     box-shadow: 0 0 15px rgba(192, 38, 255, 0.30);
 }
 
@@ -1339,7 +1190,7 @@ button:focus-visible {
 }
 
 .user-info span {
-   display: block;
+    display: block;
     color: var(--gray);
     font-size: 12px;
     font-weight: 400;
@@ -1353,9 +1204,7 @@ button:focus-visible {
 .sidebar-bottom {
     margin-top: auto;
     flex-shrink: 0;
-
     padding: 18px 16px;
-
     border-top: 1px solid rgba(192, 38, 255, 0.14);
     background: rgba(7, 4, 12, 0.25);
 }
@@ -1366,10 +1215,8 @@ button:focus-visible {
     height: 100dvh;
     overflow-y: auto;
     overflow-x: hidden;
-
     display: flex;
     flex-direction: column;
-
     scrollbar-width: thin;
     scrollbar-color: #7c3aed #171126;
 }
@@ -1396,4 +1243,88 @@ button:focus-visible {
 .sidebar-nav {
     overflow-y: visible;
     flex: 0 0 auto;
+}
+
+/* =========================================
+   CARDS DOS JOGOS — VISUAL GAMER
+   ========================================= */
+
+.game-card {
+    isolation: isolate;
+    min-height: 370px;
+    padding: 24px;
+    border-radius: 22px;
+    border: 1px solid rgba(192, 132, 252, 0.32);
+    background-color: #15101f;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+/* Brilho decorativo no fundo */
+.game-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(168, 85, 247, 0.25),
+            transparent 42%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(15, 8, 25, 0.08),
+            rgba(15, 8, 25, 0.8)
+        );
+}
+
+/* Caixa Matemático */
+.game-caixa {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 8, 35, 0.78),
+            rgba(18, 8, 35, 0.96)
+        ),
+        url(../img/caixa\ matematico.jpg) center / cover no-repeat,
+        #21152e;
+}
+
+/* Memória Matemática */
+.game-memoria {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 8, 35, 0.78),
+            rgba(18, 8, 35, 0.96)
+        ),
+        url("../img/jogo\ da\ memoria.jpg") center / cover no-repeat,
+        #21152e;
+}
+
+/* Destaque nos cards ao passar o mouse */
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: #c77dff;
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.35),
+        0 0 24px rgba(168, 85, 247, 0.2);
+}
+
+/* Ícones e botão acima da decoração */
+.game-card-top,
+.game-info,
+.game-progress,
+.game-card .play-button {
+    position: relative;
+    z-index: 1;
+}
+
+/* Celulares */
+@media (max-width: 700px) {
+    .game-card {
+        min-height: 340px;
+        padding: 20px;
+    }
 }
