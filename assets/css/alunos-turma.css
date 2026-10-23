@@ -1,20 +1,62 @@
+
 /* =========================================================
-   ALUNOS DA TURMA - MATHPLAY
+   MATHPOWER — ALUNOS DA TURMA
+   Tema escuro roxo/neon
+========================================================= */
+
+:root {
+    --purple: #A855F7;
+    --purple-dark: #7E22CE;
+    --purple-light: #C084FC;
+    --purple-neon: #D946FF;
+
+    --background: #0A0710;
+    --background-soft: #100B18;
+
+    --surface: #15101F;
+    --surface-hover: #20152E;
+    --surface-light: #261834;
+
+    --white: #FFFFFF;
+    --text: #F7F0FF;
+    --text-soft: #D0C1E2;
+    --gray: #A697B8;
+    --gray-light: #352542;
+    --gray-lighter: #21172C;
+
+    --sidebar-width: 260px;
+}
+
+/* =========================================================
+   RESET
 ========================================================= */
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f8f7fc;
-    color: #292631;
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 a {
     color: inherit;
+}
+
+button {
+    font: inherit;
 }
 
 /* =========================================================
@@ -23,96 +65,181 @@ a {
 
 .app {
     min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+
     display: flex;
+    flex-direction: column;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(168, 85, 247, .09),
+            transparent 32%
+        ),
+        var(--background-soft);
+
+    border-right: 1px solid rgba(217, 70, 255, .20);
+
+    transition: transform .25s ease;
+}
+
+.sidebar.open {
+    transform: translateX(0);
 }
 
 /* =========================================================
-   SIDEBAR
+   LOGO — PADRÃO DO DASHBOARD
 ========================================================= */
 
-.sidebar {
-    width: 250px;
-    min-height: 100vh;
-    background: #ffffff;
-    border-right: 1px solid #e9e5f0;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 100;
-}
-
 .sidebar-header {
-    padding: 24px 20px;
-    border-bottom: 1px solid #eeeaf4;
+    min-height: 88px;
+    padding: 20px 18px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid rgba(217, 70, 255, .20);
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
 }
 
 .logo-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: #7c3aed;
-    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    font-weight: 700;
+
+    background: linear-gradient(
+        135deg,
+        #C084FC,
+        #9333EA 65%,
+        #7E22CE
+    );
+
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 14px;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, .65),
+        0 0 28px rgba(168, 85, 247, .35);
 }
 
 .logo strong {
     display: block;
-    font-size: 18px;
+    color: #F7F0FF;
+
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -.7px;
+    line-height: 1.15;
+}
+
+.logo strong span {
+    color: #D946FF;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .45);
 }
 
 .logo small {
     display: block;
-    margin-top: 3px;
-    color: #6b6675;
-    font-size: 12px;
+    margin-top: 5px;
+
+    color: var(--gray);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .2px;
 }
 
 /* =========================================================
-   NAVEGAÇÃO
+   NAVEGAÇÃO LATERAL
 ========================================================= */
 
 .sidebar-nav {
-    padding: 20px 12px;
     display: flex;
     flex-direction: column;
     gap: 6px;
+
+    flex: 1;
+    padding: 22px 12px;
 }
 
 .nav-item {
-    min-height: 46px;
-    padding: 0 14px;
-    border-radius: 10px;
-    text-decoration: none;
+    min-height: 44px;
+    padding: 11px 13px;
+
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #6b6675;
-    font-size: 14px;
+
+    color: var(--gray);
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-size: 13px;
     font-weight: 600;
-    transition: 0.2s;
+    text-decoration: none;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease;
 }
 
 .nav-item:hover {
-    background: #f3effd;
-    color: #5b21b6;
+    color: var(--text);
+    background: var(--surface-hover);
+    border-color: rgba(168, 85, 247, .18);
 }
 
 .nav-item.active {
-    background: #ede9fe;
-    color: #5b21b6;
+    color: #FFFFFF;
+
+    background: linear-gradient(
+        100deg,
+        rgba(168, 85, 247, .22),
+        rgba(217, 70, 255, .08)
+    );
+
+    border-color: rgba(217, 70, 255, .30);
+    box-shadow: inset 3px 0 0 var(--purple-neon);
+}
+
+.nav-item > span:first-child {
+    width: 21px;
+    min-width: 21px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--purple-light);
+    font-size: 17px;
+}
+
+.nav-item.active > span:first-child {
+    color: var(--purple-neon);
 }
 
 /* =========================================================
@@ -121,107 +248,180 @@ a {
 
 .sidebar-bottom {
     margin-top: auto;
-    padding: 16px 12px;
-    border-top: 1px solid #eeeaf4;
+    padding: 14px 12px 20px;
+
+    border-top: 1px solid rgba(217, 70, 255, .14);
 }
 
 .logout-link {
-    min-height: 46px;
-    padding: 0 14px;
-    border-radius: 10px;
+    min-height: 44px;
+    padding: 11px 13px;
+
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
-    color: #6b6675;
-    font-size: 14px;
+
+    color: var(--gray);
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-size: 13px;
     font-weight: 600;
+    text-decoration: none;
+
+    transition: .2s ease;
+}
+
+.logout-link > span:first-child {
+    width: 21px;
+    min-width: 21px;
+    text-align: center;
+    font-size: 17px;
 }
 
 .logout-link:hover {
-    background: #f5f3f8;
+    color: #FDA4AF;
+    background: rgba(251, 113, 133, .08);
+    border-color: rgba(251, 113, 133, .20);
 }
 
 /* =========================================================
-   CONTEÚDO
+   CONTEÚDO PRINCIPAL
 ========================================================= */
 
 .main-content {
-    width: calc(100% - 250px);
-    margin-left: 250px;
     min-height: 100vh;
+    margin-left: var(--sidebar-width);
+
+    background:
+        radial-gradient(
+            ellipse at 80% 0%,
+            rgba(126, 34, 206, .07),
+            transparent 36%
+        ),
+        var(--background);
 }
 
 .topbar {
-    height: 70px;
-    padding: 0 32px;
-    background: #ffffff;
-    border-bottom: 1px solid #e9e5f0;
+    min-height: 76px;
+    padding: 16px 30px;
+
     display: flex;
     align-items: center;
+    gap: 18px;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    color: var(--text);
+    background: rgba(16, 11, 24, .88);
+    border-bottom: 1px solid rgba(217, 70, 255, .14);
+
+    font-size: 18px;
+    font-weight: 800;
+
+    backdrop-filter: blur(14px);
 }
 
 .menu-button {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
     display: none;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.menu-button:hover {
+    background: var(--surface-hover);
+    border-color: var(--purple);
 }
 
 .content {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 36px 32px 60px;
+    padding: 30px;
 }
 
 /* =========================================================
-   CABEÇALHO
+   CABEÇALHO DA TURMA
 ========================================================= */
 
 .page-header {
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 }
 
 .eyebrow {
     display: block;
-    margin-bottom: 8px;
-    color: #7c3aed;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    margin-bottom: 9px;
+
+    color: var(--purple-neon);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
 }
 
 .page-header h1 {
-    margin: 0 0 8px;
-    font-size: 32px;
+    margin: 0 0 9px;
+
+    color: var(--text);
+    font-size: clamp(25px, 3vw, 32px);
+    font-weight: 900;
+    letter-spacing: -.8px;
     line-height: 1.2;
+
+    overflow-wrap: anywhere;
 }
 
 .page-header p {
     margin: 0;
-    color: #6b6675;
-    font-size: 15px;
+
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 /* =========================================================
-   BOTÃO VOLTAR
+   LINK VOLTAR
+   O PHP atual aplica estilos inline ao link.
 ========================================================= */
 
-.back-link {
-    display: inline-flex;
+.page-header a {
+    display: inline-flex !important;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 18px;
-    color: #5b21b6;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
+    gap: 7px;
+
+    margin-bottom: 18px !important;
+
+    color: var(--purple-light);
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none !important;
+    transition: color .2s ease;
 }
 
-.back-link:hover {
-    text-decoration: underline;
+.page-header a:hover {
+    color: var(--purple-neon);
+    text-decoration: underline !important;
 }
 
 /* =========================================================
-   LISTA DE ALUNOS
+   GRADE DE ALUNOS
 ========================================================= */
 
 .students-grid {
@@ -231,40 +431,79 @@ a {
 }
 
 .student-card {
-    min-height: 92px;
+    min-width: 0;
+    min-height: 96px;
     padding: 18px;
-    background: #ffffff;
-    border: 1px solid #e9e5f0;
-    border-radius: 16px;
+
     display: flex;
     align-items: center;
     gap: 14px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid rgba(217, 70, 255, .16);
+    border-radius: 14px;
+
     text-decoration: none;
+
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
 }
 
 .student-card:hover {
-    transform: translateY(-2px);
-    border-color: #c4b5fd;
-    box-shadow: 0 8px 24px rgba(91, 33, 182, 0.08);
+    transform: translateY(-3px);
+
+    background: var(--surface-hover);
+    border-color: rgba(217, 70, 255, .48);
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, .20),
+        0 0 18px rgba(168, 85, 247, .08);
 }
+
+.student-card:focus-visible {
+    outline: 2px solid var(--purple-neon);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   AVATAR DO ALUNO
+========================================================= */
 
 .student-avatar {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
-    border-radius: 50%;
-    background: #ede9fe;
-    color: #5b21b6;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    color: #FFFFFF;
+
+    background: linear-gradient(
+        135deg,
+        #C084FC,
+        #9333EA 65%,
+        #7E22CE
+    );
+
+    border: 1px solid rgba(255, 255, 255, .20);
+    border-radius: 14px;
+
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 900;
+
+    box-shadow: 0 0 15px rgba(168, 85, 247, .18);
 }
+
+/* =========================================================
+   INFORMAÇÕES DO ALUNO
+========================================================= */
 
 .student-info {
     min-width: 0;
@@ -274,28 +513,44 @@ a {
 .student-info strong {
     display: block;
     margin-bottom: 5px;
-    font-size: 15px;
-    color: #292631;
+
     overflow: hidden;
+
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 800;
+
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.student-info span,
-.student-info small {
+.student-info span {
     display: block;
-    color: #6b6675;
-    font-size: 13px;
+    color: var(--text-soft);
+    font-size: 12px;
 }
 
 .student-info small {
+    display: block;
     margin-top: 3px;
+
+    color: var(--purple-light);
+    font-size: 11px;
+    font-weight: 700;
 }
 
 .student-arrow {
-    color: #7c3aed;
+    flex-shrink: 0;
+
+    color: var(--purple-neon);
     font-size: 22px;
     font-weight: 700;
+
+    transition: transform .2s ease;
+}
+
+.student-card:hover .student-arrow {
+    transform: translateX(3px);
 }
 
 /* =========================================================
@@ -304,46 +559,77 @@ a {
 
 .empty-card {
     padding: 48px 24px;
-    background: #ffffff;
-    border: 1px solid #e9e5f0;
-    border-radius: 18px;
+
+    background: var(--surface);
+    border: 1px solid rgba(217, 70, 255, .16);
+    border-radius: 16px;
+
     text-align: center;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .15);
 }
 
 .empty-icon {
+    margin-bottom: 16px;
     font-size: 42px;
-    margin-bottom: 14px;
 }
 
 .empty-card h2 {
-    margin: 0 0 8px;
+    margin: 0 0 9px;
+
+    color: var(--text);
     font-size: 20px;
+    font-weight: 800;
 }
 
 .empty-card p {
     margin: 0;
-    color: #6b6675;
-    font-size: 14px;
+
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 /* =========================================================
-   OVERLAY
+   OVERLAY DO MENU MOBILE
 ========================================================= */
 
 .sidebar-overlay {
-    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+
+    background: rgba(0, 0, 0, .68);
+    backdrop-filter: blur(3px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 /* =========================================================
-   RESPONSIVO
+   RESPONSIVIDADE — TABLET
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+    .students-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
+@media (max-width: 900px) {
     .sidebar {
-        width: 240px;
+        width: 260px;
         transform: translateX(-100%);
-        transition: transform 0.25s ease;
     }
 
     .sidebar.open {
@@ -351,79 +637,102 @@ a {
     }
 
     .main-content {
-        width: 100%;
         margin-left: 0;
     }
 
     .menu-button {
-        display: flex;
-        width: 42px;
-        height: 42px;
-        margin-right: 14px;
-        border: 0;
-        border-radius: 10px;
-        background: #ede9fe;
-        color: #5b21b6;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        cursor: pointer;
+        display: inline-flex;
     }
 
-    .sidebar-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(23, 21, 28, 0.45);
-        z-index: 90;
-    }
-
-    .sidebar-overlay.active {
-        display: block;
+    .topbar {
+        padding: 14px 22px;
     }
 
     .content {
-        padding: 28px 22px 50px;
+        padding: 26px 22px 48px;
     }
 
     .students-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 /* =========================================================
-   CELULAR
+   RESPONSIVIDADE — CELULAR
 ========================================================= */
 
 @media (max-width: 600px) {
-
     .topbar {
-        height: 62px;
-        padding: 0 16px;
+        min-height: 66px;
+        padding: 12px 15px;
+        gap: 12px;
+
+        font-size: 16px;
     }
 
     .content {
-        padding: 24px 16px 40px;
+        padding: 22px 15px 40px;
     }
 
     .page-header {
-        margin-bottom: 24px;
+        margin-bottom: 22px;
     }
 
     .page-header h1 {
         font-size: 26px;
     }
 
+    .page-header p {
+        font-size: 12px;
+    }
+
+    .students-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
     .student-card {
-        padding: 15px;
+        min-height: 86px;
+        padding: 14px;
+        gap: 12px;
     }
 
     .student-avatar {
         width: 44px;
         height: 44px;
+        border-radius: 12px;
         font-size: 16px;
+    }
+
+    .student-info strong {
+        font-size: 13px;
     }
 
     .student-arrow {
         font-size: 20px;
+    }
+
+    .empty-card {
+        padding: 36px 18px;
+    }
+
+    .empty-card h2 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 340px) {
+    .student-card {
+        padding: 12px 10px;
+        gap: 9px;
+    }
+
+    .student-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .student-info strong {
+        font-size: 12px;
     }
 }

@@ -113,9 +113,8 @@ $alunos = $stmt->fetchAll();
                 <div>
 
                     <strong>
-                        MathPlay
+                        Math<span>Power</span>
                     </strong>
-
                     <small>
                         Área do Professor
                     </small>
