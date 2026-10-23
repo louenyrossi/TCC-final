@@ -99,6 +99,9 @@ $jogos = $stmt->fetchAll();
         rel="stylesheet"
         href="../assets/css/jogos-aluno.css"
     >
+    
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
+
 
 </head>
 
@@ -479,6 +482,7 @@ $jogos = $stmt->fetchAll();
     id="sidebarOverlay"
 ></div>
 
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
 <script src="../assets/js/jogos-aluno.js"></script>
 
 </body>
