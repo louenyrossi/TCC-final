@@ -1,3 +1,4 @@
+
 <?php
 require_once '../includes/auth.php';
 require_once '../config/config.php';
@@ -12,37 +13,33 @@ $usuarioProfessorId = usuarioId();
 |--------------------------------------------------------------------------
 */
 $stmtTurmas = $pdo->query("
-    SELECT
-        id,
-        nome,
-        ano_serie
+    SELECT id, nome, ano_serie
     FROM turmas
     WHERE ativo = 1
     ORDER BY ano_serie ASC, nome ASC
 ");
 
-$turmas = $stmtTurmas->fetchAll();
+$turmas = $stmtTurmas->fetchAll(PDO::FETCH_ASSOC);
+
 /*
 |--------------------------------------------------------------------------
-| JOGOS
+| JOGOS DISPONÍVEIS
 |--------------------------------------------------------------------------
 */
-
-$stmt = $pdo->query("
+$stmtJogos = $pdo->query("
     SELECT id, nome
     FROM jogos
     WHERE ativo = 1
-    ORDER BY id
+    ORDER BY id ASC
 ");
 
-$jogos = $stmt->fetchAll();
+$jogos = $stmtJogos->fetchAll(PDO::FETCH_ASSOC);
 
 /*
 |--------------------------------------------------------------------------
 | FILTROS
 |--------------------------------------------------------------------------
 */
-
 $turmaSelecionada = filter_input(
     INPUT_GET,
     'turma',
@@ -55,15 +52,21 @@ $jogoSelecionado = filter_input(
     FILTER_VALIDATE_INT
 );
 
+if (!$turmaSelecionada || $turmaSelecionada < 1) {
+    $turmaSelecionada = null;
+}
+
+if (!$jogoSelecionado || $jogoSelecionado < 1) {
+    $jogoSelecionado = null;
+}
+
 /*
 |--------------------------------------------------------------------------
 | VALIDA TURMA
 |--------------------------------------------------------------------------
 */
-
-if ($turmaSelecionada) {
-
-    $stmt = $pdo->prepare("
+if ($turmaSelecionada !== null) {
+    $stmtValidacao = $pdo->prepare("
         SELECT id
         FROM turmas
         WHERE id = ?
@@ -71,9 +74,9 @@ if ($turmaSelecionada) {
         LIMIT 1
     ");
 
-    $stmt->execute([$turmaSelecionada]);
+    $stmtValidacao->execute([$turmaSelecionada]);
 
-    if (!$stmt->fetchColumn()) {
+    if (!$stmtValidacao->fetchColumn()) {
         $turmaSelecionada = null;
     }
 }
@@ -83,10 +86,8 @@ if ($turmaSelecionada) {
 | VALIDA JOGO
 |--------------------------------------------------------------------------
 */
-
-if ($jogoSelecionado) {
-
-    $stmt = $pdo->prepare("
+if ($jogoSelecionado !== null) {
+    $stmtValidacao = $pdo->prepare("
         SELECT id
         FROM jogos
         WHERE id = ?
@@ -94,39 +95,22 @@ if ($jogoSelecionado) {
         LIMIT 1
     ");
 
-    $stmt->execute([$jogoSelecionado]);
+    $stmtValidacao->execute([$jogoSelecionado]);
 
-    if (!$stmt->fetchColumn()) {
+    if (!$stmtValidacao->fetchColumn()) {
         $jogoSelecionado = null;
     }
 }
 
 /*
 |--------------------------------------------------------------------------
-| ALUNOS DO RELATÓRIO
+| CONSULTA DOS ALUNOS E RESULTADOS
 |--------------------------------------------------------------------------
 */
-
-$where = [
-    "u.tipo = 'aluno'"
-];
-
+$where = ["u.tipo = 'aluno'"];
 $params = [];
 
-$where = [
-    "u.tipo = 'aluno'"
-];
-
-$params = [];
-
-if ($turmaSelecionada) {
-
-    $where[] = "u.turma_id = ?";
-    $params[] = $turmaSelecionada;
-}
-
-if ($turmaSelecionada) {
-
+if ($turmaSelecionada !== null) {
     $where[] = "u.turma_id = ?";
     $params[] = $turmaSelecionada;
 }
@@ -145,9 +129,7 @@ $sql = "
         COUNT(p.id) AS partidas,
 
         COALESCE(SUM(p.acertos), 0) AS acertos,
-
         COALESCE(SUM(p.erros), 0) AS erros,
-
         COALESCE(SUM(p.pontuacao), 0) AS pontuacao
 
     FROM usuarios u
@@ -157,7 +139,9 @@ $sql = "
 
     LEFT JOIN partidas p
         ON p.usuario_id = u.id
-        " . ($jogoSelecionado ? "AND p.jogo_id = ?" : "") . "
+        " . ($jogoSelecionado !== null
+            ? "AND p.jogo_id = ?"
+            : "") . "
 
     WHERE {$whereSql}
 
@@ -170,26 +154,29 @@ $sql = "
         t.ano_serie
 
     ORDER BY
-        t.ano_serie,
-        t.nome,
-        u.nome
+        t.ano_serie ASC,
+        t.nome ASC,
+        u.nome ASC
 ";
 
-if ($jogoSelecionado) {
+/*
+ * O parâmetro do jogo vem primeiro porque o placeholder dele
+ * aparece no JOIN, antes dos parâmetros do WHERE.
+ */
+if ($jogoSelecionado !== null) {
     array_unshift($params, $jogoSelecionado);
 }
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
+$stmtRelatorio = $pdo->prepare($sql);
+$stmtRelatorio->execute($params);
 
-$alunos = $stmt->fetchAll();
+$alunos = $stmtRelatorio->fetchAll(PDO::FETCH_ASSOC);
 
 /*
 |--------------------------------------------------------------------------
-| RESUMO
+| RESUMO DO RELATÓRIO
 |--------------------------------------------------------------------------
 */
-
 $totalAlunos = count($alunos);
 $totalPartidas = 0;
 $totalAcertos = 0;
@@ -197,7 +184,6 @@ $totalErros = 0;
 $totalPontuacao = 0;
 
 foreach ($alunos as $aluno) {
-
     $totalPartidas += (int) $aluno['partidas'];
     $totalAcertos += (int) $aluno['acertos'];
     $totalErros += (int) $aluno['erros'];
@@ -207,33 +193,34 @@ foreach ($alunos as $aluno) {
 $totalRespostas = $totalAcertos + $totalErros;
 
 $precisaoGeral = $totalRespostas > 0
-    ? round(($totalAcertos / $totalRespostas) * 100)
+    ? (int) round(($totalAcertos / $totalRespostas) * 100)
     : 0;
 
 /*
 |--------------------------------------------------------------------------
-| NOME DO FILTRO
+| NOMES DOS FILTROS SELECIONADOS
 |--------------------------------------------------------------------------
 */
-
 $nomeTurmaRelatorio = 'Todas as turmas';
 $nomeJogoRelatorio = 'Todos os jogos';
 
 foreach ($turmas as $turma) {
-
-    if ($turmaSelecionada == $turma['id']) {
-
+    if (
+        $turmaSelecionada !== null
+        && (int) $turma['id'] === (int) $turmaSelecionada
+    ) {
         $nomeTurmaRelatorio =
-            $turma['ano_serie'] . 'º ano — Turma ' .
-            substr($turma['nome'], -1);
+            $turma['ano_serie'] . 'º ano — ' . $turma['nome'];
 
         break;
     }
 }
 
 foreach ($jogos as $jogo) {
-
-    if ($jogoSelecionado == $jogo['id']) {
+    if (
+        $jogoSelecionado !== null
+        && (int) $jogo['id'] === (int) $jogoSelecionado
+    ) {
         $nomeJogoRelatorio = $jogo['nome'];
         break;
     }
@@ -241,12 +228,23 @@ foreach ($jogos as $jogo) {
 
 $dataRelatorio = date('d/m/Y H:i');
 
+/*
+|--------------------------------------------------------------------------
+| FUNÇÃO PARA ESCAPAR TEXTO HTML
+|--------------------------------------------------------------------------
+*/
+function e($valor): string
+{
+    return htmlspecialchars(
+        (string) ($valor ?? ''),
+        ENT_QUOTES,
+        'UTF-8'
+    );
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -254,40 +252,31 @@ $dataRelatorio = date('d/m/Y H:i');
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Relatórios - MathPlay</title>
+    <title>Relatórios - MathPower</title>
 
     <link
         rel="stylesheet"
         href="../assets/css/prof-relatorios.css"
     >
-
 </head>
 
 <body>
-
 <div class="app">
 
-    <!-- SIDEBAR -->
-
+    <!-- MENU LATERAL -->
     <aside class="sidebar" id="sidebar">
-
         <div class="sidebar-header">
-
             <div class="logo">
-
-                <span class="logo-icon">M</span>
+                <div class="logo-icon">M</div>
 
                 <div>
-                    <strong>MathPlay</strong>
-                    <small>Professor</small>
+                    <strong>Math<span>Power</span></strong>
+                    <small>Área do Professor</small>
                 </div>
-
             </div>
-
         </div>
 
         <nav class="sidebar-nav">
-
             <a href="dashboard.php" class="nav-item">
                 <span class="nav-icon">▦</span>
                 <span>Dashboard</span>
@@ -308,22 +297,22 @@ $dataRelatorio = date('d/m/Y H:i');
                 <span>Desempenho</span>
             </a>
 
-            <a href="relatorios.php" class="nav-item active">
+            <a
+                href="relatorios.php"
+                class="nav-item active"
+                aria-current="page"
+            >
                 <span class="nav-icon">📄</span>
                 <span>Relatórios</span>
             </a>
-
         </nav>
 
         <div class="sidebar-bottom">
-
             <a href="../logout.php" class="logout-link">
                 <span>↪</span>
                 <span>Sair</span>
             </a>
-
         </div>
-
     </aside>
 
     <div
@@ -331,51 +320,38 @@ $dataRelatorio = date('d/m/Y H:i');
         id="sidebarOverlay"
     ></div>
 
-    <!-- MAIN -->
-
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-
         <header class="topbar">
-
             <button
                 type="button"
                 class="menu-button"
                 id="menuButton"
                 aria-label="Abrir menu"
+                aria-controls="sidebar"
+                aria-expanded="false"
             >
                 ☰
             </button>
 
             <div class="topbar-title">
-
-                <span>Professor</span>
-
+                <span>Área do Professor</span>
                 <strong>Relatórios</strong>
-
             </div>
-
         </header>
 
         <section class="content">
 
             <!-- CABEÇALHO -->
-
             <div class="page-header">
-
                 <div>
+                    <span class="eyebrow">Relatórios</span>
 
-                    <span class="eyebrow">
-                        Relatórios
-                    </span>
-
-                    <h1>
-                        Relatório de desempenho
-                    </h1>
+                    <h1>Relatório de desempenho</h1>
 
                     <p>
                         Consulte e organize os resultados dos alunos.
                     </p>
-
                 </div>
 
                 <button
@@ -385,91 +361,55 @@ $dataRelatorio = date('d/m/Y H:i');
                 >
                     🖨️ Imprimir relatório
                 </button>
-
             </div>
 
             <!-- FILTROS -->
-
-            <form
-                method="GET"
-                class="filters"
-            >
-
+            <form method="GET" class="filters">
                 <div class="filter-group">
+                    <label for="turma">Turma</label>
 
-                    <label for="turma">
-                        Turma
-                    </label>
-
-                    <select
-                        name="turma"
-                        id="turma"
-                    >
-
-                        <option value="">
-                            Todas as turmas
-                        </option>
+                    <select name="turma" id="turma">
+                        <option value="">Todas as turmas</option>
 
                         <?php foreach ($turmas as $turma): ?>
-
                             <option
                                 value="<?= (int) $turma['id'] ?>"
-                                 <?= (
-                                isset($_GET['turma']) &&
-                                (int) $_GET['turma'] === (int) $turma['id']
+                                <?= (
+                                    $turmaSelecionada !== null
+                                    && (int) $turmaSelecionada
+                                        === (int) $turma['id']
                                 ) ? 'selected' : '' ?>
                             >
-
-                        <?= htmlspecialchars($turma['nome']) ?>
-
-
+                                <?= e($turma['nome']) ?>
                             </option>
-
                         <?php endforeach; ?>
-
                     </select>
-
                 </div>
 
                 <div class="filter-group">
+                    <label for="jogo">Jogo</label>
 
-                    <label for="jogo">
-                        Jogo
-                    </label>
-
-                    <select
-                        name="jogo"
-                        id="jogo"
-                    >
-
-                        <option value="">
-                            Todos os jogos
-                        </option>
+                    <select name="jogo" id="jogo">
+                        <option value="">Todos os jogos</option>
 
                         <?php foreach ($jogos as $jogo): ?>
-
                             <option
                                 value="<?= (int) $jogo['id'] ?>"
-                                <?= $jogoSelecionado == $jogo['id'] ? 'selected' : '' ?>
+                                <?= (
+                                    $jogoSelecionado !== null
+                                    && (int) $jogoSelecionado
+                                        === (int) $jogo['id']
+                                ) ? 'selected' : '' ?>
                             >
-
-                                <?= htmlspecialchars($jogo['nome']) ?>
-
+                                <?= e($jogo['nome']) ?>
                             </option>
-
                         <?php endforeach; ?>
-
                     </select>
-
                 </div>
 
                 <div class="filter-actions">
-
-                    <button
-                        type="submit"
-                        class="filter-button"
-                    >
-                        Gerar
+                    <button type="submit" class="filter-button">
+                        Gerar relatório
                     </button>
 
                     <a
@@ -478,132 +418,68 @@ $dataRelatorio = date('d/m/Y H:i');
                     >
                         Limpar
                     </a>
-
                 </div>
-
             </form>
 
-            <!-- ÁREA DO RELATÓRIO -->
-
-            <section
-                class="report-area"
-                id="reportArea"
-            >
-
+            <!-- RELATÓRIO -->
+            <section class="report-area" id="reportArea">
                 <div class="report-header">
-
                     <div>
+                        <span class="report-label">MATHPOWER</span>
 
-                        <span class="report-label">
-                            MATHPLAY
-                        </span>
+                        <h2>Relatório de desempenho</h2>
 
-                        <h2>
-                            Relatório de desempenho
-                        </h2>
-
-                        <p>
-                            Acompanhamento dos estudantes
-                        </p>
-
+                        <p>Acompanhamento dos estudantes</p>
                     </div>
 
                     <div class="report-date">
-
                         <span>Gerado em</span>
-
-                        <strong>
-                            <?= $dataRelatorio ?>
-                        </strong>
-
+                        <strong><?= e($dataRelatorio) ?></strong>
                     </div>
-
                 </div>
 
-                <!-- FILTROS ATUAIS -->
-
+                <!-- FILTROS APLICADOS -->
                 <div class="report-filters">
-
                     <div>
-
                         <span>Turma</span>
-
-                        <strong>
-                            <?= htmlspecialchars($nomeTurmaRelatorio) ?>
-                        </strong>
-
+                        <strong><?= e($nomeTurmaRelatorio) ?></strong>
                     </div>
 
                     <div>
-
                         <span>Jogo</span>
-
-                        <strong>
-                            <?= htmlspecialchars($nomeJogoRelatorio) ?>
-                        </strong>
-
+                        <strong><?= e($nomeJogoRelatorio) ?></strong>
                     </div>
-
                 </div>
 
-                <!-- RESUMO -->
-
+                <!-- INDICADORES -->
                 <div class="report-stats">
-
                     <div class="report-stat">
-
                         <span>Alunos</span>
-
-                        <strong>
-                            <?= $totalAlunos ?>
-                        </strong>
-
+                        <strong><?= $totalAlunos ?></strong>
                     </div>
 
                     <div class="report-stat">
-
                         <span>Partidas</span>
-
-                        <strong>
-                            <?= $totalPartidas ?>
-                        </strong>
-
+                        <strong><?= $totalPartidas ?></strong>
                     </div>
 
                     <div class="report-stat">
-
                         <span>Acertos</span>
-
-                        <strong>
-                            <?= $totalAcertos ?>
-                        </strong>
-
+                        <strong><?= $totalAcertos ?></strong>
                     </div>
 
                     <div class="report-stat">
-
                         <span>Erros</span>
-
-                        <strong>
-                            <?= $totalErros ?>
-                        </strong>
-
+                        <strong><?= $totalErros ?></strong>
                     </div>
 
                     <div class="report-stat">
-
-                        <span>Precisão</span>
-
-                        <strong>
-                            <?= $precisaoGeral ?>%
-                        </strong>
-
+                        <span>Precisão geral</span>
+                        <strong><?= $precisaoGeral ?>%</strong>
                     </div>
 
                     <div class="report-stat">
-
-                        <span>Pontuação</span>
-
+                        <span>Pontuação total</span>
                         <strong>
                             <?= number_format(
                                 $totalPontuacao,
@@ -612,58 +488,37 @@ $dataRelatorio = date('d/m/Y H:i');
                                 '.'
                             ) ?>
                         </strong>
-
                     </div>
-
                 </div>
 
-                <!-- TABELA -->
-
+                <!-- TABELA DE RESULTADOS -->
                 <div class="report-table">
-
                     <div class="table-title">
-
                         <div>
-
-                            <h3>
-                                Desempenho dos alunos
-                            </h3>
+                            <h3>Desempenho dos alunos</h3>
 
                             <p>
                                 Resultados registrados no sistema.
                             </p>
-
                         </div>
-
                     </div>
 
                     <?php if (empty($alunos)): ?>
-
                         <div class="empty-state">
-
                             <span>📄</span>
 
-                            <strong>
-                                Nenhum dado encontrado
-                            </strong>
+                            <strong>Nenhum dado encontrado</strong>
 
                             <p>
                                 Não existem resultados para os filtros
                                 selecionados.
                             </p>
-
                         </div>
-
                     <?php else: ?>
-
                         <div class="table-wrapper">
-
                             <table>
-
                                 <thead>
-
                                     <tr>
-
                                         <th>Aluno</th>
                                         <th>Turma</th>
                                         <th>Nível</th>
@@ -672,159 +527,126 @@ $dataRelatorio = date('d/m/Y H:i');
                                         <th>Erros</th>
                                         <th>Precisão</th>
                                         <th>Pontuação</th>
-
                                     </tr>
-
                                 </thead>
 
                                 <tbody>
+                                    <?php foreach ($alunos as $aluno): ?>
+                                        <?php
+                                        $acertosAluno =
+                                            (int) $aluno['acertos'];
 
-                                <?php foreach ($alunos as $aluno): ?>
+                                        $errosAluno =
+                                            (int) $aluno['erros'];
 
-                                    <?php
+                                        $totalRespostasAluno =
+                                            $acertosAluno + $errosAluno;
 
-                                    $acertosAluno =
-                                        (int) $aluno['acertos'];
+                                        $precisaoAluno =
+                                            $totalRespostasAluno > 0
+                                                ? (int) round(
+                                                    ($acertosAluno
+                                                        / $totalRespostasAluno)
+                                                    * 100
+                                                )
+                                                : 0;
 
-                                    $errosAluno =
-                                        (int) $aluno['erros'];
+                                        $nomeAluno = (string) $aluno['nome'];
 
-                                    $totalAluno =
-                                        $acertosAluno + $errosAluno;
-
-                                    $precisaoAluno =
-                                        $totalAluno > 0
-                                            ? round(
-                                                ($acertosAluno / $totalAluno)
-                                                * 100
+                                        $inicialAluno = function_exists(
+                                            'mb_substr'
+                                        )
+                                            ? mb_substr(
+                                                $nomeAluno,
+                                                0,
+                                                1,
+                                                'UTF-8'
                                             )
-                                            : 0;
+                                            : substr($nomeAluno, 0, 1);
 
-                                    ?>
+                                        $inicialAluno = function_exists(
+                                            'mb_strtoupper'
+                                        )
+                                            ? mb_strtoupper(
+                                                $inicialAluno,
+                                                'UTF-8'
+                                            )
+                                            : strtoupper($inicialAluno);
+                                        ?>
 
-                                    <tr>
+                                        <tr>
+                                            <td>
+                                                <div class="student-cell">
+                                                    <div class="student-avatar">
+                                                        <?= e($inicialAluno) ?>
+                                                    </div>
 
-                                        <td>
-
-                                            <div class="student-cell">
-
-                                                <div class="student-avatar">
-
-                                                    <?= htmlspecialchars(
-                                                        mb_strtoupper(
-                                                            mb_substr(
-                                                                $aluno['nome'],
-                                                                0,
-                                                                1
-                                                            )
-                                                        )
-                                                    ) ?>
-
+                                                    <strong>
+                                                        <?= e($nomeAluno) ?>
+                                                    </strong>
                                                 </div>
+                                            </td>
 
+                                            <td>
+                                                <?= e(
+                                                    $aluno['turma']
+                                                    ?? 'Sem turma'
+                                                ) ?>
+                                            </td>
+
+                                            <td>
+                                                <?= (int) $aluno['nivel'] ?>
+                                            </td>
+
+                                            <td>
+                                                <?= (int) $aluno['partidas'] ?>
+                                            </td>
+
+                                            <td>
+                                                <span class="correct">
+                                                    <?= $acertosAluno ?>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span class="wrong">
+                                                    <?= $errosAluno ?>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <strong class="precision-value">
+                                                    <?= $precisaoAluno ?>%
+                                                </strong>
+                                            </td>
+
+                                            <td>
                                                 <strong>
-                                                    <?= htmlspecialchars(
-                                                        $aluno['nome']
+                                                    <?= number_format(
+                                                        (int) $aluno['pontuacao'],
+                                                        0,
+                                                        ',',
+                                                        '.'
                                                     ) ?>
                                                 </strong>
-
-                                            </div>
-
-                                        </td>
-
-                                        <td>
-
-                                            <?= htmlspecialchars(
-                                                $aluno['turma']
-                                                ?? 'Sem turma'
-                                            ) ?>
-
-                                        </td>
-
-                                        <td>
-
-                                            <?= (int) $aluno['nivel'] ?>
-
-                                        </td>
-
-                                        <td>
-
-                                            <?= (int) $aluno['partidas'] ?>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="correct">
-                                                <?= $acertosAluno ?>
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="wrong">
-                                                <?= $errosAluno ?>
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <strong>
-                                                <?= $precisaoAluno ?>%
-                                            </strong>
-
-                                        </td>
-
-                                        <td>
-
-                                            <strong>
-                                                <?= number_format(
-                                                    (int) $aluno['pontuacao'],
-                                                    0,
-                                                    ',',
-                                                    '.'
-                                                ) ?>
-                                            </strong>
-
-                                        </td>
-
-                                    </tr>
-
-                                <?php endforeach; ?>
-
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
-
                             </table>
-
                         </div>
-
                     <?php endif; ?>
-
                 </div>
 
                 <div class="report-footer">
-
-                    <span>
-                        MathPlay — Plataforma Educacional
-                    </span>
-
-                    <span>
-                        Relatório gerado pelo sistema
-                    </span>
-
+                    <span>MathPower — Plataforma Educacional</span>
+                    <span>Relatório gerado pelo sistema</span>
                 </div>
-
             </section>
-
         </section>
-
     </main>
-
 </div>
 
 <script src="../assets/js/prof-relatorios.js"></script>
-
 </body>
 </html>
