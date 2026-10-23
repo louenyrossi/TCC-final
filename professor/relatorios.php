@@ -254,10 +254,8 @@ function e($valor): string
 
     <title>Relatórios - MathPower</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/prof-relatorios.css"
-    >
+    <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
+    <link rel="stylesheet" href="../assets/css/prof-relatorios.css">
 </head>
 
 <body>
