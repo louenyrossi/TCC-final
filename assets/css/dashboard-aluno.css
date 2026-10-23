@@ -1988,76 +1988,111 @@ button:focus-visible {
         auto;
 }
 
-/* Fundo futurista com símbolos matemáticos */
-.math-symbol {
+/* ========================================
+   FUNDO MATEMÁTICO FUTURISTA
+   Sidebar preservada
+======================================== */
+
+.app {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Área que contém os símbolos */
+.math-background {
     position: fixed;
-    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 260px; /* largura da sidebar existente */
+    overflow: hidden;
     pointer-events: none;
-    user-select: none;
-    color: rgba(168, 85, 247, 0.20);
-    text-shadow:
-        0 0 8px rgba(168, 85, 247, 0.35),
-        0 0 20px rgba(59, 130, 246, 0.20);
+    z-index: -1;
+}
+
+/* Símbolos neon discretos */
+.math-background .math-symbol {
+    position: absolute;
+    color: rgba(168, 85, 247, 0.19);
+    font-size: clamp(36px, 5vw, 76px);
     font-weight: 800;
-    animation: math-symbol-float 7s ease-in-out infinite;
+    text-shadow:
+        0 0 12px rgba(168, 85, 247, 0.25),
+        0 0 30px rgba(99, 102, 241, 0.16);
+    animation: mathFloat 8s ease-in-out infinite;
 }
 
-/* Tamanhos e posições */
-.math-symbol.s1 {
-    top: 15%;
-    left: 32%;
-    font-size: 48px;
+/* Distribuição pelo fundo */
+.math-background .symbol-1 {
+    top: 12%;
+    left: 8%;
 }
 
-.math-symbol.s2 {
-    top: 35%;
-    right: 8%;
-    font-size: 58px;
+.math-background .symbol-2 {
+    top: 28%;
+    left: 76%;
     animation-delay: -2s;
 }
 
-.math-symbol.s3 {
-    bottom: 18%;
-    left: 38%;
-    font-size: 42px;
+.math-background .symbol-3 {
+    top: 55%;
+    left: 18%;
     animation-delay: -4s;
 }
 
-.math-symbol.s4 {
-    top: 65%;
-    right: 25%;
-    font-size: 52px;
+.math-background .symbol-4 {
+    top: 72%;
+    left: 68%;
     animation-delay: -1s;
 }
 
-.math-symbol.s5 {
-    top: 12%;
-    right: 35%;
-    font-size: 36px;
+.math-background .symbol-5 {
+    top: 18%;
+    left: 48%;
     animation-delay: -3s;
 }
 
-.math-symbol.s6 {
-    bottom: 12%;
-    right: 10%;
-    font-size: 44px;
+.math-background .symbol-6 {
+    top: 78%;
+    left: 35%;
     animation-delay: -5s;
 }
 
-@keyframes math-symbol-float {
+.math-background .symbol-7 {
+    top: 44%;
+    left: 48%;
+    animation-delay: -2.5s;
+}
+
+.math-background .symbol-8 {
+    top: 88%;
+    left: 85%;
+    animation-delay: -4.5s;
+}
+
+@keyframes mathFloat {
     0%, 100% {
         transform: translateY(0) rotate(-8deg);
-        opacity: 0.35;
     }
+
     50% {
-        transform: translateY(-18px) rotate(8deg);
-        opacity: 0.85;
+        transform: translateY(-14px) rotate(8deg);
     }
 }
 
-/* Respeita a preferência por menos animações */
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+    .math-background {
+        left: 0;
+    }
+
+    .math-background .math-symbol {
+        font-size: 42px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .math-symbol {
+    .math-background .math-symbol {
         animation: none;
     }
 }
