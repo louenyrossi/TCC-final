@@ -1270,3 +1270,95 @@ body {
         right: 12px;
     }
 }
+
+/* ===== UNIVERSO MATEMÁTICO NEON ===== */
+
+.resumo-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Símbolos principais de cada container */
+.resumo-card:nth-child(1)::before {
+    content: "+   ×";
+}
+
+.resumo-card:nth-child(2)::before {
+    content: "∞   =";
+}
+
+.resumo-card:nth-child(3)::before {
+    content: "√   π";
+}
+
+.resumo-card::before {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 18px;
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: 47px;
+    font-weight: 800;
+    letter-spacing: 8px;
+    white-space: pre;
+    color: rgba(192, 38, 255, 0.22);
+    text-shadow: 0 0 18px rgba(168, 85, 247, 0.3);
+    pointer-events: none;
+    z-index: -1;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Símbolos menores espalhados pelo fundo */
+.resumo-card {
+    background-image:
+        radial-gradient(circle at 82% 20%, rgba(192, 38, 255, 0.16) 1px, transparent 3px),
+        radial-gradient(circle at 92% 78%, rgba(168, 85, 247, 0.17) 2px, transparent 4px);
+}
+
+/* Mais brilho ao passar o mouse */
+.resumo-card:hover::before {
+    color: rgba(217, 70, 239, 0.42);
+    text-shadow:
+        0 0 12px rgba(192, 38, 255, 0.6),
+        0 0 28px rgba(168, 85, 247, 0.35);
+}
+
+/* Símbolos extras nos cards de conquistas */
+.conquista {
+    position: relative;
+    overflow: hidden;
+}
+
+.conquista::after {
+    content: "π  ∑";
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: rgba(192, 38, 255, 0.17);
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.conquista:hover::after {
+    color: rgba(217, 70, 239, 0.42);
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    .resumo-card::before {
+        font-size: 34px;
+        letter-spacing: 4px;
+        padding-right: 10px;
+    }
+
+    .conquista::after {
+        font-size: 19px;
+    }
+}
