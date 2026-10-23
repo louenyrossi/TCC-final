@@ -107,10 +107,10 @@ if (isset($_GET['id'])) {
 
     <title>Turmas | MathPower</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/prof-turmas.css"
-    >
+    
+<link rel="stylesheet" href="../assets/css/prof-turmas.css">
+<link rel="stylesheet" href="../assets/css/prof-sidebar.css">
+
 
 </head>
 
@@ -122,95 +122,53 @@ if (isset($_GET['id'])) {
          SIDEBAR
     ========================================================== -->
 
-    <aside class="sidebar">
 
-        <div class="sidebar-header">
-
-            <div class="logo">
-
-                <span class="logo-icon">
-                    M
-                </span>
-
-                <div>
-
-                    <strong>
-                        Math<span>Power</span>
-                    </strong>
-
-                    <small>
-                        Área do Professor
-                    </small>
-
-                </div>
-
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <div class="logo-icon">M</div>
+            <div>
+                <strong>Math<span>Power</span></strong>
+                <small>Área do Professor</small>
             </div>
-
         </div>
+    </div>
 
+    <nav class="sidebar-nav">
+        <a href="dashboard.php" class="nav-item">
+            <span>▦</span>
+            <span>Dashboard</span>
+        </a>
 
-        <nav class="sidebar-nav">
+        <a href="turmas.php" class="nav-item active">
+            <span>👥</span>
+            <span>Turmas</span>
+        </a>
 
-            <a
-                href="dashboard.php"
-                class="nav-item"
-            >
-                <span>▦</span>
-                <span>Dashboard</span>
-            </a>
+        <a href="alunos.php" class="nav-item">
+            <span>🎓</span>
+            <span>Alunos</span>
+        </a>
 
+        <a href="desempenho.php" class="nav-item">
+            <span>📊</span>
+            <span>Desempenho</span>
+        </a>
 
-            <a
-                href="turmas.php"
-                class="nav-item active"
-            >
-                <span>👥</span>
-                <span>Turmas</span>
-            </a>
+        <a href="relatorios.php" class="nav-item">
+            <span>📄</span>
+            <span>Relatórios</span>
+        </a>
+    </nav>
 
+    <div class="sidebar-bottom">
+        <a href="../logout.php" class="logout-link">
+            <span>↪</span>
+            <span>Sair</span>
+        </a>
+    </div>
+</aside>
 
-            <a
-                href="alunos.php"
-                class="nav-item"
-            >
-                <span>🎓</span>
-                <span>Alunos</span>
-            </a>
-
-
-            <a
-                href="desempenho.php"
-                class="nav-item"
-            >
-                <span>📊</span>
-                <span>Desempenho</span>
-            </a>
-
-
-            <a
-                href="relatorios.php"
-                class="nav-item"
-            >
-                <span>📄</span>
-                <span>Relatórios</span>
-            </a>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <a
-                href="../logout.php"
-                class="logout-link"
-            >
-                <span>↪</span>
-                <span>Sair</span>
-            </a>
-
-        </div>
-
-    </aside>
 
 
     <!-- =========================================================
