@@ -874,3 +874,83 @@ body {
         margin-left: 0;
     }
 }
+
+/* SIDEBAR — TEMA ESCURO DO DASHBOARD */
+
+.sidebar {
+    background: linear-gradient(
+        180deg,
+        #12091D 0%,
+        #0A0710 100%
+    ) !important;
+    border-right: 1px solid rgba(168, 85, 247, .35) !important;
+    color: #F7F0FF !important;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, .25);
+}
+
+.sidebar-header {
+    border-bottom: 1px solid rgba(168, 85, 247, .2) !important;
+}
+
+.logo strong {
+    color: #F7F0FF !important;
+}
+
+.logo small {
+    color: #C084FC !important;
+}
+
+.logo-icon {
+    background: linear-gradient(
+        135deg,
+        #7E22CE,
+        #A855F7,
+        #D946FF
+    ) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 18px rgba(168, 85, 247, .35);
+}
+
+.sidebar-nav .nav-item {
+    color: #D0C1E2 !important;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.sidebar-nav .nav-item:hover {
+    background: rgba(168, 85, 247, .12) !important;
+    color: #FFFFFF !important;
+    border-color: rgba(168, 85, 247, .2);
+}
+
+.sidebar-nav .nav-item.active {
+    background: linear-gradient(
+        90deg,
+        rgba(168, 85, 247, .25),
+        rgba(168, 85, 247, .08)
+    ) !important;
+    color: #FFFFFF !important;
+    border-left: 3px solid #D946FF !important;
+    box-shadow: inset 0 0 15px rgba(168, 85, 247, .08);
+}
+
+.sidebar-nav .nav-icon {
+    color: #C084FC !important;
+}
+
+.sidebar-bottom {
+    border-top: 1px solid rgba(168, 85, 247, .2) !important;
+}
+
+.sidebar-bottom .logout-link {
+    color: #D0C1E2 !important;
+}
+
+.sidebar-bottom .logout-link:hover {
+    background: rgba(239, 68, 68, .12) !important;
+    color: #FB7185 !important;
+}
+
+.sidebar-overlay {
+    background: rgba(0, 0, 0, .7) !important;
+}
