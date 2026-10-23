@@ -2446,33 +2446,14 @@ button:focus-visible {
    FUNDO DECORATIVO — TRILHA MATHPOWER
 ======================================== */
 
+
 .main-content {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background:
-        radial-gradient(
-            circle at 12% 15%,
-            rgba(177, 145, 226, 0.13) 0 3px,
-            transparent 4px
-        ),
-        radial-gradient(
-            circle at 85% 22%,
-            rgba(255, 193, 218, 0.20) 0 4px,
-            transparent 5px
-        ),
-        radial-gradient(
-            circle at 75% 65%,
-            rgba(160, 190, 255, 0.16) 0 3px,
-            transparent 4px
-        ),
-        linear-gradient(
-            145deg,
-            #fbf9ff 0%,
-            #f7f4ff 48%,
-            #fff8fc 100%
-        );
+    background: transparent;
 }
+
 
 /* Decorações espalhadas pelo fundo */
 .main-content::before {
