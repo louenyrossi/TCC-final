@@ -192,17 +192,6 @@ $porcentagemXp = min(
 </head>
 
 <body>
-    <!-- Fundo decorativo matemático -->
-<div class="math-background" aria-hidden="true">
-    <span class="math-symbol symbol-1">+</span>
-    <span class="math-symbol symbol-2">×</span>
-    <span class="math-symbol symbol-3">÷</span>
-    <span class="math-symbol symbol-4">π</span>
-    <span class="math-symbol symbol-5">∑</span>
-    <span class="math-symbol symbol-6">√</span>
-    <span class="math-symbol symbol-7">∞</span>
-    <span class="math-symbol symbol-8">%</span>
-</div>
 
 <div class="app">
 
