@@ -2924,23 +2924,32 @@ button:focus-visible {
         font-size: 24px;
     }
 }
-/* Linha neon abaixo do título da Trilha */
-.section-heading h1::after,
-.section-heading h2::after {
+/* Linha neon abaixo do título da Trilha de Aprendizagem */
+.page-header h1 {
+    position: relative;
+    display: table;
+    padding-bottom: 12px;
+}
+
+.page-header h1::after {
     content: "";
-    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
     width: 100px;
     height: 4px;
-    margin-top: 12px;
+
     border-radius: 10px;
+
     background: linear-gradient(
         90deg,
-        #d946ef,
-        #a855f7,
-        #7c3aed,
-        transparent
+        #e879f9 0%,
+        #a855f7 55%,
+        transparent 100%
     );
+
     box-shadow:
-        0 0 8px rgba(217, 70, 239, 0.8),
-        0 0 18px rgba(168, 85, 247, 0.5);
+        0 0 8px rgba(232, 121, 249, 0.9),
+        0 0 18px rgba(168, 85, 247, 0.6);
 }
