@@ -184,10 +184,8 @@ a:focus-visible {
 .sidebar-header {
     display: flex;
     align-items: center;
-
     min-height: 88px;
     padding: 20px 18px;
-
     border-bottom: 1px solid rgba(217, 70, 255, .20);
 }
 
@@ -244,7 +242,6 @@ a:focus-visible {
 .logo small {
     display: block;
     margin-top: 5px;
-
     color: var(--gray);
     font-size: 11px;
     font-weight: 600;
@@ -257,7 +254,6 @@ a:focus-visible {
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     padding: 24px 14px;
 }
 
@@ -291,9 +287,7 @@ a:focus-visible {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-
     width: 24px;
-
     font-size: 19px;
 }
 
@@ -307,15 +301,12 @@ a:focus-visible {
 
 .nav-item.active {
     color: var(--white);
-
     background: linear-gradient(
         100deg,
         rgba(168, 85, 247, .24),
         rgba(217, 70, 255, .10)
     );
-
     border-color: rgba(217, 70, 255, .40);
-
     box-shadow:
         0 0 18px rgba(168, 85, 247, .12),
         inset 3px 0 var(--purple-neon);
@@ -326,7 +317,6 @@ a:focus-visible {
 .sidebar-bottom {
     margin-top: auto;
     padding: 15px 14px 20px;
-
     border-top: 1px solid rgba(217, 70, 255, .20);
 }
 
@@ -473,7 +463,8 @@ a:focus-visible {
     min-width: 0;
 }
 
-.page-header a {
+/* Links comuns do cabeçalho, exceto o botão de voltar */
+.page-header a:not(.back-link) {
     display: inline-block;
     margin-bottom: 16px;
 
@@ -485,7 +476,7 @@ a:focus-visible {
     transition: color .2s ease;
 }
 
-.page-header a:hover {
+.page-header a:not(.back-link):hover {
     color: var(--purple-neon);
     text-shadow: 0 0 12px rgba(217, 70, 255, .3);
 }
@@ -519,6 +510,51 @@ a:focus-visible {
     color: var(--text-soft);
     font-size: 14px;
     line-height: 1.7;
+}
+
+/* =========================================================
+   BOTÃO VOLTAR PARA TURMAS
+   IGUAL AO BOTÃO VOLTAR PARA ALUNOS
+========================================================= */
+
+a.back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 20px;
+    margin-bottom: 24px;
+
+    color: #e9d5ff;
+    background: linear-gradient(135deg, #25113f, #3b1764);
+    border: 1px solid rgba(192, 132, 252, 0.45);
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease;
+}
+
+a.back-link:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #9333ea, #7e22ce);
+    border-color: #d8b4fe;
+    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
+    transform: translateY(-2px);
+    text-shadow: none;
+}
+
+a.back-link:active {
+    transform: translateY(0);
+}
+
+a.back-link:focus-visible {
+    outline: 2px solid #d8b4fe;
+    outline-offset: 4px;
 }
 
 /* =========================================================
@@ -841,145 +877,11 @@ a:focus-visible {
     }
 }
 
-/* BOTÃO VOLTAR PARA TURMAS — MESMO ESTILO DA PÁGINA DO ALUNO */
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 12px 20px;
-    margin-bottom: 24px;
-
-    color: #e9d5ff;
-    background: linear-gradient(135deg, #25113f, #3b1764);
-    border: 1px solid rgba(192, 132, 252, 0.45);
-    border-radius: 14px;
-
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
-    transition: all 0.25s ease;
-}
-
-.back-link:hover {
-    color: #fff;
-    background: linear-gradient(135deg, #9333ea, #7e22ce);
-    border-color: #d8b4fe;
-    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
-    transform: translateY(-2px);
-}
-
-.back-link:active {
-    transform: translateY(0);
-}
-
-.back-link:focus-visible {
-    outline: 2px solid #d8b4fe;
-    outline-offset: 4px;
-}
-
+/* Ajuste do botão em celulares */
 @media (max-width: 600px) {
-    .back-link {
+    a.back-link {
         padding: 10px 15px;
         font-size: 13px;
         border-radius: 12px;
-    }
-}
-
-/* BOTÃO VOLTAR PARA TURMAS — IGUAL AO DE ALUNOS */
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 12px 20px;
-    margin-bottom: 24px;
-
-    color: #e9d5ff;
-    background: linear-gradient(135deg, #25113f, #3b1764);
-    border: 1px solid rgba(192, 132, 252, 0.45);
-    border-radius: 14px;
-
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
-    transition: all 0.25s ease;
-}
-
-.back-link:hover {
-    color: #ffffff;
-    background: linear-gradient(135deg, #9333ea, #7e22ce);
-    border-color: #d8b4fe;
-    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
-    transform: translateY(-2px);
-}
-
-.back-link:active {
-    transform: translateY(0);
-}
-
-.back-link:focus-visible {
-    outline: 2px solid #d8b4fe;
-    outline-offset: 4px;
-}
-
-@media (max-width: 600px) {
-    .back-link {
-        padding: 10px 15px;
-        font-size: 13px;
-        border-radius: 12px;
-    }
-}
-
-/* BOTÃO VOLTAR DA PÁGINA DE ALUNOS DA TURMA */
-a.back-link-turma {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    padding: 12px 20px !important;
-    margin-bottom: 24px !important;
-
-    color: #e9d5ff !important;
-    background: linear-gradient(135deg, #25113f, #3b1764) !important;
-    border: 1px solid rgba(192, 132, 252, 0.45) !important;
-    border-radius: 14px !important;
-
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    text-decoration: none !important;
-
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2) !important;
-    transition: all 0.25s ease !important;
-}
-
-a.back-link-turma:hover {
-    color: #ffffff !important;
-    background: linear-gradient(135deg, #9333ea, #7e22ce) !important;
-    border-color: #d8b4fe !important;
-    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3) !important;
-    transform: translateY(-2px);
-}
-
-a.back-link-turma:active {
-    transform: translateY(0);
-}
-
-a.back-link-turma:focus-visible {
-    outline: 2px solid #d8b4fe;
-    outline-offset: 4px;
-}
-
-@media (max-width: 600px) {
-    a.back-link-turma {
-        padding: 10px 15px !important;
-        font-size: 13px !important;
-        border-radius: 12px !important;
     }
 }
