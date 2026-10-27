@@ -1,3 +1,4 @@
+
 <?php
 
 require_once '../../includes/auth.php';
@@ -24,14 +25,12 @@ $stmt = $pdo->prepare("
         t.nome AS turma_nome,
         t.ano_serie
     FROM usuarios u
-    LEFT JOIN turmas t
-        ON t.id = u.turma_id
+    LEFT JOIN turmas t ON t.id = u.turma_id
     WHERE u.id = ?
     LIMIT 1
 ");
 
 $stmt->execute([$usuarioId]);
-
 $aluno = $stmt->fetch();
 
 if (!$aluno) {
@@ -51,10 +50,7 @@ $anoSerie = (int) $aluno['ano_serie'];
 ========================================================== */
 
 $stmt = $pdo->prepare("
-    SELECT
-        id,
-        nome,
-        descricao
+    SELECT id, nome, descricao
     FROM jogos
     WHERE nome = 'Caixa Matemático'
       AND ativo = TRUE
@@ -62,7 +58,6 @@ $stmt = $pdo->prepare("
 ");
 
 $stmt->execute();
-
 $jogo = $stmt->fetch();
 
 if (!$jogo) {
@@ -79,7 +74,6 @@ $jogoId = (int) $jogo['id'];
 $jogoLiberado = true;
 
 try {
-
     $stmt = $pdo->prepare("
         SELECT ativo
         FROM jogos_turmas
@@ -88,11 +82,7 @@ try {
         LIMIT 1
     ");
 
-    $stmt->execute([
-        $jogoId,
-        $turmaId
-    ]);
-
+    $stmt->execute([$jogoId, $turmaId]);
     $configuracao = $stmt->fetch();
 
     if ($configuracao) {
@@ -100,12 +90,7 @@ try {
     }
 
 } catch (PDOException $e) {
-
-    /*
-     * Se a tabela jogos_turmas ainda não estiver disponível,
-     * o jogo continua funcionando.
-     */
-
+    // Mantém o comportamento original caso a tabela não exista.
     $jogoLiberado = true;
 }
 
@@ -127,16 +112,12 @@ $stmt = $pdo->prepare("
         pontuacao
     FROM perguntas
     WHERE jogo_id = ?
-    AND ano_serie = ?
+      AND ano_serie = ?
     ORDER BY id ASC
     LIMIT 5
 ");
 
-$stmt->execute([
-    $jogoId,
-    $anoSerie
-]);
-
+$stmt->execute([$jogoId, $anoSerie]);
 $perguntasBanco = $stmt->fetchAll();
 
 if (empty($perguntasBanco)) {
@@ -155,7 +136,6 @@ if (empty($perguntasBanco)) {
 $perguntasPublicas = [];
 
 foreach ($perguntasBanco as $pergunta) {
-
     $perguntasPublicas[] = [
         'id' => (int) $pergunta['id'],
         'enunciado' => $pergunta['enunciado'],
@@ -183,11 +163,9 @@ if ($anoSerie === 7) {
 ?>
 
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -195,22 +173,17 @@ if ($anoSerie === 7) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Caixa Matemático - MathPower
-    </title>
+    <title>Caixa Matemático - MathPower</title>
 
     <link
         rel="stylesheet"
         href="../../assets/css/caixa-matematico.css"
     >
-
 </head>
-
 
 <body>
 
 <div class="game-page">
-
 
     <!-- ======================================================
          HEADER
@@ -225,7 +198,6 @@ if ($anoSerie === 7) {
             ← Voltar aos jogos
         </a>
 
-
         <div class="game-brand">
 
             <div class="game-brand-icon">
@@ -233,30 +205,22 @@ if ($anoSerie === 7) {
             </div>
 
             <div>
-
-                <span>
-                    MathPower
-                </span>
-
-                <strong>
-                    Caixa Matemático
-                </strong>
-
+                <span>MathPower</span>
+                <strong>Caixa Matemático</strong>
             </div>
 
         </div>
 
-
         <div class="player-info">
-
-            <span>
-                Aluno
-            </span>
+            <span>Aluno</span>
 
             <strong>
-                <?= htmlspecialchars($aluno['nome']) ?>
+                <?= htmlspecialchars(
+                    $aluno['nome'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
             </strong>
-
         </div>
 
     </header>
@@ -268,13 +232,11 @@ if ($anoSerie === 7) {
 
     <main class="game-container">
 
-
         <!-- ==================================================
-             STATUS
+             STATUS DO JOGO
         =================================================== -->
 
         <section class="game-status">
-
 
             <div class="status-card">
 
@@ -282,9 +244,7 @@ if ($anoSerie === 7) {
                     Questão
                 </span>
 
-                <strong id="question-number">
-                    1
-                </strong>
+                <strong id="question-number">1</strong>
 
                 <span id="question-total">
                     / <?= count($perguntasPublicas) ?>
@@ -292,19 +252,15 @@ if ($anoSerie === 7) {
 
             </div>
 
-
             <div class="status-card">
 
                 <span class="status-label">
                     Acertos
                 </span>
 
-                <strong id="correct">
-                    0
-                </strong>
+                <strong id="correct">0</strong>
 
             </div>
-
 
             <div class="status-card">
 
@@ -312,12 +268,9 @@ if ($anoSerie === 7) {
                     Erros
                 </span>
 
-                <strong id="incorrect">
-                    0
-                </strong>
+                <strong id="incorrect">0</strong>
 
             </div>
-
 
             <div class="status-card score-card">
 
@@ -325,9 +278,23 @@ if ($anoSerie === 7) {
                     Pontuação
                 </span>
 
-                <strong id="score">
-                    0
-                </strong>
+                <strong id="score">0</strong>
+
+            </div>
+
+            <!-- NOVO: COMBO -->
+
+            <div class="status-card combo-card">
+
+                <span class="status-label">
+                    Combo
+                </span>
+
+                <strong id="combo">x0</strong>
+
+                <span id="combo-message">
+                    Vamos começar!
+                </span>
 
             </div>
 
@@ -342,16 +309,11 @@ if ($anoSerie === 7) {
 
             <div class="progress-info">
 
-                <span>
-                    Progresso
-                </span>
+                <span>Progresso</span>
 
-                <span id="progress-text">
-                    0%
-                </span>
+                <span id="progress-text">0%</span>
 
             </div>
-
 
             <div class="progress-bar">
 
@@ -366,11 +328,10 @@ if ($anoSerie === 7) {
 
 
         <!-- ==================================================
-             CARD PRINCIPAL
+             MÁQUINA REGISTRADORA
         =================================================== -->
 
         <section class="game-card">
-
 
             <div class="game-card-header">
 
@@ -382,61 +343,82 @@ if ($anoSerie === 7) {
                     >
                         <?= htmlspecialchars(
                             $perguntasPublicas[0]['conteudo']
-                                ?: 'Matemática'
+                                ?: 'Matemática',
+                            ENT_QUOTES,
+                            'UTF-8'
                         ) ?>
                     </span>
 
-                    <h1>
-                        Caixa Matemático
-                    </h1>
+                    <h1>Caixa Matemático</h1>
 
                 </div>
-
 
                 <span
                     class="difficulty-badge"
                     id="difficulty"
                 >
-                    <?= htmlspecialchars($dificuldadeAtual) ?>
+                    <?= htmlspecialchars(
+                        $dificuldadeAtual,
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
                 </span>
 
             </div>
 
 
-            <!-- ==============================================
-                 CENÁRIO
-            =============================================== -->
+            <!-- ==================================================
+                 CENÁRIO DE COMPRA
+            =================================================== -->
 
-            <div class="scenario">
+            <div class="scenario checkout-scenario">
 
-                <div class="scenario-icon">
-                    💰
+                <div
+                    class="scenario-icon"
+                    id="product-icon"
+                >
+                    🛒
                 </div>
 
-                <div>
+                <div class="scenario-content">
 
-                    <strong>
-                        Situação do dia a dia
+                    <span class="checkout-label">
+                        COMPRA EM ANDAMENTO
+                    </span>
+
+                    <strong id="product-title">
+                        Cliente no caixa
                     </strong>
 
-                    <p>
-                        Resolva o problema usando os valores
-                        apresentados na questão.
+                    <p id="product-description">
+                        Confira a situação apresentada na questão
+                        e registre sua resposta.
                     </p>
+
+                    <div class="product-price">
+
+                        <span>VALOR DA COMPRA</span>
+
+                        <strong id="product-price">
+                            Consulte a questão
+                        </strong>
+
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- ==============================================
-                 PERGUNTA
-            =============================================== -->
+            <!-- ==================================================
+                 VISOR DIGITAL DA PERGUNTA
+            =================================================== -->
 
             <div class="question-area">
 
                 <span class="question-label">
-                    QUESTÃO <span id="question-number-display">1</span>
+                    QUESTÃO
+                    <span id="question-number-display">1</span>
                 </span>
 
                 <h2 id="question">
@@ -446,9 +428,9 @@ if ($anoSerie === 7) {
             </div>
 
 
-            <!-- ==============================================
+            <!-- ==================================================
                  DICA
-            =============================================== -->
+            =================================================== -->
 
             <div class="hint-area">
 
@@ -468,9 +450,9 @@ if ($anoSerie === 7) {
             </div>
 
 
-            <!-- ==============================================
-                 FORMULÁRIO
-            =============================================== -->
+            <!-- ==================================================
+                 FORMULÁRIO E TECLADO
+            =================================================== -->
 
             <form
                 id="answer-form"
@@ -481,12 +463,9 @@ if ($anoSerie === 7) {
                     Sua resposta
                 </label>
 
-
                 <div class="answer-input-wrapper">
 
-                    <span>
-                        R$
-                    </span>
+                    <span>R$</span>
 
                     <input
                         type="text"
@@ -496,24 +475,86 @@ if ($anoSerie === 7) {
                         autocomplete="off"
                         required
                     >
+
                 </div>
-                <!-- TECLADO NUMÉRICO PARA O JOGO CAIXA MATEMATICO-->
+
+
+                <!-- TECLADO NUMÉRICO -->
+
                 <div class="numeric-keypad">
-                    <button type="button" class="key-button" data-key="1">1</button>
-                    <button type="button" class="key-button" data-key="2">2</button>
-                    <button type="button" class="key-button" data-key="3">3</button>
 
-                    <button type="button" class="key-button" data-key="4">4</button>
-                    <button type="button" class="key-button" data-key="5">5</button>
-                    <button type="button" class="key-button" data-key="6">6</button>
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="1"
+                    >1</button>
 
-                    <button type="button" class="key-button" data-key="7">7</button>
-                    <button type="button" class="key-button" data-key="8">8</button>
-                    <button type="button" class="key-button" data-key="9">9</button>
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="2"
+                    >2</button>
 
-                    <button type="button" class="key-button key-clear" data-key="clear">C</button>
-                    <button type="button" class="key-button" data-key="0">0</button>
-                    <button type="button" class="key-button key-delete" data-key="delete">←</button>
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="3"
+                    >3</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="4"
+                    >4</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="5"
+                    >5</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="6"
+                    >6</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="7"
+                    >7</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="8"
+                    >8</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="9"
+                    >9</button>
+
+                    <button
+                        type="button"
+                        class="key-button key-clear"
+                        data-key="clear"
+                    >C</button>
+
+                    <button
+                        type="button"
+                        class="key-button"
+                        data-key="0"
+                    >0</button>
+
+                    <button
+                        type="button"
+                        class="key-button key-delete"
+                        data-key="delete"
+                    >←</button>
+
                 </div>
 
 
@@ -528,9 +569,9 @@ if ($anoSerie === 7) {
             </form>
 
 
-            <!-- ==============================================
+            <!-- ==================================================
                  FEEDBACK
-            =============================================== -->
+            =================================================== -->
 
             <div
                 id="feedback"
@@ -542,23 +583,81 @@ if ($anoSerie === 7) {
                     id="feedback-icon"
                 ></div>
 
-
                 <div>
 
-                    <strong id="feedback-title">
-                    </strong>
+                    <strong id="feedback-title"></strong>
 
-                    <p id="feedback-message">
-                    </p>
+                    <p id="feedback-message"></p>
 
                 </div>
 
             </div>
 
 
-            <!-- ==============================================
-                 PRÓXIMA
-            =============================================== -->
+            <!-- ==================================================
+                 NOVO: RECIBO DIGITAL
+            =================================================== -->
+
+            <div
+                id="receipt"
+                class="receipt hidden"
+                aria-live="polite"
+            >
+
+                <div class="receipt-header">
+
+                    <span>⚡ MATHPOWER</span>
+
+                    <strong>
+                        COMPROVANTE DA OPERAÇÃO
+                    </strong>
+
+                </div>
+
+                <div class="receipt-line">
+
+                    <span>Resultado</span>
+
+                    <strong id="receipt-result">—</strong>
+
+                </div>
+
+                <div class="receipt-line">
+
+                    <span>Status</span>
+
+                    <strong id="receipt-status">
+                        Aguardando
+                    </strong>
+
+                </div>
+
+                <div class="receipt-line">
+
+                    <span>Pontos ganhos</span>
+
+                    <strong id="receipt-points">+0</strong>
+
+                </div>
+
+                <div class="receipt-line">
+
+                    <span>Combo atual</span>
+
+                    <strong id="receipt-combo">x0</strong>
+
+                </div>
+
+                <p class="receipt-footer">
+                    Obrigado por jogar MathPower!
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PRÓXIMA QUESTÃO
+            =================================================== -->
 
             <button
                 type="button"
@@ -577,18 +676,13 @@ if ($anoSerie === 7) {
 
         <section class="game-tips">
 
-
             <div class="tip-card">
 
-                <div class="tip-icon">
-                    🧠
-                </div>
+                <div class="tip-icon">🧠</div>
 
                 <div>
 
-                    <strong>
-                        Leia com atenção
-                    </strong>
+                    <strong>Leia com atenção</strong>
 
                     <p>
                         Identifique os valores importantes
@@ -599,18 +693,13 @@ if ($anoSerie === 7) {
 
             </div>
 
-
             <div class="tip-card">
 
-                <div class="tip-icon">
-                    ✏️
-                </div>
+                <div class="tip-icon">✏️</div>
 
                 <div>
 
-                    <strong>
-                        Faça passo a passo
-                    </strong>
+                    <strong>Faça passo a passo</strong>
 
                     <p>
                         Organize os cálculos para evitar erros.
@@ -620,18 +709,13 @@ if ($anoSerie === 7) {
 
             </div>
 
-
             <div class="tip-card">
 
-                <div class="tip-icon">
-                    ⭐
-                </div>
+                <div class="tip-icon">⭐</div>
 
                 <div>
 
-                    <strong>
-                        Aprenda com os erros
-                    </strong>
+                    <strong>Aprenda com os erros</strong>
 
                     <p>
                         O feedback ajuda você a entender
@@ -644,7 +728,6 @@ if ($anoSerie === 7) {
 
         </section>
 
-
     </main>
 
 </div>
@@ -655,7 +738,6 @@ if ($anoSerie === 7) {
 =========================================================== -->
 
 <script>
-
 window.MathPlayCaixa = {
 
     usuarioId: <?= (int) $usuarioId ?>,
@@ -679,58 +761,45 @@ window.MathPlayCaixa = {
     ) ?>
 
 };
-
 </script>
 
 
-<script
-    src="../../assets/js/caixa-matematico.js"
-></script>
+<!-- JAVASCRIPT PRINCIPAL DO JOGO -->
 
+<script src="../../assets/js/caixa-matematico.js"></script>
+
+
+<!-- ==========================================================
+     SINCRONIZAR NÚMERO DA QUESTÃO
+=========================================================== -->
 
 <script>
-
-/*
- * Atualiza o número visual da questão.
- * O JS principal continua controlando o jogo.
- */
-
 document.addEventListener('DOMContentLoaded', function () {
 
-    const original =
-        document.getElementById('question-number');
+    const original = document.getElementById('question-number');
 
-    const visual =
-        document.getElementById('question-number-display');
+    const visual = document.getElementById(
+        'question-number-display'
+    );
 
     if (!original || !visual) {
         return;
     }
 
     const observer = new MutationObserver(function () {
-
-        visual.textContent =
-            original.textContent;
-
+        visual.textContent = original.textContent;
     });
 
-    observer.observe(
-        original,
-        {
-            childList: true,
-            characterData: true,
-            subtree: true
-        }
-    );
+    observer.observe(original, {
+        childList: true,
+        characterData: true,
+        subtree: true
+    });
 
-    visual.textContent =
-        original.textContent;
+    visual.textContent = original.textContent;
 
 });
-
 </script>
 
-
 </body>
-
 </html>
