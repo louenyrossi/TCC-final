@@ -840,3 +840,51 @@ a:focus-visible {
         font-size: 17px;
     }
 }
+
+/* BOTÃO VOLTAR PARA TURMAS — MESMO ESTILO DA PÁGINA DO ALUNO */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 20px;
+    margin-bottom: 24px;
+
+    color: #e9d5ff;
+    background: linear-gradient(135deg, #25113f, #3b1764);
+    border: 1px solid rgba(192, 132, 252, 0.45);
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease;
+}
+
+.back-link:hover {
+    color: #fff;
+    background: linear-gradient(135deg, #9333ea, #7e22ce);
+    border-color: #d8b4fe;
+    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
+    transform: translateY(-2px);
+}
+
+.back-link:active {
+    transform: translateY(0);
+}
+
+.back-link:focus-visible {
+    outline: 2px solid #d8b4fe;
+    outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    .back-link {
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 12px;
+    }
+}

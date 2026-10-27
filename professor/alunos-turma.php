@@ -222,15 +222,9 @@ $alunos = $stmt->fetchAll();
 
                 <div>
 
-                    <a
-                        href="turmas.php"
-                        style="
-                            display:inline-block;
-                            margin-bottom:16px;
-                            text-decoration:none;
-                        "
-                    >
-                        ← Voltar para turmas
+                    <a href="turmas.php" class="back-link">
+                        <span aria-hidden="true">←</span>
+                        Voltar para turmas
                     </a>
 
 
