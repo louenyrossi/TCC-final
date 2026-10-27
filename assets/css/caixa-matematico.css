@@ -3373,3 +3373,195 @@ input:focus-visible {
         transition: none;
     }
 }
+
+/* =========================================
+   MATHPOWER — CAIXA MATEMÁTICO
+   CENÁRIO, COMBO E RECIBO DIGITAL
+========================================= */
+
+/* Cenário da compra */
+.checkout-scenario {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(180, 100, 255, 0.5);
+    border-radius: 18px;
+    background: linear-gradient(
+        135deg,
+        rgba(90, 35, 150, 0.35),
+        rgba(20, 14, 48, 0.95)
+    );
+    box-shadow: 0 0 24px rgba(151, 71, 255, 0.12);
+}
+
+.checkout-scenario .scenario-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    font-size: 2.8rem;
+}
+
+.checkout-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #c9a2ff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.checkout-scenario .scenario-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkout-scenario #product-title {
+    display: block;
+    color: #ffffff;
+    font-size: 1.15rem;
+}
+
+.checkout-scenario #product-description {
+    margin: 8px 0;
+    color: #d6cce8;
+    line-height: 1.5;
+}
+
+.product-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(220, 190, 255, 0.35);
+}
+
+.product-price span {
+    color: #c7bfdc;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.product-price strong {
+    color: #e8c7ff;
+    font-size: 1.1rem;
+}
+
+/* Cartão do combo */
+.combo-card {
+    border: 1px solid rgba(195, 110, 255, 0.5);
+    background: linear-gradient(
+        135deg,
+        rgba(100, 35, 160, 0.25),
+        rgba(25, 15, 55, 0.9)
+    );
+}
+
+#combo {
+    color: #d9a7ff;
+    font-size: 1.8rem;
+    text-shadow: 0 0 12px rgba(191, 100, 255, 0.6);
+}
+
+#combo-message {
+    display: block;
+    margin-top: 5px;
+    color: #c9bfdc;
+    font-size: 0.75rem;
+}
+
+/* Recibo digital */
+.receipt {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    box-sizing: border-box;
+    margin: 24px auto;
+    padding: 22px;
+    color: #241735;
+    background: #f7f1ff;
+    border-radius: 8px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    font-family: monospace;
+}
+
+.receipt-header {
+    display: grid;
+    gap: 7px;
+    padding-bottom: 16px;
+    border-bottom: 2px dashed #b9a4ce;
+    text-align: center;
+}
+
+.receipt-header span {
+    color: #7628bd;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.receipt-header strong {
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.receipt-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #cdbedb;
+}
+
+.receipt-line span {
+    color: #5c4b6e;
+}
+
+.receipt-line strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.receipt-footer {
+    margin: 18px 0 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #5c4b6e;
+}
+
+/* Esconde elementos quando possuem a classe hidden */
+.hidden {
+    display: none !important;
+}
+
+/* Ajustes para celular */
+@media (max-width: 560px) {
+    .checkout-scenario {
+        align-items: flex-start;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .checkout-scenario .scenario-icon {
+        min-width: 40px;
+        font-size: 2rem;
+    }
+
+    .checkout-scenario #product-title {
+        font-size: 1rem;
+    }
+
+    .product-price {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .receipt {
+        padding: 16px;
+    }
+}
