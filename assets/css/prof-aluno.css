@@ -1270,75 +1270,52 @@ a:focus-visible {
         padding: 8px 6px;
     }
 }
-/* =========================================
-   BOTÃO VOLTAR PARA ALUNOS
-========================================= */
 
-.page-header a {
+/* BOTÃO VOLTAR PARA ALUNOS */
+.back-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
+    gap: 10px;
 
-    min-height: 42px;
-    margin-bottom: 18px;
-    padding: 10px 16px;
+    padding: 12px 20px;
+    margin-bottom: 24px;
 
-    color: #E9D5FF;
-    background: linear-gradient(
-        135deg,
-        rgba(168, 85, 247, .18),
-        rgba(217, 70, 255, .07)
-    );
+    color: #e9d5ff;
+    background: linear-gradient(135deg, #25113f, #3b1764);
+    border: 1px solid rgba(192, 132, 252, 0.45);
+    border-radius: 14px;
 
-    border: 1px solid rgba(192, 132, 252, .35);
-    border-radius: 12px;
-
-    font-size: 13px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 700;
     text-decoration: none;
 
-    box-shadow: 0 4px 14px rgba(0, 0, 0, .15);
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease,
-        color .2s ease;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease;
 }
 
-.page-header a:hover {
-    color: #FFFFFF;
-    background: linear-gradient(
-        135deg,
-        #9333EA,
-        #7E22CE
-    );
-
-    border-color: #D946FF;
-    box-shadow:
-        0 6px 20px rgba(168, 85, 247, .25),
-        0 0 12px rgba(217, 70, 255, .12);
-
+.back-link:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #9333ea, #7e22ce);
+    border-color: #d8b4fe;
+    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
     transform: translateY(-2px);
 }
 
-.page-header a:active {
+.back-link:active {
     transform: translateY(0);
 }
 
-.page-header a:focus-visible {
-    outline: 2px solid #D946FF;
+.back-link:focus-visible {
+    outline: 2px solid #d8b4fe;
     outline-offset: 4px;
 }
 
 /* Ajuste para celular */
-@media (max-width: 599px) {
-    .page-header a {
-        min-height: 40px;
-        margin-bottom: 15px;
-        padding: 9px 13px;
-        font-size: 12px;
+@media (max-width: 600px) {
+    .back-link {
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 12px;
     }
 }
