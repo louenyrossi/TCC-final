@@ -796,3 +796,72 @@ body {
         background: #100916;
     }
 }
+
+/* =========================================
+   BOTÃO VOLTAR PARA TURMAS
+   MESMO ESTILO DO BOTÃO VOLTAR PARA ALUNOS
+   ========================================= */
+
+.page-header a.back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 20px;
+    margin-bottom: 24px;
+
+    color: #e9d5ff !important;
+    background: linear-gradient(135deg, #25113f, #3b1764) !important;
+
+    border: 1px solid rgba(192, 132, 252, 0.45) !important;
+    border-radius: 14px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none !important;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+    text-shadow: none !important;
+
+    transition: all 0.25s ease;
+}
+
+.page-header a.back-link:hover {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #9333ea, #7e22ce) !important;
+
+    border-color: #d8b4fe !important;
+
+    box-shadow: 0 7px 24px rgba(147, 51, 234, 0.3);
+
+    transform: translateY(-2px);
+    text-shadow: none !important;
+}
+
+.page-header a.back-link:active {
+    transform: translateY(0);
+}
+
+.page-header a.back-link:focus-visible {
+    outline: 2px solid #d8b4fe;
+    outline-offset: 4px;
+}
+
+.page-header a.back-link span {
+    display: inline-block;
+    width: auto;
+    color: inherit;
+    font-size: 18px;
+    line-height: 1;
+}
+
+@media (max-width: 600px) {
+    .page-header a.back-link {
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 12px;
+    }
+}

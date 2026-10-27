@@ -222,10 +222,10 @@ $alunos = $stmt->fetchAll();
 
                 <div>
 
-                    <a href="turmas.php" class="back-link back-link-turma">
-    <span aria-hidden="true">←</span>
-    Voltar para turmas
-</a>
+                    <a href="turmas.php" class="back-link">
+                        <span aria-hidden="true">←</span>
+                        Voltar para turmas
+                    </a>
 
 
                     <span class="eyebrow">
