@@ -1687,4 +1687,74 @@ main.pagina-jogo > header.game-header .back-button:hover {
     margin-top: 24px !important;
 }
 
+/* ==========================================
+   FUNDO DECORATIVO — MEMÓRIA MATHPOWER
+========================================== */
 
+body {
+    background-color: #080611 !important;
+    background-image:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(168, 85, 247, 0.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(217, 70, 239, 0.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(99, 102, 241, 0.16),
+            transparent 40%
+        ),
+        linear-gradient(
+            135deg,
+            #080611 0%,
+            #10091d 50%,
+            #0b0716 100%
+        ) !important;
+    background-attachment: fixed;
+}
+
+/* Pequenos pontos luminosos no fundo */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(circle, rgba(240, 171, 252, 0.8) 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(192, 132, 252, 0.55) 1px, transparent 2px),
+        radial-gradient(circle, rgba(103, 232, 249, 0.4) 1px, transparent 2px);
+
+    background-size:
+        90px 90px,
+        135px 135px,
+        180px 180px;
+
+    background-position:
+        10px 20px,
+        55px 75px,
+        25px 100px;
+
+    opacity: 0.45;
+}
+
+/* Brilho discreto nas bordas da página */
+.pagina-jogo {
+    position: relative;
+}
+
+.pagina-jogo::before {
+    color: rgba(192, 132, 252, 0.12);
+    text-shadow: 0 0 35px rgba(168, 85, 247, 0.15);
+}
+
+.pagina-jogo::after {
+    color: rgba(232, 121, 249, 0.12);
+    text-shadow: 0 0 35px rgba(217, 70, 239, 0.15);
+}
