@@ -1758,3 +1758,24 @@ body::before {
     color: rgba(232, 121, 249, 0.12);
     text-shadow: 0 0 35px rgba(217, 70, 239, 0.15);
 }
+/* Bolinha decorativa MathPower */
+body::after {
+    content: "";
+    position: fixed;
+    width: 180px;
+    height: 180px;
+    top: 12%;
+    right: 8%;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at 30% 30%,
+        #f0abfc,
+        #a855f7 45%,
+        #581c87 75%,
+        transparent 100%
+    );
+    opacity: 0.18;
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: -1;
+}
