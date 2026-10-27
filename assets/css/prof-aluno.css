@@ -1270,3 +1270,75 @@ a:focus-visible {
         padding: 8px 6px;
     }
 }
+/* =========================================
+   BOTÃO VOLTAR PARA ALUNOS
+========================================= */
+
+.page-header a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 42px;
+    margin-bottom: 18px;
+    padding: 10px 16px;
+
+    color: #E9D5FF;
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, .18),
+        rgba(217, 70, 255, .07)
+    );
+
+    border: 1px solid rgba(192, 132, 252, .35);
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .15);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        color .2s ease;
+}
+
+.page-header a:hover {
+    color: #FFFFFF;
+    background: linear-gradient(
+        135deg,
+        #9333EA,
+        #7E22CE
+    );
+
+    border-color: #D946FF;
+    box-shadow:
+        0 6px 20px rgba(168, 85, 247, .25),
+        0 0 12px rgba(217, 70, 255, .12);
+
+    transform: translateY(-2px);
+}
+
+.page-header a:active {
+    transform: translateY(0);
+}
+
+.page-header a:focus-visible {
+    outline: 2px solid #D946FF;
+    outline-offset: 4px;
+}
+
+/* Ajuste para celular */
+@media (max-width: 599px) {
+    .page-header a {
+        min-height: 40px;
+        margin-bottom: 15px;
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+}
