@@ -3565,3 +3565,43 @@ input:focus-visible {
         padding: 16px;
     }
 }
+
+/* Detalhe lateral futurista do caixa */
+.game-card {
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid #a855f7;
+    box-shadow:
+        -8px 0 25px rgba(168, 85, 247, 0.12),
+        0 0 25px rgba(168, 85, 247, 0.08);
+}
+
+/* Brilho neon na lateral */
+.game-card::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 4px;
+    height: 90px;
+    background: #e9b3ff;
+    border-radius: 0 8px 8px 0;
+    box-shadow:
+        0 0 8px #c084fc,
+        0 0 18px #a855f7,
+        0 0 30px #9333ea;
+}
+
+/* Detalhe decorativo no canto */
+.game-card::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 9px;
+    height: 9px;
+    background: #c084fc;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #a855f7;
+    pointer-events: none;
+}
