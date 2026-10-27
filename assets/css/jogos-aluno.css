@@ -1412,149 +1412,176 @@ button:focus-visible {
 }
 
 /* ==========================================
-   MATHPOWER — DECORAÇÃO GAMER NEON
-   Preserva o layout e as imagens dos cards
+   MATHPOWER — AMBIENTE GAMER FUTURISTA
 ========================================== */
 
-/* Fundo com luzes ambientes */
 .main-content {
-    background-image:
+    position: relative;
+    isolation: isolate;
+}
+
+/* Luzes coloridas no fundo da página */
+.main-content::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 110px;
+    right: 0;
+    width: 100%;
+    height: 700px;
+    pointer-events: none;
+    background:
         radial-gradient(
-            circle at 85% 12%,
-            rgba(168, 85, 247, 0.12),
+            ellipse at 80% 15%,
+            rgba(168, 85, 247, 0.18),
             transparent 32%
         ),
         radial-gradient(
-            circle at 12% 70%,
-            rgba(217, 70, 255, 0.07),
+            ellipse at 15% 40%,
+            rgba(217, 70, 255, 0.10),
             transparent 30%
+        ),
+        radial-gradient(
+            ellipse at 55% 85%,
+            rgba(59, 130, 246, 0.08),
+            transparent 32%
         );
 }
 
-/* Cards: brilho e profundidade */
-.game-card {
-    border-color: rgba(192, 132, 252, 0.42);
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.25),
-        inset 0 1px rgba(255, 255, 255, 0.05);
-    transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
+/* Símbolos matemáticos decorativos */
+.content {
+    position: relative;
+    isolation: isolate;
 }
 
-/* Linha luminosa no topo */
-.game-card::before {
-    content: "";
+.content::before {
+    content: "＋";
     position: absolute;
-    top: 0;
-    left: 10%;
-    width: 80%;
-    height: 2px;
+    z-index: -1;
+    top: 140px;
+    right: 4%;
+    color: rgba(217, 70, 255, 0.32);
+    font-size: 66px;
+    font-weight: 900;
+    text-shadow:
+        0 0 12px rgba(217, 70, 255, 0.7),
+        0 0 35px rgba(168, 85, 247, 0.4);
+    pointer-events: none;
+    animation: math-float 5s ease-in-out infinite;
+}
+
+/* Segundo símbolo */
+.page-header::after {
+    content: "÷";
+    position: absolute;
+    top: 155px;
+    right: 13%;
+    color: rgba(56, 189, 248, 0.5);
+    font-size: 42px;
+    font-weight: 900;
+    text-shadow: 0 0 18px rgba(56, 189, 248, 0.65);
+    pointer-events: none;
+    animation: math-float 6s ease-in-out infinite reverse;
+}
+
+/* Cabeçalho com destaque neon */
+.page-kicker {
+    text-shadow:
+        0 0 8px rgba(217, 70, 255, 0.75),
+        0 0 22px rgba(168, 85, 247, 0.35);
+}
+
+.page-header h1 {
+    text-shadow:
+        0 0 20px rgba(168, 85, 247, 0.25),
+        0 0 45px rgba(217, 70, 255, 0.10);
+}
+
+/* Linha luminosa abaixo do título */
+.page-header h1::after {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 4px;
+    margin-top: 14px;
+    border-radius: 10px;
     background: linear-gradient(
         90deg,
-        transparent,
         #D946FF,
-        #A855F7,
+        #8B5CF6,
         transparent
     );
-    opacity: 0.8;
+    box-shadow: 0 0 15px rgba(217, 70, 255, 0.65);
+}
+
+/* Área dos jogos com iluminação ambiente */
+.games-section {
+    position: relative;
+    isolation: isolate;
+}
+
+.games-section::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    border-radius: 30px;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(126, 34, 206, 0.08),
+        transparent 70%
+    );
     pointer-events: none;
 }
 
-/* Hover sem alterar as dimensões */
+/* Card com reflexo luminoso */
+.game-card {
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
 .game-card:hover {
-    transform: translateY(-4px);
-    border-color: #D946FF;
     box-shadow:
-        0 16px 35px rgba(0, 0, 0, 0.32),
-        0 0 18px rgba(168, 85, 247, 0.22),
-        0 0 35px rgba(217, 70, 255, 0.10);
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 22px rgba(168, 85, 247, 0.24);
 }
 
-/* Ícones dos jogos */
-.game-icon {
-    border-color: rgba(217, 70, 255, 0.55);
-    box-shadow:
-        inset 0 0 15px rgba(217, 70, 255, 0.12),
-        0 0 18px rgba(168, 85, 247, 0.2);
-    transition:
-        box-shadow 0.3s ease,
-        filter 0.3s ease;
-}
-
-.game-card:hover .game-icon {
-    filter: brightness(1.15);
-    box-shadow:
-        inset 0 0 18px rgba(217, 70, 255, 0.18),
-        0 0 24px rgba(217, 70, 255, 0.30);
-}
-
-/* Título com destaque */
-.game-info h2 {
-    text-shadow: 0 0 16px rgba(168, 85, 247, 0.16);
-}
-
-/* Etiquetas */
-.game-badge {
-    background: rgba(168, 85, 247, 0.16);
-    border-color: rgba(217, 70, 255, 0.35);
-    box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.06);
-}
-
-/* Barra de progresso */
-.progress-bar {
-    background: rgba(10, 7, 16, 0.85);
-    border-color: rgba(192, 132, 252, 0.2);
-}
-
-.progress-fill {
-    background: linear-gradient(
-        90deg,
-        #7928CA,
-        #A855F7,
-        #E879FF
-    );
-    box-shadow: 0 0 12px rgba(217, 70, 255, 0.45);
-}
-
-/* Botão jogar */
-.play-button {
-    border-color: rgba(232, 121, 255, 0.4);
-    background: linear-gradient(
-        110deg,
-        #7928CA,
-        #9D4EDD,
-        #B44CFF
-    );
-    box-shadow:
-        0 5px 18px rgba(121, 40, 202, 0.25),
-        inset 0 1px rgba(255, 255, 255, 0.12);
-}
-
-.play-button:hover {
-    filter: brightness(1.12);
-    box-shadow:
-        0 7px 22px rgba(121, 40, 202, 0.32),
-        0 0 18px rgba(217, 70, 255, 0.25);
-}
-
-/* Foco visível para teclado */
-.game-card a:focus-visible,
-.play-button:focus-visible {
-    outline: 2px solid #E879FF;
-    outline-offset: 4px;
-}
-
-/* Evita movimentos para quem prefere animações reduzidas */
-@media (prefers-reduced-motion: reduce) {
-    .game-card,
-    .game-icon,
-    .play-button {
-        transition: none !important;
+/* Animação dos símbolos */
+@keyframes math-float {
+    0%, 100% {
+        transform: translateY(0) rotate(-8deg);
     }
 
-    .game-card:hover {
-        transform: none;
+    50% {
+        transform: translateY(-14px) rotate(8deg);
+    }
+}
+
+/* Não sobrecarrega telas pequenas */
+@media (max-width: 700px) {
+    .content::before {
+        top: 100px;
+        right: 5%;
+        font-size: 42px;
+    }
+
+    .page-header::after {
+        display: none;
+    }
+
+    .page-header h1::after {
+        width: 65px;
+    }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .content::before,
+    .page-header::after {
+        animation: none !important;
     }
 }
