@@ -1503,3 +1503,90 @@ button {
         animation-iteration-count: 1 !important;
     }
 }
+
+/* ==========================================
+   MATHPOWER — FUNDO ELEGANTE DO DASHBOARD
+   Sidebar preservado
+========================================== */
+
+.main-content {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(
+            ellipse at 78% 12%,
+            rgba(126, 78, 190, 0.16),
+            transparent 34%
+        ),
+        radial-gradient(
+            ellipse at 12% 45%,
+            rgba(94, 65, 145, 0.11),
+            transparent 32%
+        ),
+        radial-gradient(
+            ellipse at 70% 92%,
+            rgba(174, 130, 225, 0.09),
+            transparent 38%
+        ),
+        linear-gradient(
+            145deg,
+            #0D0A14 0%,
+            #110C1A 48%,
+            #0C0913 100%
+        );
+}
+
+/* Pontos luminosos decorativos */
+.main-content::before {
+    content: "";
+    position: fixed;
+    top: 72px;
+    right: 0;
+    bottom: 0;
+    left: var(--sidebar-width);
+
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(circle, rgba(218, 198, 255, 0.8) 1px, transparent 2px),
+        radial-gradient(circle, rgba(168, 125, 230, 0.65) 1.5px, transparent 2.5px),
+        radial-gradient(circle, rgba(238, 220, 255, 0.45) 1px, transparent 2px);
+
+    background-size:
+        73px 73px,
+        127px 127px,
+        181px 181px;
+
+    background-position:
+        5px 12px,
+        43px 67px,
+        91px 28px;
+
+    opacity: 0.48;
+}
+
+/* Brilho suave no canto superior */
+.main-content::after {
+    content: "";
+    position: fixed;
+
+    width: 280px;
+    height: 280px;
+    top: 100px;
+    right: 5%;
+
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+
+    background: rgba(139, 92, 246, 0.12);
+    filter: blur(100px);
+}
+
+/* Mantém o fundo adaptado para celular */
+@media (max-width: 900px) {
+    .main-content::before {
+        left: 0;
+    }
+}
