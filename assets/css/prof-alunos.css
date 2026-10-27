@@ -1347,40 +1347,152 @@ body,
 .main-content .content a {
     color: #C084FC;
 }
+
 /* ==========================================
-   MATHPOWER — BOLINHAS NO FUNDO DOS ALUNOS
-   Não altera a sidebar nem os cards
+   MATHPOWER — ALUNOS COM VISUAL NEON
+   Mantém as medidas dos containers
+   Não altera a sidebar
    ========================================== */
 
-.main-content > .content {
-    background-color: #0A0710 !important;
+:root {
+    --neon-roxo: #A855F7;
+    --neon-rosa: #D946EF;
+    --neon-texto: #F7F0FF;
+}
 
-    background-image:
-        radial-gradient(
-            circle,
-            rgba(217, 70, 255, 0.85) 2px,
-            transparent 2.5px
-        ),
-        radial-gradient(
-            circle,
-            rgba(168, 85, 247, 0.75) 1.5px,
-            transparent 2px
-        ),
-        radial-gradient(
-            circle,
-            rgba(192, 132, 252, 0.55) 2px,
-            transparent 2.5px
-        ) !important;
+/* Título principal: mesmas medidas do dashboard */
+.main-content .page-header h1 {
+    color: var(--neon-texto) !important;
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.7px;
+}
 
-    background-size:
-        58px 58px,
-        91px 91px,
-        137px 137px !important;
+.main-content .page-header p {
+    color: #D0C1E2 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
 
-    background-position:
-        12px 15px,
-        42px 60px,
-        75px 28px !important;
+.main-content .eyebrow {
+    color: var(--neon-rosa) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px;
+}
 
-    background-repeat: repeat !important;
+/* Títulos das seções */
+.main-content .section-header h2,
+.main-content .turma-group-header h3 {
+    color: var(--neon-texto) !important;
+    font-weight: 700 !important;
+}
+
+.main-content .section-header h2 {
+    font-size: 20px !important;
+}
+
+.main-content .turma-group-header h3 {
+    font-size: 20px !important;
+}
+
+/* Containers neon — preserva padding e dimensões */
+.main-content .summary-card,
+.main-content .filters-card,
+.main-content .student-card,
+.main-content .empty-card,
+.main-content .no-results {
+    background: linear-gradient(
+        145deg,
+        rgba(30, 18, 44, 0.98),
+        rgba(17, 11, 26, 0.99)
+    ) !important;
+
+    border: 1px solid rgba(168, 85, 247, 0.55) !important;
+    box-shadow:
+        0 0 8px rgba(168, 85, 247, 0.12),
+        0 0 18px rgba(168, 85, 247, 0.08),
+        inset 0 0 12px rgba(168, 85, 247, 0.04) !important;
+
+    color: var(--neon-texto) !important;
+    background-clip: padding-box;
+}
+
+/* Brilho neon ao passar o mouse */
+.main-content .summary-card:hover,
+.main-content .student-card:hover {
+    border-color: var(--neon-rosa) !important;
+    box-shadow:
+        0 0 10px rgba(217, 70, 239, 0.30),
+        0 0 24px rgba(168, 85, 247, 0.18) !important;
+}
+
+/* Informações dos cards */
+.main-content .summary-card span,
+.main-content .student-info span,
+.main-content .student-info strong,
+.main-content .student-info small,
+.main-content .turma-total,
+.main-content .section-header p {
+    color: #D0C1E2 !important;
+}
+
+.main-content .student-info strong {
+    color: var(--neon-texto) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.main-content .summary-card strong {
+    color: var(--neon-texto) !important;
+    font-size: 25px !important;
+    font-weight: 800 !important;
+}
+
+.main-content .turma-label,
+.main-content .student-arrow {
+    color: var(--neon-rosa) !important;
+}
+
+/* Ícones e avatares */
+.main-content .summary-icon,
+.main-content .student-avatar {
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, 0.24),
+        rgba(217, 70, 239, 0.12)
+    ) !important;
+
+    border: 1px solid rgba(168, 85, 247, 0.45) !important;
+    color: #E9D5FF !important;
+}
+
+/* Busca e filtros */
+.main-content .search-wrapper {
+    background: #100B18 !important;
+    border: 1px solid rgba(168, 85, 247, 0.45) !important;
+}
+
+.main-content .search-wrapper:focus-within {
+    border-color: var(--neon-rosa) !important;
+    box-shadow: 0 0 10px rgba(217, 70, 239, 0.18);
+}
+
+.main-content .search-wrapper input,
+.main-content .filters-card select {
+    color: var(--neon-texto) !important;
+    font-size: 13px !important;
+}
+
+.main-content .filters-card select {
+    background-color: #100B18 !important;
+    border-color: rgba(168, 85, 247, 0.45) !important;
+}
+
+/* Medidas do título no celular */
+@media (max-width: 800px) {
+    .main-content .page-header h1 {
+        font-size: 25px !important;
+    }
 }
