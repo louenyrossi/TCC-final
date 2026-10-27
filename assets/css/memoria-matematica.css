@@ -1758,37 +1758,57 @@ body::before {
     color: rgba(232, 121, 249, 0.12);
     text-shadow: 0 0 35px rgba(217, 70, 239, 0.15);
 }
-/* MUITAS BOLINHAS DECORATIVAS */
+/* FUNDO DECORADO MATHPOWER */
+html {
+    min-height: 100%;
+    background: #090516 !important;
+}
+
+body {
+    min-height: 100vh;
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 20%, rgba(168, 85, 247, .22), transparent 35%),
+        radial-gradient(ellipse at 85% 70%, rgba(217, 70, 239, .18), transparent 35%),
+        linear-gradient(135deg, #090516, #160b2b, #090516) !important;
+    background-attachment: fixed !important;
+}
+
+/* Bolinhas decorativas */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-
     background-image:
-        radial-gradient(circle, #f5d0fe 2px, transparent 3px),
-        radial-gradient(circle, #c084fc 2px, transparent 3px),
-        radial-gradient(circle, #e879f9 3px, transparent 4px),
-        radial-gradient(circle, #a78bfa 1.5px, transparent 2.5px),
-        radial-gradient(circle, #67e8f9 2px, transparent 3px),
-        radial-gradient(circle, #ffffff 1px, transparent 2px);
+        radial-gradient(circle, #e9d5ff 2px, transparent 3px),
+        radial-gradient(circle, #c084fc 3px, transparent 4px),
+        radial-gradient(circle, #f0abfc 2px, transparent 3px),
+        radial-gradient(circle, #67e8f9 2px, transparent 3px);
+    background-size: 110px 110px, 170px 170px, 230px 230px, 290px 290px;
+    background-position: 10px 20px, 55px 80px, 100px 40px, 30px 150px;
+    opacity: .65;
+}
 
-    background-size:
-        45px 45px,
-        65px 65px,
-        90px 90px,
-        35px 35px,
-        120px 120px,
-        25px 25px;
+/* Mantém o conteúdo do jogo acima das bolinhas */
+body > * {
+    position: relative;
+    z-index: 1;
+}
 
-    background-position:
-        0 0,
-        20px 30px,
-        45px 15px,
-        10px 20px,
-        60px 50px,
-        5px 10px;
-
-    opacity: 0.75;
+/* Brilhos nos cantos */
+.pagina-jogo::after {
+    content: "";
+    position: fixed;
+    width: 240px;
+    height: 240px;
+    right: -80px;
+    top: 15%;
+    border-radius: 50%;
+    background: #a855f7;
+    filter: blur(100px);
+    opacity: .3;
+    pointer-events: none;
+    z-index: 0;
 }
