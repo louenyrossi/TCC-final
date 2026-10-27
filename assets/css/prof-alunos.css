@@ -1347,47 +1347,15 @@ body,
 .main-content .content a {
     color: #C084FC;
 }
-/* ==========================================
-   MATHPOWER — BOLINHAS DECORATIVAS NO FUNDO
-   Somente na área dos alunos
-   ========================================== */
+/* BOLINHAS NO FUNDO DA ÁREA DOS ALUNOS */
 
 .main-content {
-    position: relative;
-    isolation: isolate;
-    background: #0A0710 !important;
-}
-
-.main-content::before {
-    content: "";
-    position: fixed;
-    top: 70px;
-    right: 0;
-    bottom: 0;
-    left: var(--sidebar-width, 260px);
-    z-index: -1;
-    pointer-events: none;
-
+    background-color: #0A0710 !important;
     background-image:
-        radial-gradient(circle, rgba(217, 70, 255, 0.85) 1.5px, transparent 2px),
-        radial-gradient(circle, rgba(192, 132, 252, 0.65) 2px, transparent 3px),
-        radial-gradient(circle, rgba(168, 85, 247, 0.45) 1px, transparent 2px);
-
-    background-size:
-        65px 65px,
-        103px 103px,
-        147px 147px;
-
-    background-position:
-        12px 18px,
-        42px 55px,
-        80px 12px;
-
-    opacity: 0.7;
-}
-
-@media (max-width: 900px) {
-    .main-content::before {
-        left: 0;
-    }
+        radial-gradient(circle, #D946FF 2px, transparent 3px),
+        radial-gradient(circle, #A855F7 2px, transparent 3px),
+        radial-gradient(circle, #C084FC 1.5px, transparent 2.5px) !important;
+    background-size: 55px 55px, 85px 85px, 120px 120px !important;
+    background-position: 10px 15px, 35px 45px, 60px 20px !important;
+    background-repeat: repeat !important;
 }
