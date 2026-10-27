@@ -2924,3 +2924,23 @@ button:focus-visible {
         font-size: 24px;
     }
 }
+/* Linha neon abaixo do título da Trilha */
+.section-heading h1::after,
+.section-heading h2::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    margin-top: 12px;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        #d946ef,
+        #a855f7,
+        #7c3aed,
+        transparent
+    );
+    box-shadow:
+        0 0 8px rgba(217, 70, 239, 0.8),
+        0 0 18px rgba(168, 85, 247, 0.5);
+}
