@@ -1585,3 +1585,221 @@ button:focus-visible {
         animation: none !important;
     }
 }
+
+/* ==========================================
+   MATHPOWER — CÉU ESTRELADO NEON
+========================================== */
+
+.main-content {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Várias estrelas espalhadas pelo fundo */
+.main-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.85;
+
+    background-image:
+        radial-gradient(circle, #ffffff 1px, transparent 1.8px),
+        radial-gradient(circle, #d946ff 1.4px, transparent 2px),
+        radial-gradient(circle, #a855f7 1px, transparent 2px),
+        radial-gradient(circle, #60a5fa 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 2px);
+
+    background-size:
+        47px 53px,
+        83px 97px,
+        127px 113px,
+        163px 149px,
+        211px 181px;
+
+    background-position:
+        5px 10px,
+        30px 45px,
+        70px 20px,
+        15px 90px,
+        100px 60px;
+
+    animation: estrelas-brilhar 5s ease-in-out infinite alternate;
+}
+
+/* Brilhos maiores no espaço */
+.content::before {
+    content: "✦     ✧       ✦          ✧";
+    position: absolute;
+    top: 100px;
+    right: 5%;
+    z-index: -1;
+    color: #e879ff;
+    font-size: 25px;
+    letter-spacing: 18px;
+    text-shadow:
+        0 0 8px #d946ff,
+        0 0 22px rgba(168, 85, 247, .8);
+    pointer-events: none;
+    animation: estrelas-flutuar 4s ease-in-out infinite;
+}
+
+/* ==========================================
+   DICA DO DIA — PAINEL NEON
+========================================== */
+
+.tip-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 22px;
+    border: 1px solid rgba(217, 70, 255, .48);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(168, 85, 247, .22),
+            transparent 45%
+        ),
+        linear-gradient(
+            125deg,
+            rgba(35, 17, 54, .96),
+            rgba(14, 9, 27, .98)
+        );
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, .24),
+        0 0 18px rgba(168, 85, 247, .10),
+        inset 0 1px rgba(255, 255, 255, .06);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+/* Reflexo decorativo dentro da dica */
+.tip-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 84%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #e879ff,
+        #a855f7,
+        #60a5fa,
+        transparent
+    );
+    box-shadow: 0 0 14px rgba(217, 70, 255, .7);
+    pointer-events: none;
+}
+
+/* Símbolos decorativos no canto */
+.tip-card::after {
+    content: "✦  ✧  +";
+    position: absolute;
+    right: 18px;
+    bottom: 8px;
+    color: rgba(217, 70, 255, .35);
+    font-size: 23px;
+    letter-spacing: 8px;
+    pointer-events: none;
+}
+
+/* Ícone da dica */
+.tip-icon {
+    position: relative;
+    border-color: rgba(217, 70, 255, .55);
+    border-radius: 13px;
+    background: linear-gradient(
+        145deg,
+        #34204d,
+        #1a1029
+    );
+    color: #f0abfc;
+    box-shadow:
+        0 0 15px rgba(168, 85, 247, .18),
+        inset 0 0 12px rgba(217, 70, 255, .10);
+}
+
+/* Título */
+.tip-card strong {
+    color: #f0abfc;
+    text-shadow: 0 0 12px rgba(217, 70, 255, .25);
+}
+
+/* Texto mais legível */
+.tip-card p {
+    color: #d4c6e5;
+    line-height: 1.7;
+}
+
+/* Destaque ao passar o mouse */
+.tip-card:hover {
+    border-color: rgba(217, 70, 255, .8);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, .3),
+        0 0 24px rgba(168, 85, 247, .18);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   ANIMAÇÕES
+========================================== */
+
+@keyframes estrelas-brilhar {
+    from {
+        opacity: .55;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes estrelas-flutuar {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: .7;
+    }
+
+    50% {
+        transform: translateY(-9px);
+        opacity: 1;
+    }
+}
+
+/* Celular */
+@media (max-width: 700px) {
+    .content::before {
+        right: 2%;
+        font-size: 18px;
+        letter-spacing: 7px;
+    }
+
+    .tip-card {
+        padding: 17px;
+    }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .main-content::before,
+    .content::before {
+        animation: none !important;
+    }
+
+    .tip-card {
+        transition: none !important;
+    }
+
+    .tip-card:hover {
+        transform: none;
+    }
+}
