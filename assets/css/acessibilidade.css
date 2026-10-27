@@ -230,3 +230,107 @@ html.mp-a11y-reduce-motion *::after {
         transition: none !important;
     }
 }
+
+/* =====================================
+   ACESSIBILIDADE — MATHPOWER
+===================================== */
+
+/* Botão flutuante de acessibilidade */
+#botao-acessibilidade,
+.botao-acessibilidade,
+.btn-acessibilidade,
+.acessibilidade-btn {
+    background: linear-gradient(135deg, #a855f7, #7c3aed) !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(216, 180, 254, 0.8) !important;
+    border-radius: 18px !important;
+    box-shadow:
+        0 0 15px rgba(168, 85, 247, 0.45),
+        0 0 30px rgba(168, 85, 247, 0.18) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#botao-acessibilidade:hover,
+.botao-acessibilidade:hover,
+.btn-acessibilidade:hover,
+.acessibilidade-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 25px rgba(192, 132, 252, 0.7) !important;
+}
+
+/* Painel de acessibilidade */
+#painel-acessibilidade,
+.painel-acessibilidade,
+.menu-acessibilidade,
+.acessibilidade-panel {
+    background: rgba(18, 10, 36, 0.97) !important;
+    color: #f5eaff !important;
+    border: 1px solid rgba(192, 132, 252, 0.55) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(16px);
+    padding: 22px !important;
+}
+
+/* Títulos */
+#painel-acessibilidade h2,
+#painel-acessibilidade h3,
+.painel-acessibilidade h2,
+.painel-acessibilidade h3,
+.menu-acessibilidade h2,
+.menu-acessibilidade h3 {
+    color: #e9d5ff !important;
+    font-weight: 800;
+}
+
+/* Botões internos */
+#painel-acessibilidade button,
+.painel-acessibilidade button,
+.menu-acessibilidade button,
+.acessibilidade-panel button {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: #ffffff;
+    border: 1px solid #c084fc;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#painel-acessibilidade button:hover,
+.painel-acessibilidade button:hover,
+.menu-acessibilidade button:hover,
+.acessibilidade-panel button:hover {
+    background: linear-gradient(135deg, #9333ea, #c026d3);
+    transform: translateY(-2px);
+}
+
+/* Campos e opções */
+#painel-acessibilidade input,
+.painel-acessibilidade input,
+.menu-acessibilidade input {
+    accent-color: #c084fc;
+}
+
+/* Foco visível para navegação por teclado */
+#painel-acessibilidade button:focus-visible,
+.painel-acessibilidade button:focus-visible,
+.menu-acessibilidade button:focus-visible,
+.acessibilidade-panel button:focus-visible {
+    outline: 3px solid #67e8f9 !important;
+    outline-offset: 4px;
+}
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+    #botao-acessibilidade,
+    .botao-acessibilidade,
+    .btn-acessibilidade,
+    .acessibilidade-btn,
+    #painel-acessibilidade button,
+    .painel-acessibilidade button {
+        transition: none !important;
+        transform: none !important;
+    }
+}
