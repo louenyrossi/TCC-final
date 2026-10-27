@@ -1313,3 +1313,111 @@ body {
         opacity: 0.9;
     }
 }
+/* ==========================================
+   MATHPOWER — FUNDO MATEMÁTICO CÓSMICO
+========================================== */
+
+.pagina {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(
+            ellipse at 15% 20%,
+            rgba(126, 34, 206, 0.23),
+            transparent 32%
+        ),
+        radial-gradient(
+            ellipse at 90% 45%,
+            rgba(192, 38, 255, 0.17),
+            transparent 30%
+        ),
+        radial-gradient(
+            ellipse at 45% 85%,
+            rgba(88, 28, 135, 0.20),
+            transparent 35%
+        ),
+        #09090d;
+}
+
+/* Camada de símbolos matemáticos gigantes */
+.pagina .conteudo {
+    position: relative;
+    isolation: isolate;
+    background: none;
+}
+
+.pagina .conteudo::before {
+    content: "π      ∑       √       ∞";
+    position: absolute;
+    inset: 30px -3% auto;
+    z-index: -1;
+    height: 650px;
+    overflow: hidden;
+    color: rgba(192, 38, 255, 0.13);
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: clamp(45px, 8vw, 100px);
+    font-weight: 900;
+    letter-spacing: 16px;
+    line-height: 2.2;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Fórmulas decorativas nas laterais */
+.pagina .conteudo::after {
+    content: "x² + y²     Δ     a² + b²     ∫";
+    position: absolute;
+    top: 370px;
+    left: -2%;
+    z-index: -1;
+    width: 104%;
+    color: rgba(168, 85, 247, 0.12);
+    font-family: "Segoe UI", sans-serif;
+    font-size: clamp(17px, 2.8vw, 30px);
+    font-weight: 800;
+    letter-spacing: 8px;
+    line-height: 5;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Pontos de energia no fundo */
+.pagina {
+    background-image:
+        radial-gradient(circle at 12% 22%, rgba(233, 181, 255, 0.85) 1px, transparent 2px),
+        radial-gradient(circle at 82% 28%, rgba(192, 38, 255, 0.7) 1.5px, transparent 3px),
+        radial-gradient(circle at 70% 72%, rgba(168, 85, 247, 0.65) 1px, transparent 2px),
+        radial-gradient(ellipse at 15% 20%, rgba(126, 34, 206, 0.20), transparent 32%),
+        radial-gradient(ellipse at 90% 45%, rgba(192, 38, 255, 0.15), transparent 30%),
+        #09090d;
+    background-size:
+        137px 151px,
+        181px 167px,
+        113px 127px,
+        auto,
+        auto,
+        auto;
+}
+
+/* Halo atrás do título */
+.titulo-area h1 {
+    text-shadow:
+        0 0 12px rgba(192, 38, 255, 0.45),
+        0 0 35px rgba(168, 85, 247, 0.25);
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .pagina .conteudo::before {
+        font-size: 48px;
+        letter-spacing: 8px;
+        opacity: 0.8;
+    }
+
+    .pagina .conteudo::after {
+        font-size: 16px;
+        letter-spacing: 3px;
+    }
+}
