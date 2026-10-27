@@ -2785,3 +2785,142 @@ button:focus-visible {
         0 0 18px rgba(168, 85, 247, 0.2),
         0 10px 30px rgba(0, 0, 0, 0.22);
 }
+
+/* =========================================
+   MATHPOWER — DECORAÇÃO EXTRA DA TRILHA
+========================================= */
+
+/* Fundo com mais profundidade e cor */
+.main-content {
+    background:
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(168, 85, 247, 0.12),
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 88% 42%,
+            rgba(217, 70, 255, 0.09),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 48% 90%,
+            rgba(96, 55, 180, 0.12),
+            transparent 30%
+        ),
+        #09060f;
+}
+
+/* Estrelas decorativas nas laterais */
+.main-content > .content {
+    position: relative;
+    isolation: isolate;
+}
+
+.main-content > .content::before {
+    content: "✦";
+    position: absolute;
+    top: 130px;
+    left: 4%;
+    z-index: -1;
+    color: rgba(232, 121, 255, 0.75);
+    font-size: 25px;
+    text-shadow: 0 0 14px rgba(217, 70, 255, 0.7);
+    pointer-events: none;
+}
+
+.main-content > .content::after {
+    content: "✧";
+    position: absolute;
+    top: 390px;
+    right: 5%;
+    z-index: -1;
+    color: rgba(199, 125, 255, 0.8);
+    font-size: 32px;
+    text-shadow: 0 0 18px rgba(168, 85, 247, 0.65);
+    pointer-events: none;
+}
+
+/* Cabeçalho com um toque mágico */
+.page-header {
+    position: relative;
+}
+
+.eyebrow::before {
+    content: "✦ ";
+    color: #f0abfc;
+}
+
+.page-header h1 {
+    text-shadow:
+        0 0 18px rgba(168, 85, 247, 0.2);
+}
+
+/* Resumo da trilha — brilho interno delicado */
+.trail-summary {
+    isolation: isolate;
+    border-color: rgba(199, 125, 255, 0.65);
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(168, 85, 247, 0.18),
+            transparent 42%
+        ),
+        linear-gradient(135deg, #171124, #100b1b);
+}
+
+.trail-summary::before {
+    content: "✧";
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    color: rgba(232, 121, 255, 0.6);
+    font-size: 28px;
+    pointer-events: none;
+}
+
+/* Ícones das etapas com acabamento mais especial */
+.path-node {
+    position: relative;
+}
+
+.path-item.current .path-node {
+    box-shadow:
+        0 0 12px rgba(217, 70, 255, 0.35),
+        0 0 25px rgba(168, 85, 247, 0.2);
+}
+
+/* Pequenos detalhes nos cards, sem aumentar muito o neon */
+.path-card::after {
+    content: "✧";
+    top: 9px;
+    right: 13px;
+    color: rgba(232, 121, 255, 0.45);
+    font-size: 22px;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
+}
+
+/* Barra de progresso com gradiente mais vivo */
+.progress-fill {
+    background: linear-gradient(
+        90deg,
+        #7928ca,
+        #b84dff,
+        #e879ff
+    );
+}
+
+/* Decoração mais discreta em telas pequenas */
+@media (max-width: 700px) {
+    .main-content > .content::before {
+        top: 100px;
+        left: 3%;
+        font-size: 19px;
+    }
+
+    .main-content > .content::after {
+        top: 330px;
+        right: 3%;
+        font-size: 24px;
+    }
+}
