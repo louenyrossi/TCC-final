@@ -329,3 +329,66 @@
 .sidebar-bottom a.logout-link span:last-child {
     font-size: 14px !important;
 }
+/* ==========================================
+   MATHPOWER — BORDAS ROXO NEON
+========================================== */
+
+.stat-card,
+.progress-overview,
+.games-progress,
+.tip-card {
+    border: 1px solid #a855f7;
+    box-shadow:
+        0 0 8px rgba(168, 85, 247, 0.35),
+        0 0 18px rgba(168, 85, 247, 0.15),
+        inset 0 0 12px rgba(168, 85, 247, 0.035);
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* Brilho mais intenso ao passar o mouse */
+.stat-card:hover,
+.progress-overview:hover,
+.games-progress:hover,
+.tip-card:hover {
+    border-color: #d946ef;
+    box-shadow:
+        0 0 10px rgba(192, 38, 255, 0.45),
+        0 0 25px rgba(168, 85, 247, 0.22),
+        inset 0 0 15px rgba(168, 85, 247, 0.06);
+
+    transform: translateY(-3px);
+}
+
+/* Ícones combinando com as bordas */
+.stat-icon,
+.game-icon {
+    border: 1px solid rgba(192, 38, 255, 0.45);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.15);
+}
+
+/* Barra de progresso com contorno roxo */
+.progress-bar {
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.12);
+}
+
+/* Destaque na barra preenchida */
+.progress-fill {
+    box-shadow:
+        0 0 8px rgba(168, 85, 247, 0.65),
+        0 0 16px rgba(192, 38, 255, 0.3);
+}
+
+/* Acessibilidade: reduz movimentos */
+@media (prefers-reduced-motion: reduce) {
+    .stat-card,
+    .progress-overview,
+    .games-progress,
+    .tip-card {
+        transition: none;
+    }
+}
