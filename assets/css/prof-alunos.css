@@ -1496,3 +1496,77 @@ body,
         font-size: 25px !important;
     }
 }
+
+/* ==========================================
+   TÍTULO "MEUS ALUNOS" — IGUAL AO DASHBOARD
+   ========================================== */
+
+.main-content .page-header h1 {
+    color: #F7F0FF !important;
+    font-family: Inter, Arial, Helvetica, sans-serif !important;
+    font-size: 29px !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.8px !important;
+    overflow-wrap: anywhere;
+}
+
+/* Texto abaixo do título */
+.main-content .page-header p {
+    max-width: 760px;
+    margin-top: 10px !important;
+    color: #D0C1E2 !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+}
+
+/* Texto "ÁREA DO PROFESSOR" */
+.main-content .page-header .eyebrow {
+    display: inline-block;
+    margin-bottom: 7px !important;
+    color: #C084FC !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1.4px !important;
+    text-transform: uppercase;
+    text-shadow: 0 0 14px rgba(168, 85, 247, .20);
+}
+
+/* Espaçamento igual ao dashboard */
+.main-content .page-header {
+    margin-bottom: 26px !important;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+    .main-content .page-header {
+        margin-bottom: 28px !important;
+    }
+
+    .main-content .page-header h1 {
+        font-size: 34px !important;
+    }
+}
+
+/* Telas grandes */
+@media (min-width: 1200px) {
+    .main-content .page-header h1 {
+        font-size: 39px !important;
+    }
+}
+
+/* Celular */
+@media (max-width: 599px) {
+    .main-content .page-header {
+        margin-bottom: 22px !important;
+    }
+
+    .main-content .page-header h1 {
+        font-size: 25px !important;
+        letter-spacing: -0.5px !important;
+    }
+
+    .main-content .page-header p {
+        font-size: 13px !important;
+    }
+}
