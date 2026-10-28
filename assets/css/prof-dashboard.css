@@ -1779,3 +1779,412 @@ button {
     color: #FFFFFF !important;
     letter-spacing: -1px;
 }
+
+/* ==========================================
+   MATHPOWER — DASHBOARD PREMIUM NEON
+   Mantém a estrutura original.
+   Não altera a sidebar.
+========================================== */
+
+.main-content {
+    --neon-purple: #b45cff;
+    --neon-pink: #ed72ff;
+    --neon-blue: #795cff;
+    --panel: rgba(24, 14, 36, 0.88);
+
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 82% 8%,
+            rgba(137, 48, 207, 0.20), transparent 35%),
+        radial-gradient(ellipse at 8% 45%,
+            rgba(92, 35, 160, 0.13), transparent 36%),
+        linear-gradient(135deg, #0b0712 0%, #10091a 55%, #0b0712 100%);
+}
+
+/* Luzes decorativas no fundo */
+.main-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 90% 18%,
+            rgba(190, 87, 255, 0.13), transparent 19%),
+        radial-gradient(circle at 40% 78%,
+            rgba(104, 54, 255, 0.09), transparent 28%);
+}
+
+/* Espaçamento e profundidade do conteúdo */
+.main-content .content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================
+   CABEÇALHO DE BOAS-VINDAS
+========================================== */
+
+.main-content .page-header {
+    position: relative;
+    overflow: hidden;
+    padding: 42px;
+    margin-bottom: 34px;
+    border: 1px solid rgba(190, 111, 255, 0.38);
+    border-radius: 30px;
+    background:
+        radial-gradient(ellipse at 90% 0%,
+            rgba(172, 65, 255, 0.25), transparent 43%),
+        linear-gradient(120deg,
+            rgba(48, 21, 70, 0.98),
+            rgba(20, 13, 31, 0.98) 65%,
+            rgba(37, 17, 54, 0.98));
+    box-shadow:
+        0 0 0 1px rgba(145, 65, 220, 0.07),
+        0 15px 45px rgba(0, 0, 0, 0.24),
+        0 0 35px rgba(145, 54, 230, 0.10),
+        inset 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.main-content .page-header::before {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    right: -65px;
+    top: -110px;
+    border-radius: 50%;
+    background: rgba(172, 76, 255, 0.17);
+    filter: blur(32px);
+    pointer-events: none;
+}
+
+.main-content .page-header::after {
+    content: "✦";
+    position: absolute;
+    right: 38px;
+    top: 24px;
+    color: #d6a2ff;
+    font-size: 66px;
+    opacity: 0.72;
+    text-shadow:
+        0 0 12px rgba(197, 111, 255, 0.85),
+        0 0 36px rgba(164, 70, 255, 0.48);
+    pointer-events: none;
+}
+
+.main-content .page-header .eyebrow {
+    color: #d08aff;
+    letter-spacing: 3px;
+    text-shadow: 0 0 18px rgba(195, 100, 255, 0.4);
+}
+
+.main-content .page-header h1 {
+    position: relative;
+    color: #fffaff;
+    text-shadow: 0 0 24px rgba(177, 100, 255, 0.15);
+}
+
+.main-content .page-header p {
+    color: #c7b7d9;
+}
+
+/* ==========================================
+   CARDS DOS INDICADORES
+========================================== */
+
+.main-content .stats-grid {
+    gap: 20px;
+}
+
+.main-content .stat-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(174, 104, 221, 0.25);
+    border-radius: 25px;
+    background:
+        linear-gradient(145deg,
+            rgba(36, 22, 49, 0.98),
+            rgba(17, 12, 25, 0.98) 72%);
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.20),
+        inset 0 1px rgba(255, 255, 255, 0.045);
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease;
+}
+
+.main-content .stat-card::before,
+.main-content .overview-card::before,
+.main-content .quick-card::before,
+.main-content .class-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18%;
+    right: 18%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(218, 157, 255, 0.8),
+        transparent);
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.main-content .stat-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 125px;
+    height: 125px;
+    right: -58px;
+    bottom: -75px;
+    border-radius: 50%;
+    background: rgba(164, 71, 255, 0.14);
+    filter: blur(25px);
+    pointer-events: none;
+}
+
+.main-content .stat-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200, 126, 255, 0.72);
+    box-shadow:
+        0 16px 35px rgba(0, 0, 0, 0.30),
+        0 0 22px rgba(153, 68, 255, 0.17),
+        inset 0 1px rgba(255, 255, 255, 0.09);
+}
+
+.main-content .stat-icon {
+    border: 1px solid rgba(211, 157, 255, 0.23);
+    box-shadow:
+        0 0 18px rgba(159, 82, 255, 0.13),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.main-content .stat-card h3,
+.main-content .stat-card .stat-value {
+    text-shadow: 0 0 18px rgba(193, 115, 255, 0.14);
+}
+
+/* ==========================================
+   VISÃO GERAL E ACESSOS RÁPIDOS
+========================================== */
+
+.main-content .overview-grid {
+    gap: 24px;
+}
+
+.main-content .overview-card,
+.main-content .quick-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(174, 104, 221, 0.28);
+    border-radius: 27px;
+    background:
+        radial-gradient(ellipse at 100% 0%,
+            rgba(122, 52, 180, 0.12), transparent 38%),
+        linear-gradient(145deg,
+            rgba(29, 19, 39, 0.98),
+            rgba(16, 11, 24, 0.99));
+    box-shadow:
+        0 14px 38px rgba(0, 0, 0, 0.22),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.main-content .overview-card:hover,
+.main-content .quick-card:hover {
+    border-color: rgba(184, 111, 255, 0.48);
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.28),
+        0 0 25px rgba(139, 64, 220, 0.09);
+}
+
+.main-content .overview-card h2,
+.main-content .quick-card h2 {
+    color: #fffaff;
+    text-shadow: 0 0 18px rgba(186, 106, 255, 0.13);
+}
+
+/* Pequenos indicadores da visão geral */
+.main-content .overview-stats > * {
+    border: 1px solid rgba(165, 103, 207, 0.20);
+    border-radius: 20px;
+    background: linear-gradient(150deg,
+        rgba(36, 21, 48, 0.9),
+        rgba(14, 10, 21, 0.95));
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.035);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.main-content .overview-stats > *:hover {
+    transform: translateY(-3px);
+    border-color: rgba(193, 119, 255, 0.48);
+}
+
+/* Barras de progresso com brilho */
+.main-content .progress-bar {
+    overflow: hidden;
+    border: 1px solid rgba(183, 118, 255, 0.15);
+    border-radius: 99px;
+    background: #21142e;
+}
+
+.main-content .progress-fill {
+    border-radius: inherit;
+    background: linear-gradient(90deg,
+        #7136e8,
+        #b04dff 60%,
+        #ed9aff);
+    box-shadow: 0 0 14px rgba(175, 76, 255, 0.65);
+}
+
+/* ==========================================
+   ACESSOS RÁPIDOS
+========================================== */
+
+.main-content .quick-links {
+    gap: 13px;
+}
+
+.main-content .quick-link {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 19px;
+    background: rgba(104, 57, 139, 0.09);
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.main-content .quick-link:hover {
+    transform: translateX(4px);
+    border-color: rgba(190, 117, 255, 0.34);
+    background: linear-gradient(100deg,
+        rgba(122, 59, 181, 0.20),
+        rgba(74, 36, 105, 0.09));
+}
+
+.main-content .quick-link .stat-icon,
+.main-content .quick-link .quick-icon {
+    box-shadow:
+        0 0 20px rgba(167, 91, 255, 0.17),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================
+   TURMAS E TABELAS
+========================================== */
+
+.main-content .class-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(174, 104, 221, 0.26);
+    border-radius: 23px;
+    background: linear-gradient(145deg,
+        rgba(34, 21, 47, 0.97),
+        rgba(16, 11, 24, 0.98));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.main-content .class-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(197, 121, 255, 0.62);
+}
+
+.main-content .class-icon {
+    box-shadow: 0 0 20px rgba(164, 83, 255, 0.18);
+}
+
+.main-content .class-link,
+.main-content .view-all {
+    color: #d29aff;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.main-content .class-link:hover,
+.main-content .view-all:hover {
+    color: #f0caff;
+    text-shadow: 0 0 14px rgba(194, 113, 255, 0.55);
+}
+
+.main-content .activity-table-wrapper {
+    overflow: hidden;
+    border: 1px solid rgba(174, 104, 221, 0.26);
+    border-radius: 22px;
+    background: rgba(20, 13, 29, 0.88);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.main-content .activity-table thead {
+    background: rgba(120, 57, 166, 0.15);
+}
+
+.main-content .activity-table th {
+    color: #d6b0f2;
+}
+
+.main-content .activity-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.main-content .activity-table tbody tr:hover {
+    background: rgba(154, 78, 215, 0.09);
+}
+
+.main-content .accuracy-badge {
+    border: 1px solid rgba(178, 113, 255, 0.24);
+    box-shadow: 0 0 12px rgba(150, 71, 255, 0.08);
+}
+
+/* Estado vazio */
+.main-content .empty-card {
+    border: 1px dashed rgba(185, 117, 255, 0.36);
+    border-radius: 23px;
+    background: radial-gradient(ellipse at 50% 0%,
+        rgba(139, 65, 206, 0.12), transparent 68%);
+}
+
+/* Acessibilidade: respeita quem reduz animações */
+@media (prefers-reduced-motion: reduce) {
+    .main-content .stat-card,
+    .main-content .overview-card,
+    .main-content .quick-card,
+    .main-content .class-card,
+    .main-content .quick-link {
+        transition: none;
+    }
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .main-content .page-header {
+        padding: 28px 23px;
+        border-radius: 23px;
+    }
+
+    .main-content .page-header::after {
+        right: 15px;
+        top: 12px;
+        font-size: 43px;
+    }
+
+    .main-content .stats-grid {
+        gap: 14px;
+    }
+
+    .main-content .stat-card,
+    .main-content .overview-card,
+    .main-content .quick-card {
+        border-radius: 21px;
+    }
+}
