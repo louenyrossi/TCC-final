@@ -1,36 +1,25 @@
-
 /* =========================================================
-   MATHPOWER — DASHBOARD PROFESSOR / ADMIN
-   Visual refinado • Minimalista • Responsivo
+   MATHPLAY - DASHBOARD PROFESSOR / ADMIN
    ========================================================= */
 
 :root {
     --roxo: #7C3AED;
     --roxo-escuro: #5B21B6;
     --roxo-claro: #EDE9FE;
-
     --fundo: #F8F7FC;
     --branco: #FFFFFF;
-
     --texto: #292631;
     --texto-secundario: #6B6675;
     --borda: #E7E3EF;
-
     --verde: #16A34A;
     --vermelho: #DC2626;
-
-    --sombra: 0 2px 10px rgba(41, 38, 49, 0.035);
-    --sombra-hover: 0 12px 28px rgba(41, 38, 49, 0.075);
-    --sombra-roxa: 0 8px 22px rgba(124, 58, 237, 0.10);
-
-    --raio: 18px;
-    --raio-menor: 12px;
-
-    --transicao: 220ms ease;
+    --sombra: 0 4px 18px rgba(41, 38, 49, 0.06);
+    --raio: 16px;
 }
 
+
 /* =========================================================
-   RESET
+   RESET LOCAL
    ========================================================= */
 
 * {
@@ -42,13 +31,11 @@ body {
     background: var(--fundo);
     color: var(--texto);
     font-family: Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
+
 
 /* =========================================================
    LAYOUT
-   Sidebar preservado: estilos restritos ao conteúdo principal
    ========================================================= */
 
 .layout {
@@ -57,47 +44,41 @@ body {
 }
 
 .conteudo-principal {
-    flex: 1;
     width: 100%;
     min-width: 0;
-    padding: 28px 20px 48px;
+    padding: 24px 18px 40px;
 }
+
 
 /* =========================================================
    CABEÇALHO
    ========================================================= */
 
 .cabecalho-pagina {
-    position: relative;
-    margin-bottom: 36px;
+    margin-bottom: 28px;
 }
 
 .saudacao {
-    display: inline-block;
-    margin: 0 0 10px;
+    margin: 0 0 6px;
     color: var(--roxo);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
 }
 
 .cabecalho-pagina h1 {
     margin: 0;
-    color: var(--texto);
-    font-size: clamp(26px, 3vw, 34px);
-    font-weight: 700;
-    letter-spacing: -0.045em;
+    font-size: 28px;
     line-height: 1.2;
+    color: var(--texto);
 }
 
 .cabecalho-pagina p:last-child {
-    max-width: 620px;
-    margin: 11px 0 0;
+    margin: 8px 0 0;
     color: var(--texto-secundario);
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.5;
 }
+
 
 /* =========================================================
    CARDS DE ESTATÍSTICAS
@@ -106,120 +87,87 @@ body {
 .cards-estatisticas {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 42px;
+    gap: 14px;
+    margin-bottom: 30px;
 }
 
 .card-estatistica {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    min-width: 0;
-    padding: 22px;
-    overflow: hidden;
-
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: var(--raio);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
     box-shadow: var(--sombra);
-
-    transition:
-        transform var(--transicao),
-        border-color var(--transicao),
-        box-shadow var(--transicao);
-}
-
-.card-estatistica:hover {
-    transform: translateY(-3px);
-    border-color: rgba(124, 58, 237, 0.24);
-    box-shadow: var(--sombra-hover);
 }
 
 .card-estatistica .icone {
-    display: flex;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 50px;
-    height: 50px;
-
     background: var(--roxo-claro);
-    border: 1px solid rgba(124, 58, 237, 0.06);
-    border-radius: 15px;
-
-    font-size: 21px;
+    border-radius: 13px;
+    font-size: 22px;
 }
 
 .card-estatistica .titulo {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     color: var(--texto-secundario);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.4;
+    font-size: 13px;
 }
 
 .card-estatistica strong {
     display: block;
     color: var(--texto);
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.045em;
+    font-size: 25px;
     line-height: 1;
-    font-variant-numeric: tabular-nums;
 }
+
 
 /* =========================================================
    SEÇÕES
    ========================================================= */
 
 .secao {
-    min-width: 0;
-    margin-bottom: 42px;
+    margin-bottom: 32px;
 }
 
 .titulo-secao {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .titulo-secao h2 {
     margin: 0;
-    color: var(--texto);
     font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.025em;
+    color: var(--texto);
 }
 
 .titulo-secao p {
-    margin: 7px 0 0;
+    margin: 5px 0 0;
     color: var(--texto-secundario);
     font-size: 13px;
-    line-height: 1.6;
 }
 
 .titulo-secao > a {
-    display: inline-flex;
-    align-items: center;
-    align-self: flex-start;
-    gap: 6px;
-
     color: var(--roxo);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-
-    transition: color var(--transicao);
 }
 
 .titulo-secao > a:hover {
     color: var(--roxo-escuro);
-    text-decoration: none;
+    text-decoration: underline;
 }
+
 
 /* =========================================================
    ATALHOS
@@ -228,81 +176,54 @@ body {
 .atalhos {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
 }
 
 .atalho {
-    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-
-    min-width: 0;
-    min-height: 166px;
-    padding: 23px;
-
+    padding: 20px;
+    min-height: 140px;
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: var(--raio);
-
     color: var(--texto);
     text-decoration: none;
-
     box-shadow: var(--sombra);
-
     transition:
-        transform var(--transicao),
-        border-color var(--transicao),
-        box-shadow var(--transicao),
-        background-color var(--transicao);
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .atalho:hover {
-    transform: translateY(-4px);
-    border-color: rgba(124, 58, 237, 0.32);
-    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+    border-color: var(--roxo);
+    box-shadow: 0 7px 22px rgba(41, 38, 49, 0.09);
 }
 
 .atalho > span {
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-
-    width: 46px;
-    height: 46px;
-    margin-bottom: 21px;
-
+    margin-bottom: 16px;
     background: var(--roxo-claro);
-    border: 1px solid rgba(124, 58, 237, 0.06);
-    border-radius: 14px;
-
+    border-radius: 12px;
     font-size: 21px;
-
-    transition:
-        transform var(--transicao),
-        background-color var(--transicao);
-}
-
-.atalho:hover > span {
-    transform: scale(1.045);
-    background: #E5DEFF;
 }
 
 .atalho strong {
-    margin-bottom: 7px;
-    color: var(--texto);
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    line-height: 1.4;
+    margin-bottom: 5px;
+    font-size: 16px;
 }
 
 .atalho small {
     color: var(--texto-secundario);
-    font-size: 12px;
-    line-height: 1.7;
+    font-size: 13px;
 }
+
 
 /* =========================================================
    LISTA DE TURMAS
@@ -311,145 +232,103 @@ body {
 .lista-turmas {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
 }
 
 .card-turma {
-    min-width: 0;
-    padding: 22px;
-
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: var(--raio);
+    padding: 18px;
     box-shadow: var(--sombra);
-
-    transition:
-        transform var(--transicao),
-        border-color var(--transicao),
-        box-shadow var(--transicao);
-}
-
-.card-turma:hover {
-    transform: translateY(-3px);
-    border-color: rgba(124, 58, 237, 0.24);
-    box-shadow: var(--sombra-hover);
 }
 
 .card-turma .serie {
-    display: inline-flex;
-    align-items: center;
-
-    margin-bottom: 12px;
-    padding: 6px 10px;
-
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 4px 9px;
     background: var(--roxo-claro);
     color: var(--roxo-escuro);
-    border: 1px solid rgba(124, 58, 237, 0.06);
-    border-radius: 30px;
-
-    font-size: 10px;
+    border-radius: 20px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.035em;
 }
 
 .card-turma h3 {
     margin: 0;
-    color: var(--texto);
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.4;
+    font-size: 18px;
 }
 
 .quantidade-alunos {
     display: flex;
     align-items: baseline;
-    gap: 7px;
-
-    margin: 20px 0;
-
+    gap: 5px;
+    margin: 16px 0;
     color: var(--texto-secundario);
 }
 
 .quantidade-alunos strong {
     color: var(--texto);
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    font-variant-numeric: tabular-nums;
+    font-size: 22px;
 }
 
 .quantidade-alunos span {
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .botao-secundario {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-
-    min-height: 42px;
-    padding: 10px 15px;
-
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid var(--roxo);
+    border-radius: 9px;
     background: var(--branco);
     color: var(--roxo);
-    border: 1px solid rgba(124, 58, 237, 0.32);
-    border-radius: 10px;
-
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     text-decoration: none;
-
     transition:
-        background var(--transicao),
-        color var(--transicao),
-        border-color var(--transicao),
-        box-shadow var(--transicao);
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .botao-secundario:hover {
     background: var(--roxo);
     color: var(--branco);
-    border-color: var(--roxo);
-    box-shadow: var(--sombra-roxa);
 }
+
 
 /* =========================================================
    ESTADO VAZIO
    ========================================================= */
 
 .estado-vazio {
-    padding: 44px 24px;
-
+    padding: 35px 20px;
     background: var(--branco);
-    border: 1px dashed #DAD3E8;
+    border: 1px dashed var(--borda);
     border-radius: var(--raio);
-
     text-align: center;
 }
 
 .estado-vazio > span {
     display: block;
-    margin-bottom: 15px;
-    color: var(--roxo);
-    font-size: 34px;
+    margin-bottom: 10px;
+    font-size: 32px;
 }
 
 .estado-vazio h3 {
-    margin: 0 0 9px;
-    color: var(--texto);
+    margin: 0 0 6px;
     font-size: 16px;
-    font-weight: 700;
 }
 
 .estado-vazio p {
-    max-width: 440px;
-    margin: 0 auto;
+    margin: 0;
     color: var(--texto-secundario);
     font-size: 13px;
-    line-height: 1.75;
 }
+
 
 /* =========================================================
    TABELA
@@ -458,28 +337,22 @@ body {
 .tabela-container {
     width: 100%;
     overflow-x: auto;
-
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: var(--raio);
     box-shadow: var(--sombra);
-
-    scrollbar-width: thin;
-    scrollbar-color: #D6CBEA transparent;
 }
 
 .tabela-container table {
     width: 100%;
     min-width: 650px;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
 }
 
 .tabela-container th,
 .tabela-container td {
-    padding: 16px 18px;
-    border-bottom: 1px solid #F0EDF5;
-
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--borda);
     text-align: left;
     white-space: nowrap;
 }
@@ -487,20 +360,13 @@ body {
 .tabela-container th {
     background: #FAF9FC;
     color: var(--texto-secundario);
-
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.035em;
 }
 
 .tabela-container td {
     color: var(--texto);
     font-size: 13px;
-    line-height: 1.5;
-}
-
-.tabela-container tbody tr {
-    transition: background-color var(--transicao);
 }
 
 .tabela-container tbody tr:last-child td {
@@ -508,125 +374,770 @@ body {
 }
 
 .tabela-container tbody tr:hover {
-    background: #FCFAFF;
+    background: #FCFBFE;
 }
 
-/* =========================================================
-   ACESSIBILIDADE E FOCO
-   ========================================================= */
-
-.atalho:focus-visible,
-.botao-secundario:focus-visible,
-.titulo-secao a:focus-visible {
-    outline: 3px solid var(--roxo);
-    outline-offset: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
 
 /* =========================================================
    TABLET
    ========================================================= */
 
 @media (min-width: 600px) {
+
     .conteudo-principal {
-        padding: 34px 28px 52px;
+        padding: 30px 26px 50px;
     }
 
     .cards-estatisticas {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .atalhos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .lista-turmas {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .titulo-secao {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
-    }
-
-    .titulo-secao > a {
-        align-self: center;
-        flex-shrink: 0;
     }
 }
+
 
 /* =========================================================
    DESKTOP
    ========================================================= */
 
 @media (min-width: 900px) {
+
     .conteudo-principal {
-        padding: 42px 40px 64px;
+        padding: 36px 40px 60px;
     }
 
-    .cabecalho-pagina {
-        margin-bottom: 40px;
+    .cabecalho-pagina h1 {
+        font-size: 32px;
     }
 
     .cards-estatisticas {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .atalhos {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .lista-turmas {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    .secao {
-        margin-bottom: 48px;
+    .card-turma {
+        padding: 20px;
+    }
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+.atalho:focus-visible,
+.botao-secundario:focus-visible,
+.titulo-secao a:focus-visible {
+    outline: 3px solid var(--roxo-claro);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .atalho,
+    .botao-secundario {
+        transition: none;
     }
 }
 
 /* =========================================================
-   TELAS ESTREITAS
+   MATHPOWER — REFINAMENTO VISUAL DO DASHBOARD
+   Aplicado somente à área principal.
+   Sidebar preservado.
    ========================================================= */
 
-@media (max-width: 380px) {
-    .conteudo-principal {
-        padding: 22px 14px 36px;
+.main-content {
+    flex: 1;
+    min-width: 0;
+    background: #F8F7FC;
+}
+
+.main-content .content {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 34px 38px 56px;
+    color: #292631;
+}
+
+/* Cabeçalho da página */
+
+.main-content .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.main-content .eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #7C3AED;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.main-content .page-header h1 {
+    margin: 0;
+    color: #292631;
+    font-size: clamp(27px, 3vw, 35px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+    overflow-wrap: anywhere;
+}
+
+.main-content .page-header p {
+    margin: 11px 0 0;
+    color: #777181;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+/* Cards de estatísticas */
+
+.main-content .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+    margin-bottom: 28px;
+}
+
+.main-content .stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    padding: 23px 20px;
+
+    background: #FFFFFF;
+    border: 1px solid #EAE6F1;
+    border-radius: 17px;
+    box-shadow: 0 3px 12px rgba(41, 38, 49, 0.025);
+
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+}
+
+.main-content .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: #D8C8FA;
+    box-shadow: 0 12px 26px rgba(41, 38, 49, 0.06);
+}
+
+.main-content .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 47px;
+    width: 47px;
+    height: 47px;
+    border-radius: 14px;
+    font-size: 20px;
+}
+
+.main-content .stat-icon.purple {
+    background: #F0EAFE;
+}
+
+.main-content .stat-icon.blue {
+    background: #EAF2FF;
+}
+
+.main-content .stat-icon.green {
+    background: #E9F8EF;
+}
+
+.main-content .stat-icon.yellow {
+    background: #FFF5DF;
+}
+
+.main-content .stat-card > div:last-child {
+    min-width: 0;
+}
+
+.main-content .stat-card > div:last-child > span {
+    display: block;
+    margin-bottom: 9px;
+    color: #777181;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.main-content .stat-card strong {
+    display: block;
+    color: #292631;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Visão geral e acessos rápidos */
+
+.main-content .overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: stretch;
+    gap: 20px;
+    margin-bottom: 42px;
+}
+
+.main-content .overview-card,
+.main-content .quick-card {
+    min-width: 0;
+    padding: 25px;
+    background: #FFFFFF;
+    border: 1px solid #EAE6F1;
+    border-radius: 18px;
+    box-shadow: 0 3px 12px rgba(41, 38, 49, 0.025);
+}
+
+.main-content .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.main-content .card-header h2,
+.main-content .section-header h2 {
+    margin: 0;
+    color: #292631;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.main-content .card-header p,
+.main-content .section-header p {
+    margin: 7px 0 0;
+    color: #777181;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* Indicadores da visão geral */
+
+.main-content .overview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.main-content .overview-stats > div {
+    min-width: 0;
+    padding: 17px;
+    background: #FAF9FC;
+    border: 1px solid #F0EDF5;
+    border-radius: 13px;
+}
+
+.main-content .overview-stats span {
+    display: block;
+    margin-bottom: 9px;
+    color: #777181;
+    font-size: 12px;
+}
+
+.main-content .overview-stats strong {
+    display: block;
+    color: #292631;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.main-content .accuracy-area {
+    margin-top: 25px;
+}
+
+.main-content .accuracy-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 11px;
+}
+
+.main-content .accuracy-header span {
+    color: #777181;
+    font-size: 12px;
+}
+
+.main-content .accuracy-header strong {
+    color: #5B21B6;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.main-content .progress-bar {
+    width: 100%;
+    height: 7px;
+    overflow: hidden;
+    background: #EEEAF5;
+    border-radius: 20px;
+}
+
+.main-content .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7C3AED, #A78BFA);
+    border-radius: inherit;
+    transition: width 400ms ease;
+}
+
+/* Links rápidos */
+
+.main-content .quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.main-content .quick-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 13px 12px;
+
+    color: #292631;
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 13px;
+
+    transition:
+        background 200ms ease,
+        border-color 200ms ease,
+        transform 200ms ease;
+}
+
+.main-content .quick-link:hover {
+    background: #FAF8FF;
+    border-color: #EEE6FF;
+    transform: translateX(2px);
+}
+
+.main-content .quick-link > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 41px;
+    width: 41px;
+    height: 41px;
+    background: #F0EAFE;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.main-content .quick-link > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.main-content .quick-link strong {
+    display: block;
+    color: #292631;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.main-content .quick-link small {
+    display: block;
+    margin-top: 3px;
+    color: #858090;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.main-content .quick-link b {
+    flex-shrink: 0;
+    color: #8B5CF6;
+    font-size: 19px;
+    font-weight: 400;
+    transition: transform 200ms ease;
+}
+
+.main-content .quick-link:hover b {
+    transform: translateX(3px);
+}
+
+/* Seções inferiores */
+
+.main-content .section {
+    min-width: 0;
+    margin-bottom: 42px;
+}
+
+.main-content .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 19px;
+}
+
+.main-content .view-all {
+    flex-shrink: 0;
+    color: #7C3AED;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 200ms ease;
+}
+
+.main-content .view-all:hover {
+    color: #5B21B6;
+}
+
+/* Cards das turmas */
+
+.main-content .classes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.main-content .class-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 21px;
+
+    color: #292631;
+    text-decoration: none;
+    background: #FFFFFF;
+    border: 1px solid #EAE6F1;
+    border-radius: 17px;
+    box-shadow: 0 3px 12px rgba(41, 38, 49, 0.025);
+
+    transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+}
+
+.main-content .class-card:hover {
+    transform: translateY(-3px);
+    border-color: #D8C8FA;
+    box-shadow: 0 12px 26px rgba(41, 38, 49, 0.06);
+}
+
+.main-content .class-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    margin-bottom: 21px;
+}
+
+.main-content .class-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    background: #F0EAFE;
+    border-radius: 13px;
+    font-size: 19px;
+}
+
+.main-content .class-card-top > span {
+    padding: 6px 9px;
+    color: #5B21B6;
+    background: #F0EAFE;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.main-content .class-card h3 {
+    margin: 0;
+    color: #292631;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.main-content .class-card > p {
+    margin: 9px 0 21px;
+    color: #777181;
+    font-size: 12px;
+}
+
+.main-content .class-link {
+    margin-top: auto;
+    padding-top: 14px;
+    color: #7C3AED;
+    border-top: 1px solid #F0EDF5;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Estados vazios */
+
+.main-content .empty-card {
+    padding: 38px 22px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px dashed #DCD4E9;
+    border-radius: 17px;
+}
+
+.main-content .empty-card > div {
+    margin-bottom: 13px;
+    font-size: 30px;
+}
+
+.main-content .empty-card h3 {
+    margin: 0 0 8px;
+    color: #292631;
+    font-size: 15px;
+}
+
+.main-content .empty-card p {
+    max-width: 420px;
+    margin: 0 auto;
+    color: #777181;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* Tabela de atividades */
+
+.main-content .activity-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #FFFFFF;
+    border: 1px solid #EAE6F1;
+    border-radius: 17px;
+    box-shadow: 0 3px 12px rgba(41, 38, 49, 0.025);
+    scrollbar-width: thin;
+    scrollbar-color: #D6CBEA transparent;
+}
+
+.main-content .activity-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.main-content .activity-table th,
+.main-content .activity-table td {
+    padding: 16px 18px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid #F0EDF5;
+}
+
+.main-content .activity-table th {
+    color: #777181;
+    background: #FAF9FC;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+}
+
+.main-content .activity-table td {
+    color: #5F5A69;
+    font-size: 12px;
+}
+
+.main-content .activity-table td strong {
+    color: #292631;
+    font-weight: 700;
+}
+
+.main-content .activity-table tbody tr {
+    transition: background 180ms ease;
+}
+
+.main-content .activity-table tbody tr:hover {
+    background: #FCFAFF;
+}
+
+.main-content .activity-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.main-content .accuracy-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 31px;
+    padding: 5px 9px;
+    color: #166534;
+    background: #EAF8EF;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Foco acessível: somente conteúdo principal */
+
+.main-content a:focus-visible,
+.main-content button:focus-visible {
+    outline: 3px solid #7C3AED;
+    outline-offset: 3px;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+    .main-content .content {
+        padding: 30px 25px 44px;
     }
 
-    .card-estatistica,
-    .card-turma {
-        padding: 17px;
+    .main-content .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .atalho {
+    .main-content .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content .classes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celular */
+
+@media (max-width: 600px) {
+    .main-content .content {
+        padding: 24px 16px 36px;
+    }
+
+    .main-content .page-header {
+        margin-bottom: 25px;
+    }
+
+    .main-content .page-header h1 {
+        font-size: 27px;
+    }
+
+    .main-content .stats-grid {
+        gap: 11px;
+        margin-bottom: 23px;
+    }
+
+    .main-content .stat-card {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 13px;
+        padding: 16px;
+        border-radius: 15px;
+    }
+
+    .main-content .stat-icon {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        font-size: 18px;
+    }
+
+    .main-content .stat-card strong {
+        font-size: 25px;
+    }
+
+    .main-content .stat-card > div:last-child > span {
+        font-size: 11px;
+    }
+
+    .main-content .overview-card,
+    .main-content .quick-card {
         padding: 19px;
+        border-radius: 16px;
     }
 
-    .card-estatistica .icone {
-        width: 44px;
-        height: 44px;
+    .main-content .overview-stats {
+        gap: 9px;
     }
 
-    .card-estatistica strong {
-        font-size: 24px;
+    .main-content .overview-stats > div {
+        padding: 13px;
+    }
+
+    .main-content .overview-stats strong {
+        font-size: 22px;
+    }
+
+    .main-content .section-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .main-content .section-header h2 {
+        font-size: 18px;
+    }
+
+    .main-content .classes-grid {
+        gap: 11px;
+    }
+
+    .main-content .class-card {
+        padding: 15px;
+    }
+
+    .main-content .class-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-content .activity-table th,
+    .main-content .activity-table td {
+        padding: 14px;
+    }
+}
+
+/* Movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+    .main-content *,
+    .main-content *::before,
+    .main-content *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
     }
 }
