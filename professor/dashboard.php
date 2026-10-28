@@ -305,26 +305,26 @@ $inicial = mb_strtoupper(
 
             <!-- CABEÇALHO -->
 
-        <div class="page-header">
+            <div class="page-header">
 
-            <div>
+                <div>
 
-            <span class="eyebrow">
-                ÁREA DO PROFESSOR
-            </span>
+                    <span class="eyebrow">
+                        ÁREA DO PROFESSOR
+                    </span>
 
-            <h1>
-                Olá, <?= htmlspecialchars($professor['nome']) ?>! 👋
-            </h1>
+                    <h1>
+                        Olá, <?= htmlspecialchars($professor['nome']) ?>! 👋
+                    </h1>
 
-            <p>
-                Acompanhe suas turmas e o desempenho
-                dos seus alunos.
-            </p>
+                    <p>
+                        Acompanhe suas turmas e o desempenho
+                        dos seus alunos.
+                    </p>
+
+                </div>
 
             </div>
-
-        </div>
 
 
             <!-- CARDS PRINCIPAIS -->
