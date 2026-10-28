@@ -2188,3 +2188,214 @@ button {
         border-radius: 21px;
     }
 }
+
+/* =========================================
+   MATHPOWER — CÍRCULOS DECORATIVOS NEON
+   Adicionar no final de prof-dashboard.css
+========================================= */
+
+/* Containers preparados para receber os círculos */
+.main-content .page-header,
+.main-content .stat-card,
+.main-content .overview-card,
+.main-content .quick-card,
+.main-content .class-card,
+.main-content .empty-card,
+.main-content .activity-table-wrapper {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* Garante que o conteúdo fique acima da decoração */
+.main-content .page-header > *,
+.main-content .stat-card > *,
+.main-content .overview-card > *,
+.main-content .quick-card > *,
+.main-content .class-card > *,
+.main-content .empty-card > *,
+.main-content .activity-table-wrapper > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Círculos luminosos de fundo */
+.main-content .page-header::before,
+.main-content .stat-card::before,
+.main-content .overview-card::before,
+.main-content .quick-card::before,
+.main-content .class-card::before,
+.main-content .empty-card::before,
+.main-content .activity-table-wrapper::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    width: 190px;
+    height: 190px;
+    top: -100px;
+    right: -65px;
+    border: 1px solid rgba(201, 126, 255, 0.38);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(164, 74, 255, 0.20) 0%,
+        rgba(132, 55, 214, 0.09) 42%,
+        transparent 72%
+    );
+    box-shadow:
+        0 0 25px rgba(166, 74, 255, 0.10),
+        inset 0 0 25px rgba(190, 109, 255, 0.09);
+    pointer-events: none;
+}
+
+/* Segundo círculo, menor e mais discreto */
+.main-content .page-header::after,
+.main-content .stat-card::after,
+.main-content .overview-card::after,
+.main-content .quick-card::after,
+.main-content .class-card::after,
+.main-content .empty-card::after,
+.main-content .activity-table-wrapper::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    width: 82px;
+    height: 82px;
+    right: 38px;
+    bottom: -42px;
+    border: 1px solid rgba(222, 157, 255, 0.30);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(182, 83, 255, 0.19),
+        rgba(128, 57, 198, 0.04) 68%,
+        transparent 75%
+    );
+    box-shadow: 0 0 22px rgba(178, 86, 255, 0.12);
+    pointer-events: none;
+}
+
+/* Cabeçalho: círculos maiores e mais chamativos */
+.main-content .page-header::before {
+    width: 260px;
+    height: 260px;
+    top: -125px;
+    right: 45px;
+    border-width: 1px;
+    box-shadow:
+        0 0 35px rgba(174, 76, 255, 0.17),
+        inset 0 0 35px rgba(190, 109, 255, 0.12);
+}
+
+.main-content .page-header::after {
+    width: 145px;
+    height: 145px;
+    right: 125px;
+    bottom: -80px;
+}
+
+/* Indicadores: círculos com variações de posição */
+.main-content .stat-card:nth-child(1)::before {
+    width: 145px;
+    height: 145px;
+    top: -68px;
+    right: -45px;
+}
+
+.main-content .stat-card:nth-child(2)::before {
+    width: 115px;
+    height: 115px;
+    top: -55px;
+    right: -25px;
+}
+
+.main-content .stat-card:nth-child(3)::before {
+    width: 165px;
+    height: 165px;
+    top: -90px;
+    right: -55px;
+}
+
+.main-content .stat-card:nth-child(4)::before {
+    width: 130px;
+    height: 130px;
+    top: -60px;
+    right: -35px;
+}
+
+/* Visão geral: círculos suaves no canto */
+.main-content .overview-card::before {
+    width: 230px;
+    height: 230px;
+    top: -145px;
+    right: -65px;
+}
+
+.main-content .overview-card::after {
+    width: 115px;
+    height: 115px;
+    right: 25px;
+    bottom: -70px;
+}
+
+/* Acessos rápidos: decoração deslocada para não competir com links */
+.main-content .quick-card::before {
+    width: 180px;
+    height: 180px;
+    top: -105px;
+    right: -70px;
+}
+
+.main-content .quick-card::after {
+    width: 100px;
+    height: 100px;
+    right: 15px;
+    bottom: -55px;
+}
+
+/* Turmas */
+.main-content .class-card::before {
+    width: 135px;
+    height: 135px;
+    top: -70px;
+    right: -45px;
+}
+
+.main-content .class-card::after {
+    width: 70px;
+    height: 70px;
+    right: 20px;
+    bottom: -35px;
+}
+
+/* Brilho extra ao passar o mouse */
+.main-content .stat-card:hover::before,
+.main-content .overview-card:hover::before,
+.main-content .quick-card:hover::before,
+.main-content .class-card:hover::before {
+    border-color: rgba(218, 157, 255, 0.65);
+    box-shadow:
+        0 0 32px rgba(174, 76, 255, 0.22),
+        inset 0 0 30px rgba(190, 109, 255, 0.14);
+}
+
+/* Mantém a decoração discreta em celulares */
+@media (max-width: 768px) {
+    .main-content .page-header::before {
+        width: 175px;
+        height: 175px;
+        right: -50px;
+    }
+
+    .main-content .page-header::after {
+        width: 90px;
+        height: 90px;
+        right: 35px;
+    }
+
+    .main-content .stat-card::before,
+    .main-content .overview-card::before,
+    .main-content .quick-card::before {
+        opacity: 0.75;
+    }
+}
