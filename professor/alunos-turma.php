@@ -89,6 +89,7 @@ $alunos = $stmt->fetchAll();
         rel="stylesheet"
         href="../assets/css/prof-turmas.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 
 </head>
 
@@ -377,6 +378,8 @@ $alunos = $stmt->fetchAll();
 
 
 <script src="../assets/js/prof-turmas.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 

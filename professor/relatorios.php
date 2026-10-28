@@ -256,6 +256,7 @@ function e($valor): string
 
     <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
     <link rel="stylesheet" href="../assets/css/prof-relatorios.css">
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 </head>
 
 <body>
@@ -646,5 +647,7 @@ function e($valor): string
 </div>
 
 <script src="../assets/js/prof-relatorios.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 </body>
 </html>

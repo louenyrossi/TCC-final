@@ -110,6 +110,7 @@ if (isset($_GET['id'])) {
     
 <link rel="stylesheet" href="../assets/css/prof-turmas.css">
 <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
+<link rel="stylesheet" href="../assets/css/acessibilidade.css">
 
 
 </head>
@@ -516,6 +517,8 @@ if (isset($_GET['id'])) {
 ========================================================== -->
 
 <script src="../assets/js/prof-turmas.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 

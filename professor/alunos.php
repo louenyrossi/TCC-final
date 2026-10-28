@@ -125,6 +125,7 @@ foreach ($alunos as $aluno) {
 
     <link rel="stylesheet" href="../assets/css/prof-dashboard.css">
     <link rel="stylesheet" href="../assets/css/prof-alunos.css">
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 
 </head>
 
@@ -788,6 +789,8 @@ foreach ($alunos as $aluno) {
      ========================================================= -->
 
 <script src="../assets/js/prof-alunos.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 
 </body>
