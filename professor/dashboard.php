@@ -162,6 +162,8 @@ $inicial = mb_strtoupper(
         rel="stylesheet"
         href="../assets/css/prof-dashboard.css"
     >
+    
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 
 </head>
 
@@ -922,6 +924,8 @@ $inicial = mb_strtoupper(
 
 
 <script src="../assets/js/prof-dashboard.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 

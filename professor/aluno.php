@@ -216,6 +216,7 @@ function formatarData(?string $data): string
     <title><?= htmlspecialchars($aluno['nome']) ?> - MathPlay</title>
 
     <link rel="stylesheet" href="../assets/css/prof-aluno.css">
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 </head>
 
 <body>
@@ -658,6 +659,8 @@ function formatarData(?string $data): string
 </div>
 
 <script src="../assets/js/prof-aluno.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>
