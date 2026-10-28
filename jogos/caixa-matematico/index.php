@@ -179,6 +179,7 @@ if ($anoSerie === 7) {
         rel="stylesheet"
         href="../../assets/css/caixa-matematico.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 </head>
 
 <body>
@@ -800,6 +801,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>

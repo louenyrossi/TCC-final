@@ -112,6 +112,7 @@ foreach ($perguntasBanco as $pergunta) {
         rel="stylesheet"
         href="../../assets/css/memoria-matematica.css"
     >
+    <link rel="stylesheet" href="../assets/css/acessibilidade.css">
 </head>
 
 <body>
@@ -340,6 +341,8 @@ window.MathPlayMemoria = {
 <!-- JAVASCRIPT DO JOGO -->
 
 <script src="../../assets/js/memoria-matematica.js"></script>
+<?php require_once __DIR__ . '/../includes/acessibilidade.php'; ?>
+<script src="../assets/js/acessibilidade.js" defer></script>
 
 </body>
 </html>
