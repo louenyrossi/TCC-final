@@ -1570,3 +1570,9 @@ body,
         font-size: 13px !important;
     }
 }
+/* Diminui somente o container interno do título */
+.main-content .page-header {
+    width: 85%;
+    max-width: 950px;
+    box-sizing: border-box;
+}
